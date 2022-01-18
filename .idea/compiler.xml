@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="IP_2022" target="16" />
+      <module name="IP_2022" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
