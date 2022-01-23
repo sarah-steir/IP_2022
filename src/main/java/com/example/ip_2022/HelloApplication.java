@@ -18,8 +18,8 @@ public class HelloApplication extends Application {
         //Natalia
         stage.setScene(scene);
         stage.show();
-        
-          // Tayba
+
+        // Another commit check
     }
 
     public static void main(String[] args) {
