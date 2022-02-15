@@ -1,5 +1,6 @@
 package pack.View;
 
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -11,7 +12,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 
+import javafx.scene.text.Text;
 import pack.Model.CustomButton;
+import pack.Model.mainModel;
 
 import java.util.ArrayList;
 
@@ -22,7 +25,7 @@ public class View1 extends Pane {
 
     public View1() {
         this.setPrefSize(1050, 750);
-        this.setStyle("-fx-background-color: #7F8753;");
+        this.setStyle("-fx-background-color: #7E7F9A;");
         this.setButtons();
         this.setLogo();
         this.setLeft();
@@ -57,12 +60,11 @@ public class View1 extends Pane {
         left.setPrefSize(500, 695);
         left.setLayoutX(10);
         left.setLayoutY(14);
-        //left.setStyle("-fx-background-color:#EEBBF8;"); //pink
 
         //User input
         VBox ui= new VBox(); //1
         ui.setPrefSize(500, 160);
-        ui.setStyle("-fx-background-color:#333335;"); //purple
+        ui.setStyle("-fx-background-color:#333335;"); //grey
         ui.getChildren().addAll(setRadios());
 
         //Graph
@@ -80,12 +82,16 @@ public class View1 extends Pane {
         right.setLayoutX(520);
         right.setLayoutY(14);
         right.setSpacing(10);
-        // right.setStyle("-fx-background-color:#57B5FE;"); //blue
 
         //Program output
         VBox po= new VBox();//2
         po.setPrefSize(500, 595);
-        po.setStyle("-fx-background-color:#AE4944;"); //red
+        po.setSpacing(15);
+        po.setAlignment(Pos.TOP_CENTER);
+        po.setStyle("-fx-background-color:#333335;");
+        po.getChildren().addAll(mainModel.setTitle("System of linear equations"));
+
+
 
 
 
@@ -135,6 +141,8 @@ public class View1 extends Pane {
 
         return fieldList;
     }
+
+
 
 
 
