@@ -25,7 +25,7 @@ public class View1 extends Pane {
 
     public View1() {
         this.setPrefSize(1050, 750);
-        this.setStyle("-fx-background-color: #7E7F9A;");
+        this.setStyle("-fx-background-color: #6F6F77;");
         this.setButtons();
         this.setLogo();
         this.setLeft();
@@ -70,7 +70,7 @@ public class View1 extends Pane {
         //Graph
         Pane graph= new Pane();//3
         graph.setPrefSize(500, 525);
-        graph.setStyle("-fx-background-color:#EAD062;"); //yellow
+        graph.setStyle("-fx-background-color:#333335;"); //yellow
 
         left.getChildren().addAll(ui,graph);
         this.getChildren().add(left);
