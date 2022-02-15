@@ -29,8 +29,6 @@ public class View1 extends Pane {
 
     public void setLogo() {
         ImageView iv = new ImageView(new Image(p + "Logo.png"));
-        // file:/Users/constance/IdeaProjects/IP_2022/Logo.png
-        System.out.println(p);
         this.getChildren().add(iv);
         iv.setFitWidth(225);
         iv.setFitHeight(100);

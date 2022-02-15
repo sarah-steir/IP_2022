@@ -82,6 +82,7 @@ public class MainView extends Pane {
 
     /***
      * Function that takes care of the whole animation that occurs when changing Views
+     * It also checks if you try to go to the view you're already on
      * It will play the first half of the animation (timeline1),
      * then switch the view when timeline1 is setOnFinished,
      * and finally play the second part of the animation (timeline2).

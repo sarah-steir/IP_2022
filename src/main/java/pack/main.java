@@ -35,11 +35,19 @@ public class main extends Application {
      */
 
     /***
-     *
      * Size of the Stage :
      *
      * Height : 750 pixels
      * Width : 1050 pixels
+     */
+
+    /***
+     * Information about the logo :
+     *
+     * Height : 100 pixels
+     * Width : 225 pixels
+     * LayoutX : 805 pixels
+     * LayoutY : 610 pixels
      */
 
 }
