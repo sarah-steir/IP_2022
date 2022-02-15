@@ -1,4 +1,4 @@
-module com.example.ip_2022 {
+module src {
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -6,6 +6,6 @@ module com.example.ip_2022 {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
 
-    opens com.example.ip_2022 to javafx.fxml;
-    exports com.example.ip_2022;
+    opens pack to javafx.fxml;
+    exports pack;
 }
