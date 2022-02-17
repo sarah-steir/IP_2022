@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import pack.Model.CustomMenu;
 
 import static pack.Model.mainModel.p;
 
@@ -45,15 +46,15 @@ public class MainView extends Pane {
         AnchorPane menuPane = new AnchorPane();
         AnchorPane.setTopAnchor(menuBar, 0.0);
 
-        Menu menu1 = new Menu("Menu 1");
+        Menu menu1 = new CustomMenu("Menu 1");
         menu1.getItems().add(new MenuItem("Menu Item 1.1"));
         menu1.getItems().add(new MenuItem("Menu Item 1.2"));
 
-        Menu menu2 = new Menu("Menu 2");
+        Menu menu2 = new CustomMenu("Menu 2");
         menu2.getItems().add(new MenuItem("Menu Item 2.1"));
         menu2.getItems().add(new MenuItem("Menu Item 2.2"));
 
-        Menu menu3 = new Menu("Menu 3");
+        Menu menu3 = new CustomMenu("Menu 3");
         menu3.getItems().add(new MenuItem("Menu Item 3.1"));
         menu3.getItems().add(new MenuItem("Menu Item 3.2"));
 
