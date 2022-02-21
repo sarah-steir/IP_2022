@@ -78,12 +78,12 @@ public interface iView {
         return vbRight;
     }
 
-    static Pane setView() {
+    static Pane setView(String title) {
         Pane pane = new Pane();
         pane.setPrefSize(1050, 750);
         pane.setStyle("-fx-background-color: #6F6F77;");
         pane.getChildren().add(setLeft());
-        pane.getChildren().add(setRight("system of linear equations"));
+        pane.getChildren().add(setRight(title));
         return pane;
     }
 }
