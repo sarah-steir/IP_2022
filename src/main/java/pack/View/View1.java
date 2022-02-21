@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 
+import javafx.scene.text.Text;
 import pack.Model.CustomButton;
 import pack.Model.mainModel;
 
@@ -33,7 +34,7 @@ public class View1 extends Pane {
     }
 
     public static Node setButtons() {
-        Button start = new CustomButton("Start\nthe\nMAGIK");
+        Button start = new CustomButton("Start\nthe\n MAGIK");
         Button reset= new CustomButton("Reset\nthe\nMAGIK");
         HBox buttons= new HBox();
         buttons.setSpacing(10);
@@ -140,4 +141,9 @@ public class View1 extends Pane {
 
         return fieldList;
     }
+
+
+
+
+
 }
