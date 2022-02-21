@@ -44,7 +44,7 @@ public class View1 extends Pane {
         return buttons;
     }
 
-    public static Node setLogo() {
+    public Node setLogo() {
         ImageView iv = new ImageView(new Image(p + "Logo.png"));
         iv.setFitWidth(225);
         iv.setFitHeight(105);
