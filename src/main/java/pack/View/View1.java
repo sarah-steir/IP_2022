@@ -23,7 +23,7 @@ import static pack.Model.mainModel.p;
 public class View1 extends Pane implements iView {
 
     public View1() {
-        this.getChildren().add(iView.setView("System of Linear Equations"));
+        this.getChildren().add(setView("System of Linear Equations"));
     }
 
     public static Node setRadios(){
