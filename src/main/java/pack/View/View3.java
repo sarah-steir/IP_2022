@@ -15,6 +15,8 @@ import static pack.Model.mainModel.p;
 public class View3 extends Pane implements iView{
 
     public View3() {
-        this.getChildren().add(iView.setView("Lines And THe PLanes shit"));
+        this.getChildren().add(setView("Lines And THe PLanes shit"));
     }
+
+
 }

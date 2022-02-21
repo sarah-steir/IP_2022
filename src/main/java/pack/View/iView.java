@@ -14,7 +14,7 @@ import static pack.Model.mainModel.p;
 
 public interface iView {
 
-    static HBox setButtons() {
+    default HBox setButtons() {
         Button btnStart = new CustomButton("Start\nthe\n MAGIK");
         Button btnReset= new CustomButton("Reset\nthe\nMAGIK");
         HBox hbButtons= new HBox();
@@ -25,14 +25,14 @@ public interface iView {
         return hbButtons;
     }
 
-    static ImageView setLogo() {
+    default ImageView setLogo() {
         ImageView iv = new ImageView(new Image(p + "Logo.png"));
         iv.setFitWidth(225);
         iv.setFitHeight(105);
         return iv;
     }
 
-    static VBox setLeft() {
+    default VBox setLeft() {
         VBox vbLeft = new VBox();
         vbLeft.setSpacing(10);
         vbLeft.setPrefSize(500, 695);
@@ -53,7 +53,7 @@ public interface iView {
         return vbLeft;
     }
 
-    static VBox setRight(String title) {
+    default VBox setRight(String title) {
         VBox vbRight = new VBox();
         vbRight.setPrefSize(500, 695);
         vbRight.setLayoutX(520);
@@ -78,7 +78,7 @@ public interface iView {
         return vbRight;
     }
 
-    static Pane setView(String title) {
+    default Pane setView(String title) {
         Pane pane = new Pane();
         pane.setPrefSize(1050, 750);
         pane.setStyle("-fx-background-color: #6F6F77;");
