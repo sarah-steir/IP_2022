@@ -20,7 +20,7 @@ public class MainView extends Pane {
 
     public MainView() {
         this.setPrefSize(1050, 750);
-        this.setCurrentPane(new WelcomeView());
+        this.setCurrentPane(new WelcomeView(this));
         this.getChildren().addAll(currentPane, gif, setMenuBar());
         currentPane.setLayoutY(25);
         gif.setMouseTransparent(true);
@@ -45,27 +45,28 @@ public class MainView extends Pane {
         AnchorPane menuPane = new AnchorPane();
         AnchorPane.setTopAnchor(menuBar, 0.0);
 
-        Menu menu1 = new Menu("Menu 1");
+        Menu menu1 = new Menu("About");
         menu1.getItems().add(new MenuItem("Menu Item 1.1"));
         menu1.getItems().add(new MenuItem("Menu Item 1.2"));
 
-        Menu menu2 = new Menu("Menu 2");
+        Menu menu2 = new Menu("Help");
         menu2.getItems().add(new MenuItem("Menu Item 2.1"));
         menu2.getItems().add(new MenuItem("Menu Item 2.2"));
 
-        Menu menu3 = new Menu("Menu 3");
+        Menu menu3 = new Menu("Theme");
         menu3.getItems().add(new MenuItem("Menu Item 3.1"));
         menu3.getItems().add(new MenuItem("Menu Item 3.2"));
 
-        Menu views = new Menu("Change Views");
-        MenuItem welcomeView = new MenuItem("Welcome View");
-        MenuItem view1 = new MenuItem("View1");
-        MenuItem view2 = new MenuItem("View2");
-        MenuItem view3 = new MenuItem("View3");
+        Menu views = new Menu("Go to...");
+        //MenuItem welcomeView = new MenuItem("Welcome View");
+        MenuItem view1 = new MenuItem("Systems of Linear Equations");
+        MenuItem view2 = new MenuItem("EigenValues & EigenVectors");
+        MenuItem view3 = new MenuItem("Lines and Planes");
 
-        views.getItems().addAll(welcomeView, view1, view2, view3);
+        //views.getItems().addAll(welcomeView, view1, view2, view3);
+        views.getItems().addAll(view1, view2, view3);
 
-        welcomeView.setOnAction(e -> this.playAnimation(new WelcomeView()));
+        //welcomeView.setOnAction(e -> this.playAnimation(new WelcomeView()));
 
         view1.setOnAction(e -> this.playAnimation(new View1()));
 

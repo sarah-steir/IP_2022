@@ -14,7 +14,5 @@ public class CustomButton extends Button {
                 "-fx-text-fill: E7EBEE;");
         this.setTextAlignment(TextAlignment.CENTER);
         this.setFont(mainModel.font);
-        this.setMinSize(115, 105);
     }
-
 }

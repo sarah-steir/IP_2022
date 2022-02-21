@@ -31,7 +31,7 @@ public class main extends Application {
      * White : E7EBEE
      * Red : F15152
      * Yellow : FCBF49
-     * Grey-blue : 7E7F9A
+     * Grey-blue : 6F6F77
      */
 
     /***

@@ -16,7 +16,9 @@ public interface iView {
 
     static HBox setButtons() {
         Button btnStart = new CustomButton("Start\nthe\n MAGIK");
+        btnStart.setMinSize(115, 105);
         Button btnReset= new CustomButton("Reset\nthe\nMAGIK");
+        btnReset.setMinSize(115, 105);
         HBox hbButtons= new HBox();
         hbButtons.setSpacing(10);
         hbButtons.getChildren().addAll(btnStart,btnReset);
@@ -81,7 +83,7 @@ public interface iView {
     static Pane setView(String title) {
         Pane pane = new Pane();
         pane.setPrefSize(1050, 750);
-        pane.setStyle("-fx-background-color: #6F6F77;");
+        pane.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
         pane.getChildren().add(setLeft());
         pane.getChildren().add(setRight(title));
         return pane;
