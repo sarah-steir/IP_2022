@@ -1,18 +1,25 @@
 package pack.View;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pack.Model.CustomButton;
 import pack.Model.mainModel;
 
+import java.util.ArrayList;
+
 import static pack.Model.mainModel.p;
 
 public interface iView {
+
 
     default HBox setButtons() {
         Button btnStart = new CustomButton("Start\nthe\n MAGIK");
@@ -45,6 +52,29 @@ public interface iView {
         VBox vbUi = new VBox();
         vbUi.setPrefSize(500, 160);
         vbUi.setStyle("-fx-background-color: #333335"); // Grey
+        vbUi.getChildren().addAll(setRadios());
+
+        View1.twoo.setOnAction(new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent e) {
+                if(View1.twoo.isSelected()) {
+                    vbUi.getChildren().clear();
+                    vbUi.getChildren().addAll(setRadios());
+                    vbUi.getChildren().add(set2Fields());
+                }
+            }});
+
+        View1.threee.setOnAction(new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent e) {
+                if(View1.threee.isSelected()) {
+                    vbUi.getChildren().clear();
+                    vbUi.getChildren().addAll(setRadios());
+                    vbUi.getChildren().add(set3Fields());
+                }
+            }});
+
+
 
         // Graph Box
         Pane graph = new Pane();
@@ -87,5 +117,82 @@ public interface iView {
         pane.getChildren().add(setLeft());
         pane.getChildren().add(setRight(title));
         return pane;
+    }
+
+    public static Node setRadios(){
+        ToggleGroup size = new ToggleGroup();
+        RadioButton two= new RadioButton("2x2");
+        two.setLayoutX(80);
+        two.setLayoutY(150);
+        View1.twoo.setStyle("-fx-text-fill: E7EBEE;");
+        View1.twoo.setToggleGroup(size);
+        RadioButton three= new RadioButton("3x3");
+        View1.threee.setStyle("-fx-text-fill: E7EBEE;");
+        View1.threee.setToggleGroup(size);
+        HBox radios= new HBox();
+        radios.setSpacing(20);
+
+        radios.getChildren().addAll( View1.twoo, View1.threee);
+
+        return radios;
+    }
+
+    public static GridPane set2Fields(){
+        GridPane twoByTwo= new GridPane();
+        twoByTwo.setVgap(10);
+        twoByTwo.setHgap(10);
+        twoByTwo.setAlignment(Pos.CENTER);
+        ArrayList a=createFields(6);
+        int counter=0; //max 5
+        int row=0; //max 2
+        int column=0; //max 1
+
+
+        twoByTwo.add((Node) a.get(0), 0, 0);
+        twoByTwo.add((Node) a.get(1), 1, 0);
+        twoByTwo.add((Node) a.get(2), 2, 0);
+        twoByTwo.add((Node) a.get(3), 0, 1);
+        twoByTwo.add((Node) a.get(4), 1, 1);
+        twoByTwo.add((Node) a.get(5), 2, 1);
+
+
+        return twoByTwo;
+    }
+
+    public static GridPane set3Fields(){
+        GridPane threebyThree= new GridPane();
+        threebyThree.setAlignment(Pos.CENTER);
+        threebyThree.setVgap(10);
+        threebyThree.setHgap(10);
+        ArrayList a=createFields(9);
+        int counter=0; //max 5
+        int row=0; //max 2
+        int column=0; //max 1
+
+
+        threebyThree.add((Node) a.get(0), 0, 0);
+        threebyThree.add((Node) a.get(1), 1, 0);
+        threebyThree.add((Node) a.get(2), 2, 0);
+        threebyThree.add((Node) a.get(3), 0, 1);
+        threebyThree.add((Node) a.get(4), 1, 1);
+        threebyThree.add((Node) a.get(5), 2, 1);
+        threebyThree.add((Node) a.get(6), 0, 2);
+        threebyThree.add((Node) a.get(7), 1, 2);
+        threebyThree.add((Node) a.get(8), 2, 2);
+
+        return threebyThree;
+    }
+
+    public static ArrayList createFields(int tf){
+        ArrayList fieldList= new ArrayList(tf-1); //6-1
+        int counter=1;
+        while(counter<=tf){
+            TextField t= new TextField();
+            t.setPrefSize(80,25);
+            fieldList.add(t);
+            counter++;
+        }
+
+        return fieldList;
     }
 }
