@@ -12,8 +12,64 @@ import pack.Model.mainModel;
 
 import static pack.Model.mainModel.p;
 
+/**
+ * This interface sets the general view for all three different scenes in the application.
+ * It first sets the buttons, the logo as well as the different general panes.
+ */
+
 public interface iView {
 
+    /**
+     * This method calls all the different methods and sets the general view.
+     * @param title is the title of the right pane
+     * @return the pane that is the final general view
+     */
+    default Pane setView(String title) {
+        Pane pane = new Pane();
+        pane.setPrefSize(1050, 750);
+        pane.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
+        pane.getChildren().add(setLeft());
+        pane.getChildren().add(setRight(title));
+        return pane;
+    }
+
+    /**
+     * This method sets the right pane of the general view. The method is defaulted to include the buttons and
+     * the logo as well as a top-right pane called that serves as the program output.
+     * @param title is the title of the right pane
+     * @return the VBox of the right pane
+     */
+    default VBox setRight(String title) {
+        VBox vbRight = new VBox();
+        vbRight.setPrefSize(500, 695);
+        vbRight.setLayoutX(520);
+        vbRight.setLayoutY(14);
+        vbRight.setSpacing(10);
+
+        // Program Output Box
+        VBox vbPo = new VBox();
+        vbPo.setPrefSize(500, 595);
+        vbPo.setSpacing(15);
+        vbPo.setAlignment(Pos.TOP_CENTER);
+        vbPo.setStyle("-fx-background-color: #333335");
+        vbPo.getChildren().add(mainModel.setTitle(title));
+
+        // HBox to hold buttons and logo
+        HBox hbBottom = new HBox();
+        hbBottom.setMaxSize(500, 105);
+        hbBottom.setSpacing(55);
+        hbBottom.getChildren().addAll(setButtons(), setLogo());
+
+        vbRight.getChildren().addAll(vbPo, hbBottom);
+        return vbRight;
+    }
+
+    /**
+     * This method sets the buttons of the HBox for the general views. These two buttons are the
+     * "Start the MAGIK" button and the "Reset the MAGIK" button which all have the same functions. These two
+     * buttons are present in all the three panes.
+     * @return the HBox containing the buttons
+     */
     default HBox setButtons() {
         Button btnStart = new CustomButton("Start\nthe\n MAGIK");
         btnStart.setMinSize(115, 105);
@@ -53,39 +109,5 @@ public interface iView {
 
         vbLeft.getChildren().addAll(vbUi, graph);
         return vbLeft;
-    }
-
-    default VBox setRight(String title) {
-        VBox vbRight = new VBox();
-        vbRight.setPrefSize(500, 695);
-        vbRight.setLayoutX(520);
-        vbRight.setLayoutY(14);
-        vbRight.setSpacing(10);
-
-        // Program Output Box
-        VBox vbPo = new VBox();
-        vbPo.setPrefSize(500, 595);
-        vbPo.setSpacing(15);
-        vbPo.setAlignment(Pos.TOP_CENTER);
-        vbPo.setStyle("-fx-background-color: #333335");
-        vbPo.getChildren().add(mainModel.setTitle(title));
-
-        // HBox to hold buttons and logo
-        HBox hbBottom = new HBox();
-        hbBottom.setMaxSize(500, 105);
-        hbBottom.setSpacing(55);
-        hbBottom.getChildren().addAll(setButtons(), setLogo());
-
-        vbRight.getChildren().addAll(vbPo, hbBottom);
-        return vbRight;
-    }
-
-    default Pane setView(String title) {
-        Pane pane = new Pane();
-        pane.setPrefSize(1050, 750);
-        pane.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
-        pane.getChildren().add(setLeft());
-        pane.getChildren().add(setRight(title));
-        return pane;
     }
 }
