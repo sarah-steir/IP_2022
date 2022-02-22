@@ -5,14 +5,13 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import pack.View.MainView;
-import pack.View.View1;
 
 public class main extends Application {
 
     @Override
     public void start(Stage stage) {
 
-        Pane grid = new View1();
+        Pane grid = new MainView();
         stage.setResizable(false);
         stage.setTitle("Matrix");
 

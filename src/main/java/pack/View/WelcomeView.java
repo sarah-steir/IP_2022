@@ -44,10 +44,7 @@ public class WelcomeView extends Pane {
         boxyy.getChildren().addAll(button1, button2, button3);
         boxyy.setLayoutX(390);
         boxyy.setLayoutY(200);
-
         boxyy.setAlignment(Pos.CENTER);
-
-        System.out.println(button1.getWidth());
 
         return boxyy;
     }
