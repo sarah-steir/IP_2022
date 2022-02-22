@@ -83,6 +83,10 @@ public interface iView {
         return hbButtons;
     }
 
+    /**
+     * This method sets the logo at the bottom-right of the pane.
+     * @return the ImageView that contains the logo
+     */
     default ImageView setLogo() {
         ImageView iv = new ImageView(new Image(p + "Logo.png"));
         iv.setFitWidth(225);
@@ -90,6 +94,12 @@ public interface iView {
         return iv;
     }
 
+    /**
+     * This method sets the left pane of the general view. The default version of this method includes
+     * a user input box at the top followed by a space then a graph pane underneath it. This method however is overriden in
+     * View2.
+     * @return the VBox that is the left pane
+     */
     default VBox setLeft() {
         VBox vbLeft = new VBox();
         vbLeft.setSpacing(10);
