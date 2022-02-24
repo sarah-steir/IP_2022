@@ -13,13 +13,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pack.Model.CustomButton;
 import pack.Model.mainModel;
-
+import javafx.scene.control.Label;
 import java.util.ArrayList;
 
 import static pack.Model.mainModel.p;
 
 public interface iView {
-
+    ArrayList a=createFields(2); //fields for 2by2
+    ArrayList b=createFields(3); //fields for 3by3
 
     default HBox setButtons() {
         Button btnStart = new CustomButton("Start\nthe\n MAGIK");
@@ -50,6 +51,7 @@ public interface iView {
 
         // User Input Box
         VBox vbUi = new VBox();
+        vbUi.setSpacing(15);
         vbUi.setPrefSize(500, 160);
         vbUi.setStyle("-fx-background-color: #333335"); // Grey
         vbUi.getChildren().addAll(setRadios());
@@ -138,61 +140,108 @@ public interface iView {
     }
 
     public static GridPane set2Fields(){
+        Label l= new Label("=");
+        Label l2= new Label("=");
+        l.setStyle("-fx-text-fill: E7EBEE;");
+        l2.setStyle("-fx-text-fill: E7EBEE;");
         GridPane twoByTwo= new GridPane();
         twoByTwo.setVgap(10);
         twoByTwo.setHgap(10);
-        twoByTwo.setAlignment(Pos.CENTER);
-        ArrayList a=createFields(6);
-        int counter=0; //max 5
+        twoByTwo.setAlignment(Pos.BOTTOM_CENTER);
+        ArrayList sL= createSigns(2);
+
+        int acounter=0; //max 5
+        int sLcounter=0; //max 3
         int row=0; //max 2
-        int column=0; //max 1
+        int column=0;
+        int n=0;
 
+        while(row!=2) {
+           while(column!=5) {
+                if(column%2==0){
+                    if (acounter<=2+3*n){
+                        twoByTwo.add((Node) a.get(acounter), column, row);
+                        acounter++;
+                        column++ ;} }
 
-        twoByTwo.add((Node) a.get(0), 0, 0);
-        twoByTwo.add((Node) a.get(1), 1, 0);
-        twoByTwo.add((Node) a.get(2), 2, 0);
-        twoByTwo.add((Node) a.get(3), 0, 1);
-        twoByTwo.add((Node) a.get(4), 1, 1);
-        twoByTwo.add((Node) a.get(5), 2, 1);
-
-
+                    if(column%2==1){
+                        if (sLcounter<=1+2*n){
+                            twoByTwo.add((Node) sL.get(sLcounter), column, row);
+                            sLcounter++;
+                            column++ ;}}}
+           n++;
+           row++;
+           column=0; }
         return twoByTwo;
     }
 
     public static GridPane set3Fields(){
         GridPane threebyThree= new GridPane();
-        threebyThree.setAlignment(Pos.CENTER);
+        threebyThree.setAlignment(Pos.BOTTOM_CENTER);
         threebyThree.setVgap(10);
         threebyThree.setHgap(10);
-        ArrayList a=createFields(9);
-        int counter=0; //max 5
+
+        int acounter=0; //max 11
+        int sLcounter=0; //max 8
         int row=0; //max 2
-        int column=0; //max 1
+        int column=0; //max 6
+        int n=0;
 
+        ArrayList sL= createSigns(3);
 
-        threebyThree.add((Node) a.get(0), 0, 0);
-        threebyThree.add((Node) a.get(1), 1, 0);
-        threebyThree.add((Node) a.get(2), 2, 0);
-        threebyThree.add((Node) a.get(3), 0, 1);
-        threebyThree.add((Node) a.get(4), 1, 1);
-        threebyThree.add((Node) a.get(5), 2, 1);
-        threebyThree.add((Node) a.get(6), 0, 2);
-        threebyThree.add((Node) a.get(7), 1, 2);
-        threebyThree.add((Node) a.get(8), 2, 2);
+        while(row!=3) {
+            while(column!=7) {
+                if(column%2==0){
+                    if (acounter<=3+4*n){
+                        threebyThree.add((Node) b.get(acounter), column, row);
+                        acounter++;
+                        column++ ;} }
+
+                if(column%2==1){
+                    if (sLcounter<=2+3*n){
+                        threebyThree.add((Node) sL.get(sLcounter), column, row);
+                        sLcounter++;
+                        column++ ;}}}
+            n++;
+            row++;
+            column=0; }
 
         return threebyThree;
     }
 
     public static ArrayList createFields(int tf){
-        ArrayList fieldList= new ArrayList(tf-1); //6-1
+        int field=tf*(tf+1);
+        ArrayList fieldList= new ArrayList(field-1); //For 2 is 6 and for 3 is 12
         int counter=1;
-        while(counter<=tf){
+        while(counter<=field){
             TextField t= new TextField();
             t.setPrefSize(80,25);
             fieldList.add(t);
-            counter++;
-        }
+            counter++;}
 
-        return fieldList;
-    }
-}
+        return fieldList;}
+
+    public static ArrayList createSigns(int i) {
+        ArrayList<Label> signs= new ArrayList<Label>();
+        
+        if (i==2){
+        for(int j=0;j<i;j++){
+            Label x= new Label("X +");
+            Label y= new Label("Y =");
+            signs.add(x);
+            signs.add(y);} }
+
+        if (i==3){
+            for(int j=0;j<i;j++){
+                Label x= new Label("X +");
+                Label y= new Label("Y +");
+                Label z= new Label("Z =");
+                signs.add(x);
+                signs.add(y);
+                signs.add(z);} }
+
+        int c=0;
+        while (c!=signs.size()){
+            signs.get(c).setStyle("-fx-text-fill: E7EBEE;");
+            c++;}
+        return signs; }}
