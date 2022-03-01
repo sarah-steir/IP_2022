@@ -11,19 +11,24 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import pack.Model.CustomButton;
 import pack.Model.mainModel;
 import javafx.scene.control.Label;
 import java.util.ArrayList;
+//import org.apache.commons.lang3.math.NumberUtils;
 
 import static pack.Model.mainModel.p;
 
 public interface iView {
     ArrayList a=createFields(2); //fields for 2by2
     ArrayList b=createFields(3); //fields for 3by3
+    Button btnStart = new CustomButton("Start\nthe\n MAGIK");
+
+
+    //All these are just UI it sets the panes and nodes on the right place
 
     default HBox setButtons() {
-        Button btnStart = new CustomButton("Start\nthe\n MAGIK");
         btnStart.setMinSize(115, 105);
         Button btnReset= new CustomButton("Reset\nthe\nMAGIK");
         btnReset.setMinSize(115, 105);
@@ -121,6 +126,8 @@ public interface iView {
         return pane;
     }
 
+
+    //Creates the 2x2 and 3x3 radiobutton and connects them to a ToggleGroup so only one can be selected at a time
     public static Node setRadios(){
         ToggleGroup size = new ToggleGroup();
         RadioButton two= new RadioButton("2x2");
@@ -139,6 +146,7 @@ public interface iView {
         return radios;
     }
 
+    //set2Fields and 3Fields just arranges the textfield and the signs on the gridpane
     public static GridPane set2Fields(){
         Label l= new Label("=");
         Label l2= new Label("=");
@@ -171,9 +179,9 @@ public interface iView {
                             column++ ;}}}
            n++;
            row++;
-           column=0; }
-        return twoByTwo;
-    }
+           column=0;
+           checkFields(a);}
+        return twoByTwo;}
 
     public static GridPane set3Fields(){
         GridPane threebyThree= new GridPane();
@@ -204,22 +212,28 @@ public interface iView {
                         column++ ;}}}
             n++;
             row++;
-            column=0; }
+            column=0;
+            checkFields(b);}
 
         return threebyThree;
     }
 
-    public static ArrayList createFields(int tf){
+    //This function creates the fields which is 6 fields for the 2by2 and 12 for the 3by3
+    public static ArrayList<TextField> createFields(int tf){
         int field=tf*(tf+1);
-        ArrayList fieldList= new ArrayList(field-1); //For 2 is 6 and for 3 is 12
+        ArrayList<TextField> fieldList= new ArrayList<TextField>(field-1); //For 2 is 6 and for 3 is 12
         int counter=1;
         while(counter<=field){
             TextField t= new TextField();
             t.setPrefSize(80,25);
+            t.setOnAction(e -> {checkFields(fieldList);});
             fieldList.add(t);
             counter++;}
 
         return fieldList;}
+
+
+    //Create signs x,y, z and = to add to the pane (UI related)
 
     public static ArrayList createSigns(int i) {
         ArrayList<Label> signs= new ArrayList<Label>();
@@ -244,4 +258,61 @@ public interface iView {
         while (c!=signs.size()){
             signs.get(c).setStyle("-fx-text-fill: E7EBEE;");
             c++;}
-        return signs; }}
+        return signs; }
+
+
+    public static void checkFields(ArrayList<TextField> a){
+        ArrayList<Boolean> booleans= new ArrayList<Boolean>();
+
+     int i=0;
+     int counter=0;
+
+     while (i!=a.size()) {
+       TextField t=a.get(i);
+      if(t.getText().isEmpty()) {
+          t.setStyle(" -fx-control-inner-background:#A0A0A0;");
+      }
+
+         if(!t.getText().isEmpty()) {
+          if(isNumeric(t.getText())) {
+              t.setStyle(" -fx-control-inner-background:#A0A0A0;");
+              booleans.add(true);
+          }
+
+          if(!isNumeric(t.getText())) {
+              t.setStyle(" -fx-control-inner-background: red;");
+              counter--;
+              booleans.add(false);
+
+          }
+
+      }
+     i++;
+     }
+
+     if(booleans.contains(false)) {
+         btnStart.setDisable(true);
+     }
+
+        if(!booleans.contains(false)) {
+            btnStart.setDisable(false);
+        }
+
+    }
+
+
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
+}
+
+
+
+
+
+
