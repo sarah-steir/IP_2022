@@ -62,35 +62,26 @@ public interface iView {
         vbUi.getChildren().addAll(setRadios());
 
         View1.twoo.setOnAction(new EventHandler<ActionEvent>() {
-
             public void handle(ActionEvent e) {
                 if(View1.twoo.isSelected()) {
                     vbUi.getChildren().clear();
                     vbUi.getChildren().addAll(setRadios());
                     vbUi.getChildren().add(set2Fields());
-                }
-            }});
+                }}});
 
         View1.threee.setOnAction(new EventHandler<ActionEvent>() {
-
             public void handle(ActionEvent e) {
                 if(View1.threee.isSelected()) {
                     vbUi.getChildren().clear();
                     vbUi.getChildren().addAll(setRadios());
-                    vbUi.getChildren().add(set3Fields());
-                }
-            }});
-
-
+                    vbUi.getChildren().add(set3Fields());}}});
 
         // Graph Box
         Pane graph = new Pane();
         graph.setPrefSize(500, 525);
-        graph.setStyle("-fx-background-color: #333335");    // Grey
-
+        graph.setStyle("-fx-background-color: #333335");
         vbLeft.getChildren().addAll(vbUi, graph);
-        return vbLeft;
-    }
+        return vbLeft;}
 
     default VBox setRight(String title) {
         VBox vbRight = new VBox();
@@ -131,8 +122,6 @@ public interface iView {
     public static Node setRadios(){
         ToggleGroup size = new ToggleGroup();
         RadioButton two= new RadioButton("2x2");
-        two.setLayoutX(80);
-        two.setLayoutY(150);
         View1.twoo.setStyle("-fx-text-fill: E7EBEE;");
         View1.twoo.setToggleGroup(size);
         RadioButton three= new RadioButton("3x3");
@@ -140,7 +129,6 @@ public interface iView {
         View1.threee.setToggleGroup(size);
         HBox radios= new HBox();
         radios.setSpacing(20);
-
         radios.getChildren().addAll( View1.twoo, View1.threee);
 
         return radios;
