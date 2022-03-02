@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import static pack.Model.mainModel.p;
 
 public interface iView {
-    ArrayList a=createFields(2); //fields for 2by2
-    ArrayList b=createFields(3); //fields for 3by3
+    ArrayList a = createFields(2); //fields for 2by2
+    ArrayList b = createFields(3); //fields for 3by3
     Button btnStart = new CustomButton("Start\nthe\n MAGIK");
 
 
@@ -234,6 +234,10 @@ public interface iView {
 
 
     //Create signs x,y, z and = to add to the pane (UI related)
+
+
+
+
 
     public static ArrayList createSigns(int i) {
         ArrayList<Label> signs= new ArrayList<Label>();
