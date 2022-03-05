@@ -25,9 +25,7 @@ public interface iView {
     ArrayList b=createFields(3); //fields for 3by3
     Button btnStart = new CustomButton("Start\nthe\n MAGIK");
 
-
     //All these are just UI it sets the panes and nodes on the right place
-
     default HBox setButtons() {
         btnStart.setMinSize(115, 105);
         Button btnReset= new CustomButton("Reset\nthe\nMAGIK");
@@ -117,6 +115,7 @@ public interface iView {
         return pane;
     }
 
+    //lalalala
 
     //Creates the 2x2 and 3x3 radiobutton and connects them to a ToggleGroup so only one can be selected at a time
     public static Node setRadios(){
@@ -217,12 +216,9 @@ public interface iView {
             t.setOnAction(e -> {checkFields(fieldList);});
             fieldList.add(t);
             counter++;}
-
         return fieldList;}
 
-
     //Create signs x,y, z and = to add to the pane (UI related)
-
     public static ArrayList createSigns(int i) {
         ArrayList<Label> signs= new ArrayList<Label>();
         
@@ -247,7 +243,6 @@ public interface iView {
             signs.get(c).setStyle("-fx-text-fill: E7EBEE;");
             c++;}
         return signs; }
-
 
     public static void checkFields(ArrayList<TextField> a){
         ArrayList<Boolean> booleans= new ArrayList<Boolean>();
@@ -287,7 +282,6 @@ public interface iView {
         }
 
     }
-
 
     public static boolean isNumeric(String str) {
         try {
