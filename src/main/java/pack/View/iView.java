@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import pack.Controller.V2Controller;
 import pack.Model.CustomButton;
 import pack.Model.mainModel;
 import javafx.scene.control.Label;
@@ -21,8 +22,8 @@ import java.util.ArrayList;
 import static pack.Model.mainModel.p;
 
 public interface iView {
-    ArrayList a=createFields(2); //fields for 2by2
-    ArrayList b=createFields(3); //fields for 3by3
+    ArrayList<TextField> a=createFields(6); //fields for 2by2
+    ArrayList<TextField> b=createFields(12); //fields for 3by3
     Button btnStart = new CustomButton("Start\nthe\n MAGIK");
 
     //All these are just UI it sets the panes and nodes on the right place
@@ -57,22 +58,38 @@ public interface iView {
         vbUi.setSpacing(15);
         vbUi.setPrefSize(500, 160);
         vbUi.setStyle("-fx-background-color: #333335"); // Grey
-        vbUi.getChildren().addAll(setRadios());
 
-        View1.twoo.setOnAction(new EventHandler<ActionEvent>() {
+
+        return vbLeft;}
+
+    public static VBox setLeft(RadioButton r1,RadioButton r2,GridPane g1,GridPane g2,Node setR) {
+        VBox vbLeft = new VBox();
+        vbLeft.setSpacing(10);
+        vbLeft.setPrefSize(500, 695);
+        vbLeft.setLayoutX(10);
+        vbLeft.setLayoutY(14);
+
+        // User Input Box
+        VBox vbUi = new VBox();
+        vbUi.setSpacing(15);
+        vbUi.setPrefSize(500, 160);
+        vbUi.setStyle("-fx-background-color: #333335"); // Grey
+        vbUi.getChildren().addAll(setR);
+
+        r1.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                if(View1.twoo.isSelected()) {
+                if(r1.isSelected()) {
                     vbUi.getChildren().clear();
-                    vbUi.getChildren().addAll(setRadios());
-                    vbUi.getChildren().add(set2Fields());
+                    vbUi.getChildren().addAll(setR);
+                    vbUi.getChildren().add(g1);
                 }}});
 
-        View1.threee.setOnAction(new EventHandler<ActionEvent>() {
+        r2.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                if(View1.threee.isSelected()) {
+                if(r2.isSelected()) {
                     vbUi.getChildren().clear();
-                    vbUi.getChildren().addAll(setRadios());
-                    vbUi.getChildren().add(set3Fields());}}});
+                    vbUi.getChildren().addAll(setR);
+                    vbUi.getChildren().add(g2);}}});
 
         // Graph Box
         Pane graph = new Pane();
@@ -106,19 +123,18 @@ public interface iView {
         return vbRight;
     }
 
-    default Pane setView(String title) {
+    default Pane setView(String title,Pane p) {
         Pane pane = new Pane();
         pane.setPrefSize(1050, 750);
         pane.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
-        pane.getChildren().add(setLeft());
+        pane.getChildren().add(p);
         pane.getChildren().add(setRight(title));
         return pane;
     }
 
-    //lalalala
 
-    //Creates the 2x2 and 3x3 radiobutton and connects them to a ToggleGroup so only one can be selected at a time
-    public static Node setRadios(){
+   //Erase use other one (Fix NATALIA)
+    /*static Node setRadios(){
         ToggleGroup size = new ToggleGroup();
         RadioButton two= new RadioButton("2x2");
         View1.twoo.setStyle("-fx-text-fill: E7EBEE;");
@@ -131,7 +147,21 @@ public interface iView {
         radios.getChildren().addAll( View1.twoo, View1.threee);
 
         return radios;
+    }*/
+
+    //Creates the 2x2 and 3x3 radiobutton and connects them to a ToggleGroup so only one can be selected at a time
+    default Node setRadios(RadioButton r1, RadioButton r2) {
+        ToggleGroup size = new ToggleGroup();
+        r1.setStyle("-fx-text-fill: E7EBEE;");
+        r1.setToggleGroup(size);
+        r2.setStyle("-fx-text-fill: E7EBEE;");
+        r2.setToggleGroup(size);
+        HBox radios= new HBox();
+        radios.setSpacing(20);
+        radios.getChildren().addAll( r1, r2);
+        return radios;
     }
+
 
     //set2Fields and 3Fields just arranges the textfield and the signs on the gridpane
     public static GridPane set2Fields(){
@@ -148,7 +178,7 @@ public interface iView {
         int acounter=0; //max 5
         int sLcounter=0; //max 3
         int row=0; //max 2
-        int column=0;
+        int column=0; //max
         int n=0;
 
         while(row!=2) {
@@ -170,7 +200,8 @@ public interface iView {
            checkFields(a);}
         return twoByTwo;}
 
-    public static GridPane set3Fields(){
+    //Erase use the other one (Fix NATALIA)
+   /* default GridPane set3Fields(){
         GridPane threebyThree= new GridPane();
         threebyThree.setAlignment(Pos.BOTTOM_CENTER);
         threebyThree.setVgap(10);
@@ -203,14 +234,49 @@ public interface iView {
             checkFields(b);}
 
         return threebyThree;
+    }*/
+
+    default GridPane set3Fields(int maxrow,int maxcolumn, ArrayList rep){
+        GridPane threebyThree= new GridPane();
+        threebyThree.setAlignment(Pos.BOTTOM_CENTER);
+        threebyThree.setVgap(10);
+        threebyThree.setHgap(10);
+
+        int acounter=0; //max 11
+        int sLcounter=0; //max 8
+        int row=0; //max 2
+        int column=0; //max 6
+        int n=0;
+
+        ArrayList sL= createSigns(3);
+
+        while(row!=maxrow) {
+            while(column!=maxcolumn) {
+                if(column%2==0){
+                    if (acounter<=3+4*n){
+                        threebyThree.add((Node) rep.get(acounter), column, row);
+                        acounter++;
+                        column++ ;} }
+
+                if(column%2==1){
+                    if (sLcounter<=2+3*n){
+                        threebyThree.add((Node) sL.get(sLcounter), column, row);
+                        sLcounter++;
+                        column++ ;}}}
+            n++;
+            row++;
+            column=0;
+            checkFields(rep);}
+
+        return threebyThree;
     }
 
     //This function creates the fields which is 6 fields for the 2by2 and 12 for the 3by3
     public static ArrayList<TextField> createFields(int tf){
-        int field=tf*(tf+1);
-        ArrayList<TextField> fieldList= new ArrayList<TextField>(field-1); //For 2 is 6 and for 3 is 12
+      //  int field=tf*(tf+1);
+        ArrayList<TextField> fieldList= new ArrayList<TextField>(tf-1); //For 2 is 6 and for 3 is 12
         int counter=1;
-        while(counter<=field){
+        while(counter<=tf){
             TextField t= new TextField();
             t.setPrefSize(80,25);
             t.setOnAction(e -> {checkFields(fieldList);});
@@ -291,6 +357,28 @@ public interface iView {
             return false;
         }
     }
+
+
+    public static void handleButton(int i){
+        switch (i) {
+            case 1:
+
+            case 2:
+
+            case 3:
+                btnStart.setOnAction(new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent e) {
+                        System.out.println("View3 math is set on action babyyyy");
+                        V2Controller.transform(View3.c);
+                        V2Controller.crossProduct();
+
+                    }});
+
+        } }
+
+
+
+
 }
 
 

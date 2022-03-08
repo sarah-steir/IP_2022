@@ -16,6 +16,7 @@ public class main extends Application {
         stage.setResizable(false);
         stage.setTitle("Matrix");
 
+
         Scene scene = new Scene(grid, 1050, 750);
         stage.setScene(scene);
         stage.show();

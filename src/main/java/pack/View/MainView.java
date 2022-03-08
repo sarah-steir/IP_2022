@@ -2,11 +2,14 @@ package pack.View;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -68,7 +71,9 @@ public class MainView extends Pane {
 
         //welcomeView.setOnAction(e -> this.playAnimation(new WelcomeView()));
 
-        view1.setOnAction(e -> this.playAnimation(new View1()));
+        view1.setOnAction(e -> this.playAnimation(new View1())
+        );
+
 
         view2.setOnAction(e -> this.playAnimation(new View2()));
 
@@ -77,6 +82,8 @@ public class MainView extends Pane {
         menuBar.getMenus().addAll(menu1, menu2, menu3, views);
         menuBar.setPrefSize(1050, 25);
         menuPane.getChildren().add(menuBar);
+
+
 
         return menuPane;
     }
