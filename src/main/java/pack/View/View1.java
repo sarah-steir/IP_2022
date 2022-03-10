@@ -22,11 +22,11 @@ import java.util.ArrayList;
 import static pack.Model.mainModel.p;
 
 public class View1 extends Pane implements iView {
-    static RadioButton twoo= new RadioButton("2by2");
-    static RadioButton threee= new RadioButton("3by3");
+    static RadioButton twoo = new RadioButton("2by2");
+    static RadioButton threee = new RadioButton("3by3");
 
     public View1() {
         this.getChildren().add(setView("System of Linear Equations"));
     }
 
-     }
+}
