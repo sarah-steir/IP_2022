@@ -15,4 +15,7 @@ public class CustomButton extends Button {
         this.setTextAlignment(TextAlignment.CENTER);
         this.setFont(mainModel.font);
     }
+
+
+
 }

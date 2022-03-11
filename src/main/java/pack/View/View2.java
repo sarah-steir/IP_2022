@@ -8,7 +8,8 @@ import javax.swing.text.html.ImageView;
 public class View2 extends Pane implements iView {
 
     public View2() {
-        this.getChildren().add(setView("Eigen UI"));
+       this.getChildren().add(setView("Eigen UI",this.setLeft()));
+
     }
 
     @Override
