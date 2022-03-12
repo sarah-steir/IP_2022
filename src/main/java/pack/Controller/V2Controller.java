@@ -1,10 +1,7 @@
 package pack.Controller;
 
 import javafx.scene.control.TextField;
-import pack.View.View3;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class V2Controller {
     static int n = 3;
@@ -16,11 +13,6 @@ public class V2Controller {
 
         Integer n[] = {  1, 2, -1 ,-5}; //note to self. When getting the last result from textfield. Make it negative OR on textfield go x+y+z+d=0
         Integer m[] = {  1, -4, 1, -3};
-
-
-
-
-
        // point(n,m);
 
     }
