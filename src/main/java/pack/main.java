@@ -28,10 +28,11 @@ public class main extends Application {
      * The color palette that we will be using for most of the project :
      *
      * Grey-black : 333335
+     * Grey-less-black : 333234
      * White : E7EBEE
      * Red : F15152
      * Yellow : FCBF49
-     * Grey-blue : 6F6F77
+     * Blue : 1985A1
      */
 
     /***

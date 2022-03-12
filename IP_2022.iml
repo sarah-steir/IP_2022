@@ -7,19 +7,29 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="15" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="lib" level="project" />
-    <orderEntry type="library" exported="" name="javafx-swt" level="project" />
     <orderEntry type="library" exported="" name="javafx-swt1" level="project" />
+    <orderEntry type="library" name="lib1" level="project" />
     <orderEntry type="module-library">
       <library>
-        <CLASSES />
+        <CLASSES>
+          <root url="file://$USER_HOME$/OneDrive/Escritorio/College/Java Files/javafx-sdk-17.0.0.1/lib" />
+        </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="file://$USER_HOME$/OneDrive/Escritorio/College/Java Files/javafx-sdk-17.0.0.1" />
-        </SOURCES>
-        <jarDirectory url="file://$USER_HOME$/OneDrive/Escritorio/College/Java Files/javafx-sdk-17.0.0.1" recursive="false" type="SOURCES" />
+        <SOURCES />
+        <jarDirectory url="file://$USER_HOME$/OneDrive/Escritorio/College/Java Files/javafx-sdk-17.0.0.1/lib" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/OneDrive/Escritorio/College/Java Files/javafx-sdk-17.0.0.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$USER_HOME$/OneDrive/Escritorio/College/Java Files/javafx-sdk-17.0.0.1/lib" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:17.0.0.1" level="project" />
@@ -39,5 +49,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.7.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.7.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.7.1" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:23.0.0" level="project" />
   </component>
 </module>

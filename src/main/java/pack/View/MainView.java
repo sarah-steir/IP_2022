@@ -17,6 +17,7 @@ public class MainView extends Pane {
 
     Pane currentPane = new Pane();      // GridPane that keeps track of the view the user will be on
     Pane gif = new Pane();
+    Pane view1 = new View1(), view2 = new View2(), view3 = new View3();
 
     public MainView() {
         this.setPrefSize(1050, 750);
@@ -58,26 +59,18 @@ public class MainView extends Pane {
         menu3.getItems().add(new MenuItem("Menu Item 3.2"));
 
         Menu views = new Menu("Go to...");
-        //MenuItem welcomeView = new MenuItem("Welcome View");
         MenuItem view1 = new MenuItem("Systems of Linear Equations");
         MenuItem view2 = new MenuItem("EigenValues & EigenVectors");
         MenuItem view3 = new MenuItem("Lines and Planes");
-
-        //views.getItems().addAll(welcomeView, view1, view2, view3);
         views.getItems().addAll(view1, view2, view3);
 
-        //welcomeView.setOnAction(e -> this.playAnimation(new WelcomeView()));
-
-        view1.setOnAction(e -> this.playAnimation(new View1()));
-
-        view2.setOnAction(e -> this.playAnimation(new View2()));
-
-        view3.setOnAction(e -> this.playAnimation(new View3()));
+        view1.setOnAction(e -> this.playAnimation(this.view1));
+        view2.setOnAction(e -> this.playAnimation(this.view2));
+        view3.setOnAction(e -> this.playAnimation(this.view3));
 
         menuBar.getMenus().addAll(menu1, menu2, menu3, views);
         menuBar.setPrefSize(1050, 25);
         menuPane.getChildren().add(menuBar);
-
         return menuPane;
     }
 
