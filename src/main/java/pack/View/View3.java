@@ -16,12 +16,8 @@ public class View3 extends Pane implements iView{
 
     public View3() {
         iView.createSigns(3);
-        Pane p=iView.setLeft(r1,r2,iView.set2Fields(),set3Fields(2,7,c),setRadios(r1,r2));
-        this.getChildren().add(setView("Lines And THe PLanes shit",p));
+        Pane p = iView.setLeft(r1, r2, iView.set2Fields(), set3Fields(2, 7, c), setRadios(r1, r2));
+        this.getChildren().add(setView("Lines And THe PLanes shit", p));
         iView.handleButton(3);
     }
-
-
-
-
 }

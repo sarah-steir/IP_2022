@@ -3,8 +3,6 @@ package pack.Model;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
 import java.io.File;
 
 public class mainModel {
@@ -21,8 +19,6 @@ public class mainModel {
         t.setAlignment(Pos.CENTER);
 
         return t;}
-
-
 }
 
 

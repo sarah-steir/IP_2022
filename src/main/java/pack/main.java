@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import pack.View.MainView;
-import pack.View.View1;
 
 public class main extends Application {
 
@@ -15,7 +14,6 @@ public class main extends Application {
         Pane grid = new MainView();
         stage.setResizable(false);
         stage.setTitle("Matrix");
-
 
         Scene scene = new Scene(grid, 1050, 750);
         stage.setScene(scene);
