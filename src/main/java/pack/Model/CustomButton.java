@@ -36,18 +36,18 @@ public class CustomButton extends Button {
 
 
             case 2:
+                System.out.println("Case 2");
+
 
             case 3:
+                if(View3.r1.isSelected() ) {
+                    System.out.println("Linessssjfwwqjf");
+                }
 
-                        if(View3.r1.isSelected() ) {
-                            System.out.println("Linessssjfwwqjf");
-
-                        }
-
-                        if(View3.r2.isSelected()) {
-                        V2Controller.transform(View3.c);
-                        V2Controller.crossProduct();
-                        V2Controller.point();}
+                 if(View3.r2.isSelected()) {
+                   V2Controller.transform(View3.c);
+                   V2Controller.crossProduct();
+                   V2Controller.point();}
 
         } }}); }
 
