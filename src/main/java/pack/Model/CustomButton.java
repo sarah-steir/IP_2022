@@ -25,21 +25,31 @@ public class CustomButton extends Button {
     }
 
     public static void handleSButton(int i){
+
+        iView.btnStart.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
         switch (i) {
             case 1:
+                System.out.println("isgijfsejifejief");
+
+
+
 
             case 2:
 
             case 3:
-                iView.btnStart.setOnAction(new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent e) {
-                        System.out.println("View3 math is set on action babyyyy");
+
+                        if(View3.r1.isSelected() ) {
+                            System.out.println("Linessssjfwwqjf");
+
+                        }
+
+                        if(View3.r2.isSelected()) {
                         V2Controller.transform(View3.c);
                         V2Controller.crossProduct();
-                        V2Controller.point();
-                    }});
+                        V2Controller.point();}
 
-        } }
+        } }}); }
 
     public static void handleRButton(ArrayList<TextField> f){
         iView.btnReset.setOnAction(new EventHandler<ActionEvent>() {public void handle(ActionEvent e) {iView.clearing(f);}});}

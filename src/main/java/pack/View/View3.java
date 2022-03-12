@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 
 public class View3 extends Pane implements iView{
-    RadioButton r1=new RadioButton("Lines");
-    RadioButton r2=new RadioButton("Planes");
+    public  static RadioButton r1=new RadioButton("Lines");
+    public static RadioButton r2=new RadioButton("Planes");
     Node n=setRadios(r1,r2);
     public static ArrayList<TextField> c= iView.createFields(8);
 

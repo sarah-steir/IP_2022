@@ -30,6 +30,7 @@ public class View1 extends Pane implements iView {
     public View1() {
         Pane p=iView.setLeft(twoo,threee,iView.set2Fields(),set3Fields(3,7,b),setRadios(twoo,threee));
         this.getChildren().add(setView("System of Linear Equations",p));
+        CustomButton.handleSButton(1);
     }
 
 
