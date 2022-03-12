@@ -33,11 +33,11 @@ public interface iView {
     default HBox setButtons() {
         Button btnStart = new CustomButton("Start\nthe\n MAGIK");
         btnStart.setMinSize(115, 105);
-        Button btnReset= new CustomButton("Reset\nthe\nMAGIK");
+        Button btnReset = new CustomButton("Reset\nthe\nMAGIK");
         btnReset.setMinSize(115, 105);
-        HBox hbButtons= new HBox();
+        HBox hbButtons = new HBox();
         hbButtons.setSpacing(10);
-        hbButtons.getChildren().addAll(btnStart,btnReset);
+        hbButtons.getChildren().addAll(btnStart, btnReset);
         btnStart.setOnAction(e -> System.out.println("Patate"));
         btnReset.setOnAction(e -> System.out.println("Reset patate"));
         return hbButtons;
@@ -103,7 +103,7 @@ public interface iView {
         CustomRadioButton three = new CustomRadioButton("3x3", group);
 
         HBox radioBox = new HBox(10);
-        radioBox.setPrefSize(500,160);
+        radioBox.setPrefSize(500, 160);
         VBox radios = new VBox();
         radios.setSpacing(20);
         radios.setPrefWidth(115);
@@ -148,8 +148,8 @@ public interface iView {
         return twoByTwo;
     }
 
-    default GridPane setThreeFields(){
-        GridPane threebyThree= new GridPane();
+    default GridPane setThreeFields() {
+        GridPane threebyThree = new GridPane();
         threebyThree.setAlignment(Pos.CENTER);
         threebyThree.setVgap(10);
         threebyThree.setHgap(10);
@@ -173,7 +173,7 @@ public interface iView {
         int counter = 1;
         while (counter <= tf) {
             TextField t = new TextField();
-            t.setPrefSize(80,25);
+            t.setPrefSize(80, 25);
             fieldList.add(t);
             counter++;
         }

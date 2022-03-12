@@ -2,7 +2,6 @@ package pack.Model;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.text.TextAlignment;
 
