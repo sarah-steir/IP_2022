@@ -20,6 +20,7 @@ public class MainView extends Pane {
 
     Pane currentPane = new Pane();      // GridPane that keeps track of the view the user will be on
     Pane gif = new Pane();
+    Pane view1 = new View1(), view2 = new View2(), view3 = new View3();
 
     public MainView() {
         this.setPrefSize(1050, 750);
@@ -71,13 +72,9 @@ public class MainView extends Pane {
 
         //welcomeView.setOnAction(e -> this.playAnimation(new WelcomeView()));
 
-        view1.setOnAction(e -> this.playAnimation(new View1())
-        );
-
-
-        view2.setOnAction(e -> this.playAnimation(new View2()));
-
-        view3.setOnAction(e -> this.playAnimation(new View3()));
+        view1.setOnAction(e -> this.playAnimation(this.view1));
+        view2.setOnAction(e -> this.playAnimation(this.view2));
+        view3.setOnAction(e -> this.playAnimation(this.view3));
 
         menuBar.getMenus().addAll(menu1, menu2, menu3, views);
         menuBar.setPrefSize(1050, 25);
