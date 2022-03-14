@@ -8,11 +8,11 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
-public class View3 extends Pane implements iView{
-    RadioButton r1=new RadioButton("Lines");
-    RadioButton r2=new RadioButton("Planes");
-    Node n=setRadios(r1,r2);
-    public static ArrayList<TextField> c= iView.createFields(8);
+public class View3 extends Pane implements iView {
+    RadioButton r1 = new RadioButton("Lines");
+    RadioButton r2 = new RadioButton("Planes");
+    Node n = setRadios(r1, r2);
+    public static ArrayList<TextField> c = iView.createFields(8);
 
     public View3() {
         iView.createSigns(3);

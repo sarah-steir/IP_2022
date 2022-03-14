@@ -15,6 +15,7 @@ import pack.Controller.V2Controller;
 import pack.Model.CustomButton;
 import pack.Model.mainModel;
 import javafx.scene.control.Label;
+import pack.View.GraphView.Graph;
 
 import java.util.ArrayList;
 //import org.apache.commons.lang3.math.NumberUtils;
@@ -58,8 +59,6 @@ public interface iView {
         vbUi.setSpacing(15);
         vbUi.setPrefSize(500, 160);
         vbUi.setStyle("-fx-background-color: #333335"); // Grey
-
-
         return vbLeft;
     }
 
@@ -98,7 +97,10 @@ public interface iView {
         });
 
         // Graph Box
+        Graph actualGraph = new Graph();
         Pane graph = new Pane();
+        graph.getChildren().add(actualGraph);
+        //actualGraph.addLine(new Point3D(12, 42, 65), new Point3D(9, 45, -15));
         graph.setPrefSize(500, 525);
         graph.setStyle("-fx-background-color: #333335");
         vbLeft.getChildren().addAll(vbUi, graph);
