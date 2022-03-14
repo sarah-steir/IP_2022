@@ -15,7 +15,7 @@ public class Controller1 {
     public static int sizeMatrix;
     public static String UI;
 
-    public static void SleFinalCalc() {
+    public static void SleFinalCalc(ArrayList <TextField> f) {
 
         // setting the size of the matrix
         sizeMatrix = sizeOfMatrix(sizeMatrix);
@@ -25,35 +25,35 @@ public class Controller1 {
 
         ///okay so these should be entered into the textfields and then be added to an arraylist in said order inside of IP_2022
 
-        double[][] mat = new double[sizeMatrix][sizeMatrix];
-        double[][] constants = new double[sizeMatrix][1];
+        Double[][] mat = new Double[sizeMatrix][sizeMatrix];
+        Double[][] constants = new Double[sizeMatrix][1];
 
         //input
         for (int i = 0; i < sizeMatrix; i++) {
 
             for (int j = 0; j < sizeMatrix; j++) {
-                UI = ((TextField)(sleView.a.get(i))).getText();
-                Double input = Double.parseDouble(UI);
+                UI = f.get(i).getText();
+                Double input = Double.parseDouble(f.get(j).getText());
                 mat[i][j] = input;
             }
-            UI = ((TextField)(sleView.a.get(i))).getText();
-            Double input = Double.parseDouble(UI);
+            UI = ((TextField)(View1.a.get(i))).getText();
+            Double input = Double.parseDouble(f.get(i).getText());
             constants[i][0] = input;
         }
 
 
         //finding the inverse of the matrix
-        double inverted_mat[][] = invertMatrix(mat);
+       Double inverted_mat[][] = invertMatrix(mat);
         for (int i = 0; i < sizeMatrix; ++i) {
             for (int j = 0; j < sizeMatrix; ++j) {
             }
         }
         //Multiplying inverse and constants
-        double result[][] = new double[sizeMatrix][1];
+        Double result[][] = new Double[sizeMatrix][1];
         for (int i = 0; i < sizeMatrix; i++) {
             for (int j = 0; j < 1; j++) {
                 for (int k = 0; k < sizeMatrix; k++) {
-                    result[i][j] = result[i][j] + inverted_mat[i][k] * constants[k][j];
+                   result[i][j] = result[i][j] + inverted_mat[i][k] * constants[k][j];
                 }
             }
         }
@@ -89,13 +89,13 @@ public class Controller1 {
     //Method to inverse the matrix to perform aX=b => X=ba^-1 (solving for a^-1)
     //where X is the variable matrix [x1,x2...]
 
-    public static double[][] invertMatrix ( double a[][]){
+    public static Double[][] invertMatrix ( Double a[][]){
         int n = a.length;
-        double x[][] = new double[n][n];
-        double b[][] = new double[n][n];
+        Double x[][] = new Double[n][n];
+        Double b[][] = new Double[n][n];
         int index[] = new int[n];
         for (int i = 0; i < n; ++i)
-            b[i][i] = 1;
+           // b[i][i] = 1;
 
         // Transform the matrix into an upper triangle
         gaussianElim(a, index);
@@ -122,7 +122,7 @@ public class Controller1 {
 
     // Method to carry out the partial-pivoting Gaussian elimination.  Here index[] stores the order in which the rows of the matrix are reduced
     //eliminates methodically based on pivoting order
-    public static void gaussianElim ( double a[][], int index[]){
+    public static void gaussianElim ( Double a[][], int index[]){
 
         int n = index.length;
         double c[] = new double[n];

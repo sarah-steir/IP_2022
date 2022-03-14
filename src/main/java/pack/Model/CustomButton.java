@@ -6,7 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import pack.Controller.Controller1;
 import pack.Controller.V2Controller;
+import pack.View.View1;
 import pack.View.View3;
 import pack.View.iView;
 
@@ -32,22 +34,25 @@ public class CustomButton extends Button {
             case 1:
                 System.out.println("isgijfsejifejief");
 
-
+                break;
 
 
             case 2:
                 System.out.println("Case 2");
+                break;
 
 
             case 3:
                 if(View3.r1.isSelected() ) {
                     System.out.println("Linessssjfwwqjf");
+                    break;
                 }
 
                  if(View3.r2.isSelected()) {
                    V2Controller.transform(View3.c);
                    V2Controller.crossProduct();
-                   V2Controller.point();}
+                   V2Controller.point();
+                 break;}
 
         } }}); }
 
