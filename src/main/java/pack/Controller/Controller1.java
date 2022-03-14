@@ -27,6 +27,7 @@ public class Controller1 {
 
         Double[][] mat = new Double[sizeMatrix][sizeMatrix];
         Double[][] constants = new Double[sizeMatrix][1];
+        System.out.println("fjisdofjifsdofdsjidf");
 
         //input
         for (int i = 0; i < sizeMatrix; i++) {
