@@ -44,7 +44,7 @@ public class CustomButton extends Button {
 
             case 3:
                 if(View3.r1.isSelected() ) {
-                    System.out.println("Linessssjfwwqjf");
+                    System.out.println("fjisdofjifsdofdsjidf");
                     break;
                 }
 
