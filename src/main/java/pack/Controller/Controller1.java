@@ -27,17 +27,16 @@ public class Controller1 {
 
         Double[][] mat = new Double[sizeMatrix][sizeMatrix];
         Double[][] constants = new Double[sizeMatrix][1];
-        System.out.println("feetetwet");
 
         //input
         for (int i = 0; i < sizeMatrix; i++) {
 
             for (int j = 0; j < sizeMatrix; j++) {
                 UI = f.get(i).getText();
-                Double input = Double.parseDouble(f.get(j).getText());
+                Double input = Double.parseDouble(f.get(i).getText());
                 mat[i][j] = input;
             }
-            UI = ((TextField)(View1.a.get(i))).getText();
+            UI = ((TextField)(f.get(i))).getText();
             Double input = Double.parseDouble(f.get(i).getText());
             constants[i][0] = input;
         }
@@ -96,7 +95,7 @@ public class Controller1 {
         Double b[][] = new Double[n][n];
         int index[] = new int[n];
         for (int i = 0; i < n; ++i)
-           // b[i][i] = 1;
+           //b[i][i] = 1;
 
         // Transform the matrix into an upper triangle
         gaussianElim(a, index);
@@ -105,8 +104,7 @@ public class Controller1 {
         for (int i = 0; i < n - 1; ++i)
             for (int j = i + 1; j < n; ++j)
                 for (int k = 0; k < n; ++k)
-                    b[index[j]][k]
-                            -= a[index[j]][i] * b[index[i]][k];
+                    b[index[j]][k] -= a[index[j]][i] * b[index[i]][k];
         // Perform backward substitutions
         for (int i = 0; i < n; ++i) {
             x[n - 1][i] = b[index[n - 1]][i] / a[index[n - 1]][n - 1];

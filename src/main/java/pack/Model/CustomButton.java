@@ -32,7 +32,9 @@ public class CustomButton extends Button {
             public void handle(ActionEvent e) {
         switch (i) {
             case 1:
-                System.out.println("isgijfsejifejief");
+             Controller1.SleFinalCalc(View1.a);
+
+
 
                 break;
 
@@ -45,6 +47,7 @@ public class CustomButton extends Button {
             case 3:
                 if(View3.r1.isSelected() ) {
                     System.out.println("fjisdofjifsdofdsjidf");
+
                     break;
                 }
 

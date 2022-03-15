@@ -147,7 +147,7 @@ public interface iView {
 
 
     //set2Fields and 3Fields just arranges the textfield and the signs on the gridpane
-    public static GridPane set2Fields(){
+    public static GridPane set2Fields(ArrayList rep){
         Label l= new Label("=");
         Label l2= new Label("=");
         l.setStyle("-fx-text-fill: E7EBEE;");
@@ -168,7 +168,7 @@ public interface iView {
            while(column!=5) {
                 if(column%2==0){
                     if (acounter<=2+3*n){
-                        twoByTwo.add((Node) a.get(acounter), column, row);
+                        twoByTwo.add((Node) View1.a.get(acounter), column, row);
                         acounter++;
                         column++ ;} }
 
