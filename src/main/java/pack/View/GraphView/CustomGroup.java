@@ -1,29 +1,30 @@
 package pack.View.GraphView;
 
+import javafx.animation.PathTransition;
 import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Translate;
 
 public class CustomGroup extends Group {
 
     Color red = Color.web("#DF5C58");
 
-    Rectangle plane = new Rectangle(1000, 1000);
-    Sphere center = new Sphere(2);
-    Point3D centerPoint;
+    Rectangle plane;
+    Sphere center;
 
     public CustomGroup() {
         super();
 
+        this.plane = new Rectangle(1000, 1000);
         this.plane.setOpacity(0.5);
         this.plane.setFill(red);
 
-        this.centerPoint = new Point3D(500, 500, 0);
-
+        this.center = new Sphere(2);
         this.center.setTranslateX(500);
         this.center.setTranslateY(500);
         this.center.setTranslateZ(0);
@@ -32,7 +33,11 @@ public class CustomGroup extends Group {
         this.getChildren().addAll(plane, center);
     }
 
-    public void addTransforms(Rotate x, Rotate y, Rotate z) {
-        this.getTransforms().addAll(x, y, z);
+    public void rotate(Rotate x, Rotate y, Rotate z) {
+        this.plane.getTransforms().addAll(x, y, z);
+        this.center.getTransforms().addAll(x, y, z);
+    }
+
+    public void translate(Point3D point) {
     }
 }

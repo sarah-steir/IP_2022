@@ -15,8 +15,6 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import pack.Model.CustomText;
 
-import java.util.Vector;
-
 public class Graph extends Group {
 
     /***
@@ -65,9 +63,9 @@ public class Graph extends Group {
     public Graph() {
         axisList = getAxis();
 
-        Point3D point1 = new Point3D(50, 63, 107);
-        Point3D point2 = new Point3D(-10, -45, 150);
-        Point3D point3 = new Point3D(190, 38, -90);
+        Point3D point1 = new Point3D(120, -24, -136);
+        Point3D point2 = new Point3D(150, -45, 190);
+        Point3D point3 = new Point3D(-65, 38, -50);
 
         this.addPlane(point1, point2, point3);
 
@@ -93,47 +91,47 @@ public class Graph extends Group {
 
         scene.setOnScroll((e) -> {
 
-            double delta = 1.05;
-
-            double scale = scalable.getScale(); // currently we only use Y, same value is used for X
-            double oldScale = scale;
-
-            if (e.getDeltaY() < 0) {
-                scale /= delta;
-                map.setScaleX(map.getScaleX() * delta);
-                map.setScaleY(map.getScaleY() * delta);
-                map.setScaleZ(map.getScaleZ() * delta);
-            } else {
-                scale *= delta;
-                map.setScaleX(map.getScaleX() / delta);
-                map.setScaleY(map.getScaleY() / delta);
-                map.setScaleZ(map.getScaleZ() / delta);
-            }
-
-            scale = clamp(scale, 0.3, 3);
-
-            double f = (scale / oldScale)-1;
-
-            double dx = (e.getSceneX() - (scalable.getBoundsInParent().getWidth()/2 + scalable.getBoundsInParent().getMinX()));
-            double dy = (e.getSceneY() - (scalable.getBoundsInParent().getHeight()/2 + scalable.getBoundsInParent().getMinY()));
-
-
-            // note: pivot value must be untransformed, i. e. without scaling
-            scalable.setPivot(f*dx, f*dy);
-
-            e.consume();
-
-//            double zoomRatio = 1;
-//            if (e.getDeltaY() > 0 && scalable.getScale() < 5) {
-//                zoomRatio = 1.05;
-//            } else if (e.getDeltaY() < 0 && scalable.getScale() > 0.5) {
-//                zoomRatio = 0.95;
+//            double delta = 1.05;
+//
+//            double scale = scalable.getScale(); // currently we only use Y, same value is used for X
+//            double oldScale = scale;
+//
+//            if (e.getDeltaY() < 0) {
+//                scale /= delta;
+//                map.setScaleX(map.getScaleX() * delta);
+//                map.setScaleY(map.getScaleY() * delta);
+//                map.setScaleZ(map.getScaleZ() * delta);
+//            } else {
+//                scale *= delta;
+//                map.setScaleX(map.getScaleX() / delta);
+//                map.setScaleY(map.getScaleY() / delta);
+//                map.setScaleZ(map.getScaleZ() / delta);
 //            }
-//            map.setScaleX(map.getScaleX() / zoomRatio);
-//            map.setScaleY(map.getScaleY() / zoomRatio);
-//            map.setScaleZ(map.getScaleZ() / zoomRatio);
-//            double scale = scalable.getScale() * zoomRatio;
-//            scalable.setScale(scale);
+//
+//            scale = clamp(scale, 0.3, 3);
+//
+//            double f = (scale / oldScale)-1;
+//
+//            double dx = (e.getSceneX() - (scalable.getBoundsInParent().getWidth()/2 + scalable.getBoundsInParent().getMinX()));
+//            double dy = (e.getSceneY() - (scalable.getBoundsInParent().getHeight()/2 + scalable.getBoundsInParent().getMinY()));
+//
+//
+//            // note: pivot value must be untransformed, i. e. without scaling
+//            scalable.setPivot(f*dx, f*dy);
+//
+//            e.consume();
+
+            double zoomRatio = 1;
+            if (e.getDeltaY() > 0 && scalable.getScale() < 5) {
+                zoomRatio = 1.05;
+            } else if (e.getDeltaY() < 0 && scalable.getScale() > 0.5) {
+                zoomRatio = 0.95;
+            }
+            map.setScaleX(map.getScaleX() / zoomRatio);
+            map.setScaleY(map.getScaleY() / zoomRatio);
+            map.setScaleZ(map.getScaleZ() / zoomRatio);
+            double scale = scalable.getScale() * zoomRatio;
+            scalable.setScale(scale);
         });
 
         scene.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -177,7 +175,6 @@ public class Graph extends Group {
                 }
             }
         });
-
     }
 
     public Box bigCube() {
@@ -243,39 +240,14 @@ public class Graph extends Group {
         addLineToList(line);
     }
 
-//    public void addPlane(Point3D point1, Point3D point2, Point3D point3) {
-//        Rectangle rectangle = new Rectangle(1000, 1000);
-//        rectangle.setFill(red);
-//        rectangle.setOpacity(0.5);
-//        Sphere center = new Sphere(2);
-//        center.setTranslateX(500);
-//        center.setTranslateY(500);
-//        center.setTranslateZ(0);
-//
-//        double angleX = Math.toDegrees(Math.atan(point2.getZ() / point1.getY()));
-//        Rotate rotateX = new Rotate(angleX, Rotate.X_AXIS);
-//
-//        double angleY = Math.toDegrees(Math.atan(point3.getX() / point1.getZ()));
-//        Rotate rotateY = new Rotate(angleY, Rotate.Y_AXIS);
-//
-//        double angleZ = Math.toDegrees(Math.atan(point1.getY() / point1.getX()));
-//        Rotate rotateZ = new Rotate(angleZ, Rotate.Z_AXIS);
-//
-//        rectangle.getTransforms().addAll(rotateX, rotateY, rotateZ);
-//
-//        createPlaneLabel();
-//        addPlaneToList(rectangle);
-//    }
-
     public void addPlane(Point3D point1, Point3D point2, Point3D point3) {
-        Group group = new Group();
-        Rectangle r = new Rectangle(1000, 1000);
-        r.setFill(red);
-        r.setOpacity(0.5);
-        Sphere center = new Sphere(2);
-        center.setTranslateX(500);
-        center.setTranslateY(500);
-        group.getChildren().addAll(r, center);
+
+        Circle rectangle = new Circle(500);
+
+        Point3D triangleCenter = this.getCenter(point1, point2, point3);
+        double newX = triangleCenter.getX();
+        double newY = triangleCenter.getY();
+        double newZ = triangleCenter.getZ();
 
         double angleX = Math.toDegrees(Math.atan(point2.getZ() / point1.getY()));
         Rotate rotateX = new Rotate(angleX, Rotate.X_AXIS);
@@ -286,10 +258,23 @@ public class Graph extends Group {
         double angleZ = Math.toDegrees(Math.atan(point1.getY() / point1.getX()));
         Rotate rotateZ = new Rotate(angleZ, Rotate.Z_AXIS);
 
-        group.getTransforms().addAll(rotateX, rotateY, rotateZ);
+        rectangle.getTransforms().add(new Translate(newX, newY, newZ));
+        rectangle.getTransforms().addAll(rotateX, rotateY, rotateZ);
 
-        createPlaneLabel();
-        this.thingsToGraphList.add(group);
+        this.addPlaneToList(rectangle);
+    }
+
+    public Point3D getCenter(Point3D point1, Point3D point2, Point3D point3) {
+        double x = (point1.getX() + point2.getX() + point3.getX()) / 3;
+        double y = (point1.getY() + point2.getY() + point3.getY()) / 3;
+        double z = (point1.getZ() + point2.getZ() + point3.getZ()) / 3;
+        Sphere sphere = new Sphere(5);
+        sphere.setMaterial(new PhongMaterial(yellow));
+        sphere.setTranslateX(x);
+        sphere.setTranslateY(y);
+        sphere.setTranslateZ(z);
+        scalable.getChildren().add(sphere);
+        return new Point3D(x, y, z);
     }
 
     public void addPointToList(Sphere sphere) {
@@ -329,8 +314,8 @@ public class Graph extends Group {
         }
     }
 
-    public void addPlaneToList(Rectangle rectangle) {
-        rectangle.setOpacity(0.5);
+    public void addPlaneToList(Circle rectangle) {
+//        rectangle.setOpacity(0.5);
         thingsToGraphList.add(rectangle);
         switch (thingsToGraphList.size()) {
             case 1:
