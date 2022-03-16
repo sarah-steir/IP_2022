@@ -315,7 +315,7 @@ public class Graph extends Group {
     }
 
     public void addPlaneToList(Circle rectangle) {
-//        rectangle.setOpacity(0.5);
+        rectangle.setOpacity(0.5);
         thingsToGraphList.add(rectangle);
         switch (thingsToGraphList.size()) {
             case 1:
