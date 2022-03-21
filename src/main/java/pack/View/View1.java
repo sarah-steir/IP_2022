@@ -3,13 +3,12 @@ package pack.View;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import pack.View.GraphView.Graph;
+import pack.Model.CustomRadioButton;
 
 import java.util.ArrayList;
-
 public class View1 extends Pane implements iView {
-    static RadioButton twoo= new RadioButton("2by2");
-    static RadioButton threee= new RadioButton("3by3");
+    static RadioButton twoo= new CustomRadioButton("2 x 2");
+    static RadioButton threee= new CustomRadioButton("3 x 3");
     ArrayList<TextField> a=iView.createFields(6); //fields for 2by2
     ArrayList<TextField> b=iView.createFields(12); //fields for 3by3
     //Graph graph = new Graph();
