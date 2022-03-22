@@ -1,11 +1,7 @@
 package pack.Controller;
 
 import javafx.scene.control.TextField;
-import pack.View.View3;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 
 public class V2Controller {
     static int n = 3;
@@ -17,11 +13,6 @@ public class V2Controller {
 
         Integer n[] = {  1, 2, -1 ,-5}; //note to self. When getting the last result from textfield. Make it negative OR on textfield go x+y+z+d=0
         Integer m[] = {  1, -4, 1, -3};
-
-
-
-
-
        // point(n,m);
 
     }
@@ -50,9 +41,8 @@ public class V2Controller {
             System.out.print(crossProduct[i] + " ");}
     }
 
-    public static void point() {
-        Random rn=new Random();
-        int x=rn.nextInt(10) + 1;
+    static void point() {
+        double x=0;
         double z= ((n2.get(1)/n1.get(1))*(n1.get(0)*x+n1.get(3))-n2.get(0)*x- n2.get(3)) /(n2.get(2)-n1.get(2)*n2.get(1)/n1.get(1));
         double y=(-n1.get(2)*z-n1.get(0)*x-n1.get(3))/n1.get(1);
         //double z= ((-n2.get(1)/n1.get(1))*(n1.get(0)*x+n1.get(3))-n2.get(0)*x- -n2.get(3)) /(n2.get(2)-n1.get(2)*n2.get(1)/n1.get(1));
@@ -62,11 +52,6 @@ public class V2Controller {
 
         System.out.println("x: "+x+" y: "+y+" z: "+z);
 
-    }
-
-    public static void clearLists(){
-        n1.clear();
-        n2.clear();
     }
 
 }

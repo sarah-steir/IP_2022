@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import pack.View.MainView;
-import pack.View.View1;
 
 public class main extends Application {
 
@@ -15,7 +14,6 @@ public class main extends Application {
         Pane grid = new MainView();
         stage.setResizable(false);
         stage.setTitle("Matrix");
-
 
         Scene scene = new Scene(grid, 1050, 750);
         stage.setScene(scene);
@@ -30,10 +28,11 @@ public class main extends Application {
      * The color palette that we will be using for most of the project :
      *
      * Grey-black : 333335
+     * Grey-less-black : 333234
      * White : E7EBEE
      * Red : F15152
      * Yellow : FCBF49
-     * Grey-blue : 6F6F77
+     * Blue : 1985A1
      */
 
     /***

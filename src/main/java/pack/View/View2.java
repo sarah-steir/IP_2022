@@ -2,16 +2,11 @@ package pack.View;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Model.CustomButton;
-
-import javax.swing.text.html.ImageView;
 
 public class View2 extends Pane implements iView {
 
     public View2() {
        this.getChildren().add(setView("Eigen UI",this.setLeft()));
-        CustomButton.handleSButton(2);
-
     }
 
     @Override
