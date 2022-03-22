@@ -11,14 +11,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Controller.V2Controller;
+import pack.Controller.V3Controller;
 import pack.Model.CustomButton;
 import pack.Model.mainModel;
 import javafx.scene.control.Label;
 import pack.View.GraphView.Graph;
-
 import java.util.ArrayList;
+import java.util.Random;
 //import org.apache.commons.lang3.math.NumberUtils;
+
+
 
 import static pack.Model.mainModel.p;
 
@@ -141,23 +143,6 @@ public interface iView {
         return pane;
     }
 
-
-    //Erase use other one (Fix NATALIA)
-    /*static Node setRadios(){
-        ToggleGroup size = new ToggleGroup();
-        RadioButton two= new RadioButton("2x2");
-        View1.twoo.setStyle("-fx-text-fill: E7EBEE;");
-        View1.twoo.setToggleGroup(size);
-        RadioButton three= new RadioButton("3x3");
-        View1.threee.setStyle("-fx-text-fill: E7EBEE;");
-        View1.threee.setToggleGroup(size);
-        HBox radios= new HBox();
-        radios.setSpacing(20);
-        radios.getChildren().addAll( View1.twoo, View1.threee);
-
-        return radios;
-    }*/
-
     //Creates the 2x2 and 3x3 radiobutton and connects them to a ToggleGroup so only one can be selected at a time
     default Node setRadios(RadioButton r1, RadioButton r2) {
         ToggleGroup size = new ToggleGroup();
@@ -216,41 +201,6 @@ public interface iView {
         return twoByTwo;
     }
 
-    //Erase use the other one (Fix NATALIA)
-   /* default GridPane set3Fields(){
-        GridPane threebyThree= new GridPane();
-        threebyThree.setAlignment(Pos.BOTTOM_CENTER);
-        threebyThree.setVgap(10);
-        threebyThree.setHgap(10);
-
-        int acounter=0; //max 11
-        int sLcounter=0; //max 8
-        int row=0; //max 2
-        int column=0; //max 6
-        int n=0;
-
-        ArrayList sL= createSigns(3);
-
-        while(row!=3) {
-            while(column!=7) {
-                if(column%2==0){
-                    if (acounter<=3+4*n){
-                        threebyThree.add((Node) b.get(acounter), column, row);
-                        acounter++;
-                        column++ ;} }
-
-                if(column%2==1){
-                    if (sLcounter<=2+3*n){
-                        threebyThree.add((Node) sL.get(sLcounter), column, row);
-                        sLcounter++;
-                        column++ ;}}}
-            n++;
-            row++;
-            column=0;
-            checkFields(b);}
-
-        return threebyThree;
-    }*/
 
     default GridPane set3Fields(int maxrow, int maxcolumn, ArrayList rep) {
         GridPane threebyThree = new GridPane();
@@ -392,25 +342,41 @@ public interface iView {
 
 
     public static void handleButton(int i) {
+        btnStart.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
         switch (i) {
             case 1:
 
             case 2:
 
             case 3:
-                btnStart.setOnAction(new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent e) {
-                        System.out.println("View3 math is set on action babyyyy");
-                        V2Controller.transform(View3.c);
-                        V2Controller.crossProduct();
 
-                    }
-                });
+                if(View3.r1.isSelected()) {
+                System.out.println( "ffjifjkafok"   );
+                }
+
+
+
+                if(View3.r2.isSelected()) {
+                Random rn = new Random();
+                 int answer = rn.nextInt(10) + 1;
+                System.out.println("View3 math is set on action babyyyy");
+                V3Controller.transform(View3.c);
+                V3Controller.crossProduct();
+                V3Controller.point(answer);
+                break; }
+
+
 
         }
+
+
+
+        }
+            });
+
+
     }
-
-
 }
 
 
