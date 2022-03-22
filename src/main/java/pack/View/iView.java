@@ -11,26 +11,40 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import pack.Controller.V2Controller;
 import pack.Model.CustomButton;
+import pack.Model.CustomRadioButton;
+import pack.Model.CustomTextField;
 import pack.Model.mainModel;
 import javafx.scene.control.Label;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 //import org.apache.commons.lang3.math.NumberUtils;
 
 import static pack.Model.mainModel.p;
 
 public interface iView {
-    ArrayList<TextField> a = createFields(6); //fields for 2by2
-    ArrayList<TextField> b = createFields(12); //fields for 3by3
-    Button btnStart = new CustomButton("Start\nthe\n MAGIK");
+    //ArrayList<TextField> a = createFields(6); //fields for 2by2
+    //ArrayList<TextField> b = createFields(12); //fields for 3by3
 
-    //All these are just UI it sets the panes and nodes on the right place
+    default Pane setView(String title, CustomRadioButton rb1, CustomRadioButton rb2) {
+        Pane pane = new Pane();
+        pane.setPrefSize(1050, 750);
+        pane.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
+        pane.getChildren().addAll(setLeft(rb1, rb2), setRight(title));
+        return pane;
+    }
+
+    // All these are just UI it sets the panes and nodes on the right place
     default HBox setButtons() {
+        CustomButton btnStart = new CustomButton("Start\nthe\nMAGIK");
         btnStart.setMinSize(115, 105);
-        Button btnReset = new CustomButton("Reset\nthe\nMAGIK");
+
+        CustomButton btnReset = new CustomButton("Reset\nthe\nMAGIK");
         btnReset.setMinSize(115, 105);
+
         HBox hbButtons = new HBox();
         hbButtons.setSpacing(10);
         hbButtons.getChildren().addAll(btnStart, btnReset);
@@ -46,7 +60,7 @@ public interface iView {
         return iv;
     }
 
-    default VBox setLeft() {
+    default VBox setLeft(CustomRadioButton rb1, CustomRadioButton rb2) {
         VBox vbLeft = new VBox();
         vbLeft.setSpacing(10);
         vbLeft.setPrefSize(500, 695);
@@ -55,15 +69,24 @@ public interface iView {
 
         // User Input Box
         VBox vbUi = new VBox();
-        vbUi.setSpacing(15);
         vbUi.setPrefSize(500, 160);
         vbUi.setStyle("-fx-background-color: #333335"); // Grey
 
+        ToggleGroup toggleGroup = new ToggleGroup();
+        rb1.setToggleGroup(toggleGroup);
+        rb2.setToggleGroup(toggleGroup);
+        vbUi.getChildren().add(setRadios(rb1, rb2));
 
+        // Graph Box
+        Pane graph = new Pane();
+        graph.setPrefSize(500, 525);
+        graph.setStyle("-fx-background-color: #333335");    // Grey
+
+        vbLeft.getChildren().addAll(vbUi, graph);
         return vbLeft;
     }
 
-    public static VBox setLeft(RadioButton r1, RadioButton r2, GridPane g1, GridPane g2, Node setR) {
+    /*public static VBox setLeft(RadioButton r1, RadioButton r2, GridPane g1, GridPane g2, Node setR) {
         VBox vbLeft = new VBox();
         vbLeft.setSpacing(10);
         vbLeft.setPrefSize(500, 695);
@@ -103,7 +126,7 @@ public interface iView {
         graph.setStyle("-fx-background-color: #333335");
         vbLeft.getChildren().addAll(vbUi, graph);
         return vbLeft;
-    }
+    }*/
 
     default VBox setRight(String title) {
         VBox vbRight = new VBox();
@@ -130,15 +153,6 @@ public interface iView {
         return vbRight;
     }
 
-    default Pane setView(String title, Pane p) {
-        Pane pane = new Pane();
-        pane.setPrefSize(1050, 750);
-        pane.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
-        pane.getChildren().add(p);
-        pane.getChildren().add(setRight(title));
-        return pane;
-    }
-
 
     //Erase use other one (Fix NATALIA)
     /*static Node setRadios(){
@@ -156,21 +170,75 @@ public interface iView {
         return radios;
     }*/
 
-    //Creates the 2x2 and 3x3 radiobutton and connects them to a ToggleGroup so only one can be selected at a time
-    default Node setRadios(RadioButton r1, RadioButton r2) {
-        ToggleGroup size = new ToggleGroup();
-        r1.setStyle("-fx-text-fill: E7EBEE;");
-        r1.setToggleGroup(size);
-        r2.setStyle("-fx-text-fill: E7EBEE;");
-        r2.setToggleGroup(size);
-        HBox radios = new HBox();
-        radios.setSpacing(20);
-        radios.getChildren().addAll(r1, r2);
-        return radios;
+    // Creates the 2x2 and 3x3 radiobutton and connects them to a ToggleGroup so only one can be selected at a time
+    default VBox setRadios(CustomRadioButton rb1, CustomRadioButton rb2) {
+
+        VBox vbRadioBox = new VBox();
+        vbRadioBox.setPrefSize(500, 160);
+
+        HBox hbRadios = new HBox();
+        hbRadios.setSpacing(20);
+        hbRadios.setPrefWidth(115);
+        hbRadios.getChildren().addAll(rb1, rb2);
+        vbRadioBox.getChildren().add(hbRadios);
+
+        rb1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                vbRadioBox.getChildren().clear();
+                vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 3));
+            }
+        });
+
+        rb2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                vbRadioBox.getChildren().clear();
+                vbRadioBox.getChildren().addAll(hbRadios, setFields(3, 4));
+            }
+        });
+        return vbRadioBox;
     }
 
+    default GridPane setFields(int rows, int cols) {
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        gridPane.setAlignment(Pos.CENTER);
 
-    //set2Fields and 3Fields just arranges the textfield and the signs on the gridpane
+        CustomTextField[][] fieldList = new CustomTextField[rows][cols];
+
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols;  j++) {
+                HBox hbTextField = new HBox();
+                hbTextField.setSpacing(10);
+
+                fieldList[i][j] = new CustomTextField("R: " + i + " C: " + j);
+                Label lblVariable = new Label();
+                lblVariable.setStyle("-fx-text-fill: E7EBEE;");
+                lblVariable.setFont(mainModel.font);
+
+                if (j == 0) {
+                    lblVariable.setText("X +");
+                } else if (j == 1 && rows == 2) {
+                    lblVariable.setText("Y =");
+                } else if (j == 1 && rows == 3) {
+                    lblVariable.setText("Y +");
+                } else if (j == 2 && rows == 3) {
+                    lblVariable.setText("Z =");
+                } else {
+                    lblVariable.setText("");
+                }
+
+                hbTextField.getChildren().addAll(fieldList[i][j], lblVariable);
+                gridPane.add(hbTextField, j, i);
+            }
+        }
+        return gridPane;
+    }
+
+    /*//set2Fields and 3Fields just arranges the textfield and the signs on the gridpane
     public static GridPane set2Fields() {
         Label l = new Label("=");
         Label l2 = new Label("=");
@@ -212,7 +280,7 @@ public interface iView {
             checkFields(a);
         }
         return twoByTwo;
-    }
+    }*/
 
     //Erase use the other one (Fix NATALIA)
    /* default GridPane set3Fields(){
@@ -250,7 +318,7 @@ public interface iView {
         return threebyThree;
     }*/
 
-    default GridPane set3Fields(int maxrow, int maxcolumn, ArrayList rep) {
+    /*default GridPane set3Fields(int maxrow, int maxcolumn, ArrayList rep) {
         GridPane threebyThree = new GridPane();
         threebyThree.setAlignment(Pos.BOTTOM_CENTER);
         threebyThree.setVgap(10);
@@ -287,12 +355,11 @@ public interface iView {
             column = 0;
             checkFields(rep);
         }
-
         return threebyThree;
-    }
+    }*/
 
     //This function creates the fields which is 6 fields for the 2by2 and 12 for the 3by3
-    public static ArrayList<TextField> createFields(int tf) {
+    /*public static ArrayList<TextField> createFields(int tf) {
         //  int field=tf*(tf+1);
         ArrayList<TextField> fieldList = new ArrayList<TextField>(tf - 1); //For 2 is 6 and for 3 is 12
         int counter = 1;
@@ -338,9 +405,9 @@ public interface iView {
             c++;
         }
         return signs;
-    }
+    }*/
 
-    public static void checkFields(ArrayList<TextField> a) {
+    /*public static void checkFields(ArrayList<TextField> a) {
         ArrayList<Boolean> booleans = new ArrayList<Boolean>();
 
         int i = 0;
@@ -362,22 +429,19 @@ public interface iView {
                     t.setStyle(" -fx-control-inner-background: red;");
                     counter--;
                     booleans.add(false);
-
                 }
-
             }
             i++;
-        }
+        }*/
 
-        if (booleans.contains(false)) {
+        /*if (booleans.contains(false)) {
             btnStart.setDisable(true);
         }
 
         if (!booleans.contains(false)) {
             btnStart.setDisable(false);
-        }
-
-    }
+        }*/
+    /*}
 
     public static boolean isNumeric(String str) {
         try {
@@ -386,10 +450,10 @@ public interface iView {
         } catch (NumberFormatException e) {
             return false;
         }
-    }
+    }*/
 
 
-    public static void handleButton(int i) {
+    /*public static void handleButton(int i) {
         switch (i) {
             case 1:
 
@@ -406,7 +470,7 @@ public interface iView {
                 });
 
         }
-    }
+    }*/
 
 
 }
