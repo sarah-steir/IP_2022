@@ -17,18 +17,27 @@ import pack.Model.CustomText;
 
 public class Graph extends Group {
 
+    //TODO Make the line longer
+    //TODO Make plane more rectanglish
+
     /***
      * Elements to include in the graph :
      *
      * Big cube so the user can use it to move around ✅
      * Axis ✅
      * Line given 2 Point3D ✅
-     *      A label for the line
-     * Plane given a Point3D (a, b, c) and d (ax + by + cz = d)
+     *      A label for the line ✅
+     * Plane given 3 Point3D (a, b, c) ✅
      *      A label for the graph
-     * Point given well Point3D dumbass
-     *      A label for the point
-     -     */
+     * Point given well Point3D dumbass ✅
+     *      A label for the point ✅
+     *
+     *      Fix the line
+     *      Fix the labels
+     *      Fix the plane ?
+     *          Make it make sense (rectangle)
+     *          Render ?
+     */
 
     double mousePosX;
     double mousePosY;
@@ -67,11 +76,13 @@ public class Graph extends Group {
         Point3D point2 = new Point3D(150, -45, 190);
         Point3D point3 = new Point3D(-65, 38, -50);
 
-        this.addPlane(point1, point2, point3);
+        this.addPlane(point1, point2, point3, "zefghjkl");
 
         this.addPoint(point1);
         this.addPoint(point2);
         this.addPoint(point3);
+
+        this.addLine(point1, point2);
 
 //        this.addLine(new Point3D(21, -64, 4), new Point3D(9, 45, -15));
 //        this.addLine(new Point3D(65, -97, 3), new Point3D(67, 2, 9));
@@ -240,7 +251,7 @@ public class Graph extends Group {
         addLineToList(line);
     }
 
-    public void addPlane(Point3D point1, Point3D point2, Point3D point3) {
+    public void addPlane(Point3D point1, Point3D point2, Point3D point3, String equation) {
 
         Circle rectangle = new Circle(500);
 
@@ -260,8 +271,11 @@ public class Graph extends Group {
 
         rectangle.getTransforms().add(new Translate(newX, newY, newZ));
         rectangle.getTransforms().addAll(rotateX, rotateY, rotateZ);
+//        rectangle.setTranslateX(500);
+//        rectangle.setTranslateY(500);
 
         this.addPlaneToList(rectangle);
+        this.createPlaneLabel(triangleCenter, equation);
     }
 
     public Point3D getCenter(Point3D point1, Point3D point2, Point3D point3) {
@@ -351,8 +365,13 @@ public class Graph extends Group {
         labelsList.add(label);
     }
 
-    private void createPlaneLabel() {
-
+    private void createPlaneLabel(Point3D point, String equation) {
+        Text label = new CustomText(equation);
+        label.setScaleY(-1);
+        label.setTranslateX(point.getX());
+        label.setTranslateY(point.getY());
+        label.setTranslateZ(point.getZ());
+        labelsList.add(label);
     }
 
     private void setCameraFromViewPoint(double x, double y, double z) {
@@ -401,4 +420,3 @@ public class Graph extends Group {
 //    Text text = new Text(0, 0,
 //            String.format("(%1$d,%2$d,%3$d)", x, y,z));
 //                    text.setScaleY(-1);
-
