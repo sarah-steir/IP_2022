@@ -12,8 +12,8 @@ public class View2 extends Pane implements iView {
     RadioButton ra1 = new RadioButton("2x2");
     RadioButton ra2 = new RadioButton("3x3");
     Node n = setRadios(ra1, ra2);
-    public static ArrayList<TextField> a = iView.createFields(4);
-    public static ArrayList<TextField> ab = iView.createFields(8);
+    public static ArrayList<TextField> a = iView.createFields(4,80);
+    public static ArrayList<TextField> ab = iView.createFields(8,80);
 
 
     public View2() {
