@@ -25,7 +25,7 @@ public class View3 extends Pane implements iView {
         iView.createSigns(3);
         Pane p = iView.setLeft(r1, r2, lines(), set3Fields(2, 7, arplanes), setRadios(r1, r2));
         this.getChildren().add(setView("Lines And THe PLanes shit", p));
-        handleButton(3);
+        iView.handleButton(3);
 
     }
 
