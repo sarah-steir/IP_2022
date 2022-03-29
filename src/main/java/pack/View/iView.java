@@ -12,12 +12,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import pack.Controller.Eigen2x2;
+import pack.Controller.Eigen3x3;
 import pack.Controller.V3Controller;
 import pack.Model.CustomButton;
 import pack.Model.mainModel;
 import javafx.scene.control.Label;
 import pack.View.GraphView.Graph;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 //import org.apache.commons.lang3.math.NumberUtils;
 
@@ -360,13 +363,43 @@ public interface iView {
      *          Check example for view 3 planes, for the radio buttons just check which one is selected
      */
 
-    default void handleButton(int i) {
+    static void handleButton(int i) {
         btnStart.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
         switch (i) {
             case 1:
 
             case 2:
+                if(View2.getR3().isSelected()) {
+                    Eigen3x3 et = new Eigen3x3(Double.parseDouble(View2.getT1().getText()), Double.parseDouble(View2.getT2().getText()), Double.parseDouble(View2.getT3().getText()), Double.parseDouble(View2.getT4().getText()), Double.parseDouble(View2.getT5().getText()), Double.parseDouble(View2.getT6().getText()), Double.parseDouble(View2.getT7().getText()), Double.parseDouble(View2.getT8().getText()), Double.parseDouble(View2.getT9().getText()));
+                    System.out.println("This is 3x3");
+                    System.out.println("Vector of the eigen value " + et.getX1() + ": " + Arrays.toString(et.getS1()));
+                    System.out.println("Vector of the eigen value " + et.getX2() + ": " + Arrays.toString(et.getS2()));
+                    System.out.println("Vector of the eigen value " + et.getX3() + ": " + Arrays.toString(et.getS3()));
+                    for (Double d : et.getS1()) {
+                        View2.getStr().add(d.toString());
+                    }
+                    for (Double d : et.getS2()) {
+                        View2.getStr2().add(d.toString());
+                    }
+                    for (Double d : et.getS3()) {
+                        View2.getStr3().add(d.toString());
+                    }
+                }
+
+                if(View2.getR2().isSelected()) {
+
+                    Eigen2x2 et1 = new Eigen2x2(Double.parseDouble(View2.getT1().getText()), Double.parseDouble(View2.getT2().getText()), Double.parseDouble(View2.getT4().getText()), Double.parseDouble(View2.getT5().getText()));
+                    System.out.println("This is 2x2");
+                    System.out.println("Vector of the eigen value " + et1.getX1() + ": " + Arrays.toString(et1.getS1()));
+                    System.out.println("Vector of the eigen value " + et1.getX2() + ": " + Arrays.toString(et1.getS2()));
+                    for (Double d : et1.getS1()) {
+                        View2.getStr().add(d.toString());
+                    }
+                    for (Double d : et1.getS2()) {
+                        View2.getStr2().add(d.toString());
+                    }
+                }
 
             case 3:
 
