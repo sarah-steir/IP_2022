@@ -1,21 +1,16 @@
 package pack.Controller;
 
+import javafx.geometry.Point3D;
 import javafx.scene.control.TextField;
 import java.util.ArrayList;
 
-public class V2Controller {
+public class V3Controller {
     static int n = 3;
-    static ArrayList<Double> n1=new ArrayList<Double>();
-    static ArrayList<Double> n2=new ArrayList<Double>();
+    public static ArrayList<Double> n1=new ArrayList<Double>();
+    public static ArrayList<Double> n2=new ArrayList<Double>();
     static double crossProduct[] = new double[3];
 
-    public static void main(String[] args) {
 
-        Integer n[] = {  1, 2, -1 ,-5}; //note to self. When getting the last result from textfield. Make it negative OR on textfield go x+y+z+d=0
-        Integer m[] = {  1, -4, 1, -3};
-       // point(n,m);
-
-    }
 
     public static void transform(ArrayList <TextField> f){
         for (int i=0; i<4;i++){
@@ -41,17 +36,46 @@ public class V2Controller {
             System.out.print(crossProduct[i] + " ");}
     }
 
-    static void point() {
-        double x=0;
+    public static Point3D point(int i) {
+
+        double x=i;
         double z= ((n2.get(1)/n1.get(1))*(n1.get(0)*x+n1.get(3))-n2.get(0)*x- n2.get(3)) /(n2.get(2)-n1.get(2)*n2.get(1)/n1.get(1));
         double y=(-n1.get(2)*z-n1.get(0)*x-n1.get(3))/n1.get(1);
         //double z= ((-n2.get(1)/n1.get(1))*(n1.get(0)*x+n1.get(3))-n2.get(0)*x- -n2.get(3)) /(n2.get(2)-n1.get(2)*n2.get(1)/n1.get(1));
         //double z=((-n2.get(1/n1.get(1)))*n1.get(3)-n2.get(3))/((n2.get(2)*n2.get(1)/n1.get(1))*n1.get(2));
         //double y=(-n1.get(3)-n1.get(2)*z)/n1.get(1);
 
-
         System.out.println("x: "+x+" y: "+y+" z: "+z);
 
+        Point3D point1 = new Point3D(x, y, z);
+
+
+        return point1;
+
     }
+
+
+    public static String st (int i) {
+
+        switch (i) {
+            case 1:
+                String st= n1.get(0).toString()+"x +"+n1.get(1).toString()+"y +"+ n1.get(3).toString()+"z ="+ n1.get(4).toString();
+                return st;
+
+
+            case 2:
+                String st2= n2.get(0).toString()+"x +"+n2.get(1).toString()+"y +"+ n2.get(3).toString()+"z ="+ n2.get(4).toString();
+                return st2;
+
+          }
+
+
+        return null ;
+    }
+
+
+
+
+
 
 }
