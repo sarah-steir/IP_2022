@@ -76,16 +76,6 @@ public class Graph extends Group {
         Point3D point2 = new Point3D(150, -45, 190);
         Point3D point3 = new Point3D(-65, 38, -50);
 
-        this.addPlane(point1, point2, point3, "zefghjkl");
-
-        this.addPoint(point1);
-        this.addPoint(point2);
-        this.addPoint(point3);
-
-        this.addLine(point1, point2);
-
-//        this.addLine(new Point3D(21, -64, 4), new Point3D(9, 45, -15));
-//        this.addLine(new Point3D(65, -97, 3), new Point3D(67, 2, 9));
         scalable.getChildren().addAll(axisList);
         scalable.getChildren().addAll(thingsToGraphList);
         scalable.getChildren().addAll(labelsList);
