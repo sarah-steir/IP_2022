@@ -3,17 +3,11 @@ import java.text.DecimalFormat;
 
 public class Eigen2x2 {
 
-    private double x1;
-    private double x2;
-    private double first;
-    private double second;
-    private double third;
-    private double e1;
-    private double e2;
-    private double a1;
-    private double a2;
-    private double b1;
-    private double b2;
+    private double x1, x2;
+    private double first, second, third;
+    private double e1, e2;
+    private double a1, a2;
+    private double b1, b2;
 
     private double a1Initial;
     private double a2Initial;
