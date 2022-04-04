@@ -57,6 +57,7 @@ public interface iView {
         return hbButtons;
     }
 
+
     default ImageView setLogo() {
         ImageView iv = new ImageView(new Image(p + "Logo.png"));
         iv.setFitWidth(225);
@@ -172,8 +173,15 @@ public interface iView {
 
                 int finalI = i;
                 int finalJ = j;
+                btnStart.setOnAction(event -> {
+                    for (CustomTextField[] tfArray: fieldList) {
+                        for (CustomTextField tf: tfArray) {
+                            btnStart.setDisable(tf.checkField());
+                        }
+                    }
+                });
 
-                fieldList[i][j].setOnAction(event -> btnStart.setDisable(fieldList[finalI][finalJ].checkField()));
+                fieldList[i][j].textProperty().addListener((observable, oldValue, newValue) -> btnStart.setDisable(fieldList[finalI][finalJ].checkField()));
 
                 hbTextField.getChildren().addAll(fieldList[i][j], lblVariable);
                 gridPane.add(hbTextField, j, i);
@@ -181,6 +189,8 @@ public interface iView {
         }
         return gridPane;
     }
+
+
 }
 
 
