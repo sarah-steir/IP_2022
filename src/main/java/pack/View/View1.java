@@ -1,12 +1,7 @@
 package pack.View;
 
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
-import pack.Model.CustomRadioButton;
-
-import java.util.ArrayList;
+import pack.View.Customs.CustomRadioButton;
 
 public class View1 extends Pane implements iView {
     //ArrayList<TextField> a=iView.createFields(6); //fields for 2by2

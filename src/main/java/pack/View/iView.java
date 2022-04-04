@@ -1,9 +1,6 @@
 package pack.View;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,16 +8,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import pack.Controller.V2Controller;
-import pack.Model.CustomButton;
-import pack.Model.CustomRadioButton;
-import pack.Model.CustomTextField;
+import pack.View.Customs.CustomButton;
+import pack.View.Customs.CustomRadioButton;
+import pack.View.Customs.CustomTextField;
 import pack.Model.mainModel;
 import javafx.scene.control.Label;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 //import org.apache.commons.lang3.math.NumberUtils;
 
 import static pack.Model.mainModel.p;

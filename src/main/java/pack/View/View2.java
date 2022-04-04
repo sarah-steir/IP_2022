@@ -2,7 +2,7 @@ package pack.View;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Model.CustomRadioButton;
+import pack.View.Customs.CustomRadioButton;
 
 public class View2 extends Pane implements iView {
 

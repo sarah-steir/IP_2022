@@ -1,4 +1,4 @@
-package pack.Model;
+package pack.View.Customs;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
