@@ -70,16 +70,11 @@ public class Graph extends Group {
     ObservableList<Node> labelsList = FXCollections.observableArrayList();
 
     public Graph() {
+
+
         axisList = getAxis();
 
-        Point3D point1 = new Point3D(120, -24, -136);
-        Point3D point2 = new Point3D(150, -45, 190);
-        Point3D point3 = new Point3D(-65, 38, -50);
-
-        scalable.getChildren().addAll(axisList);
-        scalable.getChildren().addAll(thingsToGraphList);
-        scalable.getChildren().addAll(labelsList);
-        scalable.getChildren().add(map);
+        this.update();
 
         Scale mirror = new Scale(1, -1, -1);
         scalable.getTransforms().add(mirror);
@@ -212,14 +207,13 @@ public class Graph extends Group {
         sphere.setTranslateZ(point.getZ());
         createPointLabel(point);
         addPointToList(sphere);
+        System.out.println("The point was added you bitch");
     }
 
     public void addLine(Point3D point1, Point3D point2) {
-
-        Line line = new Line();
         double dist = point1.distance(point2);
 
-        line = new Line(0, 0, dist, 0);
+        Line line = new Line(0, 0, dist, 0);
 
         Point3D vector = point2.subtract(point1);
 
@@ -236,7 +230,6 @@ public class Graph extends Group {
         Translate tt = new Translate(point1.getX(), point1.getY(), point1.getZ());
         line.getTransforms().addAll(tt, yRotate, xRotate);
 
-        //        System.out.println("l(t) = (" + (int) point1.getX() + ", " + (int) point1.getY() + ", " + (int) point1.getZ() + ") + t <" + (int) point2.getX() + ", " + (int) point2.getY() + ", " + (int) point2.getZ() + ">");
         createLineLabel(point1, point2);
         addLineToList(line);
     }
@@ -266,6 +259,7 @@ public class Graph extends Group {
 
         this.addPlaneToList(rectangle);
         this.createPlaneLabel(triangleCenter, equation);
+        System.out.println("IS THE PLANE HERE PLEASE SAY YES");
     }
 
     public Point3D getCenter(Point3D point1, Point3D point2, Point3D point3) {
@@ -285,7 +279,7 @@ public class Graph extends Group {
         thingsToGraphList.add(sphere);
         switch (thingsToGraphList.size()) {
             case 1:
-                System.out.println("hehe the liane should be  red");
+                System.out.println("hehe the line should be red");
                 sphere.setMaterial(new PhongMaterial(red));
                 break;
             case 2:
@@ -298,6 +292,7 @@ public class Graph extends Group {
                 sphere.setMaterial(new PhongMaterial(white));
                 break;
         }
+        this.update();
     }
 
     public void addLineToList(Line line) {
@@ -316,6 +311,7 @@ public class Graph extends Group {
                 line.setStroke(white);
                 break;
         }
+        this.update();
     }
 
     public void addPlaneToList(Circle rectangle) {
@@ -323,18 +319,23 @@ public class Graph extends Group {
         thingsToGraphList.add(rectangle);
         switch (thingsToGraphList.size()) {
             case 1:
+                System.out.println("case 1");
                 rectangle.setFill(red);
                 break;
             case 2:
                 rectangle.setFill(yellow);
+                System.out.println("case 2");
                 break;
             case 3:
                 rectangle.setFill(blue);
+                System.out.println("case 3");
                 break;
             default:
                 rectangle.setFill(white);
+                System.out.println("case white");
                 break;
         }
+        this.update();
     }
 
     private void createPointLabel(Point3D point) {
@@ -396,6 +397,14 @@ public class Graph extends Group {
         camera.setFarClip(CAMERA_FAR_CLIP);
 
         setCameraFromViewPoint(-0, -0, 300);
+    }
+
+    public void update() {
+        scalable.getChildren().clear();
+        scalable.getChildren().addAll(axisList);
+        scalable.getChildren().add(map);
+        scalable.getChildren().addAll(thingsToGraphList);
+        scalable.getChildren().addAll(labelsList);
     }
 
     public static double clamp( double value, double min, double max) {

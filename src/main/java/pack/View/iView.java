@@ -2,6 +2,7 @@ package pack.View;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -67,7 +68,7 @@ public interface iView {
         return vbLeft;
     }
 
-    public static VBox setLeft(RadioButton r1, RadioButton r2, GridPane g1, GridPane g2, Node setR) {
+    public static VBox setLeft(RadioButton r1, RadioButton r2, GridPane g1, GridPane g2, Node setR, Graph gr) {
         VBox vbLeft = new VBox();
         vbLeft.setSpacing(10);
         vbLeft.setPrefSize(500, 695);
@@ -102,10 +103,8 @@ public interface iView {
         });
 
         // Graph Box
-        Graph actualGraph = new Graph();
         Pane graph = new Pane();
-        graph.getChildren().add(actualGraph);
-        //actualGraph.addLine(new Point3D(12, 42, 65), new Point3D(9, 45, -15));
+        graph.getChildren().add(gr);
         graph.setPrefSize(500, 525);
         graph.setStyle("-fx-background-color: #333335");
         vbLeft.getChildren().addAll(vbUi, graph);
