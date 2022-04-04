@@ -13,7 +13,7 @@ public class mainModel {
     public static Font font = Font.loadFont(p + "Font.otf", 15);
 
     public static Label setTitle(String title){
-        Label t= new Label(title);
+        Label t = new Label(title);
         t.setFont(font);
         t.setStyle("-fx-text-fill: E7EBEE;");
         t.setAlignment(Pos.CENTER);
