@@ -16,6 +16,6 @@ public class View1 extends Pane implements iView {
         //Pane p=iView.setLeft(twoo,threee,iView.set2Fields(),set3Fields(3,7,b),setRadios(twoo,threee));
         CustomRadioButton rb1 = new CustomRadioButton("2x2");
         CustomRadioButton rb2 = new CustomRadioButton("3x3");
-        this.getChildren().add(setView("System of Linear Equations", rb1, rb2));
+        this.getChildren().addAll(setLeft(rb1, rb2), setRight("System of Linear Equations"));
     }
 }
