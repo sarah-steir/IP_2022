@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Model.CustomButton;
+import pack.View.Customs.CustomButton;
 
 import static pack.Model.mainModel.p;
 
