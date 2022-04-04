@@ -6,40 +6,17 @@ import java.util.Scanner;
 public class Eigen3x3 {
 
     // idk if i need all of this
-    private double x1;
-    private double x2;
-    private double x3;
-    private double first;
-    private double second;
-    private double third;
-    private double fourth;
-    private double e1;
-    private double e2;
-    private double e3;
-    private double a1;
-    private double a2;
-    private double a3;
-    private double b1;
-    private double b2;
-    private double b3;
-    private double c1;
-    private double c2;
-    private double c3;
-    private double a1Initial;
-    private double a2Initial;
-    private double a3Initial;
-    private double b1Initial;
-    private double b2Initial;
-    private double b3Initial;
-    private double c1Initial;
-    private double c2Initial;
-    private double c3Initial;
-    double m1[];
-    double m2[];
-    double m3[];
-    static double[] s1;
-    static double[] s2;
-    static double[] s3;
+    private double x1, x2, x3;
+    private double first, second, third, fourth;
+    private double e1, e2, e3;
+    private double a1, a2, a3;
+    private double b1, b2, b3;
+    private double c1, c2, c3;
+    private double a1Initial, a2Initial, a3Initial;
+    private double b1Initial, b2Initial, b3Initial;
+    private double c1Initial, c2Initial, c3Initial;
+    double m1[], m2[], m3[];
+    static double[] s1,s2, s3;
 
 
 
