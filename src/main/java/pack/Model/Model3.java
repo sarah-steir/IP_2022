@@ -1,11 +1,11 @@
-package pack.Controller;
+package pack.Model;
 
 import javafx.geometry.Point3D;
 import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 
-public class V3Controller {
+public class Model3 {
     static int n = 3;
     public static ArrayList<Double> n1 = new ArrayList<Double>();
     public static ArrayList<Double> n2 = new ArrayList<Double>();

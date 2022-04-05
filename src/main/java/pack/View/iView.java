@@ -12,7 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Controller.V3Controller;
+import pack.Model.Model3;
 import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
 import javafx.scene.control.Label;
@@ -379,9 +379,9 @@ public interface iView {
                         if(View3.r2.isSelected()) {
                             Random rn = new Random();
                             int answer = rn.nextInt(10) + 1;
-                            V3Controller.transform(View3.arplanes);
-                            V3Controller.crossProduct();
-                            V3Controller.point(answer);
+                            Model3.transform(View3.arplanes);
+                            Model3.crossProduct();
+                            Model3.point(answer);
                             //View3.graph3.addLine(V3Controller.point(95),V3Controller.point(-10));
                             View3.graph3.addPoint(new Point3D(5,5,5));
 

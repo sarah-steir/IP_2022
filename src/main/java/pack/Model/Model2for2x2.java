@@ -1,7 +1,7 @@
 package pack.Model;
 import java.text.DecimalFormat;
 
-public class Eigen2x2 {
+public class Model2for2x2 {
 
     private double x1, x2;
     private double first, second, third;
@@ -21,7 +21,7 @@ public class Eigen2x2 {
 
     static final DecimalFormat formatting = new DecimalFormat("0.000");// format the number to 3 decimals
 
-    public Eigen2x2(double a1, double a2, double b1, double b2) {
+    public Model2for2x2(double a1, double a2, double b1, double b2) {
         this.a1 = a1;
         this.a2 = a2;
         this.b1 = b1;
