@@ -12,8 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Controller.Eigen2x2;
-import pack.Controller.Eigen3x3;
+
 import pack.Controller.V3Controller;
 import pack.Model.Eigen2x2;
 import pack.Model.Eigen3x3;
