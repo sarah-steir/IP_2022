@@ -1,4 +1,4 @@
-package pack.Controller;
+package pack.Model;
 import java.text.DecimalFormat;
 
 public class Eigen2x2 {
