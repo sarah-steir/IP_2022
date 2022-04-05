@@ -9,7 +9,6 @@ public class View2 extends Pane implements iView {
     public View2() {
     }
 
-    @Override
     public VBox setLeft(CustomRadioButton rb1, CustomRadioButton rb2) {
         VBox vbLeft = new VBox();
         vbLeft.setSpacing(10);

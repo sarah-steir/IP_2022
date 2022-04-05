@@ -8,35 +8,32 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Controller.V2Controller;
+import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
 import pack.View.Customs.CustomRadioButton;
 import pack.View.Customs.CustomTextField;
 import pack.Model.mainModel;
 import javafx.scene.control.Label;
+import pack.View.GraphView.Graph;
 
-//import org.apache.commons.lang3.math.NumberUtils;
-
-import static pack.Model.mainModel.p;
 
 public interface iView {
 
     CustomButton btnStart = new CustomButton("Start\nthe\nMAGIK");
     CustomButton btnReset = new CustomButton("Reset\nthe\nMAGIK");
 
-    default Pane setView(String title, CustomRadioButton rb1, CustomRadioButton rb2) {
+    default Pane setView(String title, CustomRadioButton rb1, CustomRadioButton rb2, Graph gr) {
         Pane pane = new Pane();
         pane.setPrefSize(1050, 750);
         pane.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
-        pane.getChildren().addAll(setLeft(rb1, rb2), setRight(title));
+        pane.getChildren().addAll(setLeft(rb1, rb2, gr), setRight(title));
 
         btnReset.setOnAction(event -> {
             pane.getChildren().clear();
             rb1.setSelected(false);
             rb2.setSelected(false);
-            pane.getChildren().addAll(setLeft(rb1, rb2), setRight(title));
+            pane.getChildren().addAll(setLeft(rb1, rb2, gr), setRight(title));
         });
-
         return pane;
     }
 
@@ -53,13 +50,13 @@ public interface iView {
 
 
     default ImageView setLogo() {
-        ImageView iv = new ImageView(new Image(p + "Logo.png"));
+        ImageView iv = new ImageView(new Image(Custom.p + "Logo.png"));
         iv.setFitWidth(225);
         iv.setFitHeight(105);
         return iv;
     }
 
-    default VBox setLeft(CustomRadioButton rb1, CustomRadioButton rb2) {
+    default VBox setLeft(CustomRadioButton rb1, CustomRadioButton rb2, Graph gr) {
         VBox vbLeft = new VBox();
         vbLeft.setSpacing(10);
         vbLeft.setPrefSize(500, 695);
@@ -78,6 +75,7 @@ public interface iView {
 
         // Graph Box
         Pane graph = new Pane();
+        graph.getChildren().add(gr);
         graph.setPrefSize(500, 525);
         graph.setStyle("-fx-background-color: #333335");    // Grey
 
@@ -98,7 +96,7 @@ public interface iView {
         vbPo.setSpacing(15);
         vbPo.setAlignment(Pos.TOP_CENTER);
         vbPo.setStyle("-fx-background-color: #333335");
-        vbPo.getChildren().add(mainModel.setTitle(title));
+        vbPo.getChildren().add(Custom.setTitle(title));
 
         // HBox to hold buttons and logo
         HBox hbBottom = new HBox();
@@ -150,7 +148,7 @@ public interface iView {
                 fieldList[i][j] = new CustomTextField();
                 Label lblVariable = new Label();
                 lblVariable.setStyle("-fx-text-fill: E7EBEE;");
-                lblVariable.setFont(mainModel.font);
+                lblVariable.setFont(Custom.font);
 
                 // Rearranges the signs for the RadioButtons
                 if (j == 0) {
@@ -183,8 +181,6 @@ public interface iView {
         }
         return gridPane;
     }
-
-
 }
 
 

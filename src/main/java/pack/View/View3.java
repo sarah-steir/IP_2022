@@ -11,6 +11,6 @@ public class View3 extends Pane implements iView{
     public View3() {
         CustomRadioButton rb1 = new CustomRadioButton("Lines");
         CustomRadioButton rb2 = new CustomRadioButton("Planes");
-        this.getChildren().add(setView("Lines and Planes", rb1, rb2));
+        this.getChildren().add(setView("Lines and Planes", rb1, rb2, graph));
     }
 }

@@ -7,6 +7,6 @@ public class CustomText extends Text {
 
     public CustomText(String message) {
         super (message);
-        this.setFont(mainModel.font);
+        this.setFont(Custom.font);
     }
 }
