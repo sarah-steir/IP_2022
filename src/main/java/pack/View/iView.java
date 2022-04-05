@@ -2,6 +2,7 @@ package pack.View;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -64,7 +65,7 @@ public interface iView {
         return vbLeft;
     }
 
-    public static VBox setLeft(RadioButton r1, RadioButton r2, GridPane g1, GridPane g2, Node setR) {
+    public static VBox setLeft(RadioButton r1, RadioButton r2, GridPane g1, GridPane g2, Node setR,Graph hraph) {
         VBox vbLeft = new VBox();
         vbLeft.setSpacing(10);
         vbLeft.setPrefSize(500, 695);
@@ -99,10 +100,10 @@ public interface iView {
         });
 
         // Graph Box
-        Graph actualGraph = new Graph();
+
         Pane graph = new Pane();
-        graph.getChildren().add(actualGraph);
-        //actualGraph.addLine(new Point3D(12, 42, 65), new Point3D(9, 45, -15));
+        graph.getChildren().add(hraph);
+       // hraph.addLine(new Point3D(12, 42, 65), new Point3D(9, 45, -15));
         graph.setPrefSize(500, 525);
         graph.setStyle("-fx-background-color: #333335");
         vbLeft.getChildren().addAll(vbUi, graph);
@@ -370,7 +371,10 @@ public interface iView {
             case 3:
 
                 if(View3.r1.isSelected()) {
-                System.out.println( "ffjifjkafok"   );
+                  //  System.out.println(V3Controller.checkzeros(View3.arlines));
+                  //  View3.transform();
+                    //View3.toMatrix();
+
                 }
 
 
@@ -378,10 +382,13 @@ public interface iView {
                 if(View3.r2.isSelected()) {
                 Random rn = new Random();
                  int answer = rn.nextInt(10) + 1;
-                System.out.println("View3 math is set on action babyyyy");
                 V3Controller.transform(View3.arplanes);
                 V3Controller.crossProduct();
                 V3Controller.point(answer);
+                //View3.graph3.addLine(V3Controller.point(95),V3Controller.point(-10));
+                    View3.graph3.addPoint(new Point3D(5,5,5));
+
+
                 break; }}
             }});
     }
