@@ -84,36 +84,6 @@ public class Graph extends Group {
 
         scene.setOnScroll((e) -> {
 
-//            double delta = 1.05;
-//
-//            double scale = scalable.getScale(); // currently we only use Y, same value is used for X
-//            double oldScale = scale;
-//
-//            if (e.getDeltaY() < 0) {
-//                scale /= delta;
-//                map.setScaleX(map.getScaleX() * delta);
-//                map.setScaleY(map.getScaleY() * delta);
-//                map.setScaleZ(map.getScaleZ() * delta);
-//            } else {
-//                scale *= delta;
-//                map.setScaleX(map.getScaleX() / delta);
-//                map.setScaleY(map.getScaleY() / delta);
-//                map.setScaleZ(map.getScaleZ() / delta);
-//            }
-//
-//            scale = clamp(scale, 0.3, 3);
-//
-//            double f = (scale / oldScale)-1;
-//
-//            double dx = (e.getSceneX() - (scalable.getBoundsInParent().getWidth()/2 + scalable.getBoundsInParent().getMinX()));
-//            double dy = (e.getSceneY() - (scalable.getBoundsInParent().getHeight()/2 + scalable.getBoundsInParent().getMinY()));
-//
-//
-//            // note: pivot value must be untransformed, i. e. without scaling
-//            scalable.setPivot(f*dx, f*dy);
-//
-//            e.consume();
-
             double zoomRatio = 1;
             if (e.getDeltaY() > 0 && scalable.getScale() < 5) {
                 zoomRatio = 1.05;
@@ -229,6 +199,30 @@ public class Graph extends Group {
 
         createLineLabel(point1, point2);
         addLineToList(line);
+    }
+
+    public Line addSingularLine(Point3D point1, Point3D point2) {
+
+        double dist = point1.distance(point2);
+
+        Line line = new Line(0, 0, dist, 0);
+
+        Point3D vector = point2.subtract(point1);
+
+        double x = vector.getX() + 0.0;
+        double y = vector.getY() + 0.0;
+        double z = vector.getZ() + 0.0;
+
+        double ry = Math.toDegrees(Math.atan2(-z, x));
+        Rotate yRotate = new Rotate(ry, Rotate.Y_AXIS);
+
+        double rx = Math.toDegrees(Math.asin(y / dist));
+        Rotate xRotate = new Rotate(rx, Rotate.Z_AXIS);
+
+        Translate tt = new Translate(point1.getX(), point1.getY(), point1.getZ());
+        line.getTransforms().addAll(tt, yRotate, xRotate);
+
+        return line;
     }
 
     public void addPlane(Point3D point1, Point3D point2, Point3D point3, String equation) {
