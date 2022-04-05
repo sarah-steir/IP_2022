@@ -10,5 +10,4 @@ public class MainController {
     public MainController(MainView view) {
         this.view = view;
     }
-
 }

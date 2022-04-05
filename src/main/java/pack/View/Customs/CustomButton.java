@@ -1,10 +1,7 @@
 package pack.View.Customs;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.text.TextAlignment;
-import pack.Model.mainModel;
 
 public class CustomButton extends Button {
 

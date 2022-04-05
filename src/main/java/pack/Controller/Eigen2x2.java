@@ -19,7 +19,6 @@ public class Eigen2x2 {
     static double[] s1;
     static double[] s2;
 
-
     static final DecimalFormat formatting = new DecimalFormat("0.000");// format the number to 3 decimals
 
     public Eigen2x2(double a1, double a2, double b1, double b2) {

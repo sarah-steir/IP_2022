@@ -18,8 +18,6 @@ public class Eigen3x3 {
     double m1[], m2[], m3[]; // reduced matrix
     static double[] s1,s2, s3;//eigenvectors
 
-
-
     static final DecimalFormat formatting = new DecimalFormat("0.0000"); // format the number to 4 decimals
 
     public Eigen3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3) {
@@ -74,8 +72,8 @@ public class Eigen3x3 {
         third = a2b1 + a3c1 + b3c2 + a1b2 + a1b2Cal2; //x
         second = a1b2Cal3 + c3Cal; // x^2
         first = toTheCube; // x^3
-
     }
+
 // get the roots so the eigenvalues
     private void roots3x3(double a, double b, double c, double d) {
 
