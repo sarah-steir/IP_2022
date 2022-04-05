@@ -1,4 +1,4 @@
-package pack.Controller;
+package pack.Model;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
