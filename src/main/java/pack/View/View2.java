@@ -16,10 +16,8 @@ public class View2 extends Pane implements iView {
     public static ArrayList<TextField> a = iView.createFields(4,80);
     public static ArrayList<TextField> ab = iView.createFields(8,80);
 
-
     public View2() {
         this.getChildren().add(setView("Eigen UI",this.setLeft()));
-
     }
 
     @Override

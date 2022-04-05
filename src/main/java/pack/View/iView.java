@@ -15,14 +15,10 @@ import javafx.scene.layout.VBox;
 import pack.Controller.V3Controller;
 import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
-import pack.Model.mainModel;
 import javafx.scene.control.Label;
 import pack.View.GraphView.Graph;
 import java.util.ArrayList;
 import java.util.Random;
-//import org.apache.commons.lang3.math.NumberUtils;
-
-
 
 import static pack.View.Customs.Custom.p;
 

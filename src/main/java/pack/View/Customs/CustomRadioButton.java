@@ -3,7 +3,6 @@ package pack.View.Customs;
 import javafx.geometry.Insets;
 import javafx.scene.control.RadioButton;
 import javafx.scene.text.TextAlignment;
-import pack.Model.mainModel;
 
 public class CustomRadioButton extends RadioButton {
 

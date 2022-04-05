@@ -1,7 +1,6 @@
 package pack.View.Customs;
 
 import javafx.scene.text.Text;
-import pack.Model.mainModel;
 
 public class CustomText extends Text {
 

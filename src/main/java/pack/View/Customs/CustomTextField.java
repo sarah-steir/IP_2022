@@ -1,7 +1,5 @@
 package pack.View.Customs;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 
 public class CustomTextField extends TextField {
@@ -29,5 +27,4 @@ public class CustomTextField extends TextField {
             return false;
         }
     }
-
 }
