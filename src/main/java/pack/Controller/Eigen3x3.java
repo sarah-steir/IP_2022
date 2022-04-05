@@ -336,4 +336,276 @@ public class Eigen3x3 {
         }
         return y1;
     }
+
+    public double getX1() {
+        return x1;
+    }
+
+    public void setX1(double x1) {
+        this.x1 = x1;
+    }
+
+    public double getX2() {
+        return x2;
+    }
+
+    public void setX2(double x2) {
+        this.x2 = x2;
+    }
+
+    public double getX3() {
+        return x3;
+    }
+
+    public void setX3(double x3) {
+        this.x3 = x3;
+    }
+
+    public double getFirst() {
+        return first;
+    }
+
+    public void setFirst(double first) {
+        this.first = first;
+    }
+
+    public double getSecond() {
+        return second;
+    }
+
+    public void setSecond(double second) {
+        this.second = second;
+    }
+
+    public double getThird() {
+        return third;
+    }
+
+    public void setThird(double third) {
+        this.third = third;
+    }
+
+    public double getFourth() {
+        return fourth;
+    }
+
+    public void setFourth(double fourth) {
+        this.fourth = fourth;
+    }
+
+    public double getE1() {
+        return e1;
+    }
+
+    public void setE1(double e1) {
+        this.e1 = e1;
+    }
+
+    public double getE2() {
+        return e2;
+    }
+
+    public void setE2(double e2) {
+        this.e2 = e2;
+    }
+
+    public double getE3() {
+        return e3;
+    }
+
+    public void setE3(double e3) {
+        this.e3 = e3;
+    }
+
+    public double getA1() {
+        return a1;
+    }
+
+    public void setA1(double a1) {
+        this.a1 = a1;
+    }
+
+    public double getA2() {
+        return a2;
+    }
+
+    public void setA2(double a2) {
+        this.a2 = a2;
+    }
+
+    public double getA3() {
+        return a3;
+    }
+
+    public void setA3(double a3) {
+        this.a3 = a3;
+    }
+
+    public double getB1() {
+        return b1;
+    }
+
+    public void setB1(double b1) {
+        this.b1 = b1;
+    }
+
+    public double getB2() {
+        return b2;
+    }
+
+    public void setB2(double b2) {
+        this.b2 = b2;
+    }
+
+    public double getB3() {
+        return b3;
+    }
+
+    public void setB3(double b3) {
+        this.b3 = b3;
+    }
+
+    public double getC1() {
+        return c1;
+    }
+
+    public void setC1(double c1) {
+        this.c1 = c1;
+    }
+
+    public double getC2() {
+        return c2;
+    }
+
+    public void setC2(double c2) {
+        this.c2 = c2;
+    }
+
+    public double getC3() {
+        return c3;
+    }
+
+    public void setC3(double c3) {
+        this.c3 = c3;
+    }
+
+    public double getA1Initial() {
+        return a1Initial;
+    }
+
+    public void setA1Initial(double a1Initial) {
+        this.a1Initial = a1Initial;
+    }
+
+    public double getA2Initial() {
+        return a2Initial;
+    }
+
+    public void setA2Initial(double a2Initial) {
+        this.a2Initial = a2Initial;
+    }
+
+    public double getA3Initial() {
+        return a3Initial;
+    }
+
+    public void setA3Initial(double a3Initial) {
+        this.a3Initial = a3Initial;
+    }
+
+    public double getB1Initial() {
+        return b1Initial;
+    }
+
+    public void setB1Initial(double b1Initial) {
+        this.b1Initial = b1Initial;
+    }
+
+    public double getB2Initial() {
+        return b2Initial;
+    }
+
+    public void setB2Initial(double b2Initial) {
+        this.b2Initial = b2Initial;
+    }
+
+    public double getB3Initial() {
+        return b3Initial;
+    }
+
+    public void setB3Initial(double b3Initial) {
+        this.b3Initial = b3Initial;
+    }
+
+    public double getC1Initial() {
+        return c1Initial;
+    }
+
+    public void setC1Initial(double c1Initial) {
+        this.c1Initial = c1Initial;
+    }
+
+    public double getC2Initial() {
+        return c2Initial;
+    }
+
+    public void setC2Initial(double c2Initial) {
+        this.c2Initial = c2Initial;
+    }
+
+    public double getC3Initial() {
+        return c3Initial;
+    }
+
+    public void setC3Initial(double c3Initial) {
+        this.c3Initial = c3Initial;
+    }
+
+    public double[] getM1() {
+        return m1;
+    }
+
+    public void setM1(double[] m1) {
+        this.m1 = m1;
+    }
+
+    public double[] getM2() {
+        return m2;
+    }
+
+    public void setM2(double[] m2) {
+        this.m2 = m2;
+    }
+
+    public double[] getM3() {
+        return m3;
+    }
+
+    public void setM3(double[] m3) {
+        this.m3 = m3;
+    }
+
+    public static double[] getS1() {
+        return s1;
+    }
+
+    public static void setS1(double[] s1) {
+        Eigen3x3.s1 = s1;
+    }
+
+    public static double[] getS2() {
+        return s2;
+    }
+
+    public static void setS2(double[] s2) {
+        Eigen3x3.s2 = s2;
+    }
+
+    public static double[] getS3() {
+        return s3;
+    }
+
+    public static void setS3(double[] s3) {
+        Eigen3x3.s3 = s3;
+    }
 }
