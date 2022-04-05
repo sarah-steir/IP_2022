@@ -13,7 +13,7 @@ public class CustomButton extends Button {
         this.setStyle("-fx-background-color: #333335;" +
                 "-fx-text-fill: E7EBEE;");
         this.setTextAlignment(TextAlignment.CENTER);
-        this.setFont(mainModel.font);
+        this.setFont(Custom.font);
     }
 }
 

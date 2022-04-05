@@ -12,6 +12,6 @@ public class CustomRadioButton extends RadioButton {
         this.setStyle("-fx-text-fill: E7EBEE;");
         this.setTextAlignment(TextAlignment.CENTER);
         this.setPadding(new Insets(15));
-        this.setFont(mainModel.font);
+        this.setFont(Custom.font);
     }
 }
