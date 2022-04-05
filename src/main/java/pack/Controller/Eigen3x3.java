@@ -125,11 +125,9 @@ public class Eigen3x3 {
             x1 = 2*cubeRoot - (a/ 3.0);
             x2 = x3 = cubeRoot - (a/ 3.0);
         }
-
         x1 = Double.parseDouble(formatting.format(x1)); // FORMAT TO 0.0000
         x2 = Double.parseDouble(formatting.format(x2));
         x3 = Double.parseDouble(formatting.format(x3));
-
     }
 
     private void answers3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3, double x1, double x2, double x3) {
@@ -210,7 +208,6 @@ public class Eigen3x3 {
         }
         //COLUMN ONE DONE
         if (b2 == 0) { // if a equal to zero (switch rows) unless all is zero (a,b,c)
-
             if (c2 != 0) {
                 e2 = Double.parseDouble(formatting.format(b2)); // replace b with c if c not zero
                 e3 = Double.parseDouble(formatting.format(b3));
@@ -288,7 +285,6 @@ public class Eigen3x3 {
                                 y1[counterUp] = -t33; // else that position in the vector is the value of which ever number is not zero and not the first 1 free number
                             }
                         }
-
                         if (t33 == 0) {
                             if (t22 == 0) {
                                 y1[counterUp] = 0;
@@ -334,67 +330,11 @@ public class Eigen3x3 {
                 if (t11 == 0 && t22 == 0 && t33 == 0) { // if the whole row is zero then that position in the vector is 1
                     y1[counterUp] = 1;
                 }
-
             }
-
             counterUp++;
             i++; // up by two to switch row
             i++;
-
         }
-
         return y1;
-
-    }
-
-    //Bunch of getters n setters idk if i need but its there
-
-    public double getX1() {
-        return x1;
-    }
-
-    public void setX1(double x1) {
-        this.x1 = x1;
-    }
-
-    public double getX2() {
-        return x2;
-    }
-
-    public void setX2(double x2) {
-        this.x2 = x2;
-    }
-
-    public double getX3() {
-        return x3;
-    }
-
-    public void setX3(double x3) {
-        this.x3 = x3;
-    }
-
-    public double[] getS1() {
-        return s1;
-    }
-
-    public void setS1(double[] s1) {
-        this.s1 = s1;
-    }
-
-    public double[] getS2() {
-        return s2;
-    }
-
-    public void setS2(double[] s2) {
-        this.s2 = s2;
-    }
-
-    public double[] getS3() {
-        return s3;
-    }
-
-    public void setS3(double[] s3) {
-        this.s3 = s3;
     }
 }
-

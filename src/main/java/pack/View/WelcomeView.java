@@ -7,9 +7,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Model.CustomButton;
-
-import static pack.Model.mainModel.p;
+import pack.View.Customs.Custom;
+import pack.View.Customs.CustomButton;
 
 public class WelcomeView extends Pane {
 
@@ -53,7 +52,7 @@ public class WelcomeView extends Pane {
     }
 
     public ImageView setLogo() {
-        ImageView iv = new ImageView(new Image(p + "Logo.png"));
+        ImageView iv = new ImageView(new Image(Custom.p + "Logo.png"));
         iv.setFitWidth(225);
         iv.setFitHeight(105);
         iv.setLayoutX(805);

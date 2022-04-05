@@ -34,7 +34,6 @@ public class Eigen2x2 {
         findTheCubicEquation2x2(a1, a2, b1, b2);
         roots2x2(first, second, third);
         answers2x2(a1, a2, b1, b2, x1, x2);
-
     }
 
     private void findTheCubicEquation2x2(double a1, double a2, double b1, double b2) {
@@ -46,7 +45,6 @@ public class Eigen2x2 {
         third = a1b2 + a2b1; // ^1
         second = -a1 + -b2; // ^2
         first = 1; // ^3
-
     }
 
     private void roots2x2(double a, double b, double c) {
@@ -59,24 +57,19 @@ public class Eigen2x2 {
             x1 = (-b) / (2 * a);
             x2 = (-b) / (2 * a);
         }
-
         x1 = Double.parseDouble(formatting.format(x1)); // format
         x2 = Double.parseDouble(formatting.format(x2));
     }
 
     private void answers2x2(double a1, double a2, double b1, double b2, double x1, double x2) {
-
         double aa1 = a1Initial - x1;//WITH FIRST LAMBA
         double bb2 = b2Initial - x1;//WITH FIRST LAMBA
-
         m1 = reduceMatrix2x2(aa1, a2Initial, b1Initial, bb2); // reduce matrix
         s1 = findEigenVectors2x2(m1); // vector
-
         aa1 = a1Initial - x2;//WITH FIRST LAMBA
         bb2 = b2Initial - x2;//WITH FIRST LAMBA
         m2 = reduceMatrix2x2(aa1, a2Initial, b1Initial, bb2);
         s2 = findEigenVectors2x2(m2);
-
     }
 
     private double[] reduceMatrix2x2(double a1, double a2, double b1, double b2) {
@@ -88,20 +81,17 @@ public class Eigen2x2 {
                 a2 = Double.parseDouble(formatting.format(b2));
                 b1 = Double.parseDouble(formatting.format(e1));
                 b2 = Double.parseDouble(formatting.format(e2));
-
             }
         }
 
         if (a1 != 1 && a1 != 0) { //if a not equal to one or zero
             a2 = Double.parseDouble(formatting.format(a2 / a1));//MAKE THE FIRST NUMBER 1 AND THEN DIVIDE ALL THE NUMBERS IN THAT row
             a1 = Double.parseDouble(formatting.format(a1 / a1));
-
         }
 
         if (b1 != 0) { // reduce the second row to 0 in the first #
             b2 = Double.parseDouble(formatting.format(b2 - (a2 * b1)));//MAKE THE FIRST NUMBER 0 AND THEN substract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
             b1 = Double.parseDouble(formatting.format(b1 - (a1 * b1)));
-
         }
 
         //COLUMN ONE DONE
@@ -112,9 +102,7 @@ public class Eigen2x2 {
         if (b2 != 0 && a2 != 0) { // reduce the second row to 0 in the first #
             a2 = Double.parseDouble(formatting.format(a2 - (a2 * b2)));//MAKE THE FIRST NUMBER 0
         }
-
         double arr[] = {a1, a2, b1, b2}; // reduced matrix
-
         return arr;
     }
 
@@ -140,52 +128,10 @@ public class Eigen2x2 {
                 if (t11 == 0 && t22 == 0) { // if they both zero then one of em is free if first row firsgt number is free if second row second number in vector is free
                     y1[counterUp] = 1;
                 }
-
             }
-
             counterUp++;
             i++;
-
         }
-
         return y1;
-
     }
-
-    public double getX1() {
-        return x1;
-    }
-
-    public void setX1(double x1) {
-        this.x1 = x1;
-    }
-
-    public double getX2() {
-        return x2;
-    }
-
-    public void setX2(double x2) {
-        this.x2 = x2;
-    }
-
-    public double[] getS1() {
-        return s1;
-    }
-
-    public void setS1(double[] s1) {
-        this.s1 = s1;
-    }
-
-    public double[] getS2() {
-        return s2;
-    }
-
-    public void setS2(double[] s2) {
-        this.s2 = s2;
-    }
-
-
 }
-
-
-
