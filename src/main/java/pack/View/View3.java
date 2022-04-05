@@ -123,30 +123,30 @@ public class View3 extends Pane implements iView {
     }
 
 
-   public static void transform() {
+    public static void transform() {
         int n = 1;
         Double[][] constant = new Double[2][1];
 
 
 
-      for(int i=0; i<2;i++) {
-        while (n != 4) {
-            if (n % 2 == 1) {
-                Double d1 = Double.parseDouble(arlines.get(n).getText());
-                Double d2 = Double.parseDouble(arlines.get(n + 6).getText());
-                constant[i][1]=d2-d1;
-                for (int p = 0;p< constant.length; p++) {
+        for(int i=0; i<2;i++) {
+            while (n != 4) {
+                if (n % 2 == 1) {
+                    Double d1 = Double.parseDouble(arlines.get(n).getText());
+                    Double d2 = Double.parseDouble(arlines.get(n + 6).getText());
+                    constant[i][1]=d2-d1;
+                    for (int p = 0;p< constant.length; p++) {
                         System.out.print(constant[p][0] + " ");
 
 
-            }
+                    }
 
-        }
+                }
 
-            n++;  }
+                n++;  }
 
 
-    } }
+        } }
 
 
     public static void toMatrix() {
@@ -173,4 +173,6 @@ public class View3 extends Pane implements iView {
 
 
     }
+
+
 }

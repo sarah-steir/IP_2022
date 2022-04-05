@@ -12,21 +12,19 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Controller.Eigen2x2;
-import pack.Controller.Eigen3x3;
 import pack.Controller.V3Controller;
-import pack.Model.CustomButton;
+import pack.View.Customs.Custom;
+import pack.View.Customs.CustomButton;
 import pack.Model.mainModel;
 import javafx.scene.control.Label;
 import pack.View.GraphView.Graph;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 //import org.apache.commons.lang3.math.NumberUtils;
 
 
 
-import static pack.Model.mainModel.p;
+import static pack.View.Customs.Custom.p;
 
 public interface iView {
     ArrayList<TextField> a = createFields(6,80);
@@ -106,7 +104,7 @@ public interface iView {
 
         Pane graph = new Pane();
         graph.getChildren().add(hraph);
-       // hraph.addLine(new Point3D(12, 42, 65), new Point3D(9, 45, -15));
+        // hraph.addLine(new Point3D(12, 42, 65), new Point3D(9, 45, -15));
         graph.setPrefSize(500, 525);
         graph.setStyle("-fx-background-color: #333335");
         vbLeft.getChildren().addAll(vbUi, graph);
@@ -126,7 +124,7 @@ public interface iView {
         vbPo.setSpacing(15);
         vbPo.setAlignment(Pos.TOP_CENTER);
         vbPo.setStyle("-fx-background-color: #333335");
-        vbPo.getChildren().add(mainModel.setTitle(title));
+        vbPo.getChildren().add(Custom.setTitle(title));
 
         // HBox to hold buttons and logo
         HBox hbBottom = new HBox();
@@ -299,10 +297,10 @@ public interface iView {
     public static ArrayList createSigns(ArrayList<String>st) {
         ArrayList<Label> signs = new ArrayList<Label>();
 
-            for (int j = 0; j < st.size(); j++) {
-                signs.add(new Label(st.get(j)));
-                signs.get(j).setStyle("-fx-text-fill: E7EBEE;");
-            }
+        for (int j = 0; j < st.size(); j++) {
+            signs.add(new Label(st.get(j)));
+            signs.get(j).setStyle("-fx-text-fill: E7EBEE;");
+        }
 
         return signs;
     }
@@ -347,7 +345,7 @@ public interface iView {
 
     }
 
-     static boolean isNumeric(String str) {
+    static boolean isNumeric(String str) {
         try {
             Double.parseDouble(str);
             return true;
@@ -363,72 +361,36 @@ public interface iView {
      *          Check example for view 3 planes, for the radio buttons just check which one is selected
      */
 
-    static void handleButton(int i) {
+    default void handleButton(int i) {
         btnStart.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-        switch (i) {
-            case 1:
+                switch (i) {
+                    case 1:
 
-            case 2:
-                if(View2.getR3().isSelected()) {
-                    Eigen3x3 et = new Eigen3x3(Double.parseDouble(View2.getT1().getText()), Double.parseDouble(View2.getT2().getText()), Double.parseDouble(View2.getT3().getText()), Double.parseDouble(View2.getT4().getText()), Double.parseDouble(View2.getT5().getText()), Double.parseDouble(View2.getT6().getText()), Double.parseDouble(View2.getT7().getText()), Double.parseDouble(View2.getT8().getText()), Double.parseDouble(View2.getT9().getText()));
-                    System.out.println("This is 3x3");
-                    System.out.println("Vector of the eigen value " + et.getX1() + ": " + Arrays.toString(et.getS1()));
-                    System.out.println("Vector of the eigen value " + et.getX2() + ": " + Arrays.toString(et.getS2()));
-                    System.out.println("Vector of the eigen value " + et.getX3() + ": " + Arrays.toString(et.getS3()));
-                    for (Double d : et.getS1()) {
-                        View2.getStr().add(d.toString());
-                    }
-                    for (Double d : et.getS2()) {
-                        View2.getStr2().add(d.toString());
-                    }
-                    for (Double d : et.getS3()) {
-                        View2.getStr3().add(d.toString());
-                    }
-                }
+                    case 2:
 
-                if(View2.getR2().isSelected()) {
+                    case 3:
 
-                    Eigen2x2 et1 = new Eigen2x2(Double.parseDouble(View2.getT1().getText()), Double.parseDouble(View2.getT2().getText()), Double.parseDouble(View2.getT4().getText()), Double.parseDouble(View2.getT5().getText()));
-                    System.out.println("This is 2x2");
-                    System.out.println("Vector of the eigen value " + et1.getX1() + ": " + Arrays.toString(et1.getS1()));
-                    System.out.println("Vector of the eigen value " + et1.getX2() + ": " + Arrays.toString(et1.getS2()));
-                    for (Double d : et1.getS1()) {
-                        View2.getStr().add(d.toString());
-                    }
-                    for (Double d : et1.getS2()) {
-                        View2.getStr2().add(d.toString());
-                    }
-                }
+                        if(View3.r1.isSelected()) {
+                            //  System.out.println(V3Controller.checkzeros(View3.arlines));
+                            //  View3.transform();
+                            //View3.toMatrix();
 
-            case 3:
-
-                if(View3.r1.isSelected()) {
-                  //  System.out.println(V3Controller.checkzeros(View3.arlines));
-                  //  View3.transform();
-                    //View3.toMatrix();
-
-                }
+                        }
 
 
 
-                if(View3.r2.isSelected()) {
-                Random rn = new Random();
-                 int answer = rn.nextInt(10) + 1;
-                V3Controller.transform(View3.arplanes);
-                V3Controller.crossProduct();
-                V3Controller.point(answer);
-                //View3.graph3.addLine(V3Controller.point(95),V3Controller.point(-10));
-                    View3.graph3.addPoint(new Point3D(5,5,5));
+                        if(View3.r2.isSelected()) {
+                            Random rn = new Random();
+                            int answer = rn.nextInt(10) + 1;
+                            V3Controller.transform(View3.arplanes);
+                            V3Controller.crossProduct();
+                            V3Controller.point(answer);
+                            //View3.graph3.addLine(V3Controller.point(95),V3Controller.point(-10));
+                            View3.graph3.addPoint(new Point3D(5,5,5));
 
 
-                break; }}
+                            break; }}
             }});
     }
 }
-
-
-
-
-
-
