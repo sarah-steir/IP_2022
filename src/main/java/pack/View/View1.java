@@ -17,5 +17,6 @@ public class View1 extends Pane implements iView {
     public View1() {
         Pane p=iView.setLeft(twoo,threee,set2Fields(),set3Fields(3,7,b),setRadios(twoo,threee), graph);
         this.getChildren().add(setView("System of Linear Equations",p));
+        iView.handleButton(1);
     }
 }

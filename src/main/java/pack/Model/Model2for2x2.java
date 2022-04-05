@@ -275,7 +275,7 @@ public class Model2for2x2 {
     }
 
     public static void setS1(double[] s1) {
-        Eigen2x2.s1 = s1;
+        Model2for2x2.s1 = s1;
     }
 
     public static double[] getS2() {
@@ -283,6 +283,6 @@ public class Model2for2x2 {
     }
 
     public static void setS2(double[] s2) {
-        Eigen2x2.s2 = s2;
+        Model2for2x2.s2 = s2;
     }
 }
