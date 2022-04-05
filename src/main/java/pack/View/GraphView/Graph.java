@@ -70,10 +70,7 @@ public class Graph extends Group {
     ObservableList<Node> labelsList = FXCollections.observableArrayList();
 
     public Graph() {
-
-
         axisList = getAxis();
-
         this.update();
 
         Scale mirror = new Scale(1, -1, -1);
