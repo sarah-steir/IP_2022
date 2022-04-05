@@ -1,9 +1,7 @@
 package pack.Model;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Scanner;
 
-public class Eigen3x3 {
+public class Model2for3x3 {
 
     // idk if i need all of this
     private double x1, x2, x3; // eigenvalues
@@ -20,7 +18,7 @@ public class Eigen3x3 {
 
     static final DecimalFormat formatting = new DecimalFormat("0.0000"); // format the number to 4 decimals
 
-    public Eigen3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3) {
+    public Model2for3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3) {
         this.a1 = a1;
         this.a2 = a2;
         this.a3 = a3;
