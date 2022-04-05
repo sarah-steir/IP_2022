@@ -220,4 +220,9 @@ public class Xform extends Group {
                 ip.getY() + ", " +
                 ip.getZ() + ")]";
     }
+
+    public void setPivot( double x, double y) {
+        setTranslateX(getTranslateX()-x);
+        setTranslateY(getTranslateY()-y);
+    }
 }
