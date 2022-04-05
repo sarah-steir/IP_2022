@@ -15,7 +15,11 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import pack.Model.CustomText;
 
+
 public class Graph extends Group {
+
+    //TODO Make the line longer
+    //TODO Make plane more rectanglish
 
     /***
      * Elements to include in the graph :
@@ -23,12 +27,18 @@ public class Graph extends Group {
      * Big cube so the user can use it to move around ✅
      * Axis ✅
      * Line given 2 Point3D ✅
-     *      A label for the line
-     * Plane given a Point3D (a, b, c) and d (ax + by + cz = d)
+     *      A label for the line ✅
+     * Plane given 3 Point3D (a, b, c) ✅
      *      A label for the graph
-     * Point given well Point3D dumbass
-     *      A label for the point
-     -     */
+     * Point given well Point3D dumbass ✅
+     *      A label for the point ✅
+     *
+     *      Fix the line
+     *      Fix the labels
+     *      Fix the plane ?
+     *          Make it make sense (rectangle)
+     *          Render ?
+     */
 
     double mousePosX;
     double mousePosY;
@@ -62,23 +72,7 @@ public class Graph extends Group {
 
     public Graph() {
         axisList = getAxis();
-
-        Point3D point1 = new Point3D(120, -24, -136);
-        Point3D point2 = new Point3D(150, -45, 190);
-        Point3D point3 = new Point3D(-65, 38, -50);
-
-        this.addPlane(point1, point2, point3);
-
-        this.addPoint(point1);
-        this.addPoint(point2);
-        this.addPoint(point3);
-
-//        this.addLine(new Point3D(21, -64, 4), new Point3D(9, 45, -15));
-//        this.addLine(new Point3D(65, -97, 3), new Point3D(67, 2, 9));
-        scalable.getChildren().addAll(axisList);
-        scalable.getChildren().addAll(thingsToGraphList);
-        scalable.getChildren().addAll(labelsList);
-        scalable.getChildren().add(map);
+        this.update();
 
         Scale mirror = new Scale(1, -1, -1);
         scalable.getTransforms().add(mirror);
@@ -211,14 +205,13 @@ public class Graph extends Group {
         sphere.setTranslateZ(point.getZ());
         createPointLabel(point);
         addPointToList(sphere);
+        System.out.println("The point was added you bitch");
     }
 
     public void addLine(Point3D point1, Point3D point2) {
-
-        Line line = new Line();
         double dist = point1.distance(point2);
 
-        line = new Line(0, 0, dist, 0);
+        Line line = new Line(0, 0, dist, 0);
 
         Point3D vector = point2.subtract(point1);
 
@@ -235,12 +228,11 @@ public class Graph extends Group {
         Translate tt = new Translate(point1.getX(), point1.getY(), point1.getZ());
         line.getTransforms().addAll(tt, yRotate, xRotate);
 
-        //        System.out.println("l(t) = (" + (int) point1.getX() + ", " + (int) point1.getY() + ", " + (int) point1.getZ() + ") + t <" + (int) point2.getX() + ", " + (int) point2.getY() + ", " + (int) point2.getZ() + ">");
         createLineLabel(point1, point2);
         addLineToList(line);
     }
 
-    public void addPlane(Point3D point1, Point3D point2, Point3D point3) {
+    public void addPlane(Point3D point1, Point3D point2, Point3D point3, String equation) {
 
         Circle rectangle = new Circle(500);
 
@@ -260,8 +252,12 @@ public class Graph extends Group {
 
         rectangle.getTransforms().add(new Translate(newX, newY, newZ));
         rectangle.getTransforms().addAll(rotateX, rotateY, rotateZ);
+//        rectangle.setTranslateX(500);
+//        rectangle.setTranslateY(500);
 
         this.addPlaneToList(rectangle);
+        this.createPlaneLabel(triangleCenter, equation);
+        System.out.println("IS THE PLANE HERE PLEASE SAY YES");
     }
 
     public Point3D getCenter(Point3D point1, Point3D point2, Point3D point3) {
@@ -281,7 +277,7 @@ public class Graph extends Group {
         thingsToGraphList.add(sphere);
         switch (thingsToGraphList.size()) {
             case 1:
-                System.out.println("hehe the liane should be  red");
+                System.out.println("hehe the line should be red");
                 sphere.setMaterial(new PhongMaterial(red));
                 break;
             case 2:
@@ -294,6 +290,7 @@ public class Graph extends Group {
                 sphere.setMaterial(new PhongMaterial(white));
                 break;
         }
+        this.update();
     }
 
     public void addLineToList(Line line) {
@@ -312,6 +309,7 @@ public class Graph extends Group {
                 line.setStroke(white);
                 break;
         }
+        this.update();
     }
 
     public void addPlaneToList(Circle rectangle) {
@@ -319,18 +317,23 @@ public class Graph extends Group {
         thingsToGraphList.add(rectangle);
         switch (thingsToGraphList.size()) {
             case 1:
+                System.out.println("case 1");
                 rectangle.setFill(red);
                 break;
             case 2:
                 rectangle.setFill(yellow);
+                System.out.println("case 2");
                 break;
             case 3:
                 rectangle.setFill(blue);
+                System.out.println("case 3");
                 break;
             default:
                 rectangle.setFill(white);
+                System.out.println("case white");
                 break;
         }
+        this.update();
     }
 
     private void createPointLabel(Point3D point) {
@@ -351,8 +354,13 @@ public class Graph extends Group {
         labelsList.add(label);
     }
 
-    private void createPlaneLabel() {
-
+    private void createPlaneLabel(Point3D point, String equation) {
+        Text label = new CustomText(equation);
+        label.setScaleY(-1);
+        label.setTranslateX(point.getX());
+        label.setTranslateY(point.getY());
+        label.setTranslateZ(point.getZ());
+        labelsList.add(label);
     }
 
     private void setCameraFromViewPoint(double x, double y, double z) {
@@ -389,6 +397,14 @@ public class Graph extends Group {
         setCameraFromViewPoint(-0, -0, 300);
     }
 
+    public void update() {
+        scalable.getChildren().clear();
+        scalable.getChildren().addAll(axisList);
+        scalable.getChildren().add(map);
+        scalable.getChildren().addAll(thingsToGraphList);
+        scalable.getChildren().addAll(labelsList);
+    }
+
     public static double clamp( double value, double min, double max) {
         if( Double.compare(value, min) < 0)
             return min;
@@ -401,4 +417,3 @@ public class Graph extends Group {
 //    Text text = new Text(0, 0,
 //            String.format("(%1$d,%2$d,%3$d)", x, y,z));
 //                    text.setScaleY(-1);
-
