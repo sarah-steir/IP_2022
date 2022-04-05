@@ -403,8 +403,8 @@ public interface iView {
                     case 3:
 
                         if(View3.r1.isSelected()) {
-                            //  System.out.println(V3Controller.checkzeros(View3.arlines));
-                            //  View3.transform();
+                              System.out.println(V3Controller.checkzeros(View3.arlines));
+                              View3.transform();
                             //View3.toMatrix();
 
                         }
