@@ -27,28 +27,21 @@ import static pack.Model.mainModel.p;
 
 public interface iView {
 
-    CustomButton btnStart = new CustomButton("Start\nthe\nMAGIK");
-    CustomButton btnReset = new CustomButton("Reset\nthe\nMAGIK");
-
     default Pane setView(String title, CustomRadioButton rb1, CustomRadioButton rb2) {
         Pane pane = new Pane();
         pane.setPrefSize(1050, 750);
         pane.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
         pane.getChildren().addAll(setLeft(rb1, rb2), setRight(title));
 
-        btnReset.setOnAction(event -> {
-            pane.getChildren().clear();
-            rb1.setSelected(false);
-            rb2.setSelected(false);
-            pane.getChildren().addAll(setLeft(rb1, rb2), setRight(title));
-        });
-
         return pane;
     }
 
     // All these are just UI it sets the panes and nodes on the right place
     default HBox setButtons() {
+        CustomButton btnStart = new CustomButton("Start\nthe\nMAGIK");
         btnStart.setMinSize(115, 105);
+
+        CustomButton btnReset = new CustomButton("Reset\nthe\nMAGIK");
         btnReset.setMinSize(115, 105);
 
         HBox hbButtons = new HBox();
@@ -56,6 +49,7 @@ public interface iView {
         hbButtons.getChildren().addAll(btnStart, btnReset);
         return hbButtons;
     }
+
 
     default ImageView setLogo() {
         ImageView iv = new ImageView(new Image(p + "Logo.png"));
@@ -173,7 +167,15 @@ public interface iView {
                 int finalI = i;
                 int finalJ = j;
 
-                fieldList[i][j].setOnAction(event -> btnStart.setDisable(fieldList[finalI][finalJ].checkField()));
+                btnStart.setOnAction(event -> {
+                    for (CustomTextField[] tfArray: fieldList) {
+                        for (CustomTextField tf: tfArray) {
+                            btnStart.setDisable(tf.checkField());
+                        }
+                    }
+                });
+
+                fieldList[i][j].textProperty().addListener((observable, oldValue, newValue) -> btnStart.setDisable(fieldList[finalI][finalJ].checkField()));
 
                 hbTextField.getChildren().addAll(fieldList[i][j], lblVariable);
                 gridPane.add(hbTextField, j, i);
@@ -181,6 +183,8 @@ public interface iView {
         }
         return gridPane;
     }
+
+
 }
 
 

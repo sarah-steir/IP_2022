@@ -12,7 +12,7 @@ public class CustomTextField extends TextField {
     }
 
     public boolean checkField() {
-        if (!isNumeric(this.getText())) {
+        if (!isNumeric(this.getText()) || this.getText().isEmpty()) {
             this.setStyle("-fx-background-color: red");
             return true;
         } else {
