@@ -6,17 +6,17 @@ import java.util.Scanner;
 public class Eigen3x3 {
 
     // idk if i need all of this
-    private double x1, x2, x3;
-    private double first, second, third, fourth;
-    private double e1, e2, e3;
-    private double a1, a2, a3;
-    private double b1, b2, b3;
-    private double c1, c2, c3;
-    private double a1Initial, a2Initial, a3Initial;
-    private double b1Initial, b2Initial, b3Initial;
-    private double c1Initial, c2Initial, c3Initial;
-    double m1[], m2[], m3[];
-    static double[] s1,s2, s3;
+    private double x1, x2, x3; // eigenvalues
+    private double first, second, third, fourth; //cubic function
+    private double e1, e2, e3; // to hold values in the reduce matrix
+    private double a1, a2, a3; // first line of matrix
+    private double b1, b2, b3;//second line
+    private double c1, c2, c3;// third line
+    private double a1Initial, a2Initial, a3Initial; // hold initiql value first row
+    private double b1Initial, b2Initial, b3Initial;// hold initial value second row
+    private double c1Initial, c2Initial, c3Initial;// hold initial value third row
+    double m1[], m2[], m3[]; // reduced matrix
+    static double[] s1,s2, s3;//eigenvectors
 
 
 
@@ -47,6 +47,7 @@ public class Eigen3x3 {
 
     }
 
+    // find the cubic equation
     private void findTheCubicEquation3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3) {
         //additions
         //SEPARATED A1*B2*C3 according to the exponent of lambda
@@ -75,7 +76,7 @@ public class Eigen3x3 {
         first = toTheCube; // x^3
 
     }
-
+// get the roots so the eigenvalues
     private void roots3x3(double a, double b, double c, double d) {
 
         if (a == 0.0){
@@ -131,7 +132,7 @@ public class Eigen3x3 {
         x3 = Double.parseDouble(formatting.format(x3));
 
     }
-
+// find the eigenvectors and finds reduce matrix PUTS EVERYTHING TOGETHER
     private void answers3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3, double x1, double x2, double x3) {
         double aa1 = a1Initial - x1;//WITH FIRST LAMBA
         double bb2 = b2Initial - x1;//WITH FIRST LAMBA
@@ -152,7 +153,7 @@ public class Eigen3x3 {
         s3 = findEigenVectors3x3(m3);
 
     }
-
+// reduces the matrix
     private double[] reduceMatrix3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3) {
         a1 = Double.parseDouble(formatting.format(a1)); // format everything
         a2 = Double.parseDouble(formatting.format(a2));
@@ -261,7 +262,7 @@ public class Eigen3x3 {
 
         return arr;
     }
-
+// find eigenvectors
     private double[] findEigenVectors3x3(double[] v1) {
         double[] y1 = new double[3]; // if only one vector for that one eigen value
         double[] y2 = new double[6];// if two vectors for that one eigen value
