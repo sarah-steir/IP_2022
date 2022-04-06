@@ -29,7 +29,7 @@ public class View3 extends Pane implements iView {
         this.getChildren().add(setView("Lines And THe PLanes shit", p));
         handleButton(3);
         //graph3.addPlane(new Point3D(0,0,20),new Point3D(0,50,0),new Point3D(30,10,10),"fjdkskfkjsfjk");
-      //  graph3.addLine(new Point3D(0, 0, 20), new Point3D(0, 50, 0));
+        //  graph3.addLine(new Point3D(0, 0, 20), new Point3D(0, 50, 0));
     }
 
     public static ArrayList<String> signs(String l, String l2) {
