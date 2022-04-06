@@ -150,14 +150,14 @@ public class Graph extends Group {
 
         ObservableList<Node> axisList = FXCollections.observableArrayList();
 
-        Cylinder xAxis = new Cylinder(1.5, 1000);
-        xAxis.setMaterial(new PhongMaterial(white));
+        Cylinder xAxis = new Cylinder(1.5, 3000);
+        xAxis.setMaterial(new PhongMaterial(Color.RED));
         xAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(1, 0, 0)));
-        Cylinder yAxis = new Cylinder(1.5, 1000);
-        yAxis.setMaterial(new PhongMaterial(white));
+        Cylinder yAxis = new Cylinder(1.5, 3000);
+        yAxis.setMaterial(new PhongMaterial(Color.GREEN));
         yAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(0, 1, 0)));
-        Cylinder zAxis = new Cylinder(1.5, 1000);
-        zAxis.setMaterial(new PhongMaterial(white));
+        Cylinder zAxis = new Cylinder(1.5, 3000);
+        zAxis.setMaterial(new PhongMaterial(Color.BLUE));
         zAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(0, 0, 1)));
 
         Xform axes = new Xform();
@@ -174,7 +174,6 @@ public class Graph extends Group {
         sphere.setTranslateZ(point.getZ());
         createPointLabel(point);
         addPointToList(sphere);
-        System.out.println("The point was added you bitch");
     }
 
     public void addLine(Point3D point1, Point3D point2) {
@@ -250,7 +249,6 @@ public class Graph extends Group {
 
         this.addPlaneToList(rectangle);
         this.createPlaneLabel(triangleCenter, equation);
-        System.out.println("IS THE PLANE HERE PLEASE SAY YES");
     }
 
     public Point3D getCenter(Point3D point1, Point3D point2, Point3D point3) {
@@ -270,7 +268,6 @@ public class Graph extends Group {
         thingsToGraphList.add(sphere);
         switch (thingsToGraphList.size()) {
             case 1:
-                System.out.println("hehe the line should be red");
                 sphere.setMaterial(new PhongMaterial(red));
                 break;
             case 2:
@@ -310,20 +307,16 @@ public class Graph extends Group {
         thingsToGraphList.add(rectangle);
         switch (thingsToGraphList.size()) {
             case 1:
-                System.out.println("case 1");
                 rectangle.setFill(red);
                 break;
             case 2:
                 rectangle.setFill(yellow);
-                System.out.println("case 2");
                 break;
             case 3:
                 rectangle.setFill(blue);
-                System.out.println("case 3");
                 break;
             default:
                 rectangle.setFill(white);
-                System.out.println("case white");
                 break;
         }
         this.update();
@@ -386,12 +379,12 @@ public class Graph extends Group {
 
         camera.setNearClip(CAMERA_NEAR_CLIP);
         camera.setFarClip(CAMERA_FAR_CLIP);
-
-        setCameraFromViewPoint(-0, -0, 300);
+        setCameraFromViewPoint(100, 100, 300);
     }
 
     public void update() {
         scalable.getChildren().clear();
+        scalable.getChildren().add(new AmbientLight());
         scalable.getChildren().addAll(axisList);
         scalable.getChildren().add(map);
         scalable.getChildren().addAll(thingsToGraphList);
