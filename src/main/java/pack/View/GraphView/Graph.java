@@ -17,34 +17,9 @@ import pack.View.Customs.CustomText;
 
 public class Graph extends Group {
 
-    //TODO Make the line longer
-    //TODO Make plane more rectanglish
-
-    /***
-     * Elements to include in the graph :
-     *
-     * Big cube so the user can use it to move around ✅
-     * Axis ✅
-     * Line given 2 Point3D ✅
-     *      A label for the line ✅
-     * Plane given 3 Point3D (a, b, c) ✅
-     *      A label for the graph
-     * Point given well Point3D dumbass ✅
-     *      A label for the point ✅
-     *
-     *      Fix the line
-     *      Fix the labels
-     *      Fix the plane ?
-     *          Make it make sense (rectangle)
-     *          Render ?
-     */
-
-    double mousePosX;
-    double mousePosY;
-    double mouseOldX;
-    double mouseOldY;
-    double mouseDeltaX;
-    double mouseDeltaY;
+    double mousePosX, mousePosY;
+    double mouseOldX, mouseOldY;
+    double mouseDeltaX, mouseDeltaY;
 
     private static final double CAMERA_NEAR_CLIP = 0.1;
     private static final double CAMERA_FAR_CLIP = 1000.0;
@@ -198,30 +173,6 @@ public class Graph extends Group {
 
         createLineLabel(point1, point2);
         addLineToList(line);
-    }
-
-    public Line addSingularLine(Point3D point1, Point3D point2) {
-
-        double dist = point1.distance(point2);
-
-        Line line = new Line(0, 0, dist, 0);
-
-        Point3D vector = point2.subtract(point1);
-
-        double x = vector.getX() + 0.0;
-        double y = vector.getY() + 0.0;
-        double z = vector.getZ() + 0.0;
-
-        double ry = Math.toDegrees(Math.atan2(-z, x));
-        Rotate yRotate = new Rotate(ry, Rotate.Y_AXIS);
-
-        double rx = Math.toDegrees(Math.asin(y / dist));
-        Rotate xRotate = new Rotate(rx, Rotate.Z_AXIS);
-
-        Translate tt = new Translate(point1.getX(), point1.getY(), point1.getZ());
-        line.getTransforms().addAll(tt, yRotate, xRotate);
-
-        return line;
     }
 
     public void addPlane(Point3D point1, Point3D point2, Point3D point3, String equation) {
