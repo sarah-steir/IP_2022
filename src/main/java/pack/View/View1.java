@@ -3,11 +3,15 @@ package pack.View;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import pack.Controller.Controller1;
 import pack.View.Customs.CustomRadioButton;
 import pack.View.GraphView.Graph;
 
 import java.util.ArrayList;
 public class View1 extends Pane implements iView {
+
+    Controller1 controller = new Controller1(this);
+
     public static RadioButton twoo= new CustomRadioButton("2 x 2");
     public static RadioButton threee= new CustomRadioButton("3 x 3");
     ArrayList<TextField> a=iView.createFields(6,80); //fields for 2by2

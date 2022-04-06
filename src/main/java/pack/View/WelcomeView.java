@@ -33,11 +33,11 @@ public class WelcomeView extends Pane {
         VBox boxyy = new VBox();
 
         Button button1 = new CustomButton("Systems of Linear Equations");
-        button1.setOnAction(e -> main.playAnimation(new View1()));
+        button1.setOnAction(e -> main.playAnimation(main.view1));
         Button button2 = new CustomButton("EigenValues & EigenVectors");
-        button2.setOnAction(e -> main.playAnimation(new View2()));
+        button2.setOnAction(e -> main.playAnimation(main.view2));
         Button button3 = new CustomButton("Lines and Planes");
-        button3.setOnAction(e -> main.playAnimation(new View3()));
+        button3.setOnAction(e -> main.playAnimation(main.view3));
 
         boxyy.setSpacing(20);
         boxyy.getChildren().addAll(button1, button2, button3);

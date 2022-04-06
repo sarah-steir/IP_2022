@@ -9,11 +9,15 @@ import javafx.scene.control.TextField;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import pack.Controller.Controller3;
 import pack.View.GraphView.Graph;
 
 import java.util.ArrayList;
 
 public class View3 extends Pane implements iView {
+
+    Controller3 controller = new Controller3(this);
+
     public static RadioButton r1 = new RadioButton("Lines");
     public static RadioButton r2 = new RadioButton("Planes");
     Node n = setRadios(r1, r2);
@@ -26,9 +30,10 @@ public class View3 extends Pane implements iView {
         iView.createSigns(3);
         Pane p = iView.setLeft(r1, r2, lines(), set3Fields(2, 7, arplanes), setRadios(r1, r2), graph3);
         this.getChildren().add(setView("Lines And THe PLanes shit", p));
-        handleButton(3);
-        //graph3.addPlane(new Point3D(0,0,20),new Point3D(0,50,0),new Point3D(30,10,10),"fjdkskfkjsfjk");
+        //iView.handleButton(3);
+        graph3.addPlane(new Point3D(10,540,20),new Point3D(31,500,67),new Point3D(30,10,10),"fjdkskfkjsfjk");
         graph3.addLine(new Point3D(0, 0, 20), new Point3D(0, 50, 0));
+        graph3.addPoint(new Point3D(-122, 65, -76));
     }
 
     public static ArrayList<String> signs(String l, String l2) {

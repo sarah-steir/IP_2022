@@ -12,7 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Controller.V3Controller;
+import pack.Model.Model3;
 import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
 import javafx.scene.control.Label;
@@ -25,13 +25,24 @@ import static pack.View.Customs.Custom.p;
 public interface iView {
     ArrayList<TextField> a = createFields(6,80);
     ArrayList<TextField> b = createFields(12,80);
-    Button btnStart = new CustomButton("Start\nthe\n MAGIK");
+
+    static Button[] getButtons() {
+        Button btnStart = new CustomButton("Start\nthe\n MAGIK");
+        Button btnReset = new CustomButton("Reset\nthe\nMAGIK");
+        btnStart.setMinSize(115, 105);
+        btnReset.setMinSize(115, 105);
+        Button[] btns = new Button[2];
+        btns[0] = btnStart;
+        btns[1] = btnReset;
+        return btns;
+    }
 
     //All these are just UI it sets the panes and nodes on the right place
     default HBox setButtons() {
-        btnStart.setMinSize(115, 105);
-        Button btnReset = new CustomButton("Reset\nthe\nMAGIK");
-        btnReset.setMinSize(115, 105);
+        Button[] btns = getButtons();
+        Button btnStart = btns[0];
+        Button btnReset = btns[1];
+
         HBox hbButtons = new HBox();
         hbButtons.setSpacing(10);
         hbButtons.getChildren().addAll(btnStart, btnReset);
@@ -332,11 +343,11 @@ public interface iView {
         }
 
         if (booleans.contains(false)) {
-            btnStart.setDisable(true);
+            //btnStart.setDisable(true);
         }
 
         if (!booleans.contains(false)) {
-            btnStart.setDisable(false);
+            //btnStart.setDisable(false);
         }
 
     }
@@ -357,36 +368,36 @@ public interface iView {
      *          Check example for view 3 planes, for the radio buttons just check which one is selected
      */
 
-    default void handleButton(int i) {
-        btnStart.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                switch (i) {
-                    case 1:
-
-                    case 2:
-
-                    case 3:
-
-                        if(View3.r1.isSelected()) {
-                            //  System.out.println(V3Controller.checkzeros(View3.arlines));
-                            //  View3.transform();
-                            //View3.toMatrix();
-
-                        }
-
-
-
-                        if(View3.r2.isSelected()) {
-                            Random rn = new Random();
-                            int answer = rn.nextInt(10) + 1;
-                            V3Controller.transform(View3.arplanes);
-                            V3Controller.crossProduct();
-                            V3Controller.point(answer);
-                            //View3.graph3.addLine(V3Controller.point(95),V3Controller.point(-10));
-                            View3.graph3.addPoint(new Point3D(5,5,5));
-
-
-                            break; }}
-            }});
-    }
+//    default void handleButton(int i) {
+//        btnStart.setOnAction(new EventHandler<ActionEvent>() {
+//            public void handle(ActionEvent e) {
+//                switch (i) {
+//                    case 1:
+//
+//                    case 2:
+//
+//                    case 3:
+//
+//                        if(View3.r1.isSelected()) {
+//                              System.out.println(Model3.checkzeros(View3.arlines));
+//                              View3.transform();
+//                            //View3.toMatrix();
+//
+//                        }
+//
+//
+//
+//                        if(View3.r2.isSelected()) {
+//                            Random rn = new Random();
+//                            int answer = rn.nextInt(10) + 1;
+//                            Model3.transform(View3.arplanes);
+//                            Model3.crossProduct();
+//                            Model3.point(answer);
+//                            //View3.graph3.addLine(V3Controller.point(95),V3Controller.point(-10));
+//                            View3.graph3.addPoint(new Point3D(5,5,5));
+//
+//
+//                            break; }}
+//            }});
+//    }
 }
