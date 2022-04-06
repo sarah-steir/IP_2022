@@ -259,7 +259,7 @@ public interface iView {
     }
 
     //Create signs x,y, z and = to add to the pane (UI related)
-    public static ArrayList createSigns(int i) {
+    public static ArrayList<Label> createSigns(int i) {
         ArrayList<Label> signs = new ArrayList<Label>();
 
         if (i == 2) {
@@ -279,18 +279,32 @@ public interface iView {
                 signs.add(x);
                 signs.add(y);
                 signs.add(z);
-            }
+            }  }
+
+
+            if (i == 4) {
+                for (int j = 0; j < 3; j++) {
+                    Label x = new Label("X +");
+                    Label y = new Label("Y +");
+                    Label z = new Label("Z +");
+                    Label eq = new Label("= 0");
+                    signs.add(x);
+                    signs.add(y);
+                    signs.add(z);
+                    signs.add(eq);
+                }
         }
 
         int c = 0;
         while (c != signs.size()) {
+            signs.get(c).setFont(Custom.font);
             signs.get(c).setStyle("-fx-text-fill: E7EBEE;");
             c++;
         }
         return signs;
     }
 
-    public static ArrayList createSigns(ArrayList<String>st) {
+    static ArrayList createSigns(ArrayList<String> st) {
         ArrayList<Label> signs = new ArrayList<Label>();
 
         for (int j = 0; j < st.size(); j++) {
@@ -368,13 +382,7 @@ public interface iView {
                     case 3:
 
                         if(View3.r1.isSelected()) {
-                            //  System.out.println(V3Controller.checkzeros(View3.arlines));
-                            //  View3.transform();
-                            //View3.toMatrix();
-
-                        }
-
-
+                           V3Controller.linesMath(View3.input(),View3.constants());}
 
                         if(View3.r2.isSelected()) {
                             Random rn = new Random();
@@ -382,11 +390,10 @@ public interface iView {
                             V3Controller.transform(View3.arplanes);
                             V3Controller.crossProduct();
                             V3Controller.point(answer);
-                            //View3.graph3.addLine(V3Controller.point(95),V3Controller.point(-10));
-                            View3.graph3.addPoint(new Point3D(5,5,5));
-
-
-                            break; }}
+                            View3.graph3.addLine(V3Controller.point(95),V3Controller.point(-10)); }}
             }});
     }
+
+
+
 }

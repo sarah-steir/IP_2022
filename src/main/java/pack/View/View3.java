@@ -19,16 +19,17 @@ public class View3 extends Pane implements iView {
     Node n = setRadios(r1, r2);
     public static ArrayList<TextField> arplanes = iView.createFields(8, 80);
     public static ArrayList<TextField> arlines = iView.createFields(12, 30);
-    public static ArrayList<Label> labeling = iView.createSigns(signs("s+ ", "t+ "));
+    public  ArrayList<Label> labeling = iView.createSigns(signs("s+ ", "t+ "));
     public static Graph graph3 = new Graph();
+    public static ArrayList planeSigns=iView.createSigns(4);
 
     public View3() {
         iView.createSigns(3);
-        Pane p = iView.setLeft(r1, r2, lines(), set3Fields(2, 7, arplanes), setRadios(r1, r2), graph3);
+        Pane p = iView.setLeft(r1, r2, lines(), planes(), setRadios(r1, r2), graph3);
         this.getChildren().add(setView("Lines And THe PLanes shit", p));
         handleButton(3);
         //graph3.addPlane(new Point3D(0,0,20),new Point3D(0,50,0),new Point3D(30,10,10),"fjdkskfkjsfjk");
-        graph3.addLine(new Point3D(0, 0, 20), new Point3D(0, 50, 0));
+      //  graph3.addLine(new Point3D(0, 0, 20), new Point3D(0, 50, 0));
     }
 
     public static ArrayList<String> signs(String l, String l2) {
@@ -107,6 +108,75 @@ public class View3 extends Pane implements iView {
         return twoByTwo;
     }
 
+    public static GridPane planes() {
+        ArrayList planeSigns=iView.createSigns(4);
+        GridPane paprika = new GridPane();
+        paprika.setVgap(10);
+        paprika.setHgap(10);
+        paprika.setAlignment(Pos.BOTTOM_CENTER);
+        int acounter = 0; //max 5
+        int i = 0; //max 11 (for textfields)
+        int j = 0;
+        int row = 0; //max 11
+        int n = 0;
+
+        while (n != 2) {
+            while (row != 8) {
+                if (row % 2 == 1) {
+                    if (i != 4 * n + 4) {
+                        paprika.add((Node) planeSigns.get(i), row, n);
+                        i++;
+                        row++;
+                    }
+                }
+                if (row % 2 == 0) {
+                    if (j != 4 * n + 4) {
+                        paprika.add((Node) View3.arplanes.get(j), row, n);
+                        j++;
+                        row++;
+                    }
+                }
+            }
+            n++;
+            row = 0;
+
+
+        }
+        iView.checkFields(View3.arplanes);
+        return paprika;
+    }
+
+
+
+
+    public static double[][] constants() {
+        int n = 1;
+        double[][] constant = new double[2][1];
+
+        double d1 = Double.parseDouble(arlines.get(1).getText());
+        double d2 = Double.parseDouble(arlines.get(7).getText());
+        double d3 = Double.parseDouble(arlines.get(3).getText());
+        double d4 = Double.parseDouble(arlines.get(9).getText());
+        constant[0][0]=d2-d1;
+        constant[1][0]=d4-d3;
+        return constant;}
+
+    public static double[][] input() {
+        double[][] arr = new double[2][2];
+        double d1 = Double.parseDouble(arlines.get(0).getText());
+        arr[0][0] = d1;
+        double d2 = Double.parseDouble(arlines.get(2).getText());
+        arr[1][0] = d2;
+        double d3 = Double.parseDouble(arlines.get(6).getText());
+        arr[0][1] = d3;
+        double d4 = Double.parseDouble(arlines.get(8).getText());
+        arr[1][1] = d4;
+
+
+
+        return arr;
+    }
+
     public static void transform() {
         int n = 1;
         Double[][] constant = new Double[2][1];
@@ -115,7 +185,7 @@ public class View3 extends Pane implements iView {
                 if (n % 2 == 1) {
                     Double d1 = Double.parseDouble(arlines.get(n).getText());
                     Double d2 = Double.parseDouble(arlines.get(n + 6).getText());
-                    constant[i][1]=d2-d1;
+                    constant[i][0]=d2-d1;
                     for (int p = 0;p< constant.length; p++) {
                         System.out.print(constant[p][0] + " ");
                     }
