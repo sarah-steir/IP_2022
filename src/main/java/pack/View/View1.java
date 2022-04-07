@@ -1,9 +1,6 @@
 package pack.View;
 
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.Pane;
 import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
 

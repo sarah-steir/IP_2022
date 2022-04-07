@@ -166,10 +166,10 @@ import java.text.DecimalFormat;
 public class Model1 {
     static final DecimalFormat formatting = new DecimalFormat("0.000");// format the number to 3 decimals
     private double e1, e2, e3, e4; // to hold values in the reduce matrix
-    private double a1, a2, a3;
-    private double b1, b2, b3;
-    private double c1, c2, c3;
-    private double d1, d2, d3;
+    private double a1, a2, a3; // Row 1
+    private double b1, b2, b3; // Row 2
+    private double c1, c2, c3; // Row 3
+    private double d1, d2, d3; // Last Column
 
     public Model1(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3, double d1, double d2, double d3) {
         this.a1 = a1;
