@@ -80,6 +80,12 @@ public class Model1 {
             a2 = Double.parseDouble(formatting.format(a2 - (a2 * b2)));//MAKE THE FIRST NUMBER 0
             d1 = Double.parseDouble(formatting.format(d1 - (d2 * b2)));
         }
+        setA1(a1);
+        setA2(a2);
+        setB1(b1);
+        setB2(b2);
+        setD1(d1);
+        setD2(d2);
         double arr[] = {a1, a2, b1, b2, d1, d2}; // reduced matrix
         return arr;
     }
