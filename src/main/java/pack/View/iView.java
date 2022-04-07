@@ -76,51 +76,6 @@ public interface iView {
         return vbRadioBox;
     }
 
-    /*public static VBox setLeft(RadioButton r1, RadioButton r2, GridPane g1, GridPane g2, Node setR, Graph hraph) {
-        VBox vbLeft = new VBox();
-        vbLeft.setSpacing(10);
-        vbLeft.setPrefSize(500, 695);
-        vbLeft.setLayoutX(10);
-        vbLeft.setLayoutY(14);
-
-        // User Input Box
-        VBox vbUi = new VBox();
-        vbUi.setSpacing(15);
-        vbUi.setPrefSize(500, 160);
-        vbUi.setStyle("-fx-background-color: #333335"); // Grey
-        vbUi.getChildren().addAll(setR);
-
-        r1.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                if (r1.isSelected()) {
-                    vbUi.getChildren().clear();
-                    vbUi.getChildren().addAll(setR);
-                    vbUi.getChildren().add(g1);
-                }
-            }
-        });
-
-        r2.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                if (r2.isSelected()) {
-                    vbUi.getChildren().clear();
-                    vbUi.getChildren().addAll(setR);
-                    vbUi.getChildren().add(g2);
-                }
-            }
-        });
-
-        // Graph Box
-
-        Pane graph = new Pane();
-        graph.getChildren().add(hraph);
-        // hraph.addLine(new Point3D(12, 42, 65), new Point3D(9, 45, -15));
-        graph.setPrefSize(500, 525);
-        graph.setStyle("-fx-background-color: #333335");
-        vbLeft.getChildren().addAll(vbUi, graph);
-        return vbLeft;
-    }*/
-
     default HBox setButtons(CustomButton btnStart, CustomButton btnReset) {
         btnStart.setMinSize(115, 105);
         btnReset.setMinSize(115, 105);
