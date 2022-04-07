@@ -37,7 +37,7 @@ public class MainController {
         ImageView iv = new ImageView(new Image(p + "LSEQuestions.png"));
         Stage stage = new Stage();
         stage.setScene(new Scene(new Pane(iv)));
-        stage.setTitle("Linear System of Equations 101 aka go back to Linear Algebra if you don't know this");
+        stage.setTitle("Linear System of Equations 101");
         stage.show();
     }
 
@@ -45,7 +45,7 @@ public class MainController {
         ImageView iv = new ImageView(new Image(p + "EigenQuestions.png"));
         Stage stage = new Stage();
         stage.setScene(new Scene(new Pane(iv)));
-        stage.setTitle("EigenValues & EigenVectors 101 aka go back to Linear Algebra if you don't know this");
+        stage.setTitle("EigenValues & EigenVectors 101");
         stage.show();
     }
 
@@ -53,7 +53,7 @@ public class MainController {
         ImageView iv = new ImageView(new Image(p + "LinesQuestions.png"));
         Stage stage = new Stage();
         stage.setScene(new Scene(new Pane(iv)));
-        stage.setTitle("Lines & Planes 101 aka go back to Linear Algebra if you don't know this");
+        stage.setTitle("Lines & Planes 101");
         stage.show();
     }
 

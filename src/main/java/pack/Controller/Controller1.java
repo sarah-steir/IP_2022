@@ -1,8 +1,5 @@
 package pack.Controller;
 
-import com.sun.tools.javac.Main;
-import pack.Model.Model1;
-import pack.View.Customs.CustomText;
 import pack.View.Customs.CustomTextField;
 import pack.View.View1;
 
