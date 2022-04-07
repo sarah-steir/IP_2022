@@ -15,36 +15,12 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import pack.View.Customs.CustomText;
 
+
 public class Graph extends Group {
 
-    //TODO Make the line longer
-    //TODO Make plane more rectanglish
-
-    /***
-     * Elements to include in the graph :
-     *
-     * Big cube so the user can use it to move around ✅
-     * Axis ✅
-     * Line given 2 Point3D ✅
-     *      A label for the line ✅
-     * Plane given 3 Point3D (a, b, c) ✅
-     *      A label for the graph
-     * Point given well Point3D dumbass ✅
-     *      A label for the point ✅
-     *
-     *      Fix the line
-     *      Fix the labels
-     *      Fix the plane ?
-     *          Make it make sense (rectangle)
-     *          Render ?
-     */
-
-    double mousePosX;
-    double mousePosY;
-    double mouseOldX;
-    double mouseOldY;
-    double mouseDeltaX;
-    double mouseDeltaY;
+    double mousePosX, mousePosY;
+    double mouseOldX, mouseOldY;
+    double mouseDeltaX, mouseDeltaY;
 
     private static final double CAMERA_NEAR_CLIP = 0.1;
     private static final double CAMERA_FAR_CLIP = 1000.0;
@@ -83,36 +59,6 @@ public class Graph extends Group {
         this.getChildren().add(scene);
 
         scene.setOnScroll((e) -> {
-
-//            double delta = 1.05;
-//
-//            double scale = scalable.getScale(); // currently we only use Y, same value is used for X
-//            double oldScale = scale;
-//
-//            if (e.getDeltaY() < 0) {
-//                scale /= delta;
-//                map.setScaleX(map.getScaleX() * delta);
-//                map.setScaleY(map.getScaleY() * delta);
-//                map.setScaleZ(map.getScaleZ() * delta);
-//            } else {
-//                scale *= delta;
-//                map.setScaleX(map.getScaleX() / delta);
-//                map.setScaleY(map.getScaleY() / delta);
-//                map.setScaleZ(map.getScaleZ() / delta);
-//            }
-//
-//            scale = clamp(scale, 0.3, 3);
-//
-//            double f = (scale / oldScale)-1;
-//
-//            double dx = (e.getSceneX() - (scalable.getBoundsInParent().getWidth()/2 + scalable.getBoundsInParent().getMinX()));
-//            double dy = (e.getSceneY() - (scalable.getBoundsInParent().getHeight()/2 + scalable.getBoundsInParent().getMinY()));
-//
-//
-//            // note: pivot value must be untransformed, i. e. without scaling
-//            scalable.setPivot(f*dx, f*dy);
-//
-//            e.consume();
 
             double zoomRatio = 1;
             if (e.getDeltaY() > 0 && scalable.getScale() < 5) {
@@ -180,14 +126,14 @@ public class Graph extends Group {
 
         ObservableList<Node> axisList = FXCollections.observableArrayList();
 
-        Cylinder xAxis = new Cylinder(1.5, 1000);
-        xAxis.setMaterial(new PhongMaterial(white));
+        Cylinder xAxis = new Cylinder(1.5, 3000);
+        xAxis.setMaterial(new PhongMaterial(Color.RED));
         xAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(1, 0, 0)));
-        Cylinder yAxis = new Cylinder(1.5, 1000);
-        yAxis.setMaterial(new PhongMaterial(white));
+        Cylinder yAxis = new Cylinder(1.5, 3000);
+        yAxis.setMaterial(new PhongMaterial(Color.GREEN));
         yAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(0, 1, 0)));
-        Cylinder zAxis = new Cylinder(1.5, 1000);
-        zAxis.setMaterial(new PhongMaterial(white));
+        Cylinder zAxis = new Cylinder(1.5, 3000);
+        zAxis.setMaterial(new PhongMaterial(Color.BLUE));
         zAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(0, 0, 1)));
 
         Xform axes = new Xform();
@@ -204,7 +150,6 @@ public class Graph extends Group {
         sphere.setTranslateZ(point.getZ());
         createPointLabel(point);
         addPointToList(sphere);
-        System.out.println("The point was added you bitch");
     }
 
     public void addLine(Point3D point1, Point3D point2) {
@@ -256,7 +201,6 @@ public class Graph extends Group {
 
         this.addPlaneToList(rectangle);
         this.createPlaneLabel(triangleCenter, equation);
-        System.out.println("IS THE PLANE HERE PLEASE SAY YES");
     }
 
     public Point3D getCenter(Point3D point1, Point3D point2, Point3D point3) {
@@ -276,7 +220,6 @@ public class Graph extends Group {
         thingsToGraphList.add(sphere);
         switch (thingsToGraphList.size()) {
             case 1:
-                System.out.println("hehe the line should be red");
                 sphere.setMaterial(new PhongMaterial(red));
                 break;
             case 2:
@@ -316,20 +259,16 @@ public class Graph extends Group {
         thingsToGraphList.add(rectangle);
         switch (thingsToGraphList.size()) {
             case 1:
-                System.out.println("case 1");
                 rectangle.setFill(red);
                 break;
             case 2:
                 rectangle.setFill(yellow);
-                System.out.println("case 2");
                 break;
             case 3:
                 rectangle.setFill(blue);
-                System.out.println("case 3");
                 break;
             default:
                 rectangle.setFill(white);
-                System.out.println("case white");
                 break;
         }
         this.update();
@@ -392,12 +331,12 @@ public class Graph extends Group {
 
         camera.setNearClip(CAMERA_NEAR_CLIP);
         camera.setFarClip(CAMERA_FAR_CLIP);
-
-        setCameraFromViewPoint(-0, -0, 300);
+        setCameraFromViewPoint(100, 100, 300);
     }
 
     public void update() {
         scalable.getChildren().clear();
+        scalable.getChildren().add(new AmbientLight());
         scalable.getChildren().addAll(axisList);
         scalable.getChildren().add(map);
         scalable.getChildren().addAll(thingsToGraphList);

@@ -12,16 +12,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Model.Model1;
-import pack.Model.Model2for2x2;
-import pack.Model.Model2for3x3;
 import pack.Model.Model3;
 import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
 import javafx.scene.control.Label;
 import pack.View.GraphView.Graph;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 import static pack.View.Customs.Custom.p;
@@ -29,13 +25,24 @@ import static pack.View.Customs.Custom.p;
 public interface iView {
     ArrayList<TextField> a = createFields(6,80);
     ArrayList<TextField> b = createFields(12,80);
-    Button btnStart = new CustomButton("Start\nthe\n MAGIK");
+
+    static Button[] getButtons() {
+        Button btnStart = new CustomButton("Start\nthe\n MAGIK");
+        Button btnReset = new CustomButton("Reset\nthe\nMAGIK");
+        btnStart.setMinSize(115, 105);
+        btnReset.setMinSize(115, 105);
+        Button[] btns = new Button[2];
+        btns[0] = btnStart;
+        btns[1] = btnReset;
+        return btns;
+    }
 
     //All these are just UI it sets the panes and nodes on the right place
     default HBox setButtons() {
-        btnStart.setMinSize(115, 105);
-        Button btnReset = new CustomButton("Reset\nthe\nMAGIK");
-        btnReset.setMinSize(115, 105);
+        Button[] btns = getButtons();
+        Button btnStart = btns[0];
+        Button btnReset = btns[1];
+
         HBox hbButtons = new HBox();
         hbButtons.setSpacing(10);
         hbButtons.getChildren().addAll(btnStart, btnReset);
@@ -336,11 +343,11 @@ public interface iView {
         }
 
         if (booleans.contains(false)) {
-            btnStart.setDisable(true);
+            //btnStart.setDisable(true);
         }
 
         if (!booleans.contains(false)) {
-            btnStart.setDisable(false);
+            //btnStart.setDisable(false);
         }
 
     }
@@ -361,70 +368,36 @@ public interface iView {
      *          Check example for view 3 planes, for the radio buttons just check which one is selected
      */
 
-    static void handleButton(int i) {
-        btnStart.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                switch (i) {
-                    case 1:
-                        Model1 yt = new Model1(2,3,5,6,2,1,5,8,2,4,5,2);
-                        Model1 yt1 = new Model1(2,43,5,6,2,1);
-                        System.out.println(yt.getA1() + " " + yt.getA2() + " " + yt.getA3() + " |" + yt.getD1() + "\n" + yt.getB1() + " " + yt.getB2() + " " + yt.getB3() + " |" + yt.getD2() + "\n" + yt.getC1() + " " + yt.getC2() + " " + yt.getC3() + " |" + yt.getD3());
-
-
-                    case 2:   if(View2.getR3().isSelected()) {
-                        Model2for3x3 et = new Model2for3x3(Double.parseDouble(View2.getT1().getText()), Double.parseDouble(View2.getT2().getText()), Double.parseDouble(View2.getT3().getText()), Double.parseDouble(View2.getT4().getText()), Double.parseDouble(View2.getT5().getText()), Double.parseDouble(View2.getT6().getText()), Double.parseDouble(View2.getT7().getText()), Double.parseDouble(View2.getT8().getText()), Double.parseDouble(View2.getT9().getText()));
-                        System.out.println("This is 3x3");
-                        System.out.println("Vector of the eigen value " + et.getX1() + ": " + Arrays.toString(et.getS1()));
-                        System.out.println("Vector T of the eigen value " + et.getX2() + ": " + Arrays.toString(et.getS2()));
-                        System.out.println("Vector of the eigen value " + et.getX3() + ": " + Arrays.toString(et.getS3()));
-                        for (Double d : et.getS1()) {
-                            View2.getStr().add(d.toString());
-                        }
-                        for (Double d : et.getS2()) {
-                            View2.getStr2().add(d.toString());
-                        }
-                        for (Double d : et.getS3()) {
-                            View2.getStr3().add(d.toString());
-                        }
-                    }
-
-                        if(View2.getR2().isSelected()) {
-
-                            Model2for2x2 et1 = new Model2for2x2(Double.parseDouble(View2.getT1().getText()), Double.parseDouble(View2.getT2().getText()), Double.parseDouble(View2.getT4().getText()), Double.parseDouble(View2.getT5().getText()));
-                            System.out.println("This is 2x2");
-                            System.out.println("Vector of the eigen value " + et1.getX1() + ": " + Arrays.toString(et1.getS1()));
-                            System.out.println("Vector of the eigen value " + et1.getX2() + ": " + Arrays.toString(et1.getS2()));
-                            for (Double d : et1.getS1()) {
-                                View2.getStr().add(d.toString());
-                            }
-                            for (Double d : et1.getS2()) {
-                                View2.getStr2().add(d.toString());
-                            }
-                        }
-
-
-                    case 3:
-
-                        if(View3.r1.isSelected()) {
-                              System.out.println(Model3.checkzeros(View3.arlines));
-                              View3.transform();
-                            //View3.toMatrix();
-
-                        }
-
-
-
-                        if(View3.r2.isSelected()) {
-                            Random rn = new Random();
-                            int answer = rn.nextInt(10) + 1;
-                            Model3.transform(View3.arplanes);
-                            Model3.crossProduct();
-                            Model3.point(answer);
-                            //View3.graph3.addLine(V3Controller.point(95),V3Controller.point(-10));
-                            View3.graph3.addPoint(new Point3D(5,5,5));
-
-
-                            break; }}
-            }});
-    }
+//    default void handleButton(int i) {
+//        btnStart.setOnAction(new EventHandler<ActionEvent>() {
+//            public void handle(ActionEvent e) {
+//                switch (i) {
+//                    case 1:
+//
+//                    case 2:
+//
+//                    case 3:
+//
+//                        if(View3.r1.isSelected()) {
+//                              System.out.println(Model3.checkzeros(View3.arlines));
+//                              View3.transform();
+//                            //View3.toMatrix();
+//
+//                        }
+//
+//
+//
+//                        if(View3.r2.isSelected()) {
+//                            Random rn = new Random();
+//                            int answer = rn.nextInt(10) + 1;
+//                            Model3.transform(View3.arplanes);
+//                            Model3.crossProduct();
+//                            Model3.point(answer);
+//                            //View3.graph3.addLine(V3Controller.point(95),V3Controller.point(-10));
+//                            View3.graph3.addPoint(new Point3D(5,5,5));
+//
+//
+//                            break; }}
+//            }});
+//    }
 }

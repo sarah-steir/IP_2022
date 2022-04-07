@@ -9,11 +9,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import pack.Controller.Controller2;
 
 import java.util.ArrayList;
 
 
 public class View2 extends Pane implements iView {
+
+    Controller2 controller = new Controller2(this);
+
     private static RadioButton r2 = new RadioButton("2x2");
     static RadioButton r3 = new RadioButton("3x3");
     Node n = setRadios(r2, r3);
@@ -42,7 +46,7 @@ public class View2 extends Pane implements iView {
         Button1EventHandler2x2 rdobut2 = new Button1EventHandler2x2();
         r3.setOnAction(rdobut3);
         r2.setOnAction(rdobut2);
-        iView.handleButton(2);
+        //iView.handleButton(2);
 
     }
 
