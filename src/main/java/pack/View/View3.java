@@ -1,148 +1,125 @@
 package pack.View;
 
-import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import pack.Controller.Controller3;
+import javafx.scene.layout.VBox;
+import pack.View.Customs.Custom;
+import pack.View.Customs.CustomButton;
+import pack.View.Customs.CustomRadioButton;
+import pack.View.Customs.CustomTextField;
 import pack.View.GraphView.Graph;
 
-import java.util.ArrayList;
-
 public class View3 extends Pane implements iView {
+//    public static RadioButton r1 = new RadioButton("Lines");
+//    public static RadioButton r2 = new RadioButton("Planes");
+//    Node n = setRadios(r1, r2);
+//    ArrayList<TextField> arplanes = createFields(8, 80);
+//    ArrayList<TextField> arlines = createFields(12, 30);
+//    public static ArrayList<Label> labeling = iView.createSigns(signs("s+ ", "t+ "));
+//    public static Graph graph3 = new Graph();
 
-    Controller3 controller = new Controller3(this);
-
-    public static RadioButton r1 = new RadioButton("Lines");
-    public static RadioButton r2 = new RadioButton("Planes");
-    Node n = setRadios(r1, r2);
-    public static ArrayList<TextField> arplanes = iView.createFields(8, 80);
-    public static ArrayList<TextField> arlines = iView.createFields(12, 30);
-    public static ArrayList<Label> labeling = iView.createSigns(signs("s+ ", "t+ "));
-    public static Graph graph3 = new Graph();
+    private CustomRadioButton rb1, rb2;
+    private CustomButton btnStart, btnReset;
+    private ToggleGroup group = new ToggleGroup();
+    private Graph graph = new Graph();
+    private String[] signsRb1 = {"X: ", "S + ", "Y: ", "S + ", "Z: ", "S + "};
+    private String[] signsRb2 = {"X +", "Y +", "Z ="};
 
     public View3() {
-        iView.createSigns(3);
-        Pane p = iView.setLeft(r1, r2, lines(), set3Fields(2, 7, arplanes), setRadios(r1, r2), graph3);
-        this.getChildren().add(setView("Lines And THe PLanes shit", p));
-        //iView.handleButton(3);
-        graph3.addPlane(new Point3D(10,540,20),new Point3D(31,500,67),new Point3D(30,10,10),"fjdkskfkjsfjk");
-        graph3.addLine(new Point3D(0, 0, 20), new Point3D(0, 50, 0));
-        graph3.addPoint(new Point3D(-122, 65, -76));
+
+        rb1 = new CustomRadioButton("Lines");
+        rb2 = new CustomRadioButton("Planes");
+        rb1.setToggleGroup(group);
+        rb2.setToggleGroup(group);
+
+        btnStart = new CustomButton("START\nTHE\nMAGIK");
+        btnReset = new CustomButton("RESET\nTHE\nMAGIK");
+        this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "Lines and planes", graph));
     }
 
-    public static ArrayList<String> signs(String l, String l2) {
-        String s1 = new String("x: ");
-        String s2 = new String(" y: ");
-        String s3 = new String(" z: ");
-        String[] pr = {s1, s2, s3};
-        int j = 0;
-        ArrayList<String> arr = new ArrayList<String>();
+    @Override
+    public VBox setRadios(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2) {
 
-        while (j != 2) {
-            for (int i = 0; i <= 2; i++) {
-                arr.add(pr[i]);
-                arr.add(l);
-            }
-            j++;
-            if (j == 1) {
-                for (int i = 0; i <= 2; i++) {
-                    arr.add(pr[i]);
-                    arr.add(l2);
+        VBox vbRadioBox = new VBox();
+        vbRadioBox.setPrefSize(500, 160);
+
+        HBox hbRadios = new HBox();
+        hbRadios.setSpacing(20);
+        hbRadios.setPrefWidth(115);
+        hbRadios.getChildren().addAll(rb1, rb2);
+        vbRadioBox.getChildren().add(hbRadios);
+
+        rb1.setOnAction(event -> {
+            vbRadioBox.getChildren().clear();
+            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 6, btnStart, signsRb1));
+        });
+
+        rb2.setOnAction(event -> {
+            vbRadioBox.getChildren().clear();
+            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 4, btnStart, signsRb2));
+        });
+        return vbRadioBox;
+    }
+
+    @Override
+    public GridPane setFields(int rows, int cols, CustomButton btnStart, String[] signs) {
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        gridPane.setAlignment(Pos.CENTER);
+
+        CustomTextField[][] fieldList = new CustomTextField[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols;  j++) {
+                HBox hbTextField = new HBox();
+                hbTextField.setSpacing(10);
+
+                fieldList[i][j] = new CustomTextField();
+                Label lblVariable = new Label();
+                lblVariable.setStyle("-fx-text-fill: E7EBEE;");
+                lblVariable.setFont(Custom.font);
+
+                if (j == cols - 1) {
+                    if (cols == 6) {
+                        lblVariable.setText("T + ");
+                    } else {
+                        lblVariable.setText("");
+                    }
+                } else if (signs[j].equals("S + ") && i == 1) {
+                    lblVariable.setText("T + ");
+                } else {
+                    lblVariable.setText(signs[j]);
                 }
-            }
-            j++;
-        }
-        return arr;
-    }
 
-    public GridPane lines() {
-        Label l = new Label("Line 1:");
-        Label l2 = new Label("Line 2:");
-        l.setStyle("-fx-text-fill: E7EBEE;");
-        l2.setStyle("-fx-text-fill: E7EBEE;");
-        GridPane twoByTwo = new GridPane();
-        twoByTwo.setVgap(10);
-        twoByTwo.setHgap(10);
-        twoByTwo.setAlignment(Pos.BOTTOM_CENTER);
+                int finalI = i;
+                int finalJ = j;
 
-        int acounter = 0; //max 5
-        int i = 0; //max 11 (for textfields)
-        int j = 0;
-        int row = 0; //max 11
-        int n = 0;
-
-        while (n != 4) {
-            if (n % 2 == 1) {
-                while (row != 12) {
-                    if (row % 2 == 1) {
-                        if (i != 3 * n + 3) {
-                            twoByTwo.add((Node) arlines.get(i), row, n);
-                            i++;
-                            row++;
+                btnStart.setOnAction(event -> {
+                    for (CustomTextField[] tfArray: fieldList) {
+                        for (CustomTextField tf: tfArray) {
+                            btnStart.setDisable(tf.checkField());
                         }
                     }
-                    if (row % 2 == 0) {
-                        if (j != 3 * n + 3) {
-                            twoByTwo.add((Node) labeling.get(j), row, n);
-                            j++;
-                            row++;
-                        }
-                    }
-                }
-                n++;
-                row = 0;
-            }
+                });
 
-            if (n == 0) {
-                twoByTwo.add(l, 0, n);
-                n++;
-            }
-            if (n == 2) {
-                twoByTwo.add(l2, 0, n);
-                n++;
+                fieldList[i][j].textProperty().addListener((observable, oldValue, newValue) ->
+                        btnStart.setDisable(fieldList[finalI][finalJ].checkField()));
+
+                if (cols == 6) {
+                    fieldList[i][j].setMaxWidth(35);
+                    hbTextField.getChildren().addAll(lblVariable, fieldList[i][j]);
+                } else {
+                    hbTextField.getChildren().addAll(fieldList[i][j], lblVariable);
+                }
+                gridPane.add(hbTextField, j, i);
             }
         }
-        iView.checkFields(arlines);
-        return twoByTwo;
-    }
-
-    public static void transform() {
-        int n = 1;
-        Double[][] constant = new Double[2][1];
-        for(int i=0; i<2;i++) {
-            while (n != 4) {
-                if (n % 2 == 1) {
-                    Double d1 = Double.parseDouble(arlines.get(n).getText());
-                    Double d2 = Double.parseDouble(arlines.get(n + 6).getText());
-                    constant[i][1]=d2-d1;
-                    for (int p = 0;p< constant.length; p++) {
-                        System.out.print(constant[p][0] + " ");
-                    }
-                }
-                n++;  }
-        } }
-
-    public static void toMatrix() {
-        Double[][] arr = new Double[2][2];
-        Double d1 = Double.parseDouble(arlines.get(0).getText());
-        arr[0][0] = d1;
-        Double d2 = Double.parseDouble(arlines.get(2).getText());
-        arr[1][0] = d2;
-        Double d3 = Double.parseDouble(arlines.get(6).getText());
-        arr[0][1] = d3;
-        Double d4 = Double.parseDouble(arlines.get(8).getText());
-        arr[1][1] = d4;
-
-        for (int i = 0; i < arr.length; i++) { //this equals to the row in our matrix.
-            for (int j = 0; j < arr[i].length; j++) { //this equals to the column in each row.
-                System.out.print(arr[i][j] + " ");
-            }
-        }
+        return gridPane;
     }
 }

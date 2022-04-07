@@ -1,26 +1,28 @@
 package pack.View;
 
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.geometry.Point3D;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
-import pack.Controller.Controller1;
-import pack.View.Customs.CustomRadioButton;
+import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
 
-import java.util.ArrayList;
 public class View1 extends Pane implements iView {
 
-    Controller1 controller = new Controller1(this);
-
-    public static RadioButton twoo= new CustomRadioButton("2 x 2");
-    public static RadioButton threee= new CustomRadioButton("3 x 3");
-    ArrayList<TextField> a=iView.createFields(6,80); //fields for 2by2
-    ArrayList<TextField> b=iView.createFields(12,80); //fields for 3by3
-    Graph graph = new Graph();
+    private CustomRadioButton rb1, rb2;
+    private CustomButton btnStart, btnReset;
+    private ToggleGroup group = new ToggleGroup();
+    private Graph graph = new Graph();
+    private String[] signsRb1 = {"X +", "Y ="};
+    private String[] signsRb2 = {"X +", "Y +", "Z ="};
 
     public View1() {
-        Pane p=iView.setLeft(twoo,threee,set2Fields(),set3Fields(3,7,b),setRadios(twoo,threee), graph);
-        this.getChildren().add(setView("System of Linear Equations",p));
-        iView.handleButton(1);
+        rb1 = new CustomRadioButton("2 x 2");
+        rb2 = new CustomRadioButton("3 x 3");
+        rb1.setToggleGroup(group);
+        rb2.setToggleGroup(group);
+        btnStart = new CustomButton("START\nTHE\nMAGIK");
+        btnReset = new CustomButton("RESET\nTHE\nMAGIK");
+        this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "Systems of linear equations", graph));
+        graph.addPoint(new Point3D(45, 65, 56));
     }
 }

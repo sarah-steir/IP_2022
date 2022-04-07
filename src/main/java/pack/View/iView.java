@@ -1,58 +1,25 @@
 package pack.View;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Model.Model2for2x2;
-import pack.Model.Model2for3x3;
-import pack.Model.Model3;
-import pack.View.Customs.Custom;
-import pack.View.Customs.CustomButton;
+import pack.Controller.Controller1;
+import pack.View.Customs.*;
 import javafx.scene.control.Label;
 import pack.View.GraphView.Graph;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 import static pack.View.Customs.Custom.p;
 
 public interface iView {
-    ArrayList<TextField> a = createFields(6,80);
-    ArrayList<TextField> b = createFields(12,80);
 
-    static Button[] getButtons() {
-        Button btnStart = new CustomButton("Start\nthe\n MAGIK");
-        Button btnReset = new CustomButton("Reset\nthe\nMAGIK");
-        btnStart.setMinSize(115, 105);
-        btnReset.setMinSize(115, 105);
-        Button[] btns = new Button[2];
-        btns[0] = btnStart;
-        btns[1] = btnReset;
-        return btns;
-    }
-
-    //All these are just UI it sets the panes and nodes on the right place
-    default HBox setButtons() {
-        Button[] btns = getButtons();
-        Button btnStart = btns[0];
-        Button btnReset = btns[1];
-
-        HBox hbButtons = new HBox();
-        hbButtons.setSpacing(10);
-        hbButtons.getChildren().addAll(btnStart, btnReset);
-        btnStart.setOnAction(e -> System.out.println("Patate"));
-        btnReset.setOnAction(e -> System.out.println("Reset patate"));
-        return hbButtons;
-    }
+    ArrayList<CustomTextField> copyArray = new ArrayList<>();
 
     default ImageView setLogo() {
         ImageView iv = new ImageView(new Image(p + "Logo.png"));
@@ -61,7 +28,7 @@ public interface iView {
         return iv;
     }
 
-    default VBox setLeft() {
+    default VBox setLeft(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2, Graph graph) {
         VBox vbLeft = new VBox();
         vbLeft.setSpacing(10);
         vbLeft.setPrefSize(500, 695);
@@ -73,10 +40,43 @@ public interface iView {
         vbUi.setSpacing(15);
         vbUi.setPrefSize(500, 160);
         vbUi.setStyle("-fx-background-color: #333335"); // Grey
+        vbUi.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2));
+
+        // Graph Box
+        Pane graphPane = new Pane();
+        graphPane.getChildren().add(graph);
+        graphPane.setPrefSize(500, 525);
+        graphPane.setStyle("-fx-background-color: #333335");    // Grey
+
+        vbLeft.getChildren().addAll(vbUi, graphPane);
+
         return vbLeft;
     }
 
-    public static VBox setLeft(RadioButton r1, RadioButton r2, GridPane g1, GridPane g2, Node setR,Graph hraph) {
+    default VBox setRadios(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2) {
+
+        VBox vbRadioBox = new VBox();
+        vbRadioBox.setPrefSize(500, 160);
+
+        HBox hbRadios = new HBox();
+        hbRadios.setSpacing(20);
+        hbRadios.setPrefWidth(115);
+        hbRadios.getChildren().addAll(rb1, rb2);
+        vbRadioBox.getChildren().add(hbRadios);
+
+        rb1.setOnAction(event -> {
+            vbRadioBox.getChildren().clear();
+            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 3, btnStart, signsRb1));
+        });
+
+        rb2.setOnAction(event -> {
+            vbRadioBox.getChildren().clear();
+            vbRadioBox.getChildren().addAll(hbRadios, setFields(3, 4, btnStart, signsRb2));
+        });
+        return vbRadioBox;
+    }
+
+    /*public static VBox setLeft(RadioButton r1, RadioButton r2, GridPane g1, GridPane g2, Node setR, Graph hraph) {
         VBox vbLeft = new VBox();
         vbLeft.setSpacing(10);
         vbLeft.setPrefSize(500, 695);
@@ -119,9 +119,19 @@ public interface iView {
         graph.setStyle("-fx-background-color: #333335");
         vbLeft.getChildren().addAll(vbUi, graph);
         return vbLeft;
+    }*/
+
+    default HBox setButtons(CustomButton btnStart, CustomButton btnReset) {
+        btnStart.setMinSize(115, 105);
+        btnReset.setMinSize(115, 105);
+
+        HBox hbButtons = new HBox();
+        hbButtons.setSpacing(10);
+        hbButtons.getChildren().addAll(btnStart, btnReset);
+        return hbButtons;
     }
 
-    default VBox setRight(String title) {
+    default VBox setRight(String title, CustomButton btnStart, CustomButton btnReset) {
         VBox vbRight = new VBox();
         vbRight.setPrefSize(500, 695);
         vbRight.setLayoutX(520);
@@ -140,296 +150,129 @@ public interface iView {
         HBox hbBottom = new HBox();
         hbBottom.setMaxSize(500, 105);
         hbBottom.setSpacing(55);
-        hbBottom.getChildren().addAll(setButtons(), setLogo());
+        hbBottom.getChildren().addAll(setButtons(btnStart, btnReset), setLogo());
 
         vbRight.getChildren().addAll(vbPo, hbBottom);
         return vbRight;
     }
 
-    default Pane setView(String title, Pane p) {
+    default Pane setView(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, CustomButton btnReset,
+                         String[] signsRb1, String[] signsRb2, String title, Graph graph) {
         Pane pane = new Pane();
         pane.setPrefSize(1050, 750);
         pane.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
-        pane.getChildren().add(p);
-        pane.getChildren().add(setRight(title));
+        pane.getChildren().addAll(setLeft(rb1, rb2, btnStart, signsRb1, signsRb2, graph), setRight(title, btnStart, btnReset));
+
+        btnReset.setOnAction(event -> {
+            pane.getChildren().clear();
+            btnStart.setDisable(false);
+            rb1.setSelected(false);
+            rb2.setSelected(false);
+            pane.getChildren().addAll(setLeft(rb1, rb2, btnStart, signsRb1, signsRb2, graph), setRight(title, btnStart, btnReset));
+        });
+
         return pane;
     }
 
-    //Connects radiobuttons to a ToggleGroup so only one can be selected at a time
-    default Node setRadios(RadioButton r1, RadioButton r2) {
-        ToggleGroup size = new ToggleGroup();
-        r1.setStyle("-fx-text-fill: E7EBEE;");
-        r1.setToggleGroup(size);
-        r2.setStyle("-fx-text-fill: E7EBEE;");
-        r2.setToggleGroup(size);
-        HBox radios = new HBox();
-        radios.setSpacing(20);
-        radios.getChildren().addAll(r1, r2);
-        return radios;
-    }
+    default GridPane setFields(int rows, int cols, CustomButton btnStart, String[] signs) {
 
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        gridPane.setAlignment(Pos.CENTER);
 
-    //set2Fields and 3Fields just arranges the textfield and the signs on the gridpane
-    default GridPane set2Fields() {
-        Label l = new Label("=");
-        Label l2 = new Label("=");
-        l.setStyle("-fx-text-fill: E7EBEE;");
-        l2.setStyle("-fx-text-fill: E7EBEE;");
-        GridPane twoByTwo = new GridPane();
-        twoByTwo.setVgap(10);
-        twoByTwo.setHgap(10);
-        twoByTwo.setAlignment(Pos.BOTTOM_CENTER);
-        ArrayList sL = createSigns(2);
+        CustomTextField[][] fieldList = new CustomTextField[rows][cols];
 
-        int acounter = 0; //max 5
-        int sLcounter = 0; //max 3
-        int row = 0; //max 2
-        int column = 0; //max
-        int n = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols;  j++) {
+                HBox hbTextField = new HBox();
+                hbTextField.setSpacing(10);
 
-        while (row != 2) {
-            while (column != 5) {
-                if (column % 2 == 0) {
-                    if (acounter <= 2 + 3 * n) {
-                        twoByTwo.add((Node) a.get(acounter), column, row);
-                        acounter++;
-                        column++;
-                    }
+                fieldList[i][j] = new CustomTextField();
+                Label lblVariable = new Label();
+                lblVariable.setStyle("-fx-text-fill: E7EBEE;");
+                lblVariable.setFont(Custom.font);
+                if (j == cols - 1) {
+                    lblVariable.setText("");
+                } else {
+                    lblVariable.setText(signs[j]);
                 }
 
-                if (column % 2 == 1) {
-                    if (sLcounter <= 1 + 2 * n) {
-                        twoByTwo.add((Node) sL.get(sLcounter), column, row);
-                        sLcounter++;
-                        column++;
-                    }
-                }
-            }
-            n++;
-            row++;
-            column = 0;
-            checkFields(a);
-        }
-        return twoByTwo;
-    }
+                int finalI = i;
+                int finalJ = j;
 
-
-    default GridPane set3Fields(int maxrow, int maxcolumn, ArrayList rep) {
-        GridPane threebyThree = new GridPane();
-        threebyThree.setAlignment(Pos.BOTTOM_CENTER);
-        threebyThree.setVgap(10);
-        threebyThree.setHgap(10);
-
-        int acounter = 0; //max 11
-        int sLcounter = 0; //max 8
-        int row = 0; //max 2
-        int column = 0; //max 6
-        int n = 0;
-
-        ArrayList sL = createSigns(3);
-
-        while (row != maxrow) {
-            while (column != maxcolumn) {
-                if (column % 2 == 0) {
-                    if (acounter <= 3 + 4 * n) {
-                        threebyThree.add((Node) rep.get(acounter), column, row);
-                        acounter++;
-                        column++;
-                    }
-                }
-
-                if (column % 2 == 1) {
-                    if (sLcounter <= 2 + 3 * n) {
-                        threebyThree.add((Node) sL.get(sLcounter), column, row);
-                        sLcounter++;
-                        column++;
-                    }
-                }
-            }
-            n++;
-            row++;
-            column = 0;
-            checkFields(rep);
-        }
-
-        return threebyThree;
-    }
-
-    //This function creates the fields which is 6 fields for the 2by2 and 12 for the 3by3
-    public static ArrayList<TextField> createFields(int tf,int width) {
-        //  int field=tf*(tf+1);
-        ArrayList<TextField> fieldList = new ArrayList<TextField>(tf - 1); //For 2 is 6 and for 3 is 12
-        int counter = 1;
-        while (counter <= tf) {
-            TextField t = new TextField();
-            t.setPrefSize(width, 25);
-            t.setOnAction(e -> {
-                checkFields(fieldList);
-            });
-            fieldList.add(t);
-            counter++;
-        }
-        return fieldList;
-    }
-
-    //Create signs x,y, z and = to add to the pane (UI related)
-    public static ArrayList createSigns(int i) {
-        ArrayList<Label> signs = new ArrayList<Label>();
-
-        if (i == 2) {
-            for (int j = 0; j < i; j++) {
-                Label x = new Label("X +");
-                Label y = new Label("Y =");
-                signs.add(x);
-                signs.add(y);
-            }
-        }
-
-        if (i == 3) {
-            for (int j = 0; j < i; j++) {
-                Label x = new Label("X +");
-                Label y = new Label("Y +");
-                Label z = new Label("Z =");
-                signs.add(x);
-                signs.add(y);
-                signs.add(z);
-            }
-        }
-
-        int c = 0;
-        while (c != signs.size()) {
-            signs.get(c).setStyle("-fx-text-fill: E7EBEE;");
-            c++;
-        }
-        return signs;
-    }
-
-    public static ArrayList createSigns(ArrayList<String>st) {
-        ArrayList<Label> signs = new ArrayList<Label>();
-
-        for (int j = 0; j < st.size(); j++) {
-            signs.add(new Label(st.get(j)));
-            signs.get(j).setStyle("-fx-text-fill: E7EBEE;");
-        }
-
-        return signs;
-    }
-
-
-    public static void checkFields(ArrayList<TextField> a) {
-        ArrayList<Boolean> booleans = new ArrayList<Boolean>();
-
-        int i = 0;
-        int counter = 0;
-
-        while (i != a.size()) {
-            TextField t = a.get(i);
-            if (t.getText().isEmpty()) {
-                t.setStyle(" -fx-control-inner-background:#A0A0A0;");
-            }
-
-            if (!t.getText().isEmpty()) {
-                if (isNumeric(t.getText())) {
-                    t.setStyle(" -fx-control-inner-background:#A0A0A0;");
-                    booleans.add(true);
-                }
-
-                if (!isNumeric(t.getText())) {
-                    t.setStyle(" -fx-control-inner-background: red;");
-                    counter--;
-                    booleans.add(false);
-
-                }
-
-            }
-            i++;
-        }
-
-        if (booleans.contains(false)) {
-            //btnStart.setDisable(true);
-        }
-
-        if (!booleans.contains(false)) {
-            //btnStart.setDisable(false);
-        }
-
-    }
-
-    static boolean isNumeric(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-
-    /**
-     *
-     * @param i number of the view, to execute the dif math depending on the view
-     *          Check example for view 3 planes, for the radio buttons just check which one is selected
-     */
-
-  /*  default void handleButton(int i) {
-        btnStart.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                switch (i) {
-                    case 1:
-
-                    case 2:
-                        if(View2.getR3().isSelected()) {
-                            Model2for3x3 et = new Model2for3x3(Double.parseDouble(View2.getT1().getText()), Double.parseDouble(View2.getT2().getText()), Double.parseDouble(View2.getT3().getText()), Double.parseDouble(View2.getT4().getText()), Double.parseDouble(View2.getT5().getText()), Double.parseDouble(View2.getT6().getText()), Double.parseDouble(View2.getT7().getText()), Double.parseDouble(View2.getT8().getText()), Double.parseDouble(View2.getT9().getText()));
-                            System.out.println("This is 3x3");
-                            System.out.println("Vector of the eigen value " + et.getX1() + ": " + Arrays.toString(et.getS1()));
-                            System.out.println("Vector of the eigen value " + et.getX2() + ": " + Arrays.toString(et.getS2()));
-                            System.out.println("Vector of the eigen value " + et.getX3() + ": " + Arrays.toString(et.getS3()));
-                            for (Double d : et.getS1()) {
-                                View2.getStr().add(d.toString());
-                            }
-                            for (Double d : et.getS2()) {
-                                View2.getStr2().add(d.toString());
-                            }
-                            for (Double d : et.getS3()) {
-                                View2.getStr3().add(d.toString());
+                btnStart.setOnAction(event -> {
+                    boolean isInvalid = false;
+                    for (CustomTextField[] tfArray: fieldList) {
+                        for (CustomTextField tf: tfArray) {
+                            if (tf.checkField()) {
+                                btnStart.setDisable(true);
+                                isInvalid = true;
+                            } else {
+                                copyArray.add(tf);
+                                isInvalid = false;
                             }
                         }
+                    }
+                    handleStart(getWhichView(signs), isInvalid);
+                });
 
-                        if(View2.getR2().isSelected()) {
+                fieldList[i][j].textProperty().addListener((observable, oldValue, newValue) ->
+                        btnStart.setDisable(fieldList[finalI][finalJ].checkField()));
 
-                            Model2for2x2 et1 = new Model2for2x2(Double.parseDouble(View2.getT1().getText()), Double.parseDouble(View2.getT2().getText()), Double.parseDouble(View2.getT4().getText()), Double.parseDouble(View2.getT5().getText()));
-                            System.out.println("This is 2x2");
-                            System.out.println("Vector of the eigen value " + et1.getX1() + ": " + Arrays.toString(et1.getS1()));
-                            System.out.println("Vector of the eigen value " + et1.getX2() + ": " + Arrays.toString(et1.getS2()));
-                            for (Double d : et1.getS1()) {
-                                View2.getStr().add(d.toString());
-                            }
-                            for (Double d : et1.getS2()) {
-                                View2.getStr2().add(d.toString());
-                            }
-                        }
+                hbTextField.getChildren().addAll(fieldList[i][j], lblVariable);
+                gridPane.add(hbTextField, j, i);
+            }
+        }
+        return gridPane;
+    }
 
-                    case 3:
+    default int getWhichView(String[] signs) {
+        if (Arrays.equals(signs, new String[]{"X +", "Y ="}) || Arrays.equals(signs, new String[]{"X +", "Y +", "Z ="})) {
+            return 1;
+        } else {
+            return 3;
+        }
+    }
 
-                        if(View3.r1.isSelected()) {
-                              System.out.println(Model3.checkzeros(View3.arlines));
-                              View3.transform();
-                            //View3.toMatrix();
-                        }
+    default ArrayList<CustomTextField> getCopyArray() {
+        return copyArray;
+    }
 
+    default void handleStart (int i, boolean isInvalid) {
+        switch (i) {
+            case 1:
+                if (!isInvalid) {
+                    Controller1 controller1 = new Controller1();
+                    controller1.setFieldList(getCopyArray());
+                    controller1.transform();
+                    controller1.getOutput();
+                    controller1.printOutput();
+                }
+                break;
+            case 2:
 
+            case 3:
 
-                        if(View3.r2.isSelected()) {
-                            Random rn = new Random();
-                            int answer = rn.nextInt(10) + 1;
-                            Model3.transform(View3.arplanes);
-                            Model3.crossProduct();
-                            Model3.point(answer);
-                            //View3.graph3.addLine(V3Controller.point(95),V3Controller.point(-10));
-                            View3.graph3.addPoint(new Point3D(5,5,5));
-
-
-                            break; }}
-           }});
-    } */
+//                if (View3.r1.isSelected()) {
+//                    //  System.out.println(V3Controller.checkzeros(View3.arlines));
+//                    //  View3.transform();
+//                    //View3.toMatrix();
+//
+//                }
+//
+//
+//                if (View3.r2.isSelected()) {
+//                    Random rn = new Random();
+//                    int answer = rn.nextInt(10) + 1;
+//                    //V3Controller.transform(View3.arplanes);
+//                    V3Controller.crossProduct();
+//                    V3Controller.point(answer);
+//                    //View3.graph3.addLine(V3Controller.point(95),V3Controller.point(-10));
+//                    View3.graph3.addPoint(new Point3D(5, 5, 5));
+//
+//                    break;
+//                }
+        }
+    }
 }
