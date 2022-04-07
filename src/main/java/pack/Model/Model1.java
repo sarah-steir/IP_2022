@@ -203,7 +203,7 @@ public class Model1 {
     private double[] reduceMatrix2x2(double a1, double a2, double b1, double b2, double d1, double d2) {
         if (a1 == 0) { // if a equal to zero (switch rows) unless all is zero (a,b,c)
             if (b1 != 0) { //switch a with b if b not zero
-                e1 = Double.parseDouble(formatting.format(a1));// E holds the number
+                e1 = Double.parseDouble(formatting.format(a1));
                 e2 = Double.parseDouble(formatting.format(a2));
                 e3 = Double.parseDouble(formatting.format(d1));
                 a1 = Double.parseDouble(formatting.format(b1));
