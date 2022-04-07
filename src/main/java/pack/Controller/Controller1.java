@@ -1,5 +1,6 @@
 package pack.Controller;
 
+import pack.Model.Model1;
 import pack.View.Customs.CustomTextField;
 import pack.View.View1;
 
@@ -10,6 +11,8 @@ public class Controller1 {
     View1 view;
     private ArrayList<CustomTextField> fieldList;
     private ArrayList<Double> matrixCoefficients;
+    private double[] reduced2x2matrix, reduced3x3matrix;
+    private boolean is2by2;
 
     public Controller1() {
         fieldList = new ArrayList<>();
@@ -33,8 +36,10 @@ public class Controller1 {
     public void transform() {
         if (this.fieldList.size() == 6) {
             transform2x2();
+            is2by2 = true;
         } else {
             transform3x3();
+            is2by2 = false;
         }
     }
 
@@ -54,9 +59,24 @@ public class Controller1 {
         this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(11).getText()));
     }
 
+    public void getOutput() {
+        Model1 model1 = new Model1(this.matrixCoefficients, is2by2);
+        if (is2by2) {
+            reduced2x2matrix = model1.getReduced2x2matrix();
+        } else {
+            reduced3x3matrix = model1.getReduced3x3matrix();
+        }
+    }
 
-//    public void getOutput() {
-//        Model1 model1 = new Model1(this.matrixCoefficients);
-//        model1.printOutput();
-//    }
+    public void printOutput() {
+        if (is2by2) {
+            for (Double coefficient: reduced2x2matrix) {
+                System.out.println(coefficient);
+            }
+        } else {
+            for (Double coefficient: reduced3x3matrix) {
+                System.out.println(coefficient);
+            }
+        }
+    }
 }

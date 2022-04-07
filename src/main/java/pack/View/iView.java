@@ -244,7 +244,8 @@ public interface iView {
                     Controller1 controller1 = new Controller1();
                     controller1.setFieldList(getCopyArray());
                     controller1.transform();
-                    //cits into Tayba from master ontroller1.getOutput();
+                    controller1.getOutput();
+                    controller1.printOutput();
                 }
                 break;
             case 2:
