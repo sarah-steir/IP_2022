@@ -1,11 +1,12 @@
-package pack.Model;
+package pack.View.Customs;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
+
 import java.io.File;
 
-public class mainModel {
+public class Custom {
 
     static File f = new File("");
     public static String p = "file:" + f.getAbsolutePath() + "/";
@@ -20,5 +21,3 @@ public class mainModel {
 
         return t;}
 }
-
-

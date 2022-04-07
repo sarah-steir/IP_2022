@@ -1,55 +1,24 @@
 package pack.View;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import pack.Controller.V2Controller;
-import pack.Model.CustomButton;
-import pack.Model.CustomRadioButton;
-import pack.Model.CustomTextField;
-import pack.Model.mainModel;
+import pack.Controller.Controller1;
+import pack.View.Customs.*;
 import javafx.scene.control.Label;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-//import org.apache.commons.lang3.math.NumberUtils;
+import java.util.Arrays;
 
-import static pack.Model.mainModel.p;
+import static pack.View.Customs.Custom.p;
 
 public interface iView {
 
-    default Pane setView(String title, CustomRadioButton rb1, CustomRadioButton rb2) {
-        Pane pane = new Pane();
-        pane.setPrefSize(1050, 750);
-        pane.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
-        pane.getChildren().addAll(setLeft(rb1, rb2), setRight(title));
-
-        return pane;
-    }
-
-    // All these are just UI it sets the panes and nodes on the right place
-    default HBox setButtons() {
-        CustomButton btnStart = new CustomButton("Start\nthe\nMAGIK");
-        btnStart.setMinSize(115, 105);
-
-        CustomButton btnReset = new CustomButton("Reset\nthe\nMAGIK");
-        btnReset.setMinSize(115, 105);
-
-        HBox hbButtons = new HBox();
-        hbButtons.setSpacing(10);
-        hbButtons.getChildren().addAll(btnStart, btnReset);
-        return hbButtons;
-    }
-
+    ArrayList<CustomTextField> copyArray = new ArrayList<>();
 
     default ImageView setLogo() {
         ImageView iv = new ImageView(new Image(p + "Logo.png"));
@@ -58,7 +27,7 @@ public interface iView {
         return iv;
     }
 
-    default VBox setLeft(CustomRadioButton rb1, CustomRadioButton rb2) {
+    default VBox setLeft(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2) {
         VBox vbLeft = new VBox();
         vbLeft.setSpacing(10);
         vbLeft.setPrefSize(500, 695);
@@ -67,13 +36,10 @@ public interface iView {
 
         // User Input Box
         VBox vbUi = new VBox();
+        vbUi.setSpacing(15);
         vbUi.setPrefSize(500, 160);
         vbUi.setStyle("-fx-background-color: #333335"); // Grey
-
-        ToggleGroup toggleGroup = new ToggleGroup();
-        rb1.setToggleGroup(toggleGroup);
-        rb2.setToggleGroup(toggleGroup);
-        vbUi.getChildren().add(setRadios(rb1, rb2));
+        vbUi.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2));
 
         // Graph Box
         Pane graph = new Pane();
@@ -81,36 +47,11 @@ public interface iView {
         graph.setStyle("-fx-background-color: #333335");    // Grey
 
         vbLeft.getChildren().addAll(vbUi, graph);
+
         return vbLeft;
     }
 
-    default VBox setRight(String title) {
-        VBox vbRight = new VBox();
-        vbRight.setPrefSize(500, 695);
-        vbRight.setLayoutX(520);
-        vbRight.setLayoutY(14);
-        vbRight.setSpacing(10);
-
-        // Program Output Box
-        VBox vbPo = new VBox();
-        vbPo.setPrefSize(500, 595);
-        vbPo.setSpacing(15);
-        vbPo.setAlignment(Pos.TOP_CENTER);
-        vbPo.setStyle("-fx-background-color: #333335");
-        vbPo.getChildren().add(mainModel.setTitle(title));
-
-        // HBox to hold buttons and logo
-        HBox hbBottom = new HBox();
-        hbBottom.setMaxSize(500, 105);
-        hbBottom.setSpacing(55);
-        hbBottom.getChildren().addAll(setButtons(), setLogo());
-
-        vbRight.getChildren().addAll(vbPo, hbBottom);
-        return vbRight;
-    }
-
-    // Creates the 2x2 and 3x3 radiobutton and connects them to a ToggleGroup so only one can be selected at a time
-    default VBox setRadios(CustomRadioButton rb1, CustomRadioButton rb2) {
+    default VBox setRadios(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2) {
 
         VBox vbRadioBox = new VBox();
         vbRadioBox.setPrefSize(500, 160);
@@ -123,17 +64,116 @@ public interface iView {
 
         rb1.setOnAction(event -> {
             vbRadioBox.getChildren().clear();
-            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 3));
+            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 3, btnStart, signsRb1));
         });
 
         rb2.setOnAction(event -> {
             vbRadioBox.getChildren().clear();
-            vbRadioBox.getChildren().addAll(hbRadios, setFields(3, 4));
+            vbRadioBox.getChildren().addAll(hbRadios, setFields(3, 4, btnStart, signsRb2));
         });
         return vbRadioBox;
     }
 
-    default GridPane setFields(int rows, int cols) {
+    /*public static VBox setLeft(RadioButton r1, RadioButton r2, GridPane g1, GridPane g2, Node setR, Graph hraph) {
+        VBox vbLeft = new VBox();
+        vbLeft.setSpacing(10);
+        vbLeft.setPrefSize(500, 695);
+        vbLeft.setLayoutX(10);
+        vbLeft.setLayoutY(14);
+
+        // User Input Box
+        VBox vbUi = new VBox();
+        vbUi.setSpacing(15);
+        vbUi.setPrefSize(500, 160);
+        vbUi.setStyle("-fx-background-color: #333335"); // Grey
+        vbUi.getChildren().addAll(setR);
+
+        r1.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                if (r1.isSelected()) {
+                    vbUi.getChildren().clear();
+                    vbUi.getChildren().addAll(setR);
+                    vbUi.getChildren().add(g1);
+                }
+            }
+        });
+
+        r2.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                if (r2.isSelected()) {
+                    vbUi.getChildren().clear();
+                    vbUi.getChildren().addAll(setR);
+                    vbUi.getChildren().add(g2);
+                }
+            }
+        });
+
+        // Graph Box
+
+        Pane graph = new Pane();
+        graph.getChildren().add(hraph);
+        // hraph.addLine(new Point3D(12, 42, 65), new Point3D(9, 45, -15));
+        graph.setPrefSize(500, 525);
+        graph.setStyle("-fx-background-color: #333335");
+        vbLeft.getChildren().addAll(vbUi, graph);
+        return vbLeft;
+    }*/
+
+    default HBox setButtons(CustomButton btnStart, CustomButton btnReset) {
+        btnStart.setMinSize(115, 105);
+        btnReset.setMinSize(115, 105);
+
+        HBox hbButtons = new HBox();
+        hbButtons.setSpacing(10);
+        hbButtons.getChildren().addAll(btnStart, btnReset);
+        return hbButtons;
+    }
+
+    default VBox setRight(String title, CustomButton btnStart, CustomButton btnReset) {
+        VBox vbRight = new VBox();
+        vbRight.setPrefSize(500, 695);
+        vbRight.setLayoutX(520);
+        vbRight.setLayoutY(14);
+        vbRight.setSpacing(10);
+
+        // Program Output Box
+        VBox vbPo = new VBox();
+        vbPo.setPrefSize(500, 595);
+        vbPo.setSpacing(15);
+        vbPo.setAlignment(Pos.TOP_CENTER);
+        vbPo.setStyle("-fx-background-color: #333335");
+        vbPo.getChildren().add(Custom.setTitle(title));
+
+        // HBox to hold buttons and logo
+        HBox hbBottom = new HBox();
+        hbBottom.setMaxSize(500, 105);
+        hbBottom.setSpacing(55);
+        hbBottom.getChildren().addAll(setButtons(btnStart, btnReset), setLogo());
+
+        vbRight.getChildren().addAll(vbPo, hbBottom);
+        return vbRight;
+    }
+
+    default Pane setView(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, CustomButton btnReset,
+                         String[] signsRb1, String[] signsRb2, String title) {
+        Pane pane = new Pane();
+        pane.setPrefSize(1050, 750);
+        pane.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
+        pane.getChildren().addAll(setLeft(rb1, rb2, btnStart, signsRb1, signsRb2), setRight(title, btnStart, btnReset));
+
+        btnReset.setOnAction(event -> {
+            pane.getChildren().clear();
+            btnStart.setDisable(false);
+            rb1.setSelected(false);
+            rb2.setSelected(false);
+            pane.getChildren().addAll(setLeft(rb1, rb2, btnStart, signsRb1, signsRb2), setRight(title, btnStart, btnReset));
+        });
+
+        return pane;
+    }
+
+    default GridPane setFields(int rows, int cols, CustomButton btnStart, String[] signs) {
+
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(10);
@@ -149,33 +189,34 @@ public interface iView {
                 fieldList[i][j] = new CustomTextField();
                 Label lblVariable = new Label();
                 lblVariable.setStyle("-fx-text-fill: E7EBEE;");
-                lblVariable.setFont(mainModel.font);
-
-                // Rearranges the signs for the RadioButtons
-                if (j == 0) {
-                    lblVariable.setText("X +");
-                } else if (j == 1 && rows == 2) {
-                    lblVariable.setText("Y =");
-                } else if (j == 1 && rows == 3) {
-                    lblVariable.setText("Y +");
-                } else if (j == 2 && rows == 3) {
-                    lblVariable.setText("Z =");
-                } else {
+                lblVariable.setFont(Custom.font);
+                if (j == cols - 1) {
                     lblVariable.setText("");
+                } else {
+                    lblVariable.setText(signs[j]);
                 }
 
                 int finalI = i;
                 int finalJ = j;
 
                 btnStart.setOnAction(event -> {
+                    boolean isInvalid = false;
                     for (CustomTextField[] tfArray: fieldList) {
                         for (CustomTextField tf: tfArray) {
-                            btnStart.setDisable(tf.checkField());
+                            if (tf.checkField()) {
+                                btnStart.setDisable(true);
+                                isInvalid = true;
+                            } else {
+                                copyArray.add(tf);
+                                isInvalid = false;
+                            }
                         }
                     }
+                    handleStart(getWhichView(signs), isInvalid);
                 });
 
-                fieldList[i][j].textProperty().addListener((observable, oldValue, newValue) -> btnStart.setDisable(fieldList[finalI][finalJ].checkField()));
+                fieldList[i][j].textProperty().addListener((observable, oldValue, newValue) ->
+                        btnStart.setDisable(fieldList[finalI][finalJ].checkField()));
 
                 hbTextField.getChildren().addAll(fieldList[i][j], lblVariable);
                 gridPane.add(hbTextField, j, i);
@@ -184,11 +225,51 @@ public interface iView {
         return gridPane;
     }
 
+    default int getWhichView(String[] signs) {
+        if (Arrays.equals(signs, new String[]{"X +", "Y ="}) || Arrays.equals(signs, new String[]{"X +", "Y +", "Z ="})) {
+            return 1;
+        } else {
+            return 3;
+        }
+    }
 
+    default ArrayList<CustomTextField> getCopyArray() {
+        return copyArray;
+    }
+
+    default void handleStart (int i, boolean isInvalid) {
+        switch (i) {
+            case 1:
+                if (!isInvalid) {
+                    Controller1 controller1 = new Controller1();
+                    controller1.setFieldList(getCopyArray());
+                    controller1.transform();
+                    //cits into Tayba from master ontroller1.getOutput();
+                }
+                break;
+            case 2:
+
+            case 3:
+
+//                if (View3.r1.isSelected()) {
+//                    //  System.out.println(V3Controller.checkzeros(View3.arlines));
+//                    //  View3.transform();
+//                    //View3.toMatrix();
+//
+//                }
+//
+//
+//                if (View3.r2.isSelected()) {
+//                    Random rn = new Random();
+//                    int answer = rn.nextInt(10) + 1;
+//                    //V3Controller.transform(View3.arplanes);
+//                    V3Controller.crossProduct();
+//                    V3Controller.point(answer);
+//                    //View3.graph3.addLine(V3Controller.point(95),V3Controller.point(-10));
+//                    View3.graph3.addPoint(new Point3D(5, 5, 5));
+//
+//                    break;
+//                }
+        }
+    }
 }
-
-
-
-
-
-

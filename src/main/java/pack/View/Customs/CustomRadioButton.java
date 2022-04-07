@@ -1,8 +1,7 @@
-package pack.Model;
+package pack.View.Customs;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.text.TextAlignment;
 
 public class CustomRadioButton extends RadioButton {
@@ -12,6 +11,6 @@ public class CustomRadioButton extends RadioButton {
         this.setStyle("-fx-text-fill: E7EBEE;");
         this.setTextAlignment(TextAlignment.CENTER);
         this.setPadding(new Insets(15));
-        this.setFont(mainModel.font);
+        this.setFont(Custom.font);
     }
 }

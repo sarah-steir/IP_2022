@@ -7,9 +7,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Model.CustomButton;
-
-import static pack.Model.mainModel.p;
+import pack.View.Customs.Custom;
+import pack.View.Customs.CustomButton;
 
 public class WelcomeView extends Pane {
 
@@ -34,31 +33,26 @@ public class WelcomeView extends Pane {
         VBox boxyy = new VBox();
 
         Button button1 = new CustomButton("Systems of Linear Equations");
-        button1.setOnAction(e -> main.playAnimation(new View1()));
+        button1.setOnAction(e -> main.playAnimation(main.view1));
         Button button2 = new CustomButton("EigenValues & EigenVectors");
-        button2.setOnAction(e -> main.playAnimation(new View2()));
+        button2.setOnAction(e -> main.playAnimation(main.view2));
         Button button3 = new CustomButton("Lines and Planes");
-        button3.setOnAction(e -> main.playAnimation(new View3()));
+        button3.setOnAction(e -> main.playAnimation(main.view3));
 
         boxyy.setSpacing(20);
         boxyy.getChildren().addAll(button1, button2, button3);
         boxyy.setLayoutX(390);
         boxyy.setLayoutY(200);
-
         boxyy.setAlignment(Pos.CENTER);
-
-        System.out.println(button1.getWidth());
-
         return boxyy;
     }
 
     public ImageView setLogo() {
-        ImageView iv = new ImageView(new Image(p + "Logo.png"));
+        ImageView iv = new ImageView(new Image(Custom.p + "Logo.png"));
         iv.setFitWidth(225);
         iv.setFitHeight(105);
         iv.setLayoutX(805);
         iv.setLayoutY(610);
         return iv;
     }
-
 }
