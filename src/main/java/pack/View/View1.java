@@ -23,6 +23,5 @@ public class View1 extends Pane implements iView {
         btnStart = new CustomButton("START\nTHE\nMAGIK");
         btnReset = new CustomButton("RESET\nTHE\nMAGIK");
         this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "Systems of linear equations", graph));
-        graph.addPoint(new Point3D(45, 65, 56));
     }
 }
