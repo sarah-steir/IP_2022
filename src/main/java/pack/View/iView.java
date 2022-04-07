@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import pack.Controller.Controller1;
 import pack.View.Customs.*;
 import javafx.scene.control.Label;
+import pack.View.GraphView.Graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +28,7 @@ public interface iView {
         return iv;
     }
 
-    default VBox setLeft(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2) {
+    default VBox setLeft(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2, Graph graph) {
         VBox vbLeft = new VBox();
         vbLeft.setSpacing(10);
         vbLeft.setPrefSize(500, 695);
@@ -42,11 +43,12 @@ public interface iView {
         vbUi.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2));
 
         // Graph Box
-        Pane graph = new Pane();
-        graph.setPrefSize(500, 525);
-        graph.setStyle("-fx-background-color: #333335");    // Grey
+        Pane graphPane = new Pane();
+        graphPane.setPrefSize(500, 525);
+        graphPane.setStyle("-fx-background-color: #333335");    // Grey
+        graphPane.getChildren().add(graph);
 
-        vbLeft.getChildren().addAll(vbUi, graph);
+        vbLeft.getChildren().addAll(vbUi, graphPane);
 
         return vbLeft;
     }
@@ -155,18 +157,18 @@ public interface iView {
     }
 
     default Pane setView(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, CustomButton btnReset,
-                         String[] signsRb1, String[] signsRb2, String title) {
+                         String[] signsRb1, String[] signsRb2, String title, Graph graph) {
         Pane pane = new Pane();
         pane.setPrefSize(1050, 750);
         pane.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
-        pane.getChildren().addAll(setLeft(rb1, rb2, btnStart, signsRb1, signsRb2), setRight(title, btnStart, btnReset));
+        pane.getChildren().addAll(setLeft(rb1, rb2, btnStart, signsRb1, signsRb2, graph), setRight(title, btnStart, btnReset));
 
         btnReset.setOnAction(event -> {
             pane.getChildren().clear();
             btnStart.setDisable(false);
             rb1.setSelected(false);
             rb2.setSelected(false);
-            pane.getChildren().addAll(setLeft(rb1, rb2, btnStart, signsRb1, signsRb2), setRight(title, btnStart, btnReset));
+            pane.getChildren().addAll(setLeft(rb1, rb2, btnStart, signsRb1, signsRb2, graph), setRight(title, btnStart, btnReset));
         });
 
         return pane;

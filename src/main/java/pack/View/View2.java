@@ -24,11 +24,11 @@ public class View2 extends Pane implements iView {
         rb2.setToggleGroup(group);
         btnStart = new CustomButton("START\nTHE\nMAGIK");
         btnReset = new CustomButton("RESET\nTHE\nMAGIK");
-        this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "EigenValues and EigenVectors"));
+        this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "EigenValues and EigenVectors", null));
     }
 
     @Override
-    public VBox setLeft(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2) {
+    public VBox setLeft(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2, Graph graph) {
         VBox vbLeft = new VBox();
         vbLeft.setSpacing(10);
         vbLeft.setPrefSize(500, 695);

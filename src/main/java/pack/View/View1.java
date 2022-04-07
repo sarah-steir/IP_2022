@@ -22,6 +22,6 @@ public class View1 extends CustomPane implements iView {
         rb2.setToggleGroup(group);
         btnStart = new CustomButton("START\nTHE\nMAGIK");
         btnReset = new CustomButton("RESET\nTHE\nMAGIK");
-        this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "Systems of linear equations"));
+        this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "Systems of linear equations", graph));
     }
 }

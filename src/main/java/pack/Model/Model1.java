@@ -262,57 +262,57 @@ public class Model1 {
         return arr;
     }
 
-    public double getE1() {
-        return e1;
-    }
-
-    public void setE1(double e1) {
-        this.e1 = e1;
-    }
-
-    public double getE2() {
-        return e2;
-    }
-
-    public void setE2(double e2) {
-        this.e2 = e2;
-    }
-
-    public double getE3() {
-        return e3;
-    }
-
-    public void setE3(double e3) {
-        this.e3 = e3;
-    }
-
-    public double getE4() {
-        return e4;
-    }
-
-    public void setE4(double e4) {
-        this.e4 = e4;
-    }
-
-    public double getA1() {
-        return a1;
-    }
+//    public double getE1() {
+//        return e1;
+//    }
+//
+//    public void setE1(double e1) {
+//        this.e1 = e1;
+//    }
+//
+//    public double getE2() {
+//        return e2;
+//    }
+//
+//    public void setE2(double e2) {
+//        this.e2 = e2;
+//    }
+//
+//    public double getE3() {
+//        return e3;
+//    }
+//
+//    public void setE3(double e3) {
+//        this.e3 = e3;
+//    }
+//
+//    public double getE4() {
+//        return e4;
+//    }
+//
+//    public void setE4(double e4) {
+//        this.e4 = e4;
+//    }
+//
+//    public double getA1() {
+//        return a1;
+//    }
 
     public void setA1(double a1) {
         this.a1 = a1;
     }
 
-    public double getA2() {
-        return a2;
-    }
+//    public double getA2() {
+//        return a2;
+//    }
 
     public void setA2(double a2) {
         this.a2 = a2;
     }
 
-    public double getA3() {
-        return a3;
-    }
+//    public double getA3() {
+//        return a3;
+//    }
 
     public void setA3(double a3) {
         this.a3 = a3;
