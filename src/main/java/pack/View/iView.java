@@ -1,6 +1,7 @@
 package pack.View;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -14,7 +15,6 @@ import pack.Model.ModelForJSON;
 import pack.View.Customs.*;
 import javafx.scene.control.Label;
 import pack.View.GraphView.Graph;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -24,6 +24,38 @@ public interface iView {
 
     ArrayList<CustomTextField> copyArray = new ArrayList<>();
 
+    /**
+     * This method is the one that is called by View1, View2 and View3. It sets both the left and right pane and keeps
+     * track of all the needed parameters for that specific view. This method is the one that sets off the chain reaction
+     * of setting up the rest of the User Interface for a certain View.
+     * @param rb1 the first RadioButton
+     * @param rb2 the second RadioButton
+     * @param btnStart the start Button
+     * @param btnReset the reset Button
+     * @param signsRb1 an array of labels to add with the TextFields for rb1
+     * @param signsRb2 an array of labels to add with the TextFields for rb2
+     * @param title the title of the right pane
+     * @param graph the graph object
+     * @return a Pane object containing the whole UI of that view
+     */
+    default Pane setView(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, CustomButton btnReset,
+                         String[] signsRb1, String[] signsRb2, String title, Graph graph, ComboBox comboBox) {
+        Pane pane = new Pane();
+        pane.setPrefSize(1050, 750);
+        pane.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
+        pane.getChildren().addAll(setLeft(rb1, rb2, btnStart, signsRb1, signsRb2, graph, comboBox), setRight(title, btnStart, btnReset));
+
+        btnReset.setOnAction(event -> {
+            pane.getChildren().clear();
+            btnStart.setDisable(false);
+            rb1.setSelected(false);
+            rb2.setSelected(false);
+            pane.getChildren().addAll(setLeft(rb1, rb2, btnStart, signsRb1, signsRb2, graph, comboBox), setRight(title, btnStart, btnReset));
+        });
+
+        return pane;
+    }
+
     default ImageView setLogo() {
         ImageView iv = new ImageView(new Image(p + "Logo.png"));
         iv.setFitWidth(225);
@@ -31,7 +63,8 @@ public interface iView {
         return iv;
     }
 
-    default VBox setLeft(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2, Graph graph) {
+    default VBox setLeft(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2,
+                         Graph graph, ComboBox comboBox) {
         VBox vbLeft = new VBox();
         vbLeft.setSpacing(10);
         vbLeft.setPrefSize(500, 695);
@@ -43,7 +76,7 @@ public interface iView {
         vbUi.setSpacing(15);
         vbUi.setPrefSize(500, 160);
         vbUi.setStyle("-fx-background-color: #333335"); // Grey
-        vbUi.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2));
+        vbUi.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2, comboBox));
 
         // Graph Box
         Pane graphPane = new Pane();
@@ -56,7 +89,7 @@ public interface iView {
         return vbLeft;
     }
 
-    default VBox setRadios(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2) {
+    default VBox setRadios(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2, ComboBox comboBox) {
 
         VBox vbRadioBox = new VBox();
         vbRadioBox.setPrefSize(500, 160);
@@ -65,16 +98,22 @@ public interface iView {
         hbRadios.setSpacing(20);
         hbRadios.setPrefWidth(115);
         hbRadios.getChildren().addAll(rb1, rb2);
-        vbRadioBox.getChildren().add(hbRadios);
+        vbRadioBox.getChildren().addAll(hbRadios, comboBox);
+
+        if (!rb1.isSelected() || !rb2.isSelected()) {
+            comboBox.setDisable(true);
+        }
 
         rb1.setOnAction(event -> {
             vbRadioBox.getChildren().clear();
-            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 3, btnStart, signsRb1));
+            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 3, btnStart, signsRb1, comboBox));
+            comboBox.setDisable(false);
         });
 
         rb2.setOnAction(event -> {
             vbRadioBox.getChildren().clear();
-            vbRadioBox.getChildren().addAll(hbRadios, setFields(3, 4, btnStart, signsRb2));
+            vbRadioBox.getChildren().addAll(hbRadios, setFields(3, 4, btnStart, signsRb2, comboBox));
+            comboBox.setDisable(false);
         });
         return vbRadioBox;
     }
@@ -114,25 +153,7 @@ public interface iView {
         return vbRight;
     }
 
-    default Pane setView(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, CustomButton btnReset,
-                         String[] signsRb1, String[] signsRb2, String title, Graph graph) {
-        Pane pane = new Pane();
-        pane.setPrefSize(1050, 750);
-        pane.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
-        pane.getChildren().addAll(setLeft(rb1, rb2, btnStart, signsRb1, signsRb2, graph), setRight(title, btnStart, btnReset));
-
-        btnReset.setOnAction(event -> {
-            pane.getChildren().clear();
-            btnStart.setDisable(false);
-            rb1.setSelected(false);
-            rb2.setSelected(false);
-            pane.getChildren().addAll(setLeft(rb1, rb2, btnStart, signsRb1, signsRb2, graph), setRight(title, btnStart, btnReset));
-        });
-
-        return pane;
-    }
-
-    default GridPane setFields(int rows, int cols, CustomButton btnStart, String[] signs) {
+    default GridPane setFields(int rows, int cols, CustomButton btnStart, String[] signs, ComboBox comboBox) {
 
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
@@ -173,6 +194,12 @@ public interface iView {
                         }
                     }
                     handleStart(getWhichView(signs), isInvalid);
+                });
+
+                comboBox.setOnAction(event -> {
+                    if (comboBox.getValue().equals("Identity")) {
+                        System.out.println("YOOO this is the first item in the komobokobox");
+                    }
                 });
 
                 fieldList[i][j].textProperty().addListener((observable, oldValue, newValue) ->

@@ -22,10 +22,11 @@ public class ModelForJSON {
     private static ArrayList<Integer> Symmetric = new ArrayList<>();
     private static ArrayList<Integer> Nul = new ArrayList<>();
 
-    public ModelForJSON(){
+    public ModelForJSON() {
         writeBasics();
         readBasics();
     }
+
 public static void writeBasics() {
     JSONObject matrix = new JSONObject();
 
