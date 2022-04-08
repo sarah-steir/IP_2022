@@ -9,7 +9,7 @@ import java.io.File;
 public class Custom {
 
     static File f = new File("");
-    public static String p = "file:" + f.getAbsolutePath() + "/";
+    public static String p = "file:" + f.getAbsolutePath() + "/Resources/";
 
     public static Font font = Font.loadFont(p + "Font.otf", 15);
 
