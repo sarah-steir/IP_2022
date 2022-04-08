@@ -128,13 +128,14 @@ public class Graph extends Group {
 
         Cylinder xAxis = new Cylinder(1.5, 3000);
         xAxis.setMaterial(new PhongMaterial(Color.RED));
-        xAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(1, 0, 0)));
+        xAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(0, 0, 1)));
         Cylinder yAxis = new Cylinder(1.5, 3000);
         yAxis.setMaterial(new PhongMaterial(Color.GREEN));
-        yAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(0, 1, 0)));
+        yAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(1, 0, 0)));
         Cylinder zAxis = new Cylinder(1.5, 3000);
         zAxis.setMaterial(new PhongMaterial(Color.BLUE));
-        zAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(0, 0, 1)));
+        zAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(0, 1, 0)));
+
 
         Xform axes = new Xform();
         axes.getChildren().addAll(xAxis, yAxis, zAxis);
