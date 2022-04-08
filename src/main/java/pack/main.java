@@ -11,7 +11,6 @@ public class main extends Application {
 
     @Override
     public void start(Stage stage) {
-        ModelForJSON mdj = new ModelForJSON();
         Pane grid = new MainView();
         stage.setResizable(false);
         stage.setTitle("Matrix");

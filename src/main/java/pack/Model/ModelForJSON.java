@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Iterator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,6 +15,12 @@ import org.json.simple.parser.ParseException;
 
 public class ModelForJSON {
     private static FileWriter file;
+    private static ArrayList<Integer> Diagonal = new ArrayList<>();
+    private static ArrayList<Integer> Identity = new ArrayList<>();
+    private static ArrayList<Integer> UpperTriangle = new ArrayList<>();
+    private static ArrayList<Integer> LowerTriangle = new ArrayList<>();
+    private static ArrayList<Integer> Symmetric = new ArrayList<>();
+    private static ArrayList<Integer> Nul = new ArrayList<>();
 
     public ModelForJSON(){
         writeBasics();
@@ -118,25 +126,87 @@ public static void writeBasics() {
         Object obj = null;
             try {
                 obj = parser.parse(new FileReader("Resources/JsonFile.json"));
+                JSONObject jsonObject = (JSONObject) obj;
+
+                // JSONArray companyList = (JSONArray) jsonObject.get("Identity");
+              /*  Identity = makeTheArrayList((JSONArray) jsonObject.get("Identity"));
+                UpperTriangle = makeTheArrayList((JSONArray) jsonObject.get("UpperTriangle"));
+                LowerTriangle = makeTheArrayList((JSONArray) jsonObject.get("LowerTriangle"));
+                Symmetric = makeTheArrayList((JSONArray) jsonObject.get("Symmetric"));
+                Diagonal = makeTheArrayList((JSONArray) jsonObject.get("Diagonal"));
+                Nul = makeTheArrayList((JSONArray) jsonObject.get("Null"));
+*/
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
-            JSONObject jsonObject = (JSONObject) obj;
-
-            JSONArray companyList = (JSONArray) jsonObject.get("Identity");
-
-            Iterator<JSONObject> iterator = companyList.iterator();
-            while (iterator.hasNext()) {
 
 
+    }
+   /* private static ArrayList<Integer> makeTheArrayList(JSONArray js){
+        ArrayList<String> objs = new ArrayList<>();
+        ArrayList<Integer> ints = new ArrayList<>();
+        JSONArray list = js;
+        Iterator<JSONObject> iterator = js.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(Integer.parseInt(String.valueOf(iterator.next())));
+            objs.add(String.valueOf(iterator.next()));
+        }
+        for(int i = 0; i< ints.size();i++){
+            ints.add(Integer.valueOf(String.valueOf(objs.get(1))));
         }
 
+        return ints;
+    }
+*/
+    public static ArrayList<Integer> getDiagonal() {
+        return Diagonal;
+    }
 
+    public static void setDiagonal(ArrayList<Integer> diagonal) {
+        Diagonal = diagonal;
+    }
 
+    public static ArrayList<Integer> getIdentity() {
+        return Identity;
+    }
 
+    public static void setIdentity(ArrayList<Integer> identity) {
+        Identity = identity;
+    }
+
+    public static ArrayList<Integer> getUpperTriangle() {
+        return UpperTriangle;
+    }
+
+    public static void setUpperTriangle(ArrayList<Integer> upperTriangle) {
+        UpperTriangle = upperTriangle;
+    }
+
+    public static ArrayList<Integer> getLowerTriangle() {
+        return LowerTriangle;
+    }
+
+    public static void setLowerTriangle(ArrayList<Integer> lowerTriangle) {
+        LowerTriangle = lowerTriangle;
+    }
+
+    public static ArrayList<Integer> getSymmetric() {
+        return Symmetric;
+    }
+
+    public static void setSymmetric(ArrayList<Integer> symmetric) {
+        Symmetric = symmetric;
+    }
+
+    public static ArrayList<Integer> getNul() {
+        return Nul;
+    }
+
+    public static void setNul(ArrayList<Integer> nul) {
+        Nul = nul;
     }
 }
 
