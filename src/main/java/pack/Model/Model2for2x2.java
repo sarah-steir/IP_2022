@@ -133,4 +133,156 @@ public class Model2for2x2 {
         }
         return y1;
     }
+
+    public double getX1() {
+        return x1;
+    }
+
+    public void setX1(double x1) {
+        this.x1 = x1;
+    }
+
+    public double getX2() {
+        return x2;
+    }
+
+    public void setX2(double x2) {
+        this.x2 = x2;
+    }
+
+    public double getFirst() {
+        return first;
+    }
+
+    public void setFirst(double first) {
+        this.first = first;
+    }
+
+    public double getSecond() {
+        return second;
+    }
+
+    public void setSecond(double second) {
+        this.second = second;
+    }
+
+    public double getThird() {
+        return third;
+    }
+
+    public void setThird(double third) {
+        this.third = third;
+    }
+
+    public double getE1() {
+        return e1;
+    }
+
+    public void setE1(double e1) {
+        this.e1 = e1;
+    }
+
+    public double getE2() {
+        return e2;
+    }
+
+    public void setE2(double e2) {
+        this.e2 = e2;
+    }
+
+    public double getA1() {
+        return a1;
+    }
+
+    public void setA1(double a1) {
+        this.a1 = a1;
+    }
+
+    public double getA2() {
+        return a2;
+    }
+
+    public void setA2(double a2) {
+        this.a2 = a2;
+    }
+
+    public double getB1() {
+        return b1;
+    }
+
+    public void setB1(double b1) {
+        this.b1 = b1;
+    }
+
+    public double getB2() {
+        return b2;
+    }
+
+    public void setB2(double b2) {
+        this.b2 = b2;
+    }
+
+    public double getA1Initial() {
+        return a1Initial;
+    }
+
+    public void setA1Initial(double a1Initial) {
+        this.a1Initial = a1Initial;
+    }
+
+    public double getA2Initial() {
+        return a2Initial;
+    }
+
+    public void setA2Initial(double a2Initial) {
+        this.a2Initial = a2Initial;
+    }
+
+    public double getB1Initial() {
+        return b1Initial;
+    }
+
+    public void setB1Initial(double b1Initial) {
+        this.b1Initial = b1Initial;
+    }
+
+    public double getB2Initial() {
+        return b2Initial;
+    }
+
+    public void setB2Initial(double b2Initial) {
+        this.b2Initial = b2Initial;
+    }
+
+    public double[] getM1() {
+        return m1;
+    }
+
+    public void setM1(double[] m1) {
+        this.m1 = m1;
+    }
+
+    public double[] getM2() {
+        return m2;
+    }
+
+    public void setM2(double[] m2) {
+        this.m2 = m2;
+    }
+
+    public static double[] getS1() {
+        return s1;
+    }
+
+    public static void setS1(double[] s1) {
+        Model2for2x2.s1 = s1;
+    }
+
+    public static double[] getS2() {
+        return s2;
+    }
+
+    public static void setS2(double[] s2) {
+        Model2for2x2.s2 = s2;
+    }
 }

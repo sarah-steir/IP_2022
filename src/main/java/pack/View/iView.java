@@ -8,6 +8,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pack.Controller.Controller1;
+import pack.Model.Model2for2x2;
+import pack.Model.Model2for3x3;
+import pack.Model.ModelForJSON;
 import pack.View.Customs.*;
 import javafx.scene.control.Label;
 import pack.View.GraphView.Graph;
@@ -206,6 +209,40 @@ public interface iView {
                 }
                 break;
             case 2:
+
+                /*
+                if(View2.getR3().isSelected()) {
+                    Model2for3x3 et = new Model2for3x3(Double.parseDouble(View2.getT1().getText()), Double.parseDouble(View2.getT2().getText()), Double.parseDouble(View2.getT3().getText()), Double.parseDouble(View2.getT4().getText()), Double.parseDouble(View2.getT5().getText()), Double.parseDouble(View2.getT6().getText()), Double.parseDouble(View2.getT7().getText()), Double.parseDouble(View2.getT8().getText()), Double.parseDouble(View2.getT9().getText()));
+                    System.out.println("This is 3x3");
+                    System.out.println("Vector of the eigen value " + et.getX1() + ": " + Arrays.toString(et.getS1()));
+                    System.out.println("Vector of the eigen value " + et.getX2() + ": " + Arrays.toString(et.getS2()));
+                    System.out.println("Vector of the eigen value " + et.getX3() + ": " + Arrays.toString(et.getS3()));
+                    for (Double d : et.getS1()) {
+                        View2.getStr().add(d.toString());
+                    }
+                    for (Double d : et.getS2()) {
+                        View2.getStr2().add(d.toString());
+                    }
+                    for (Double d : et.getS3()) {
+                        View2.getStr3().add(d.toString());
+                    }
+                }
+
+                if(View2.getR2().isSelected()) {
+
+                    Model2for2x2 et1 = new Model2for2x2(Double.parseDouble(View2.getT1().getText()), Double.parseDouble(View2.getT2().getText()), Double.parseDouble(View2.getT4().getText()), Double.parseDouble(View2.getT5().getText()));
+                    System.out.println("This is 2x2");
+                    System.out.println("Vector of the eigen value " + et1.getX1() + ": " + Arrays.toString(et1.getS1()));
+                    System.out.println("Vector of the eigen value " + et1.getX2() + ": " + Arrays.toString(et1.getS2()));
+                    for (Double d : et1.getS1()) {
+                        View2.getStr().add(d.toString());
+                    }
+                    for (Double d : et1.getS2()) {
+                        View2.getStr2().add(d.toString());
+                    }
+                }
+
+                 */
 
             case 3:
 

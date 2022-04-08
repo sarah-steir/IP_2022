@@ -4,13 +4,14 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import pack.Model.ModelForJSON;
 import pack.View.MainView;
 
 public class main extends Application {
 
     @Override
     public void start(Stage stage) {
-
+        ModelForJSON mdj = new ModelForJSON();
         Pane grid = new MainView();
         stage.setResizable(false);
         stage.setTitle("Matrix");

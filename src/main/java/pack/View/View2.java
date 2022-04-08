@@ -36,4 +36,60 @@ public class View2 extends Pane implements iView {
         vbLeft.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2));
         return vbLeft;
     }
+
+    public String[] getSignsRb2() {
+        return signsRb2;
+    }
+
+    public void setSignsRb2(String[] signsRb2) {
+        this.signsRb2 = signsRb2;
+    }
+
+    public CustomRadioButton getRb1() {
+        return rb1;
+    }
+
+    public void setRb1(CustomRadioButton rb1) {
+        this.rb1 = rb1;
+    }
+
+    public CustomRadioButton getRb2() {
+        return rb2;
+    }
+
+    public void setRb2(CustomRadioButton rb2) {
+        this.rb2 = rb2;
+    }
+
+    public CustomButton getBtnStart() {
+        return btnStart;
+    }
+
+    public void setBtnStart(CustomButton btnStart) {
+        this.btnStart = btnStart;
+    }
+
+    public CustomButton getBtnReset() {
+        return btnReset;
+    }
+
+    public void setBtnReset(CustomButton btnReset) {
+        this.btnReset = btnReset;
+    }
+
+    public ToggleGroup getGroup() {
+        return group;
+    }
+
+    public void setGroup(ToggleGroup group) {
+        this.group = group;
+    }
+
+    public String[] getSignsRb1() {
+        return signsRb1;
+    }
+
+    public void setSignsRb1(String[] signsRb1) {
+        this.signsRb1 = signsRb1;
+    }
 }
