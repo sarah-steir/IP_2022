@@ -41,14 +41,6 @@ public class View3 extends Pane implements iView {
         btnStart = new CustomButton("START\nTHE\nMAGIK");
         btnReset = new CustomButton("RESET\nTHE\nMAGIK");
         this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "Lines and planes", graph));
-        Point3D p1 = new Point3D(65, 23, -76);
-        Point3D p2 = new Point3D(54, -234, 54);
-        Point3D p3 = new Point3D(234, 93, -315  );
-        graph.addPoint(p1);
-        graph.addPoint(p2);
-        graph.addPoint(p3);
-        graph.addPlane(p1, p2, p3, "11x+16y+14z-15=0");
-
     }
 
     @Override
