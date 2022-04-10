@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
+import pack.View.Customs.Custom;
 import pack.View.Customs.CustomText;
 
 
@@ -34,12 +35,6 @@ public class Graph extends Group {
     final Xform cameraXform3 = new Xform();
 
     Box map = bigCube();
-
-    Color white = Color.web("#E7EBEE");
-    Color grey = Color.web("#333234");
-    Color red = Color.web("#DF5C58");
-    Color yellow = Color.web("#F2C15F");
-    Color blue = Color.web("#1985A1");
 
     ObservableList<Node> axisList;
     ObservableList<Node> thingsToGraphList = FXCollections.observableArrayList();
@@ -225,16 +220,16 @@ public class Graph extends Group {
         thingsToGraphList.add(sphere);
         switch (thingsToGraphList.size()) {
             case 1:
-                sphere.setMaterial(new PhongMaterial(red));
+                sphere.setMaterial(new PhongMaterial(Custom.color1));
                 break;
             case 2:
-                sphere.setMaterial(new PhongMaterial(yellow));
+                sphere.setMaterial(new PhongMaterial(Custom.color2));
                 break;
             case 3:
-                sphere.setMaterial(new PhongMaterial(blue));
+                sphere.setMaterial(new PhongMaterial(Custom.color3));
                 break;
             default:
-                sphere.setMaterial(new PhongMaterial(white));
+                sphere.setMaterial(new PhongMaterial(Custom.white));
                 break;
         }
         this.update();
@@ -249,16 +244,16 @@ public class Graph extends Group {
         thingsToGraphList.add(line);
         switch (thingsToGraphList.size()) {
             case 1:
-                line.setStroke(red);
+                line.setStroke(Custom.color1);
                 break;
             case 2:
-                line.setStroke(yellow);
+                line.setStroke(Custom.color2);
                 break;
             case 3:
-                line.setStroke(blue);
+                line.setStroke(Custom.color3);
                 break;
             default:
-                line.setStroke(white);
+                line.setStroke(Custom.white);
                 break;
         }
         this.update();
@@ -274,16 +269,16 @@ public class Graph extends Group {
         thingsToGraphList.add(rectangle);
         switch (thingsToGraphList.size()) {
             case 1:
-                rectangle.setFill(red);
+                rectangle.setFill(Custom.color1);
                 break;
             case 2:
-                rectangle.setFill(yellow);
+                rectangle.setFill(Custom.color2);
                 break;
             case 3:
-                rectangle.setFill(blue);
+                rectangle.setFill(Custom.color3);
                 break;
             default:
-                rectangle.setFill(white);
+                rectangle.setFill(Custom.white);
                 break;
         }
         this.update();

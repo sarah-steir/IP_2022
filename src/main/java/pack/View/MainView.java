@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import pack.Controller.MainController;
+import pack.View.Customs.Custom;
 
 import static pack.View.Customs.Custom.p;
 
@@ -22,6 +23,7 @@ public class MainView extends Pane {
     Pane view1 = new View1(), view2 = new View2(), view3 = new View3();
 
     public MainView() {
+        Custom.setTheme(1);
         this.setPrefSize(1050, 750);
         this.setCurrentPane(new WelcomeView(this));
         this.getChildren().addAll(currentPane, gif, setMenuBar());
@@ -73,7 +75,16 @@ public class MainView extends Pane {
         view2.setOnAction(e -> this.playAnimation(this.view2));
         view3.setOnAction(e -> this.playAnimation(this.view3));
 
-        menuBar.getMenus().addAll(about, help, views);
+        Menu themes = new Menu(("Themes"));
+        MenuItem theme1 = new MenuItem("The Original");
+        MenuItem theme2 = new MenuItem("Spooky");
+        MenuItem theme3 = new MenuItem("Deep Woter");
+        themes.getItems().addAll(theme1, theme2, theme3);
+        theme1.setOnAction(e -> Custom.setTheme(1));
+        theme2.setOnAction(e -> Custom.setTheme(2));
+        theme3.setOnAction(e -> Custom.setTheme(3));
+
+        menuBar.getMenus().addAll(about, help, views, themes);
         menuBar.setPrefSize(1050, 25);
         menuPane.getChildren().add(menuBar);
 

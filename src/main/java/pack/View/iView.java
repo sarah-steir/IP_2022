@@ -25,7 +25,7 @@ public interface iView {
     ArrayList<CustomTextField> copyArray = new ArrayList<>();
 
     default ImageView setLogo() {
-        ImageView iv = new ImageView(new Image(p + "Logo.png"));
+        ImageView iv = Custom.logo;
         iv.setFitWidth(225);
         iv.setFitHeight(105);
         return iv;
