@@ -12,11 +12,6 @@ public class Model1 {
     double b1, b2, b3; // Row 2
     double c1, c2, c3; // Row 3
     double d1, d2, d3; // Last Column
-
-    public int getN() {
-        return n;
-    }
-
     int n;
 
 
@@ -49,7 +44,7 @@ public class Model1 {
             this.d1 = matrixOfCoefficients.get(4);
             matrixB_2x2[0] = this.d1;
             this.d2 = matrixOfCoefficients.get(5);
-            matrixB_2x2[1] = this.d1;
+            matrixB_2x2[1] = this.d2;
 
 //            //making sure im getting the right numbers for A lmao 2x2
 //            for (int i = 0; i < 2; i++)
@@ -182,25 +177,5 @@ public class Model1 {
             x[i] = (b[i] - sum) / A[i][i];
         }
         return x;
-    }
-
-
-    // sample client
-    public void main(String[] args) {
-        int n = 3;
-        double[][] A = {
-                {0, 1, 1},
-                {2, 4, -2},
-                {0, 3, 15}
-        };
-        double[] b = {4, 2, 36};
-        double[] x = SLESolve(A, b);
-
-
-        // print results
-        for (int i = 0; i < n; i++) {
-            System.out.println(x[i]);
-        }
-
     }
 }
