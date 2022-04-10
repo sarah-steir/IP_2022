@@ -1,14 +1,20 @@
 package pack.View;
 
 import javafx.collections.FXCollections;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Box;
+import javafx.scene.text.Text;
+import pack.Model.Model2for3x3;
 import pack.Model.ModelForJSON;
 import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
@@ -135,7 +141,6 @@ public class View2 extends Pane implements iView {
         public VBox setLeft (CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[]
         signsRb1, String[]signsRb2, Graph graph){
             VBox vbLeft = new VBox();
-            ImageView imL = new ImageView(new Image(Custom.p + "brack left.png"));
             vbLeft.setSpacing(10);
             vbLeft.setPrefSize(500, 695);
             vbLeft.setLayoutX(10);
@@ -143,23 +148,74 @@ public class View2 extends Pane implements iView {
             vbLeft.setStyle("-fx-background-color: #333335"); // Grey
             vbLeft.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2));
             vbLeft.getChildren().add(cb);
-            vbLeft.getChildren().add(imL);
             return vbLeft;
         }
+   public GridPane RIGHT3X3(){
+        GridPane gpt = new GridPane();
+       Text text = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX1() + " THE EIGEN VECTOR IS");
+       Text text1 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX2() + " THE EIGEN VECTOR IS");
+       Text text2 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX3() + " THE EIGEN VECTOR IS");
+       gpt.setPrefSize(500, 695);
+       gpt.setLayoutX(520);
+       gpt.setLayoutY(14);
+        ImageView imL = new ImageView(new Image(Custom.p + "brack left.png"));
+       imL.setFitWidth(15);
+       imL.setFitHeight(75);
+       ImageView imL1 = new ImageView(new Image(Custom.p + "brack left.png"));
+       imL1.setFitWidth(10);
+       imL1.setFitHeight(75);
+       ImageView imL2 = new ImageView(new Image(Custom.p + "brack left.png"));
+       imL2.setFitWidth(15);
+       imL2.setFitHeight(75);
+       ImageView imR = new ImageView(new Image(Custom.p + "brack right.png"));
+       imR.setFitWidth(15);
+       imR.setFitHeight(75);
+       ImageView imR1 = new ImageView(new Image(Custom.p + "brack right.png"));
+       imR1.setFitWidth(15);
+       imR1.setFitHeight(75);
+       ImageView imR2 = new ImageView(new Image(Custom.p + "brack right.png"));
+       imR2.setFitWidth(15);
+       imR2.setFitHeight(75);
+       gpt.add(text,1,10);
+       gpt.add(imL,2,15);
+       gpt.add(imR,5,15);
+       gpt.add(text1,1,20);
+       gpt.add(imL1,2,25);
+       gpt.add(imR1,5,25);
+       gpt.add(text2,1,30);
+       gpt.add(imL2,2,35);
+       gpt.add(imR2,5,35);
 
+
+        return gpt;
+    }
     @Override
     public VBox setRight(String title, CustomButton btnStart, CustomButton btnReset) {
-        VBox vbRight= new VBox();
-        ImageView imL = new ImageView(new Image(Custom.p + "brack left.png"));
-        vbRight.setSpacing(10);
+        VBox vbRight = new VBox();
         vbRight.setPrefSize(500, 695);
-        vbRight.setLayoutX(10);
+        vbRight.setLayoutX(520);
         vbRight.setLayoutY(14);
-        vbRight.setStyle("-fx-background-color: #333335"); // Grey
-        vbRight.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2));
-        vbRight.getChildren().add(cb);
-        vbRight.getChildren().add(imL);
-        return vbRight;    }
+        vbRight.setSpacing(10);
+
+        // Program Output Box
+        VBox vbPo = new VBox();
+        vbPo.setPrefSize(500, 595);
+        vbPo.setSpacing(15);
+        vbPo.setAlignment(Pos.TOP_CENTER);
+        GridPane gpjCoaching = RIGHT3X3();
+        vbPo.setStyle("-fx-background-color: #333335");
+        vbPo.getChildren().add(Custom.setTitle(title));
+        vbPo.getChildren().add(gpjCoaching);
+
+        // HBox to hold buttons and logo
+        HBox hbBottom = new HBox();
+        hbBottom.setMaxSize(500, 105);
+        hbBottom.setSpacing(55);
+        hbBottom.getChildren().addAll(setButtons(btnStart, btnReset), setLogo());
+
+        vbRight.getChildren().addAll(vbPo, hbBottom);
+        return vbRight;
+    }
 
 
         public String[] getSignsRb2 () {

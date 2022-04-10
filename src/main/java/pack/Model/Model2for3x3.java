@@ -4,7 +4,9 @@ import java.text.DecimalFormat;
 public class Model2for3x3 {
 
     // idk if i need all of this
-    private double x1, x2, x3; // eigenvalues
+    private static double x1;
+    private static double x2;
+    private static double x3; // eigenvalues
     private double first, second, third, fourth; //cubic function
     private double e1, e2, e3; // to hold values in the reduce matrix
     private double a1, a2, a3; // first line of matrix
@@ -335,7 +337,7 @@ public class Model2for3x3 {
         return y1;
     }
 
-    public double getX1() {
+    public static double getX1() {
         return x1;
     }
 
@@ -343,7 +345,7 @@ public class Model2for3x3 {
         this.x1 = x1;
     }
 
-    public double getX2() {
+    public static double getX2() {
         return x2;
     }
 
@@ -351,7 +353,7 @@ public class Model2for3x3 {
         this.x2 = x2;
     }
 
-    public double getX3() {
+    public static double getX3() {
         return x3;
     }
 
