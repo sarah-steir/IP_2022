@@ -231,7 +231,6 @@ public interface iView {
                     Controller1 controller1 = new Controller1();
                     controller1.setFieldList(getCopyArray());
                     controller1.transform();
-                    controller1.getOutput();
                     controller1.printOutput();
                 }
                 break;

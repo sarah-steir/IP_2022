@@ -1,400 +1,181 @@
-//package pack.Model;
-//
-//import java.text.DecimalFormat;
-//import java.util.ArrayList;
-//
-//
-///**
-// * Fix math. In example 1, only the constants are different. In example 2, everything is wrong. Possibly because of negative
-// * values? Also wth are is there so much formatting?
-// *
-// * Ex 1:
-// * 1 2 3 4
-// * 4 5 6 7
-// * 6 7 8 9
-// *
-// * Ex 2:
-// * 1 -1 1 8
-// * 2 3 -1 -2
-// * 3 -2 -9 9
-// */
+
 
 package pack.Model;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-
 public class Model1 {
-    static final DecimalFormat formatting = new DecimalFormat("0.000");// format the number to 3 decimals
-    private double e1, e2, e3, e4; // to hold values in the reduce matrix
-    private double a1, a2, a3; // Row 1
-    private double b1, b2, b3; // Row 2
-    private double c1, c2, c3; // Row 3
-    private double d1, d2, d3; // Last Column
+    private static final double EPSILON = 1e-10;
 
-    private double[] reduced2x2matrix;
-    private double[] reduced3x3matrix;
+    final DecimalFormat formatting = new DecimalFormat("0.000");// format the number to 3 decimals
+    double a1, a2, a3; // Row 1
+    double b1, b2, b3; // Row 2
+    double c1, c2, c3; // Row 3
+    double d1, d2, d3; // Last Column
+    int n;
 
+
+    // storing arraylist variables for the SLE calculation 2x2
+    public static double[][] matrixA_2x2 = {{1, 1}, {1, 1}};
+    public static double[] matrixB_2x2 = {1, 1};
+
+    // storing arraylist variables for the SLE calculation 3x3
+    public static double[][] matrixA_3x3 = {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}};
+    public static double[] matrixB_3x3 = {1, 1, 1};
+
+    //Storing A matrix variables
     public Model1(ArrayList<Double> matrixOfCoefficients, boolean is2by2) {
         if (is2by2) {
+            n =2;
+            // A matrix for 2x2
+            //Row 1
             this.a1 = matrixOfCoefficients.get(0);
+            matrixA_2x2[0][0] = this.a1;
             this.a2 = matrixOfCoefficients.get(1);
+            matrixA_2x2[0][1] = this.a2;
+
+            //Row2
             this.b1 = matrixOfCoefficients.get(2);
+            matrixA_2x2[1][0] = this.b1;
             this.b2 = matrixOfCoefficients.get(3);
+            matrixA_2x2[1][1] = this.b2;
+
+            //B Matrix
             this.d1 = matrixOfCoefficients.get(4);
+            matrixB_2x2[0] = this.d1;
             this.d2 = matrixOfCoefficients.get(5);
-            reduced2x2matrix = reduceMatrix2x2(this.a1, this.a2, this.b1, this.b2, this.d1, this.d2);
+            matrixB_2x2[1] = this.d2;
+
+//            //making sure im getting the right numbers for A lmao 2x2
+//            for (int i = 0; i < 2; i++)
+//                for (int j = 0; j < 2; j++)
+//                    System.out.println("arr2A[" + i + "][" + j + "] = "
+//                            + matrixA_2x2[i][j]);
+//            //making sure im getting the right numbers for B lmao 2x2
+//            for (int i = 0; i < 2; i++)
+//                for (int j = 0; j < 1; j++)
+//                    System.out.println("arr2B[" + i + "][" + j + "] = "
+//                            + matrixB_2x2[i]);
+
+            System.out.println(matrixOfCoefficients);
+
         } else {
+
+            n = 3;
+            System.out.println(matrixOfCoefficients.toString());
+            // A matrix for 3x3
+            //Row 1
             this.a1 = matrixOfCoefficients.get(0);
+            matrixA_3x3[0][0] = this.a1;
             this.a2 = matrixOfCoefficients.get(1);
+            matrixA_3x3[0][1] = this.a2;
             this.a3 = matrixOfCoefficients.get(2);
+            matrixA_3x3[0][2] = this.a3;
+
+            //Row 2
             this.b1 = matrixOfCoefficients.get(3);
+            matrixA_3x3[1][0] = this.b1;
             this.b2 = matrixOfCoefficients.get(4);
+            matrixA_3x3[1][1] = this.b2;
             this.b3 = matrixOfCoefficients.get(5);
+            matrixA_3x3[1][2] = this.b3;
+
+            //Row 3
             this.c1 = matrixOfCoefficients.get(6);
+            matrixA_3x3[2][0] = this.c1;
             this.c2 = matrixOfCoefficients.get(7);
+            matrixA_3x3[2][1] = this.c2;
             this.c3 = matrixOfCoefficients.get(8);
+            matrixA_3x3[2][2] = this.c3;
+
+
+            //B Matrix
             this.d1 = matrixOfCoefficients.get(9);
+            matrixB_3x3[0] = this.d1;
             this.d2 = matrixOfCoefficients.get(10);
+            matrixB_3x3[1] = this.d2;
             this.d3 = matrixOfCoefficients.get(11);
-            reduced3x3matrix = reduceMatrix3x3(this.a1, this.a2, this.a3, this.b1, this.b2, this.b3, this.c1, this.c2, this.c3, this.d1,
-                    this.d2, this.d3);
-        }
-    }
-//
-//    private double transform(double value) {
-//        return Double.parseDouble(formatting.format(value));
-//    };
+            matrixB_3x3[2] = this.d3;
 
-    private double[] reduceMatrix2x2(double a1, double a2, double b1, double b2, double d1, double d2) {
-        if (a1 == 0) { // if a equal to zero (switch rows) unless all is zero (a,b,c)
-            if (b1 != 0) { //switch a with b if b not zero
-                e1 = Double.parseDouble(formatting.format(a1));
-                e2 = Double.parseDouble(formatting.format(a2));
-                e3 = Double.parseDouble(formatting.format(d1));
-                a1 = Double.parseDouble(formatting.format(b1));
-                a2 = Double.parseDouble(formatting.format(b2));
-                d1 = Double.parseDouble(formatting.format(d2));
-                b1 = Double.parseDouble(formatting.format(e1));
-                b2 = Double.parseDouble(formatting.format(e2));
-                d2 = Double.parseDouble(formatting.format(d1));
-            }
+
+//            //making sure im getting the right numbers for A lmao 3x3
+//            for (int i = 0; i < 3; i++)
+//                for (int j = 0; j < 3; j++)
+//                    System.out.println("arr3A[" + i + "][" + j + "] = "
+//                            + matrixA_3x3[i][j]);
+//            //making sure im getting the right numbers for B lmao 3x3
+//            for (int i = 0; i < 3; i++)
+//                for (int j = 0; j < 1; j++)
+//                    System.out.println("arr3B[" + i + "][" + j + "] = "
+//                            + matrixB_3x3[i]);
+
+
         }
 
-        if (a1 != 1 && a1 != 0) { //if a not equal to one or zero
-            a2 = Double.parseDouble(formatting.format(a2 / a1));//MAKE THE FIRST NUMBER 1 AND THEN DIVIDE ALL THE NUMBERS IN THAT row
-            d1 = Double.parseDouble(formatting.format(d1 / a1));
-            a1 = Double.parseDouble(formatting.format(a1 / a1));
-        }
-
-        if (b1 != 0) { // reduce the second row to 0 in the first #
-            b2 = Double.parseDouble(formatting.format(b2 - (a2 * b1)));//MAKE THE FIRST NUMBER 0 AND THEN substract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
-            d2 = Double.parseDouble(formatting.format(d2 - (d1 * b1)));
-            b1 = Double.parseDouble(formatting.format(b1 - (a1 * b1)));
-        }
-
-        //COLUMN ONE DONE
-        if (b2 != 1 && b2 != 0) { //if a not equal to one or zero
-            b2 = Double.parseDouble(formatting.format(b2 / b2));//MAKE THE FIRST NUMBER 1
-            d2 = Double.parseDouble(formatting.format(d2 / b2));
-        }
-
-        if (b2 != 0 && a2 != 0) { // reduce the second row to 0 in the first #
-            a2 = Double.parseDouble(formatting.format(a2 - (a2 * b2)));//MAKE THE FIRST NUMBER 0
-            d1 = Double.parseDouble(formatting.format(d1 - (d2 * b2)));
-        }
-        double arr[] = {a1, a2, b1, b2, d1, d2}; // reduced matrix
-        return arr;
     }
 
-    private double[] reduceMatrix3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3,double d1, double d2, double d3) {
-        a1 = Double.parseDouble(formatting.format(a1)); // format everything
-        a2 = Double.parseDouble(formatting.format(a2));
-        a3 = Double.parseDouble(formatting.format(a3));
-        b1 = Double.parseDouble(formatting.format(b1));
-        b2 = Double.parseDouble(formatting.format(b2));
-        b3 = Double.parseDouble(formatting.format(b3));
-        c1 = Double.parseDouble(formatting.format(c1));
-        c2 = Double.parseDouble(formatting.format(c2));
-        c3 = Double.parseDouble(formatting.format(c3));
-        d1 = Double.parseDouble(formatting.format(d1));
-        d2 = Double.parseDouble(formatting.format(d2));
-        d3 = Double.parseDouble(formatting.format(d3));
-        if (a1 == 0) { // if a equal to zero (switch rows) unless all is zero (a,b,c)
-            if (b1 == 0) { // if second row also has zero as the first number
-                if (c1 != 0) { // then switch a with c if c not equal zero
-                    e1 = Double.parseDouble(formatting.format(a1)); // E holds the number
-                    e2 = Double.parseDouble(formatting.format(a2));
-                    e3 = Double.parseDouble(formatting.format(a3));
-                    e4 = Double.parseDouble(formatting.format(d1));
-                    a1 = Double.parseDouble(formatting.format(c1));
-                    a2 = Double.parseDouble(formatting.format(c2));
-                    a3 = Double.parseDouble(formatting.format(c3));
-                    d1 = Double.parseDouble(formatting.format(d3));
-                    c1 = Double.parseDouble(formatting.format(e1));
-                    c2 = Double.parseDouble(formatting.format(e2));
-                    c3 = Double.parseDouble(formatting.format(e3));
-                    d3 = Double.parseDouble(formatting.format(d1));
+    public static double[][] getMatrixA_2x2() {
+        return matrixA_2x2;
+    }
+
+    public static double[] getMatrixB_2x2() {
+        return matrixB_2x2;
+    }
+
+    public static double[][] getMatrixA_3x3() {
+        return matrixA_3x3;
+    }
+
+    public static double[] getMatrixB_3x3() {
+        return matrixB_3x3;
+    }
+
+// SLE SOLVER
+
+    // Gaussian elimination with partial pivoting
+    public double[] SLESolve(double[][] A, double[] b) {
+        n = b.length;
+
+        for (int p = 0; p < n; p++) {
+
+            // find pivot row and swap
+            int max = p;
+            for (int i = p + 1; i < n; i++) {
+                if (Math.abs(A[i][p]) > Math.abs(A[max][p])) {
+                    max = i;
                 }
             }
-            if (b1 != 0) { // switch a with b if b not equal zero
+            double[] temp = A[p];
+            A[p] = A[max];
+            A[max] = temp;
+            double t = b[p];
+            b[p] = b[max];
+            b[max] = t;
 
-                e1 = Double.parseDouble(formatting.format(a1));
-                e2 = Double.parseDouble(formatting.format(a2));
-                e3 = Double.parseDouble(formatting.format(a3));
-                e4 = Double.parseDouble(formatting.format(d1));
-                a1 = Double.parseDouble(formatting.format(b1));
-                a2 = Double.parseDouble(formatting.format(b2));
-                a3 = Double.parseDouble(formatting.format(b3));
-                d1 = Double.parseDouble(formatting.format(d2));
-                b1 = Double.parseDouble(formatting.format(e1));
-                b2 = Double.parseDouble(formatting.format(e2));
-                b3 = Double.parseDouble(formatting.format(e3));
-                d2 = Double.parseDouble(formatting.format(d1));
+            // singular or nearly singular
+            if (Math.abs(A[p][p]) <= EPSILON) {
+                throw new ArithmeticException("Matrix is singular or super close to being singular, try again :) ");
+            }
+
+            // pivot within A and b
+            for (int i = p + 1; i < n; i++) {
+                double alpha = A[i][p] / A[p][p];
+                b[i] -= alpha * b[p];
+                for (int j = p; j < n; j++) {
+                    A[i][j] -= alpha * A[p][j];
+                }
             }
         }
-        if (a1 != 1 && a1 != 0) { //if a not equal to one or zero
 
-            a2 = Double.parseDouble(formatting.format(a2 / a1)); //MAKE THE FIRST NUMBER 1 AND THEN DIVIDE ALL THE NUMBERS IN THAT row
-            a3 = Double.parseDouble(formatting.format(a3 / a1));
-            d1 = Double.parseDouble(formatting.format(d1 / a1));
-            a1 = Double.parseDouble(formatting.format(a1 / a1));
-        }
-        if (b1 != 0) { // reduce the second row to 0 in the first #
-
-            b2 = Double.parseDouble(formatting.format(b2 - (a2 * b1)));//MAKE THE FIRST NUMBER 0 AND THEN substract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
-            b3 = Double.parseDouble(formatting.format(b3 - (a3 * b1)));
-            d2 = Double.parseDouble(formatting.format(d2 - (d1 * b1)));
-            b1 = Double.parseDouble(formatting.format(b1 - (a1 * b1)));
-        }
-        if (c1 != 0) { // reduce the third row to 0 in the first #
-
-            c2 = Double.parseDouble(formatting.format(c2 - (a2 * c1)));//MAKE THE FIRST NUMBER 0 AND THEN substract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
-            c3 = Double.parseDouble(formatting.format(c3 - (a3 * c1)));
-            d3 = Double.parseDouble(formatting.format(d3 - (d1 * c1)));
-            c1 = Double.parseDouble(formatting.format(c1 - (a1 * c1)));
-        }
-        //COLUMN ONE DONE
-        if (b2 == 0) { // if a equal to zero (switch rows) unless all is zero (a,b,c)
-            if (c2 != 0) {
-                e2 = Double.parseDouble(formatting.format(b2)); // replace b with c if c not zero
-                e3 = Double.parseDouble(formatting.format(b3));
-                e4 = Double.parseDouble(formatting.format(d2));
-                b2 = Double.parseDouble(formatting.format(c2));
-                b3 = Double.parseDouble(formatting.format(c3));
-                d2 = Double.parseDouble(formatting.format(d3));
-                c2 = Double.parseDouble(formatting.format(e2));
-                c3 = Double.parseDouble(formatting.format(e3));
-                d3 = Double.parseDouble(formatting.format(d2));
+        // back substitution
+        double[] x = new double[n];
+        for (int i = n - 1; i >= 0; i--) {
+            double sum = 0.0;
+            for (int j = i + 1; j < n; j++) {
+                sum += A[i][j] * x[j];
             }
-            if (b2 == 0 && c2 == 0 && a1 == 0 && a2 != 0) { // if A has 0 in the first position and not zero in second position a switch with b
-                e2 = Double.parseDouble(formatting.format(b2));
-                e3 = Double.parseDouble(formatting.format(b3));
-                e4 = Double.parseDouble(formatting.format(d2));
-                b2 = Double.parseDouble(formatting.format(a2));
-                b3 = Double.parseDouble(formatting.format(a3));
-                d2 = Double.parseDouble(formatting.format(d1));
-                a2 = Double.parseDouble(formatting.format(e2));
-                a3 = Double.parseDouble(formatting.format(e3));
-                d1 = Double.parseDouble(formatting.format(d2));
-            }
+            x[i] = (b[i] - sum) / A[i][i];
         }
-        if (b2 != 1 && b2 != 0) { //if a not equal to one or zero
-            //System.out.println(d2);
-            b3 = Double.parseDouble(formatting.format(b3 / b2));//MAKE THE FIRST NUMBER 1 AND THEN DIVIDE ALL THE NUMBERS IN THAT row
-            d2 = Double.parseDouble(formatting.format(d2 / b2));
-            b2 = Double.parseDouble(formatting.format(b2 / b2));
-            //.out.println(d2);
-        }
-
-        if (a2 != 0) { // reduce the second row to 0 in the first #
-            a3 = Double.parseDouble(formatting.format(a3 - (a2 * b3))); //MAKE THE FIRST NUMBER 0 AND THEN substract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
-            d1 = Double.parseDouble(formatting.format(d1 - (a2 * d2)));
-            a2 = Double.parseDouble(formatting.format(a2 - (a2 * b2)));
-        }
-
-        if (c2 != 0) { // reduce the third row to 0 in the first #
-            c3 = Double.parseDouble(formatting.format(c3 - (b3 * c2))); //MAKE THE FIRST NUMBER 0 AND THEN substract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
-            d3 = Double.parseDouble(formatting.format(d3 - (d2 * c2)));
-            c2 = Double.parseDouble(formatting.format(c2 - (b2 * c2)));
-        }
-        if(c3<0.005){
-            c3=0;
-        }
-        // second row done
-        if (c3 != 1 && c3 != 0) { //if a not equal to one or zero
-            d3 = Double.parseDouble(formatting.format(d3 / c3));
-            c3 = Double.parseDouble(formatting.format(c3 / c3));//MAKE THE FIRST NUMBER 1 AND THEN DIVIDE ALL THE NUMBERS IN THAT row
-
-        }
-
-        if (c3 != 0 && b3 != 0) { // reduce the second row to 0 in the first #
-            //System.out.println(b3);
-            System.out.println(d2);
-            System.out.println(d3);
-            System.out.println(c3);
-            d2 = Double.parseDouble(formatting.format(d2 - (d3 * b3)));
-            b3 = Double.parseDouble(formatting.format(b3 - (b3 * c3)));
-
-
-        }
-
-        if (c3 != 0 && a3 != 0) { // reduce the third row to 0 in the first #
-            d1 = Double.parseDouble(formatting.format(d1 - (d3 * a3)));
-            a3 = Double.parseDouble(formatting.format(a3 - (a3 * c3)));
-
-        }
-
-        double arr[] = {a1, a2, a3, b1, b2, b3, c1, c2, c3, d1, d2, d3}; // array to hold the matrix
-        setA1(a1);
-        setA2(a2);
-        setA3(a3);
-        setB1(b1);
-        setB2(b2);
-        setB3(b3);
-        setC1(c1);
-        setC2(c2);
-        setC3(c3);
-        setD1(d1);
-        setD2(d2);
-        setD3(d3);
-
-        return arr;
-    }
-
-    public double getE1() {
-        return e1;
-    }
-
-    public void setE1(double e1) {
-        this.e1 = e1;
-    }
-
-    public double getE2() {
-        return e2;
-    }
-
-    public void setE2(double e2) {
-        this.e2 = e2;
-    }
-
-    public double getE3() {
-        return e3;
-    }
-
-    public void setE3(double e3) {
-        this.e3 = e3;
-    }
-
-    public double getE4() {
-        return e4;
-    }
-
-    public void setE4(double e4) {
-        this.e4 = e4;
-    }
-
-    public double getA1() {
-        return a1;
-    }
-
-    public void setA1(double a1) {
-        this.a1 = a1;
-    }
-
-    public double getA2() {
-        return a2;
-    }
-
-    public void setA2(double a2) {
-        this.a2 = a2;
-    }
-
-    public double getA3() {
-        return a3;
-    }
-
-    public void setA3(double a3) {
-        this.a3 = a3;
-    }
-
-    public double getB1() {
-        return b1;
-    }
-
-    public void setB1(double b1) {
-        this.b1 = b1;
-    }
-
-    public double getB2() {
-        return b2;
-    }
-
-    public void setB2(double b2) {
-        this.b2 = b2;
-    }
-
-    public double getB3() {
-        return b3;
-    }
-
-    public void setB3(double b3) {
-        this.b3 = b3;
-    }
-
-    public double getC1() {
-        return c1;
-    }
-
-    public void setC1(double c1) {
-        this.c1 = c1;
-    }
-
-    public double getC2() {
-        return c2;
-    }
-
-    public void setC2(double c2) {
-        this.c2 = c2;
-    }
-
-    public double getC3() {
-        return c3;
-    }
-
-    public void setC3(double c3) {
-        this.c3 = c3;
-    }
-
-    public double getD1() {
-        return d1;
-    }
-
-    public void setD1(double d1) {
-        this.d1 = d1;
-    }
-
-    public double getD2() {
-        return d2;
-    }
-
-    public void setD2(double d2) {
-        this.d2 = d2;
-    }
-
-    public double getD3() {
-        return d3;
-    }
-
-    public void setD3(double d3) {
-        this.d3 = d3;
-    }
-
-    public double[] getReduced2x2matrix() {
-        return reduced2x2matrix;
-    }
-
-    public double[] getReduced3x3matrix() {
-        return reduced3x3matrix;
+        return x;
     }
 }

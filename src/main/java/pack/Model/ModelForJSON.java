@@ -122,21 +122,21 @@ public static void writeBasics() {
 
         public static void readBasics(){
 //Read
-        JSONParser parser = new JSONParser();
+            JSONParser parser = new JSONParser();
 
-        Object obj = null;
+            Object obj = null;
             try {
-                obj = parser.parse(new FileReader("Resources/JsonFile.json"));
+                obj = parser.parse(new FileReader("C:\\Users\\naola\\Documents\\NetBeansProjects\\Json\\src\\json\\T1.json"));
                 JSONObject jsonObject = (JSONObject) obj;
 
-                // JSONArray companyList = (JSONArray) jsonObject.get("Identity");
-              /*  Identity = makeTheArrayList((JSONArray) jsonObject.get("Identity"));
+
+                Identity = makeTheArrayList((JSONArray) jsonObject.get("Identity"));
                 UpperTriangle = makeTheArrayList((JSONArray) jsonObject.get("UpperTriangle"));
                 LowerTriangle = makeTheArrayList((JSONArray) jsonObject.get("LowerTriangle"));
                 Symmetric = makeTheArrayList((JSONArray) jsonObject.get("Symmetric"));
                 Diagonal = makeTheArrayList((JSONArray) jsonObject.get("Diagonal"));
                 Nul = makeTheArrayList((JSONArray) jsonObject.get("Null"));
-*/
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ParseException e) {
@@ -144,24 +144,22 @@ public static void writeBasics() {
             }
 
 
-
-    }
-   /* private static ArrayList<Integer> makeTheArrayList(JSONArray js){
+        }
+    private static ArrayList<Integer> makeTheArrayList(JSONArray js){
         ArrayList<String> objs = new ArrayList<>();
         ArrayList<Integer> ints = new ArrayList<>();
         JSONArray list = js;
         Iterator<JSONObject> iterator = js.iterator();
         while (iterator.hasNext()) {
-            System.out.println(Integer.parseInt(String.valueOf(iterator.next())));
             objs.add(String.valueOf(iterator.next()));
         }
-        for(int i = 0; i< ints.size();i++){
-            ints.add(Integer.valueOf(String.valueOf(objs.get(1))));
-        }
 
+        for(int i = 0; i< objs.size();i++){
+            ints.add(Integer.valueOf(objs.get(i)));
+        }
         return ints;
     }
-*/
+
     public static ArrayList<Integer> getDiagonal() {
         return Diagonal;
     }

@@ -4,6 +4,7 @@ import pack.Model.Model1;
 import pack.View.Customs.CustomTextField;
 import pack.View.View1;
 
+
 import java.util.ArrayList;
 
 public class Controller1 {
@@ -11,7 +12,6 @@ public class Controller1 {
     View1 view;
     private ArrayList<CustomTextField> fieldList;
     private ArrayList<Double> matrixCoefficients;
-    private double[] reduced2x2matrix, reduced3x3matrix;
     private boolean is2by2;
 
     public Controller1() {
@@ -44,11 +44,21 @@ public class Controller1 {
     }
 
     public void transform2x2() {
+        for (int i = 0; i < this.fieldList.size(); i++) {
+            System.out.println(this.fieldList.size() + " FIELDLIST SIZE SHOULD BE 6");
+            if (i == 2 || i == 5 ) {
+                continue;
+            }
+            this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(i).getText()));
+        }
+        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(2).getText()));
+        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(5).getText()));
 
     }
 
     public void transform3x3() {
         for (int i = 0; i < this.fieldList.size(); i++) {
+            System.out.println(this.fieldList.size());
             if (i == 3 || i == 7 || i == 11) {
                 continue;
             }
@@ -59,24 +69,28 @@ public class Controller1 {
         this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(11).getText()));
     }
 
-    public void getOutput() {
+    public void printOutput() {
         Model1 model1 = new Model1(this.matrixCoefficients, is2by2);
         if (is2by2) {
-            reduced2x2matrix = model1.getReduced2x2matrix();
+            double [][]A = Model1.getMatrixA_2x2();
+            double[] b = Model1.getMatrixB_2x2();
+            double[] x = model1.SLESolve(A, b);
+
+
+            System.out.println("X = "+ x[0]);
+            System.out.println("Y = "+ x[1]);
+
+
         } else {
-            reduced3x3matrix = model1.getReduced3x3matrix();
+            double [][]A = Model1.getMatrixA_3x3();
+            double[] b = Model1.getMatrixB_3x3();
+            double[] x = model1.SLESolve(A, b);
+
+            System.out.println("X = "+ x[0]);
+            System.out.println("Y = "+ x[1]);
+            System.out.println("Z = "+ x[2]);
         }
     }
 
-    public void printOutput() {
-        if (is2by2) {
-            for (Double coefficient: reduced2x2matrix) {
-                System.out.println(coefficient);
-            }
-        } else {
-            for (Double coefficient: reduced3x3matrix) {
-                System.out.println(coefficient);
-            }
-        }
-    }
+
 }

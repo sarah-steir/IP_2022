@@ -11,6 +11,7 @@ public class main extends Application {
 
     @Override
     public void start(Stage stage) {
+
         Pane grid = new MainView();
         stage.setResizable(false);
         stage.setTitle("Matrix");
