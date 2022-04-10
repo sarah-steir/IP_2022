@@ -262,6 +262,17 @@ public class Model2for3x3 {
         double[] y1 = new double[3]; // if only one vector for that one eigen value
         double[] y2 = new double[6];// if two vectors for that one eigen value
         int counterUp = 0;
+        int counter=0;
+        for (int j = 0; j < v1.length; j++) {
+            if(v1[j]==0){
+            counter++;
+
+        }
+            if(counter==9){
+                double[] y3 = {1,0,0,0,1,0,0,0,1};
+                return y3;
+            }
+            }
         for (int i = 0; i < v1.length; i++) { // loop until we went through all the numbers in the matrix  SHOULD GO THROUGH 3 TIME CUZ 3 ROWS
             double t11 = Double.parseDouble(formatting.format(v1[i])); // T11 = FIRST NUMBER IN ROW T22= SECOND NUMBER IN ROW T33 THRID NUMBER IN ROW
             double t22 = Double.parseDouble(formatting.format(v1[i + 1]));

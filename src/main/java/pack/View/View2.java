@@ -200,15 +200,19 @@ public class View2 extends Pane implements iView {
         gpt.setPrefSize(500, 695);
         gpt.setLayoutX(520);
         gpt.setLayoutY(14);
+
         ImageView imL = new ImageView(new Image(Custom.p + "brack left.png"));
         imL.setFitWidth(15);
         imL.setFitHeight(75);
+
         ImageView imL1 = new ImageView(new Image(Custom.p + "brack left.png"));
         imL1.setFitWidth(15);
         imL1.setFitHeight(75);
+
         ImageView imR = new ImageView(new Image(Custom.p + "brack right.png"));
         imR.setFitWidth(14);
         imR.setFitHeight(75);
+
         ImageView imR1 = new ImageView(new Image(Custom.p + "brack right.png"));
         imR1.setFitWidth(14);
         imR1.setFitHeight(75);
@@ -216,6 +220,7 @@ public class View2 extends Pane implements iView {
         gpt.add(text,1,10);
         gpt.add(imL,2,15);
         gpt.add(imR,5,15);
+
         gpt.add(text1,1,20);
         gpt.add(imL1,2,25);
         gpt.add(imR1,5,25);
@@ -240,7 +245,7 @@ public class View2 extends Pane implements iView {
 
         vbPo.setStyle("-fx-background-color: #333335");
         vbPo.getChildren().add(Custom.setTitle(title));
-        if(rb2.isSelected()) {
+        /*if(rb2.isSelected()) {
             btnStart.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent e) {
@@ -248,16 +253,16 @@ public class View2 extends Pane implements iView {
                     vbPo.getChildren().add(gpjCoaching);
                 }
             });
-        }
-            if(rb1.isSelected()) {
-                btnStart.setOnAction(new EventHandler<ActionEvent>() {
+      //  }
+*/          // if(rb1.isSelected()) {
+        btnStart.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
                         GridPane gpjCoaching = RIGHT2X2();
                         vbPo.getChildren().add(gpjCoaching);
                     }
                 });
-            }
+        //    }
 
 
         // HBox to hold buttons and logo
