@@ -5,9 +5,12 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pack.Model.ModelForJSON;
+import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
 import pack.View.Customs.CustomRadioButton;
 import pack.View.GraphView.Graph;
@@ -28,6 +31,7 @@ public class View2 extends Pane implements iView {
     private double c1;
     private double c2;
     private double c3;
+    String gh = "fddd";
 
     public View2() {
         rb1 = new CustomRadioButton("2 x 2");
@@ -131,6 +135,7 @@ public class View2 extends Pane implements iView {
         public VBox setLeft (CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[]
         signsRb1, String[]signsRb2, Graph graph){
             VBox vbLeft = new VBox();
+            ImageView imL = new ImageView(new Image(Custom.p + "brack left.png"));
             vbLeft.setSpacing(10);
             vbLeft.setPrefSize(500, 695);
             vbLeft.setLayoutX(10);
@@ -138,8 +143,24 @@ public class View2 extends Pane implements iView {
             vbLeft.setStyle("-fx-background-color: #333335"); // Grey
             vbLeft.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2));
             vbLeft.getChildren().add(cb);
+            vbLeft.getChildren().add(imL);
             return vbLeft;
         }
+
+    @Override
+    public VBox setRight(String title, CustomButton btnStart, CustomButton btnReset) {
+        VBox vbRight= new VBox();
+        ImageView imL = new ImageView(new Image(Custom.p + "brack left.png"));
+        vbRight.setSpacing(10);
+        vbRight.setPrefSize(500, 695);
+        vbRight.setLayoutX(10);
+        vbRight.setLayoutY(14);
+        vbRight.setStyle("-fx-background-color: #333335"); // Grey
+        vbRight.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2));
+        vbRight.getChildren().add(cb);
+        vbRight.getChildren().add(imL);
+        return vbRight;    }
+
 
         public String[] getSignsRb2 () {
             return signsRb2;
