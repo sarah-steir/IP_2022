@@ -1,6 +1,9 @@
 package pack.View;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -8,12 +11,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Box;
 import javafx.scene.text.Text;
+import pack.Model.Model2for2x2;
 import pack.Model.Model2for3x3;
 import pack.Model.ModelForJSON;
 import pack.View.Customs.Custom;
@@ -61,7 +62,7 @@ public class View2 extends Pane implements iView {
         });
         cb.setPromptText("Saved Matrices");
         this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "EigenValues and EigenVectors", null));
-
+        //iView.handleStart.(2,false);
     }
 
     private void doAction(String listItem) {
@@ -152,6 +153,7 @@ public class View2 extends Pane implements iView {
         }
    public GridPane RIGHT3X3(){
         GridPane gpt = new GridPane();
+       gpt.setPadding(new Insets(10, 10, 10, 10));
        Text text = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX1() + " THE EIGEN VECTOR IS");
        Text text1 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX2() + " THE EIGEN VECTOR IS");
        Text text2 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX3() + " THE EIGEN VECTOR IS");
@@ -162,19 +164,19 @@ public class View2 extends Pane implements iView {
        imL.setFitWidth(15);
        imL.setFitHeight(75);
        ImageView imL1 = new ImageView(new Image(Custom.p + "brack left.png"));
-       imL1.setFitWidth(10);
+       imL1.setFitWidth(15);
        imL1.setFitHeight(75);
        ImageView imL2 = new ImageView(new Image(Custom.p + "brack left.png"));
        imL2.setFitWidth(15);
        imL2.setFitHeight(75);
        ImageView imR = new ImageView(new Image(Custom.p + "brack right.png"));
-       imR.setFitWidth(15);
+       imR.setFitWidth(14);
        imR.setFitHeight(75);
        ImageView imR1 = new ImageView(new Image(Custom.p + "brack right.png"));
-       imR1.setFitWidth(15);
+       imR1.setFitWidth(14);
        imR1.setFitHeight(75);
        ImageView imR2 = new ImageView(new Image(Custom.p + "brack right.png"));
-       imR2.setFitWidth(15);
+       imR2.setFitWidth(14);
        imR2.setFitHeight(75);
        gpt.add(text,1,10);
        gpt.add(imL,2,15);
@@ -185,6 +187,39 @@ public class View2 extends Pane implements iView {
        gpt.add(text2,1,30);
        gpt.add(imL2,2,35);
        gpt.add(imR2,5,35);
+
+
+        return gpt;
+    }
+    public GridPane RIGHT2X2(){
+        GridPane gpt = new GridPane();
+        gpt.setPadding(new Insets(10, 10, 10, 10));
+        Text text = new Text("FOR THE EIGENVALUE " + Model2for2x2.getX1() + " THE EIGEN VECTOR IS");
+        Text text1 = new Text("FOR THE EIGENVALUE " + Model2for2x2.getX2() + " THE EIGEN VECTOR IS");
+
+        gpt.setPrefSize(500, 695);
+        gpt.setLayoutX(520);
+        gpt.setLayoutY(14);
+        ImageView imL = new ImageView(new Image(Custom.p + "brack left.png"));
+        imL.setFitWidth(15);
+        imL.setFitHeight(75);
+        ImageView imL1 = new ImageView(new Image(Custom.p + "brack left.png"));
+        imL1.setFitWidth(15);
+        imL1.setFitHeight(75);
+        ImageView imR = new ImageView(new Image(Custom.p + "brack right.png"));
+        imR.setFitWidth(14);
+        imR.setFitHeight(75);
+        ImageView imR1 = new ImageView(new Image(Custom.p + "brack right.png"));
+        imR1.setFitWidth(14);
+        imR1.setFitHeight(75);
+
+        gpt.add(text,1,10);
+        gpt.add(imL,2,15);
+        gpt.add(imR,5,15);
+        gpt.add(text1,1,20);
+        gpt.add(imL1,2,25);
+        gpt.add(imR1,5,25);
+
 
 
         return gpt;
@@ -202,10 +237,28 @@ public class View2 extends Pane implements iView {
         vbPo.setPrefSize(500, 595);
         vbPo.setSpacing(15);
         vbPo.setAlignment(Pos.TOP_CENTER);
-        GridPane gpjCoaching = RIGHT3X3();
+
         vbPo.setStyle("-fx-background-color: #333335");
         vbPo.getChildren().add(Custom.setTitle(title));
-        vbPo.getChildren().add(gpjCoaching);
+        if(rb2.isSelected()) {
+            btnStart.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    GridPane gpjCoaching = RIGHT3X3();
+                    vbPo.getChildren().add(gpjCoaching);
+                }
+            });
+        }
+            if(rb1.isSelected()) {
+                btnStart.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        GridPane gpjCoaching = RIGHT2X2();
+                        vbPo.getChildren().add(gpjCoaching);
+                    }
+                });
+            }
+
 
         // HBox to hold buttons and logo
         HBox hbBottom = new HBox();

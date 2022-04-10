@@ -3,7 +3,8 @@ import java.text.DecimalFormat;
 
 public class Model2for2x2 {
 
-    private double x1, x2;// eigenvalues
+    private static double x1;
+    private static double x2;// eigenvalues
     private double first, second, third;//square function
     private double e1, e2;// to hold values in the reduce matrix
     private double a1, a2;//first line
@@ -134,7 +135,7 @@ public class Model2for2x2 {
         return y1;
     }
 
-    public double getX1() {
+    public static double getX1() {
         return x1;
     }
 
@@ -142,7 +143,7 @@ public class Model2for2x2 {
         this.x1 = x1;
     }
 
-    public double getX2() {
+    public static double getX2() {
         return x2;
     }
 
