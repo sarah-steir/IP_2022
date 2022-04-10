@@ -177,44 +177,23 @@ public class Graph extends Group {
         addLineToList(line);
     }
 
-    public void addPlane(Point3D point1, Point3D point2, Point3D point3, String equation) {
+    public void addPlane(double x, double y, double z, String equation) {
+        Circle plane = new Circle(500);
 
-        Circle rectangle = new Circle(500);
+        Point3D m = new Point3D(x/2, y/2, 0);
+        double d = Math.sqrt(Math.pow(m.getX(), 2) + Math.pow(m.getY(), 2) + Math.pow(z, 2));
+        double angle = Math.toDegrees(Math.asin(z / d));
+        Point3D vector = new Point3D(-x, y, 0);
 
-        Point3D triangleCenter = this.getCenter(point1, point2, point3);
-        double newX = triangleCenter.getX();
-        double newY = triangleCenter.getY();
-        double newZ = triangleCenter.getZ();
+        if (x * y < 0) {
+            angle = 360 - angle;
+        }
 
-        double angleX = Math.toDegrees(Math.atan(point2.getZ() / point1.getY()));
-        Rotate rotateX = new Rotate(angleX, Rotate.X_AXIS);
+        Rotate rotate = new Rotate(angle, m.getX(), m.getY(), 0, vector);
+        plane.getTransforms().addAll(rotate);
 
-        double angleY = Math.toDegrees(Math.atan(point3.getX() / point1.getZ()));
-        Rotate rotateY = new Rotate(angleY, Rotate.Y_AXIS);
-
-        double angleZ = Math.toDegrees(Math.atan(point1.getY() / point1.getX()));
-        Rotate rotateZ = new Rotate(angleZ, Rotate.Z_AXIS);
-
-        rectangle.getTransforms().add(new Translate(newX, newY, newZ));
-        rectangle.getTransforms().addAll(rotateX, rotateY, rotateZ);
-//        rectangle.setTranslateX(500);
-//        rectangle.setTranslateY(500);
-
-        this.addPlaneToList(rectangle);
-        this.createPlaneLabel(triangleCenter, equation);
-    }
-
-    public Point3D getCenter(Point3D point1, Point3D point2, Point3D point3) {
-        double x = (point1.getX() + point2.getX() + point3.getX()) / 3;
-        double y = (point1.getY() + point2.getY() + point3.getY()) / 3;
-        double z = (point1.getZ() + point2.getZ() + point3.getZ()) / 3;
-        Sphere sphere = new Sphere(5);
-        sphere.setMaterial(new PhongMaterial(yellow));
-        sphere.setTranslateX(x);
-        sphere.setTranslateY(y);
-        sphere.setTranslateZ(z);
-        scalable.getChildren().add(sphere);
-        return new Point3D(x, y, z);
+        createPlaneLabel(equation);
+        addPlaneToList(plane);
     }
 
     public void addPointToList(Sphere sphere) {
@@ -293,12 +272,9 @@ public class Graph extends Group {
         labelsList.add(label);
     }
 
-    private void createPlaneLabel(Point3D point, String equation) {
-        Text label = new CustomText(equation);
+    private void createPlaneLabel(String equation) {
+        Text label = new Text(equation);
         label.setScaleY(-1);
-        label.setTranslateX(point.getX());
-        label.setTranslateY(point.getY());
-        label.setTranslateZ(point.getZ());
         labelsList.add(label);
     }
 
