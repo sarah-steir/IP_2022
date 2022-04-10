@@ -15,6 +15,8 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import pack.View.Customs.CustomText;
 
+import java.util.List;
+
 
 public class Graph extends Group {
 
@@ -40,6 +42,8 @@ public class Graph extends Group {
     Color red = Color.web("#DF5C58");
     Color yellow = Color.web("#F2C15F");
     Color blue = Color.web("#1985A1");
+
+    private int a = 0; // Serves as a counter to know which color should the added element be
 
     ObservableList<Node> axisList;
     ObservableList<Node> thingsToGraphList = FXCollections.observableArrayList();
@@ -161,9 +165,17 @@ public class Graph extends Group {
      * @param point2 the second point the line passes through
      */
     public void addLine(Point3D point1, Point3D point2) {
+        Line line1 = this.FindOneLine(point1, point2);
+        Line line2 = this.FindOneLine(point2, point1);
+
+        createLineLabel(point1, point2);
+        addLineToList(line1, line2);
+    }
+
+    public Line FindOneLine(Point3D point1, Point3D point2) {
         double dist = point1.distance(point2);
 
-        Line line = new Line(0, 0, dist, 0);
+        Line line = new Line(0, 0, 1000, 0);
 
         Point3D vector = point2.subtract(point1);
 
@@ -180,14 +192,14 @@ public class Graph extends Group {
         Translate tt = new Translate(point1.getX(), point1.getY(), point1.getZ());
         line.getTransforms().addAll(tt, yRotate, xRotate);
 
-        createLineLabel(point1, point2);
-        addLineToList(line);
+        return line;
     }
 
     /**
      *
      * Boy oh boy was this function a pain in the ass to program... Anyways here we go
      * It creates the plane (a circle because it is too hard to take a rectangle and transform it since the pivot point is in the corner, not in the center)
+     * When the circle is added, it goes automatically through x and y, so we just to rotate along this vector (x -> y) to make it pass through z
      * It finds the midpoint m between the x and y
      * It finds the angle it needs to rotate the circle in order to pass through z
      * It rotates the circle
@@ -202,10 +214,10 @@ public class Graph extends Group {
 
         Point3D m = new Point3D(x/2, y/2, 0); // Midpoint between x and y
         double d = Math.sqrt(Math.pow(m.getX(), 2) + Math.pow(m.getY(), 2) + Math.pow(z, 2)); // Distance between m and z
-        double angle = Math.toDegrees(Math.asin(z / d)); // Angle it need to rotate
-        Point3D vector = new Point3D(-x, y, 0); // "Axis" of rotation, aka vector from x to m
+        double angle = Math.toDegrees(Math.asin(z / d)); // Angle it needs to rotate
+        Point3D vector = new Point3D(-x, y, 0); // "Axis" of rotation, aka vector from x to y
 
-        if (x * y < 0) { // If the cooridantes are a bit weird we need to do this
+        if (x * y < 0) { // If the coordinates are a bit weird we need to do this
             angle = 360 - angle;
         }
 
@@ -222,8 +234,9 @@ public class Graph extends Group {
      * @param sphere
      */
     public void addPointToList(Sphere sphere) {
+        a++;
         thingsToGraphList.add(sphere);
-        switch (thingsToGraphList.size()) {
+        switch (a) {
             case 1:
                 sphere.setMaterial(new PhongMaterial(red));
                 break;
@@ -243,22 +256,30 @@ public class Graph extends Group {
     /**
      * Chooses the right color depending on how many elements are already in the graph
      * and adds the Line
-     * @param line
+     *
+     * @param line1
+     * @param line2
      */
-    public void addLineToList(Line line) {
-        thingsToGraphList.add(line);
-        switch (thingsToGraphList.size()) {
+    public void addLineToList(Line line1, Line line2) {
+        a++;
+        thingsToGraphList.add(line1);
+        thingsToGraphList.add(line2);
+        switch (a) {
             case 1:
-                line.setStroke(red);
+                line1.setStroke(red);
+                line2.setStroke(red);
                 break;
             case 2:
-                line.setStroke(yellow);
+                line1.setStroke(yellow);
+                line2.setStroke(yellow);
                 break;
             case 3:
-                line.setStroke(blue);
+                line1.setStroke(blue);
+                line2.setStroke(blue);
                 break;
             default:
-                line.setStroke(white);
+                line1.setStroke(white);
+                line2.setStroke(white);
                 break;
         }
         this.update();
@@ -270,9 +291,10 @@ public class Graph extends Group {
      * @param rectangle
      */
     public void addPlaneToList(Circle rectangle) {
+        a++;
         rectangle.setOpacity(0.5);
         thingsToGraphList.add(rectangle);
-        switch (thingsToGraphList.size()) {
+        switch (a) {
             case 1:
                 rectangle.setFill(red);
                 break;
