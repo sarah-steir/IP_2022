@@ -2,7 +2,6 @@ package pack.View;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -15,8 +14,8 @@ import javafx.scene.layout.VBox;
 import pack.Controller.V3Controller;
 import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
-import javafx.scene.control.Label;
 import pack.View.GraphView.Graph;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -389,8 +388,8 @@ public interface iView {
                             int answer = rn.nextInt(10) + 1;
                             V3Controller.transform(View3.arplanes);
                             V3Controller.crossProduct();
-                            V3Controller.point(answer);
-                            View3.graph3.addLine(V3Controller.point(95),V3Controller.point(-10)); }}
+                            V3Controller.solutionPoints(answer);
+                            View3.graph3.addLine(V3Controller.solutionPoints(95),V3Controller.solutionPoints(-10)); }}
             }});
     }
 

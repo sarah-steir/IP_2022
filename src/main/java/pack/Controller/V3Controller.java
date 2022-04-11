@@ -2,8 +2,10 @@ package pack.Controller;
 
 import javafx.geometry.Point3D;
 import javafx.scene.control.TextField;
+import pack.View.View3;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class V3Controller {
     static int n = 3;
@@ -11,13 +13,10 @@ public class V3Controller {
     public static ArrayList<Double> n2 = new ArrayList<Double>();
     static double crossProduct[] = new double[3];
 
+
+//TODO make sure to check if two planes are parallel
+
     public static void transform(ArrayList<TextField> f) {
-        int b=0;
-
-
-
-
-
         for (int i = 0; i < 4; i++) {
             Double d = Double.parseDouble(f.get(i).getText());
             n1.add(d);
@@ -40,18 +39,38 @@ public class V3Controller {
         }
     }
 
-    public static Point3D point(int i) {
-
+    public static Point3D solutionPoints(int i) {
         double x = i;
         double z = ((n2.get(1) / n1.get(1)) * (n1.get(0) * x + n1.get(3)) - n2.get(0) * x - n2.get(3)) / (n2.get(2) - n1.get(2) * n2.get(1) / n1.get(1));
         double y = (-n1.get(2) * z - n1.get(0) * x - n1.get(3)) / n1.get(1);
         //double z= ((-n2.get(1)/n1.get(1))*(n1.get(0)*x+n1.get(3))-n2.get(0)*x- -n2.get(3)) /(n2.get(2)-n1.get(2)*n2.get(1)/n1.get(1));
         //double z=((-n2.get(1/n1.get(1)))*n1.get(3)-n2.get(3))/((n2.get(2)*n2.get(1)/n1.get(1))*n1.get(2));
         //double y=(-n1.get(3)-n1.get(2)*z)/n1.get(1);
-        System.out.println("x: " + x + " y: " + y + " z: " + z);
+
         Point3D point1 = new Point3D(x, y, z);
         return point1;
     }
+
+    public static Point3D planePoints(ArrayList<Double> plane) {
+        Random rn = new Random();
+        int x = rn.nextInt(10) + 1;
+        int y = rn.nextInt(10) + 1;
+
+
+        double i= x*plane.get(0);
+        double j= y*plane.get(1);
+
+        double z=(-i-j-plane.get(3))/plane.get(2);
+
+        System.out.println("Point"+Double.valueOf(x)+","+Double.valueOf(y)+","+z);
+
+        Point3D point = new Point3D(x, y, z);
+
+        return point;}
+
+
+
+
 
   /*  public static String st(int i) {
         switch (i) {
@@ -200,6 +219,13 @@ public class V3Controller {
                     a[index[i]][l] -= pj * a[index[j]][l];
             }
         }
+    }
+
+    public static void linesPoints(ArrayList arl){
+
+        View3.input();
+
+
     }
 
 

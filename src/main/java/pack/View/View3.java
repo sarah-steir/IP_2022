@@ -1,12 +1,10 @@
 package pack.View;
 
-import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import pack.View.GraphView.Graph;
