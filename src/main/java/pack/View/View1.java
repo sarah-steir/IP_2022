@@ -1,22 +1,15 @@
 package pack.View;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
-//import pack.Controller.Controller1;
 import pack.Controller.Controller1;
 import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
-
-import java.util.ArrayList;
 
 public class View1 extends Pane implements iView {
 

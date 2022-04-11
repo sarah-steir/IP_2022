@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Controller1 {
 
     View1 view;
-    private double[] reduced2x2matrix, reduced3x3matrix;
     private ArrayList<Double> matrixCoefficients;
     private boolean is2by2;
 
