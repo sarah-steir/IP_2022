@@ -10,8 +10,6 @@ import javafx.scene.layout.VBox;
 import pack.Controller.Controller1;
 import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class View1 extends Pane implements iView {
@@ -37,7 +35,7 @@ public class View1 extends Pane implements iView {
         rb1.setToggleGroup(group);
         rb2.setToggleGroup(group);
         btnStart = new CustomButton("START\nTHE\nMAGIK");
-        this.btnStart.setDisable(true);
+        btnStart.setDisable(true);
         btnReset = new CustomButton("RESET\nTHE\nMAGIK");
 
         fieldListRb1 = new CustomTextField[2][3];
@@ -49,7 +47,7 @@ public class View1 extends Pane implements iView {
         vbLeft = new VBox();
         vbRight = new VBox();
 
-        setVbUi(setHbRadios(this.rb1, this.rb2));   // FIX THIS
+        setVbUi(setHbRadios(this.rb1, this.rb2));
         setVbPo("Systems of linear equations");
 
         setVbLeft(setLeft(this.vbUi, setGraphPane(graph)));

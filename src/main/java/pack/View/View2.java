@@ -27,7 +27,7 @@ public class View2 extends Pane implements iView {
     private CustomTextField[][] fieldListRb1, fieldListRb2;
     private GridPane fieldsPane;
     private CustomRadioButton rb1, rb2;
-    private CustomButton btnStart, btnReset;
+    private CustomButton btnStart, btnReset, btnSave;
     private ToggleGroup group = new ToggleGroup();
     private ComboBox cb;
 
@@ -46,6 +46,8 @@ public class View2 extends Pane implements iView {
         this.btnStart.setDisable(true);
         this.btnReset = new CustomButton("RESET\nTHE\nMAGIK");
         this.cb = new ComboBox();
+        this.btnSave = new CustomButton("Save\nMatrix");
+        this.btnSave.setPrefSize(115, 50);
 
         fieldListRb1 = new CustomTextField[2][2];
         fieldListRb2 = new CustomTextField[3][3];
@@ -56,14 +58,14 @@ public class View2 extends Pane implements iView {
         vbLeft = new VBox();
         vbRight = new VBox();
 
-        setVbUi(setHbRadios(this.rb1, this.rb2), setComboBox());
+        setVbUi(setHbRadios(this.rb1, this.rb2), setHbComboBox());
         setVbPo("Eigenvalues and Eigenvectors");
 
         setVbLeft(setLeft(this.vbUi, null));
         setVbRight(setRight(this.vbPo, setHbBottom(this.btnStart, this.btnReset)));
 
         setView2();
-        //setActions();
+        setActions();
 
         cb.getItems().addAll(
                 "Diagonal",
@@ -83,10 +85,10 @@ public class View2 extends Pane implements iView {
         //iView.handleStart.(2,false);
     }
 
-    private HBox setComboBox() {
+    private HBox setHbComboBox() {
         HBox hbComboBox = new HBox(10);
         hbComboBox.setPadding(new Insets(15));
-        hbComboBox.getChildren().add(this.cb);
+        hbComboBox.getChildren().addAll(this.cb, this.btnSave);
         return hbComboBox;
     }
 
@@ -136,14 +138,14 @@ public class View2 extends Pane implements iView {
             this.btnStart.setDisable(false);
             fieldsPane = setFields(fieldListRb1);
             this.vbUi.getChildren().clear();
-            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), fieldsPane);
         });
 
         rb2.setOnAction(event -> {
             this.btnStart.setDisable(false);
             fieldsPane = setFields(fieldListRb2);
             this.vbUi.getChildren().clear();
-            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), fieldsPane);
         });
         this.btnStart.setOnAction(event -> { handleStart(rb1.isSelected()); });
         this.btnReset.setOnAction(event -> { handleReset(); });
