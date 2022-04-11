@@ -21,7 +21,8 @@ import pack.View.Customs.CustomTextField;
 import pack.View.GraphView.Graph;
 
 public class View2<textField> extends Pane implements iView {
-    private CustomRadioButton rb1, rb2;
+    private static CustomRadioButton rb1;
+    private static CustomRadioButton rb2;
     private ComboBox cb = new ComboBox();
     private CustomButton btnStart, btnReset;
     private ToggleGroup group = new ToggleGroup();
@@ -36,7 +37,15 @@ public class View2<textField> extends Pane implements iView {
     private double c1;
     private double c2;
     private double c3;
-    private CustomTextField t1,t2,t3,t4,t5,t6,t7,t8,t9;
+    private static CustomTextField t1;
+    private static CustomTextField t2;
+    private static CustomTextField t3;
+    private static CustomTextField t4;
+    private static CustomTextField t5;
+    private static CustomTextField t6;
+    private static CustomTextField t7;
+    private static CustomTextField t8;
+    private static CustomTextField t9;
 
 
 
@@ -380,7 +389,7 @@ public class View2<textField> extends Pane implements iView {
             this.signsRb2 = signsRb2;
         }
 
-        public CustomRadioButton getRb1 () {
+        public static CustomRadioButton getRb1() {
             return rb1;
         }
 
@@ -388,7 +397,7 @@ public class View2<textField> extends Pane implements iView {
             this.rb1 = rb1;
         }
 
-        public CustomRadioButton getRb2 () {
+        public static CustomRadioButton getRb2() {
             return rb2;
         }
 
@@ -500,4 +509,84 @@ public class View2<textField> extends Pane implements iView {
         public void setC3 ( double c3){
             this.c3 = c3;
         }
+
+    public static ComboBox getCb() {
+        return cb;
     }
+
+    public void setCb(ComboBox cb) {
+        this.cb = cb;
+    }
+
+    public static CustomTextField getT1() {
+        return t1;
+    }
+
+    public void setT1(CustomTextField t1) {
+        this.t1 = t1;
+    }
+
+    public static CustomTextField getT2() {
+        return t2;
+    }
+
+    public void setT2(CustomTextField t2) {
+        this.t2 = t2;
+    }
+
+    public static CustomTextField getT3() {
+        return t3;
+    }
+
+    public void setT3(CustomTextField t3) {
+        this.t3 = t3;
+    }
+
+    public static CustomTextField getT4() {
+        return t4;
+    }
+
+    public void setT4(CustomTextField t4) {
+        this.t4 = t4;
+    }
+
+    public static CustomTextField getT5() {
+        return t5;
+    }
+
+    public void setT5(CustomTextField t5) {
+        this.t5 = t5;
+    }
+
+    public static CustomTextField getT6() {
+        return t6;
+    }
+
+    public void setT6(CustomTextField t6) {
+        this.t6 = t6;
+    }
+
+    public static CustomTextField getT7() {
+        return t7;
+    }
+
+    public void setT7(CustomTextField t7) {
+        this.t7 = t7;
+    }
+
+    public static CustomTextField getT8() {
+        return t8;
+    }
+
+    public void setT8(CustomTextField t8) {
+        this.t8 = t8;
+    }
+
+    public static CustomTextField getT9() {
+        return t9;
+    }
+
+    public void setT9(CustomTextField t9) {
+        this.t9 = t9;
+    }
+}
