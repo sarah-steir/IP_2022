@@ -217,14 +217,41 @@ public class View2 extends Pane implements iView {
         imR1.setFitWidth(14);
         imR1.setFitHeight(75);
 
+        VBox vbx =  new VBox();
+        vbx.getChildren().add(new Text(Double. toString(Model2for2x2.getS1().get(0))));
+        vbx.getChildren().add(new Text(Double. toString(Model2for2x2.getS1().get(1))));
+
+
         gpt.add(text,1,10);
         gpt.add(imL,2,15);
+        gpt.add(vbx,3,15);
         gpt.add(imR,5,15);
+        if(Model2for2x2.getS1().size()==4){
+            ImageView imR2 = new ImageView(new Image(Custom.p + "brack right.png"));
+            imR.setFitWidth(14);
+            imR.setFitHeight(75);
+
+            ImageView imL2 = new ImageView(new Image(Custom.p + "brack left.png"));
+            imL1.setFitWidth(15);
+            imL1.setFitHeight(75);
+            gpt.add(imL2,6,15);
+            gpt.add(imR2,8,15);
+        }
 
         gpt.add(text1,1,20);
         gpt.add(imL1,2,25);
         gpt.add(imR1,5,25);
+        if(Model2for2x2.getS2().size()==4){
+            ImageView imR3 = new ImageView(new Image(Custom.p + "brack right.png"));
+            imR.setFitWidth(14);
+            imR.setFitHeight(75);
 
+            ImageView imL3 = new ImageView(new Image(Custom.p + "brack left.png"));
+            imL1.setFitWidth(15);
+            imL1.setFitHeight(75);
+            gpt.add(imL3,6,25);
+            gpt.add(imR3,8,25);
+        }
 
 
         return gpt;
