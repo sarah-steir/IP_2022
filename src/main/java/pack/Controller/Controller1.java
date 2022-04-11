@@ -28,20 +28,28 @@ public class Controller1 {
         }
     }
 
-    public void transform2x2() {
-        for (CustomTextField[] tfArray: this.view.getFieldListRb1()) {
-            for (CustomTextField tf: tfArray) {
-                this.matrixCoefficients.add(Double.parseDouble(tf.getText()));
+    public void transform2x2() { // always 6
+        for (int i = 0; i < 6; i++) {
+            if (i == 2 || i == 5 ) {
+                continue;
             }
+            this.matrixCoefficients.add(Double.parseDouble(this.view.getFieldListRb1()[i].getText()));
         }
+        this.matrixCoefficients.add(Double.parseDouble(this.view.getFieldListRb1()[2].getText()));
+        this.matrixCoefficients.add(Double.parseDouble(this.view.getFieldListRb1()[5].getText()));
+
     }
 
-    public void transform3x3() {
-        for (CustomTextField[] tfArray: this.view.getFieldListRb2()) {
-            for (CustomTextField tf: tfArray) {
-                this.matrixCoefficients.add(Double.parseDouble(tf.getText()));
+    public void transform3x3() {   //always 12d
+        for (int i = 0; i < this.fieldList.size(); i++) {
+            if (i == 3 || i == 7 || i == 11) {
+                continue;
             }
+            this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(i).getText()));
         }
+        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(3).getText()));
+        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(7).getText()));
+        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(11).getText()));
     }
 
     public double[] getOutput() {
