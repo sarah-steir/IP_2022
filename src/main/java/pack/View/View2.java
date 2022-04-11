@@ -1,19 +1,15 @@
 package pack.View;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Box;
 import javafx.scene.text.Text;
 import pack.Model.Model2for2x2;
 import pack.Model.Model2for3x3;
@@ -190,111 +186,145 @@ public class View2<textField> extends Pane implements iView {
             vbLeft.getChildren().add(cb);
             return vbLeft;
         }
-   public GridPane RIGHT3X3(){
-        GridPane gpt = new GridPane();
+   public GridPane showDaRight() {
+       GridPane gpt = new GridPane();
        gpt.setPadding(new Insets(10, 10, 10, 10));
-       Text text = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX1() + " THE EIGEN VECTOR IS");
-       Text text1 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX2() + " THE EIGEN VECTOR IS");
-       Text text2 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX3() + " THE EIGEN VECTOR IS");
        gpt.setPrefSize(500, 695);
        gpt.setLayoutX(520);
        gpt.setLayoutY(14);
-        ImageView imL = new ImageView(new Image(Custom.p + "brack left.png"));
-       imL.setFitWidth(15);
-       imL.setFitHeight(75);
-       ImageView imL1 = new ImageView(new Image(Custom.p + "brack left.png"));
-       imL1.setFitWidth(15);
-       imL1.setFitHeight(75);
-       ImageView imL2 = new ImageView(new Image(Custom.p + "brack left.png"));
-       imL2.setFitWidth(15);
-       imL2.setFitHeight(75);
-       ImageView imR = new ImageView(new Image(Custom.p + "brack right.png"));
-       imR.setFitWidth(14);
-       imR.setFitHeight(75);
-       ImageView imR1 = new ImageView(new Image(Custom.p + "brack right.png"));
-       imR1.setFitWidth(14);
-       imR1.setFitHeight(75);
-       ImageView imR2 = new ImageView(new Image(Custom.p + "brack right.png"));
-       imR2.setFitWidth(14);
-       imR2.setFitHeight(75);
-       gpt.add(text,1,10);
-       gpt.add(imL,2,15);
-       gpt.add(imR,5,15);
-       gpt.add(text1,1,20);
-       gpt.add(imL1,2,25);
-       gpt.add(imR1,5,25);
-       gpt.add(text2,1,30);
-       gpt.add(imL2,2,35);
-       gpt.add(imR2,5,35);
+       if (rb2.isSelected()) {
+           Text text = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX1() + " THE EIGEN VECTOR IS");
+           Text text1 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX2() + " THE EIGEN VECTOR IS");
+           Text text2 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX3() + " THE EIGEN VECTOR IS");
+           gpt.add(text, 1, 10);
+           if (Model2for3x3.getS1().size() == 3) {
+               gpt.add(newVector(1,3), 2, 15);
+           } else if (Model2for3x3.getS1().size() == 6) {
+               gpt.add(newVector(1,3), 2, 15);
+               gpt.add(newVector(2,3), 3, 15);
+           } else {
+               gpt.add(newVector(1,3), 2, 15);
+               gpt.add(newVector(2,3), 3, 15);
+               gpt.add(newVector(3,3), 4, 15);
+           }
+           gpt.add(text1, 1, 10);
+           if (Model2for3x3.getS2().size() == 3) {
+               gpt.add(newVector(1,3), 2, 15);
+           } else if (Model2for3x3.getS2().size() == 6) {
+               gpt.add(newVector(1,3), 2, 15);
+               gpt.add(newVector(2,3), 3, 15);
+           } else {
+               gpt.add(newVector(1,3), 2, 15);
+               gpt.add(newVector(2,3), 3, 15);
+               gpt.add(newVector(3,3), 4, 15);
+           }
+           gpt.add(text2, 1, 10);
+           if (Model2for3x3.getS3().size() == 3) {
+               gpt.add(newVector(1,3), 2, 15);
+           } else if (Model2for3x3.getS3().size() == 6) {
+               gpt.add(newVector(1,3), 2, 15);
+               gpt.add(newVector(2,3), 3, 15);
+           } else {
+               gpt.add(newVector(1,3), 2, 15);
+               gpt.add(newVector(2,3), 3, 15);
+               gpt.add(newVector(3,3), 4, 15);
+           }
+       }
+       if (rb1.isSelected()) {
+           Text text = new Text("FOR THE EIGENVALUE " + Model2for2x2.getX1() + " THE EIGEN VECTOR IS");
+           Text text1 = new Text("FOR THE EIGENVALUE " + Model2for2x2.getX2() + " THE EIGEN VECTOR IS");
+           gpt.add(text, 1, 10);
+           if (Model2for2x2.getS1().size() == 2) {
+               gpt.add(newVector(1,2), 2, 15);
+           }
+           else{
+               gpt.add(newVector(1,2), 2, 15);
+               gpt.add(newVector(2,2), 3, 15);
+           }
+           gpt.add(text1, 1, 10);
+           if (Model2for2x2.getS2().size() == 2) {
+               gpt.add(newVector(1,2), 2, 15);
+           }
+           else{
+               gpt.add(newVector(1,2), 2, 15);
+               gpt.add(newVector(2,2), 3, 15);
+           }
 
+       }
+           return gpt;
+       }
 
-        return gpt;
-    }
-    public GridPane RIGHT2X2(){
-        GridPane gpt = new GridPane();
-        gpt.setPadding(new Insets(10, 10, 10, 10));
-        Text text = new Text("FOR THE EIGENVALUE " + Model2for2x2.getX1() + " THE EIGEN VECTOR IS");
-        Text text1 = new Text("FOR THE EIGENVALUE " + Model2for2x2.getX2() + " THE EIGEN VECTOR IS");
-
-        gpt.setPrefSize(500, 695);
-        gpt.setLayoutX(520);
-        gpt.setLayoutY(14);
-
+    public HBox newVector(int counter, int whatSize){ // counter is the vector if size=6 there is counter 1 and 2 possible
+        HBox hbx = new HBox();
+        VBox vbx1 = new VBox();
         ImageView imL = new ImageView(new Image(Custom.p + "brack left.png"));
         imL.setFitWidth(15);
         imL.setFitHeight(75);
-
-        ImageView imL1 = new ImageView(new Image(Custom.p + "brack left.png"));
-        imL1.setFitWidth(15);
-        imL1.setFitHeight(75);
-
         ImageView imR = new ImageView(new Image(Custom.p + "brack right.png"));
         imR.setFitWidth(14);
         imR.setFitHeight(75);
-
-        ImageView imR1 = new ImageView(new Image(Custom.p + "brack right.png"));
-        imR1.setFitWidth(14);
-        imR1.setFitHeight(75);
-
-        VBox vbx =  new VBox();
-        vbx.getChildren().add(new Text(Double. toString(Model2for2x2.getS1().get(0))));
-        vbx.getChildren().add(new Text(Double. toString(Model2for2x2.getS1().get(1))));
-
-
-        gpt.add(text,1,10);
-        gpt.add(imL,2,15);
-        gpt.add(vbx,3,15);
-        gpt.add(imR,5,15);
-        if(Model2for2x2.getS1().size()==4){
-            ImageView imR2 = new ImageView(new Image(Custom.p + "brack right.png"));
-            imR.setFitWidth(14);
-            imR.setFitHeight(75);
-
-            ImageView imL2 = new ImageView(new Image(Custom.p + "brack left.png"));
-            imL1.setFitWidth(15);
-            imL1.setFitHeight(75);
-            gpt.add(imL2,6,15);
-            gpt.add(imR2,8,15);
+        if(whatSize == 2){
+            vbx1 = putVertical2x2(counter);
+         vbx1.setPrefHeight(75);
         }
-
-        gpt.add(text1,1,20);
-        gpt.add(imL1,2,25);
-        gpt.add(imR1,5,25);
-        if(Model2for2x2.getS2().size()==4){
-            ImageView imR3 = new ImageView(new Image(Custom.p + "brack right.png"));
-            imR.setFitWidth(14);
-            imR.setFitHeight(75);
-
-            ImageView imL3 = new ImageView(new Image(Custom.p + "brack left.png"));
-            imL1.setFitWidth(15);
-            imL1.setFitHeight(75);
-            gpt.add(imL3,6,25);
-            gpt.add(imR3,8,25);
+        if(whatSize == 3){
+            vbx1 = putVertical3x3(counter);
+            vbx1.setPrefHeight(75);
         }
+        hbx.getChildren().addAll(imL,vbx1,imR);
 
-
-        return gpt;
+        return hbx;
     }
+    public VBox putVertical3x3(int counter){
+        VBox vbx1 = new VBox();
+        Double numba1 = null;
+        Double numba2 = null;
+        Double numba3 = null;
+        if(counter==1){
+             numba1 = Model2for3x3.getS1().get(0);
+             numba2 = Model2for3x3.getS1().get(1);
+             numba3 = Model2for3x3.getS1().get(2);
+        }
+        else if(counter==2){
+             numba1 = Model2for3x3.getS1().get(3);
+             numba2 = Model2for3x3.getS1().get(4);
+             numba3 = Model2for3x3.getS1().get(5);
+        }
+        else{
+             numba1 = Model2for3x3.getS1().get(6);
+             numba2 = Model2for3x3.getS1().get(7);
+             numba3 = Model2for3x3.getS1().get(8);
+        }
+        Text nb1 = new Text(Double.toString(numba1));
+        Text nb2 = new Text(Double.toString(numba2));
+        Text nb3 = new Text(Double.toString(numba3));
+        vbx1.getChildren().add(nb1);
+        vbx1.getChildren().add(nb2);
+        vbx1.getChildren().add(nb3);
+
+
+        return vbx1;
+    }
+
+    public VBox putVertical2x2(int counter){
+        VBox vbx1 = new VBox();
+        Double numba1 = null;
+        Double numba2= null;
+        if(counter==1){
+             numba1 = Model2for3x3.getS1().get(0);
+             numba2 = Model2for3x3.getS1().get(1);
+        }
+        if(counter==2){
+             numba1 = Model2for3x3.getS1().get(2);
+             numba2 = Model2for3x3.getS1().get(3);
+        }
+        Text nb1 = new Text(Double.toString(numba1));
+        Text nb2 = new Text(Double.toString(numba2));
+        vbx1.getChildren().add(nb1);
+        vbx1.getChildren().add(nb2);
+        return vbx1;
+    }
+
     @Override
     public VBox setRight(String title, CustomButton btnStart, CustomButton btnReset) {
         VBox vbRight = new VBox();
@@ -311,24 +341,24 @@ public class View2<textField> extends Pane implements iView {
 
         vbPo.setStyle("-fx-background-color: #333335");
         vbPo.getChildren().add(Custom.setTitle(title));
-        /*if(rb2.isSelected()) {
+        if(rb2.isSelected()) { //THIS DONT WORK
             btnStart.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent e) {
-                    GridPane gpjCoaching = RIGHT3X3();
+                    GridPane gpjCoaching = showDaRight();
                     vbPo.getChildren().add(gpjCoaching);
                 }
             });
-      //  }
-*/          // if(rb1.isSelected()) {
+        }
+           if(rb1.isSelected()) {
         btnStart.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
-                        GridPane gpjCoaching = RIGHT2X2();
+                        GridPane gpjCoaching = showDaRight();
                         vbPo.getChildren().add(gpjCoaching);
                     }
                 });
-        //    }
+            }
 
 
         // HBox to hold buttons and logo
