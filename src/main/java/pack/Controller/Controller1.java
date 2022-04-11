@@ -17,6 +17,7 @@ public class Controller1 {
         this.view = view;
         is2by2 = view.getRb1().isSelected();
         matrixCoefficients = new ArrayList<>();
+        transform();
     }
 
     // Include 2x2 as well later
@@ -44,24 +45,24 @@ public class Controller1 {
         }
     }
 
-    public void getOutput() {
+    public void printOutput() {
         Model1 model1 = new Model1(this.matrixCoefficients, is2by2);
         if (is2by2) {
-            reduced2x2matrix = model1.getReduced2x2matrix();
-        } else {
-            reduced3x3matrix = model1.getReduced3x3matrix();
-        }
-    }
+            double [][]A = Model1.getMatrixA_2x2();
+            double[] b = Model1.getMatrixB_2x2();
+            double[] x = model1.SLESolve(A, b);
 
-    public void printOutput() {
-        if (is2by2) {
-            for (Double coefficient: reduced2x2matrix) {
-                System.out.println(coefficient);
-            }
+            System.out.println("X = "+ x[0]);
+            System.out.println("Y = "+ x[1]);
+
         } else {
-            for (Double coefficient: reduced3x3matrix) {
-                System.out.println(coefficient);
-            }
+            double [][]A = Model1.getMatrixA_3x3();
+            double[] b = Model1.getMatrixB_3x3();
+            double[] x = model1.SLESolve(A, b);
+
+            System.out.println("X = "+ x[0]);
+            System.out.println("Y = "+ x[1]);
+            System.out.println("Z = "+ x[2]);
         }
     }
 }

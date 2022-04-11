@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 //import pack.Controller.Controller1;
+import pack.Controller.Controller1;
 import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
 
@@ -130,6 +131,7 @@ public class View1 extends Pane implements iView {
             }
         }
         Controller1 controller1 = new Controller1(this);
+        controller1.printOutput();
     }
 
     public void handleReset() {
@@ -149,10 +151,6 @@ public class View1 extends Pane implements iView {
 
     public CustomRadioButton getRb1() {
         return rb1;
-    }
-
-    public CustomRadioButton getRb2() {
-        return rb2;
     }
 
     public CustomTextField[][] getFieldListRb1() {
