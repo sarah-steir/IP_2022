@@ -10,38 +10,41 @@ public class Controller1 {
 
     View1 view;
     private ArrayList<Double> matrixCoefficients;
+    private ArrayList<CustomTextField> fieldList;
     private boolean is2by2;
 
     public Controller1 (View1 view) {
         this.view = view;
         is2by2 = view.getRb1().isSelected();
         matrixCoefficients = new ArrayList<>();
+        fieldList = new ArrayList<>();
         transform();
     }
 
     // Include 2x2 as well later
     public void transform() {
         if (is2by2) {
+            fieldList = view.getFieldListRb1();
             transform2x2();
         } else {
+            fieldList = view.getFieldListRb2();
             transform3x3();
         }
     }
 
-    public void transform2x2() { // always 6
-        for (int i = 0; i < 6; i++) {
+    public void transform2x2() {
+        for (int i = 0; i < fieldList.size(); i++) {
             if (i == 2 || i == 5 ) {
                 continue;
             }
-            this.matrixCoefficients.add(Double.parseDouble(this.view.getFieldListRb1()[i].getText()));
+            this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(i).getText()));
         }
-        this.matrixCoefficients.add(Double.parseDouble(this.view.getFieldListRb1()[2].getText()));
-        this.matrixCoefficients.add(Double.parseDouble(this.view.getFieldListRb1()[5].getText()));
-
+        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(2).getText()));
+        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(5).getText()));
     }
 
-    public void transform3x3() {   //always 12d
-        for (int i = 0; i < this.fieldList.size(); i++) {
+    public void transform3x3() {
+        for (int i = 0; i < fieldList.size(); i++) {
             if (i == 3 || i == 7 || i == 11) {
                 continue;
             }

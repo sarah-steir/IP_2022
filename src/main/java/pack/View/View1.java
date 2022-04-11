@@ -11,6 +11,9 @@ import pack.Controller.Controller1;
 import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class View1 extends Pane implements iView {
 
     private CustomTextField[][] fieldListRb1, fieldListRb2;
@@ -160,11 +163,23 @@ public class View1 extends Pane implements iView {
         return rb1;
     }
 
-    public CustomTextField[][] getFieldListRb1() {
-        return fieldListRb1;
+    public ArrayList<CustomTextField> getFieldListRb1() {
+        ArrayList<CustomTextField> fieldList = new ArrayList<>();
+        for (CustomTextField[] tfArray: this.fieldListRb1) {
+            for (CustomTextField tf: tfArray) {
+                fieldList.add(tf);
+            }
+        }
+        return fieldList;
     }
 
-    public CustomTextField[][] getFieldListRb2() {
-        return fieldListRb2;
+    public ArrayList<CustomTextField> getFieldListRb2() {
+        ArrayList<CustomTextField> fieldList = new ArrayList<>();
+        for (CustomTextField[] tfArray: this.fieldListRb2) {
+            for (CustomTextField tf: tfArray) {
+                fieldList.add(tf);
+            }
+        }
+        return fieldList;
     }
 }
