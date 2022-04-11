@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,9 +21,10 @@ import pack.Model.ModelForJSON;
 import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
 import pack.View.Customs.CustomRadioButton;
+import pack.View.Customs.CustomTextField;
 import pack.View.GraphView.Graph;
 
-public class View2 extends Pane implements iView {
+public class View2<textField> extends Pane implements iView {
     private CustomRadioButton rb1, rb2;
     private ComboBox cb = new ComboBox();
     private CustomButton btnStart, btnReset;
@@ -38,7 +40,9 @@ public class View2 extends Pane implements iView {
     private double c1;
     private double c2;
     private double c3;
-    String gh = "fddd";
+    private CustomTextField t1,t2,t3,t4,t5,t6,t7,t8,t9;
+
+
 
     public View2() {
         rb1 = new CustomRadioButton("2 x 2");
@@ -64,79 +68,114 @@ public class View2 extends Pane implements iView {
         this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "EigenValues and EigenVectors", null));
         //iView.handleStart.(2,false);
     }
+    private void getTextfields(){
+
+    }
 
     private void doAction(String listItem) {
         switch (listItem) {
             case "Lower Triangle":
-                a1=ModelForJSON.getLowerTriangle().get(0);
-                a2=ModelForJSON.getLowerTriangle().get(1);
-                a3=ModelForJSON.getLowerTriangle().get(2);
-                b1=ModelForJSON.getLowerTriangle().get(3);
-                b2=ModelForJSON.getLowerTriangle().get(4);
-                b3=ModelForJSON.getLowerTriangle().get(5);
-                c1=ModelForJSON.getLowerTriangle().get(6);
-                c2=ModelForJSON.getLowerTriangle().get(7);
-                c3=ModelForJSON.getLowerTriangle().get(8);
+                a1 = ModelForJSON.getLowerTriangle().get(0);
+                a2 = ModelForJSON.getLowerTriangle().get(1);
+                a3 = ModelForJSON.getLowerTriangle().get(2);
+                b1 = ModelForJSON.getLowerTriangle().get(3);
+                b2 = ModelForJSON.getLowerTriangle().get(4);
+                b3 = ModelForJSON.getLowerTriangle().get(5);
+                c1 = ModelForJSON.getLowerTriangle().get(6);
+                c2 = ModelForJSON.getLowerTriangle().get(7);
+                c3 = ModelForJSON.getLowerTriangle().get(8);
 
                 //Action for this item
                 break;
             case "Upper Triangle":
-                a1=ModelForJSON.getUpperTriangle().get(0);
-                a2=ModelForJSON.getUpperTriangle().get(1);
-                a3=ModelForJSON.getUpperTriangle().get(2);
-                b1=ModelForJSON.getUpperTriangle().get(3);
-                b2=ModelForJSON.getUpperTriangle().get(4);
-                b3=ModelForJSON.getUpperTriangle().get(5);
-                c1=ModelForJSON.getUpperTriangle().get(6);
-                c2=ModelForJSON.getUpperTriangle().get(7);
-                c3=ModelForJSON.getUpperTriangle().get(8);
+                a1 = ModelForJSON.getUpperTriangle().get(0);
+                a2 = ModelForJSON.getUpperTriangle().get(1);
+                a3 = ModelForJSON.getUpperTriangle().get(2);
+                b1 = ModelForJSON.getUpperTriangle().get(3);
+                b2 = ModelForJSON.getUpperTriangle().get(4);
+                b3 = ModelForJSON.getUpperTriangle().get(5);
+                c1 = ModelForJSON.getUpperTriangle().get(6);
+                c2 = ModelForJSON.getUpperTriangle().get(7);
+                c3 = ModelForJSON.getUpperTriangle().get(8);
                 break;
             case "Diagonal":
-                a1=ModelForJSON.getDiagonal().get(0);
-                a2=ModelForJSON.getDiagonal().get(1);
-                a3=ModelForJSON.getDiagonal().get(2);
-                b1=ModelForJSON.getDiagonal().get(3);
-                b2=ModelForJSON.getDiagonal().get(4);
-                b3=ModelForJSON.getDiagonal().get(5);
-                c1=ModelForJSON.getDiagonal().get(6);
-                c2=ModelForJSON.getDiagonal().get(7);
-                c3=ModelForJSON.getDiagonal().get(8);
+                a1 = ModelForJSON.getDiagonal().get(0);
+                a2 = ModelForJSON.getDiagonal().get(1);
+                a3 = ModelForJSON.getDiagonal().get(2);
+                b1 = ModelForJSON.getDiagonal().get(3);
+                b2 = ModelForJSON.getDiagonal().get(4);
+                b3 = ModelForJSON.getDiagonal().get(5);
+                c1 = ModelForJSON.getDiagonal().get(6);
+                c2 = ModelForJSON.getDiagonal().get(7);
+                c3 = ModelForJSON.getDiagonal().get(8);
                 break;
             case "identity":
-                a1=ModelForJSON.getIdentity().get(0);
-                a2=ModelForJSON.getIdentity().get(1);
-                a3=ModelForJSON.getIdentity().get(2);
-                b1=ModelForJSON.getIdentity().get(3);
-                b2=ModelForJSON.getIdentity().get(4);
-                b3=ModelForJSON.getIdentity().get(5);
-                c1=ModelForJSON.getIdentity().get(6);
-                c2=ModelForJSON.getIdentity().get(7);
-                c3=ModelForJSON.getIdentity().get(8);
+                a1 = ModelForJSON.getIdentity().get(0);
+                a2 = ModelForJSON.getIdentity().get(1);
+                a3 = ModelForJSON.getIdentity().get(2);
+                b1 = ModelForJSON.getIdentity().get(3);
+                b2 = ModelForJSON.getIdentity().get(4);
+                b3 = ModelForJSON.getIdentity().get(5);
+                c1 = ModelForJSON.getIdentity().get(6);
+                c2 = ModelForJSON.getIdentity().get(7);
+                c3 = ModelForJSON.getIdentity().get(8);
                 break;
             case "Null":
-                a1=ModelForJSON.getNul().get(0);
-                a2=ModelForJSON.getNul().get(1);
-                a3=ModelForJSON.getNul().get(2);
-                b1=ModelForJSON.getNul().get(4);
-                b3=ModelForJSON.getNul().get(5);
-                c1=ModelForJSON.getNul().get(6);
-                c2=ModelForJSON.getNul().get(7);
-                c3=ModelForJSON.getNul().get(8);
+                a1 = ModelForJSON.getNul().get(0);
+                a2 = ModelForJSON.getNul().get(1);
+                a3 = ModelForJSON.getNul().get(2);
+                b1 = ModelForJSON.getNul().get(4);
+                b3 = ModelForJSON.getNul().get(5);
+                c1 = ModelForJSON.getNul().get(6);
+                c2 = ModelForJSON.getNul().get(7);
+                c3 = ModelForJSON.getNul().get(8);
                 break;
             case "Symmetric":
-                a1=ModelForJSON.getSymmetric().get(0);
-                a2=ModelForJSON.getSymmetric().get(1);
-                a3=ModelForJSON.getSymmetric().get(2);
-                b1=ModelForJSON.getSymmetric().get(3);
-                b2=ModelForJSON.getSymmetric().get(4);
-                b3=ModelForJSON.getSymmetric().get(5);
-                c1=ModelForJSON.getSymmetric().get(6);
-                c2=ModelForJSON.getSymmetric().get(7);
-                c3=ModelForJSON.getSymmetric().get(8);
+                a1 = ModelForJSON.getSymmetric().get(0);
+                a2 = ModelForJSON.getSymmetric().get(1);
+                a3 = ModelForJSON.getSymmetric().get(2);
+                b1 = ModelForJSON.getSymmetric().get(3);
+                b2 = ModelForJSON.getSymmetric().get(4);
+                b3 = ModelForJSON.getSymmetric().get(5);
+                c1 = ModelForJSON.getSymmetric().get(6);
+                c2 = ModelForJSON.getSymmetric().get(7);
+                c3 = ModelForJSON.getSymmetric().get(8);
                 break;
             default: //Default action
                 break;
         }
+        if (rb1.isSelected()) {
+            t1= iView.getCopyArray().get(0);
+            t2= iView.getCopyArray().get(1);
+            t3= iView.getCopyArray().get(2);
+            t4= iView.getCopyArray().get(3);
+            t1.setText(String.valueOf(a1));
+            t2.setText(String.valueOf(a2));
+            t4.setText(String.valueOf(b1));
+            t5.setText(String.valueOf(b2));
+        }
+        if (rb2.isSelected()) {
+            t1= iView.getCopyArray().get(0);
+            t2= iView.getCopyArray().get(1);
+            t3= iView.getCopyArray().get(2);
+            t4= iView.getCopyArray().get(3);
+            t5= iView.getCopyArray().get(4);
+            t6= iView.getCopyArray().get(5);
+            t7= iView.getCopyArray().get(6);
+            t8= iView.getCopyArray().get(7);
+            t9= iView.getCopyArray().get(8);
+            t1.setText(String.valueOf(a1));
+            t2.setText(String.valueOf(a2));
+            t3.setText(String.valueOf(a3));
+            t4.setText(String.valueOf(b1));
+            t5.setText(String.valueOf(b2));
+            t6.setText(String.valueOf(63));
+            t7.setText(String.valueOf(c1));
+            t8.setText(String.valueOf(c2));
+            t9.setText(String.valueOf(c3));
+        }
+
+
     }
         @Override
         public VBox setLeft (CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[]
