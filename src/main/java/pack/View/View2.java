@@ -1,18 +1,23 @@
 package pack.View;
 
 import javafx.collections.FXCollections;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pack.Model.ModelForJSON;
 import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
 import pack.View.Customs.CustomRadioButton;
+import pack.View.Customs.CustomTextField;
 import pack.View.GraphView.Graph;
 
 public class View2 extends Pane implements iView {
@@ -54,8 +59,7 @@ public class View2 extends Pane implements iView {
             doAction(cb.getValue().toString()); //Send the selected item to the method
         });
         cb.setPromptText("Saved Matrices");
-        this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "EigenValues and EigenVectors", null));
-
+        this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "EigenValues and EigenVectors", null, cb));
     }
 
     private void doAction(String listItem) {
@@ -133,7 +137,7 @@ public class View2 extends Pane implements iView {
     }
         @Override
         public VBox setLeft (CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[]
-        signsRb1, String[]signsRb2, Graph graph){
+        signsRb1, String[] signsRb2, Graph graph, ComboBox comboBox){
             VBox vbLeft = new VBox();
             ImageView imL = new ImageView(new Image(Custom.p + "brack left.png"));
             vbLeft.setSpacing(10);
@@ -141,7 +145,7 @@ public class View2 extends Pane implements iView {
             vbLeft.setLayoutX(10);
             vbLeft.setLayoutY(14);
             vbLeft.setStyle("-fx-background-color: #333335"); // Grey
-            vbLeft.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2));
+            vbLeft.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2, comboBox));
             vbLeft.getChildren().add(cb);
             vbLeft.getChildren().add(imL);
             return vbLeft;
@@ -156,10 +160,99 @@ public class View2 extends Pane implements iView {
         vbRight.setLayoutX(10);
         vbRight.setLayoutY(14);
         vbRight.setStyle("-fx-background-color: #333335"); // Grey
-        vbRight.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2));
+        //vbRight.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2));
         vbRight.getChildren().add(cb);
         vbRight.getChildren().add(imL);
         return vbRight;    }
+
+    @Override
+    public VBox setRadios(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1,
+                          String[] signsRb2, ComboBox comboBox) {
+        VBox vbRadioBox = new VBox();
+        vbRadioBox.setPrefSize(500, 160);
+
+        HBox hbRadios = new HBox();
+        hbRadios.setSpacing(20);
+        hbRadios.setPrefWidth(115);
+        hbRadios.getChildren().addAll(rb1, rb2);
+        vbRadioBox.getChildren().addAll(hbRadios, comboBox);
+
+        if (!rb1.isSelected() || !rb2.isSelected()) {
+            comboBox.setDisable(true);
+        }
+
+        rb1.setOnAction(event -> {
+            vbRadioBox.getChildren().clear();
+            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 3, btnStart, signsRb1, comboBox));
+            comboBox.setDisable(false);
+        });
+
+        rb2.setOnAction(event -> {
+            vbRadioBox.getChildren().clear();
+            vbRadioBox.getChildren().addAll(hbRadios, setFields(3, 4, btnStart, signsRb2, comboBox));
+            comboBox.setDisable(false);
+        });
+        return vbRadioBox;
+    }
+
+    @Override
+    public GridPane setFields(int rows, int cols, CustomButton btnStart, String[] signs, ComboBox comboBox) {
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        gridPane.setAlignment(Pos.CENTER);
+
+        CustomTextField[][] fieldList = new CustomTextField[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols;  j++) {
+                HBox hbTextField = new HBox();
+                hbTextField.setSpacing(10);
+
+                fieldList[i][j] = new CustomTextField();
+                Label lblVariable = new Label();
+                lblVariable.setStyle("-fx-text-fill: E7EBEE;");
+                lblVariable.setFont(Custom.font);
+                if (j == cols - 1) {
+                    lblVariable.setText("");
+                } else {
+                    lblVariable.setText(signs[j]);
+                }
+
+                int finalI = i;
+                int finalJ = j;
+
+                btnStart.setOnAction(event -> {
+                    boolean isInvalid = false;
+                    for (CustomTextField[] tfArray: fieldList) {
+                        for (CustomTextField tf: tfArray) {
+                            if (tf.checkField()) {
+                                btnStart.setDisable(true);
+                                isInvalid = true;
+                            } else {
+                                copyArray.add(tf);
+                                isInvalid = false;
+                            }
+                        }
+                    }
+                    handleStart(getWhichView(signs), isInvalid);
+                });
+
+                comboBox.setOnAction(event -> {
+                    if (comboBox.getValue().equals("Identity")) {
+                        System.out.println("YOOO this is the first item in the komobokobox");
+                    }
+                });
+
+                fieldList[i][j].textProperty().addListener((observable, oldValue, newValue) ->
+                        btnStart.setDisable(fieldList[finalI][finalJ].checkField()));
+
+                hbTextField.getChildren().addAll(fieldList[i][j], lblVariable);
+                gridPane.add(hbTextField, j, i);
+            }
+        }
+        return gridPane;
+    }
 
 
         public String[] getSignsRb2 () {

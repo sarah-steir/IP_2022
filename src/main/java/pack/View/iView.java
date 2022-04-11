@@ -24,20 +24,6 @@ public interface iView {
 
     ArrayList<CustomTextField> copyArray = new ArrayList<>();
 
-    /**
-     * This method is the one that is called by View1, View2 and View3. It sets both the left and right pane and keeps
-     * track of all the needed parameters for that specific view. This method is the one that sets off the chain reaction
-     * of setting up the rest of the User Interface for a certain View.
-     * @param rb1 the first RadioButton
-     * @param rb2 the second RadioButton
-     * @param btnStart the start Button
-     * @param btnReset the reset Button
-     * @param signsRb1 an array of labels to add with the TextFields for rb1
-     * @param signsRb2 an array of labels to add with the TextFields for rb2
-     * @param title the title of the right pane
-     * @param graph the graph object
-     * @return a Pane object containing the whole UI of that view
-     */
     default Pane setView(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, CustomButton btnReset,
                          String[] signsRb1, String[] signsRb2, String title, Graph graph, ComboBox comboBox) {
         Pane pane = new Pane();
@@ -98,34 +84,24 @@ public interface iView {
         hbRadios.setSpacing(20);
         hbRadios.setPrefWidth(115);
         hbRadios.getChildren().addAll(rb1, rb2);
-        vbRadioBox.getChildren().addAll(hbRadios, comboBox);
+        vbRadioBox.getChildren().addAll(hbRadios/*, comboBox*/);
 
-        if (!rb1.isSelected() || !rb2.isSelected()) {
-            comboBox.setDisable(true);
-        }
+//        if (!rb1.isSelected() || !rb2.isSelected()) {
+//            comboBox.setDisable(true);
+//        }
 
-        rb1.setOnAction(event -> {
-            vbRadioBox.getChildren().clear();
-            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 3, btnStart, signsRb1, comboBox));
-            comboBox.setDisable(false);
-        });
-
-        rb2.setOnAction(event -> {
-            vbRadioBox.getChildren().clear();
-            vbRadioBox.getChildren().addAll(hbRadios, setFields(3, 4, btnStart, signsRb2, comboBox));
-            comboBox.setDisable(false);
-        });
+//        rb1.setOnAction(event -> {
+//            vbRadioBox.getChildren().clear();
+//            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 3, btnStart, signsRb1, comboBox));
+//            //comboBox.setDisable(false);
+//        });
+//
+//        rb2.setOnAction(event -> {
+//            vbRadioBox.getChildren().clear();
+//            vbRadioBox.getChildren().addAll(hbRadios, setFields(3, 4, btnStart, signsRb2, comboBox));
+//            //comboBox.setDisable(false);
+//        });
         return vbRadioBox;
-    }
-
-    default HBox setButtons(CustomButton btnStart, CustomButton btnReset) {
-        btnStart.setMinSize(115, 105);
-        btnReset.setMinSize(115, 105);
-
-        HBox hbButtons = new HBox();
-        hbButtons.setSpacing(10);
-        hbButtons.getChildren().addAll(btnStart, btnReset);
-        return hbButtons;
     }
 
     default VBox setRight(String title, CustomButton btnStart, CustomButton btnReset) {
@@ -151,6 +127,15 @@ public interface iView {
 
         vbRight.getChildren().addAll(vbPo, hbBottom);
         return vbRight;
+    }
+
+    default Pane setGraphPane(Graph graph) {
+        Pane graphPane = new Pane();
+        graphPane.getChildren().add(graph);
+        graphPane.setPrefSize(500, 525);
+        graphPane.setStyle("-fx-background-color: #333335");
+
+        return graphPane;
     }
 
     default GridPane setFields(int rows, int cols, CustomButton btnStart, String[] signs, ComboBox comboBox) {
@@ -196,16 +181,69 @@ public interface iView {
                     handleStart(getWhichView(signs), isInvalid);
                 });
 
-                comboBox.setOnAction(event -> {
-                    if (comboBox.getValue().equals("Identity")) {
-                        System.out.println("YOOO this is the first item in the komobokobox");
-                    }
-                });
+//                comboBox.setOnAction(event -> {
+//                    if (comboBox.getValue().equals("Identity")) {
+//                        System.out.println("YOOO this is the first item in the komobokobox");
+//                    }
+//                });
 
                 fieldList[i][j].textProperty().addListener((observable, oldValue, newValue) ->
                         btnStart.setDisable(fieldList[finalI][finalJ].checkField()));
 
                 hbTextField.getChildren().addAll(fieldList[i][j], lblVariable);
+                gridPane.add(hbTextField, j, i);
+            }
+        }
+        return gridPane;
+    }
+
+    default GridPane setFields (CustomTextField[][] textFields, String[] signs, CustomButton btnStart) {
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        gridPane.setAlignment(Pos.CENTER);
+
+        int rows = textFields.length;
+        int cols = textFields[0].length;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols;  j++) {
+                HBox hbTextField = new HBox();
+                hbTextField.setSpacing(10);
+
+                textFields[i][j] = new CustomTextField();
+                Label lblVariable = new Label();
+                lblVariable.setStyle("-fx-text-fill: E7EBEE;");
+                lblVariable.setFont(Custom.font);
+                if (j == cols - 1) {
+                    lblVariable.setText("");
+                } else {
+                    lblVariable.setText(signs[j]);
+                }
+
+                int finalI = i;
+                int finalJ = j;
+
+                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) ->
+                        btnStart.setDisable(textFields[finalI][finalJ].checkField()));
+
+//                btnStart.setOnAction(event -> {
+//                    boolean isInvalid = false;
+//                    for (CustomTextField[] tfArray: textFields) {
+//                        for (CustomTextField tf: tfArray) {
+//                            if (tf.checkField()) {
+//                                btnStart.setDisable(true);
+//                                //isInvalid = true;
+//                            } else {
+//                                copyArray.add(tf);
+//                               //isInvalid = false;
+//                            }
+//                        }
+//                    }
+//                    //handleStart(getWhichView(signs), isInvalid);
+//                });
+
+                hbTextField.getChildren().addAll(textFields[i][j], lblVariable);
                 gridPane.add(hbTextField, j, i);
             }
         }
@@ -227,6 +265,7 @@ public interface iView {
     default void handleStart (int i, boolean isInvalid) {
         switch (i) {
             case 1:
+                //view = new View1();
                 if (!isInvalid) {
                     Controller1 controller1 = new Controller1();
                     controller1.setFieldList(getCopyArray());
@@ -292,5 +331,57 @@ public interface iView {
 //                    break;
 //                }
         }
+    }
+
+    // Tayba is testing shiz rn so pls dont delete these extra functions down here
+    default HBox setHbRadios(CustomRadioButton rb1, CustomRadioButton rb2) {
+        HBox hbRadios = new HBox();
+        hbRadios.setSpacing(20);
+        hbRadios.setPrefWidth(115);
+        hbRadios.getChildren().addAll(rb1, rb2);
+
+        return hbRadios;
+    }
+
+    default VBox setLeft(VBox vbUi, Pane graphPane) {
+        VBox vbLeft = new VBox();
+        vbLeft.setSpacing(10);
+        vbLeft.setPrefSize(500, 695);
+        vbLeft.setLayoutX(10);
+        vbLeft.setLayoutY(14);
+        vbLeft.getChildren().addAll(vbUi, graphPane);
+
+        return  vbLeft;
+    }
+
+    default VBox setRight(VBox vbPo, HBox hbButtons) {
+        VBox vbRight = new VBox();
+        vbRight.setPrefSize(500, 695);
+        vbRight.setLayoutX(520);
+        vbRight.setLayoutY(14);
+        vbRight.setSpacing(10);
+
+        vbRight.getChildren().addAll(vbPo, hbButtons);
+
+        return vbRight;
+    }
+
+    default HBox setHbBottom(CustomButton btnStart, CustomButton btnReset) {
+        HBox hbBottom = new HBox();
+        hbBottom.setMaxSize(500, 105);
+        hbBottom.setSpacing(55);
+        hbBottom.getChildren().addAll(setButtons(btnStart, btnReset), setLogo());
+
+        return hbBottom;
+    }
+
+    default HBox setButtons(CustomButton btnStart, CustomButton btnReset) {
+        btnStart.setMinSize(115, 105);
+        btnReset.setMinSize(115, 105);
+
+        HBox hbButtons = new HBox();
+        hbButtons.setSpacing(10);
+        hbButtons.getChildren().addAll(btnStart, btnReset);
+        return hbButtons;
     }
 }

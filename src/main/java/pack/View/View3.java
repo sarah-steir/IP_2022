@@ -38,7 +38,6 @@ public class View3 extends Pane implements iView {
         rb2 = new CustomRadioButton("Planes");
         rb1.setToggleGroup(group);
         rb2.setToggleGroup(group);
-
         btnStart = new CustomButton("START\nTHE\nMAGIK");
         btnReset = new CustomButton("RESET\nTHE\nMAGIK");
         this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "Lines and planes", graph, null));
