@@ -208,8 +208,9 @@ public interface iView {
                 }
                 break;
             case 2:
+               System.out.println("BEEP");
+/*
 
-                /*
                 if(View2.getR3().isSelected()) {
                     Model2for3x3 et = new Model2for3x3(Double.parseDouble(View2.getT1().getText()), Double.parseDouble(View2.getT2().getText()), Double.parseDouble(View2.getT3().getText()), Double.parseDouble(View2.getT4().getText()), Double.parseDouble(View2.getT5().getText()), Double.parseDouble(View2.getT6().getText()), Double.parseDouble(View2.getT7().getText()), Double.parseDouble(View2.getT8().getText()), Double.parseDouble(View2.getT9().getText()));
                     System.out.println("This is 3x3");
@@ -240,8 +241,8 @@ public interface iView {
                         View2.getStr2().add(d.toString());
                     }
                 }
+*/
 
-                 */
 
             case 3:
 
