@@ -15,6 +15,8 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import pack.View.Customs.CustomText;
 
+import java.util.List;
+
 
 public class Graph extends Group {
 
@@ -41,6 +43,8 @@ public class Graph extends Group {
     Color yellow = Color.web("#F2C15F");
     Color blue = Color.web("#1985A1");
 
+    private int a = 0; // Serves as a counter to know which color should the added element be
+
     ObservableList<Node> axisList;
     ObservableList<Node> thingsToGraphList = FXCollections.observableArrayList();
     ObservableList<Node> labelsList = FXCollections.observableArrayList();
@@ -59,7 +63,6 @@ public class Graph extends Group {
         this.getChildren().add(scene);
 
         scene.setOnScroll((e) -> {
-
             double zoomRatio = 1;
             if (e.getDeltaY() > 0 && scalable.getScale() < 5) {
                 zoomRatio = 1.05;
@@ -92,12 +95,6 @@ public class Graph extends Group {
                 mousePosY = me.getSceneY();
                 mouseDeltaX = (mousePosX - mouseOldX);
                 mouseDeltaY = (mousePosY - mouseOldY);
-
-                if (me.isControlDown()) {
-                }
-                if (me.isShiftDown()) {
-                }
-
                 if (me.isPrimaryButtonDown() && me.isSecondaryButtonDown()) {
                     camera.setTranslateX(camera.getTranslateX() + mouseDeltaX);
                     camera.setTranslateY(camera.getTranslateY() + mouseDeltaY);
@@ -116,14 +113,21 @@ public class Graph extends Group {
         });
     }
 
+    /**
+     * This function is used so that the user doesn't have to click on a specific element to rotate/move the graph
+     * @return a big, transparent box that will serve as a "grip" so the user can click anywhere on the graph and rotate it
+     */
     public Box bigCube() {
         map = new Box(400, 400, 400);
         map.setMaterial(new PhongMaterial(Color.TRANSPARENT));
         return map;
     }
 
+    /**
+     * Well it's a function to create the axis duh
+     * @return an ArrayList of the three axis, to be added in the scene
+     */
     private ObservableList<Node> getAxis() {
-
         ObservableList<Node> axisList = FXCollections.observableArrayList();
 
         Cylinder xAxis = new Cylinder(1.5, 3000);
@@ -135,8 +139,6 @@ public class Graph extends Group {
         Cylinder zAxis = new Cylinder(1.5, 3000);
         zAxis.setMaterial(new PhongMaterial(Color.BLUE));
         zAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(0, 1, 0)));
-
-
         Xform axes = new Xform();
         axes.getChildren().addAll(xAxis, yAxis, zAxis);
         axisList.add(axes);
@@ -144,6 +146,10 @@ public class Graph extends Group {
         return axisList;
     }
 
+    /**
+     * This function takes three coordinates (a Point3D), and then translates a sphere to these coordinates in order to "create a point"
+     * @param point with the three coordinates to be added
+     */
     public void addPoint(Point3D point) {
         Sphere sphere = new Sphere(2);
         sphere.setTranslateX(point.getX());
@@ -153,10 +159,23 @@ public class Graph extends Group {
         addPointToList(sphere);
     }
 
+    /**
+     *
+     * @param point1 the first point the line passes through
+     * @param point2 the second point the line passes through
+     */
     public void addLine(Point3D point1, Point3D point2) {
+        Line line1 = this.FindOneLine(point1, point2);
+        Line line2 = this.FindOneLine(point2, point1);
+
+        createLineLabel(point1, point2);
+        addLineToList(line1, line2);
+    }
+
+    public Line FindOneLine(Point3D point1, Point3D point2) {
         double dist = point1.distance(point2);
 
-        Line line = new Line(0, 0, dist, 0);
+        Line line = new Line(0, 0, 1000, 0);
 
         Point3D vector = point2.subtract(point1);
 
@@ -173,19 +192,32 @@ public class Graph extends Group {
         Translate tt = new Translate(point1.getX(), point1.getY(), point1.getZ());
         line.getTransforms().addAll(tt, yRotate, xRotate);
 
-        createLineLabel(point1, point2);
-        addLineToList(line);
+        return line;
     }
 
+    /**
+     *
+     * Boy oh boy was this function a pain in the ass to program... Anyways here we go
+     * It creates the plane (a circle because it is too hard to take a rectangle and transform it since the pivot point is in the corner, not in the center)
+     * When the circle is added, it goes automatically through x and y, so we just to rotate along this vector (x -> y) to make it pass through z
+     * It finds the midpoint m between the x and y
+     * It finds the angle it needs to rotate the circle in order to pass through z
+     * It rotates the circle
+     *
+     * @param x the x-intercept
+     * @param y the y-intercept
+     * @param z the z-intercept
+     * @param equation
+     */
     public void addPlane(double x, double y, double z, String equation) {
         Circle plane = new Circle(500);
 
-        Point3D m = new Point3D(x/2, y/2, 0);
-        double d = Math.sqrt(Math.pow(m.getX(), 2) + Math.pow(m.getY(), 2) + Math.pow(z, 2));
-        double angle = Math.toDegrees(Math.asin(z / d));
-        Point3D vector = new Point3D(-x, y, 0);
+        Point3D m = new Point3D(x/2, y/2, 0); // Midpoint between x and y
+        double d = Math.sqrt(Math.pow(m.getX(), 2) + Math.pow(m.getY(), 2) + Math.pow(z, 2)); // Distance between m and z
+        double angle = Math.toDegrees(Math.asin(z / d)); // Angle it needs to rotate
+        Point3D vector = new Point3D(-x, y, 0); // "Axis" of rotation, aka vector from x to y
 
-        if (x * y < 0) {
+        if (x * y < 0) { // If the coordinates are a bit weird we need to do this
             angle = 360 - angle;
         }
 
@@ -196,9 +228,15 @@ public class Graph extends Group {
         addPlaneToList(plane);
     }
 
+    /**
+     * Chooses the right color depending on how many elements are already in the graph
+     * and adds the Point/Sphere
+     * @param sphere
+     */
     public void addPointToList(Sphere sphere) {
+        a++;
         thingsToGraphList.add(sphere);
-        switch (thingsToGraphList.size()) {
+        switch (a) {
             case 1:
                 sphere.setMaterial(new PhongMaterial(red));
                 break;
@@ -215,29 +253,48 @@ public class Graph extends Group {
         this.update();
     }
 
-    public void addLineToList(Line line) {
-        thingsToGraphList.add(line);
-        switch (thingsToGraphList.size()) {
+    /**
+     * Chooses the right color depending on how many elements are already in the graph
+     * and adds the Line
+     *
+     * @param line1
+     * @param line2
+     */
+    public void addLineToList(Line line1, Line line2) {
+        a++;
+        thingsToGraphList.add(line1);
+        thingsToGraphList.add(line2);
+        switch (a) {
             case 1:
-                line.setStroke(red);
+                line1.setStroke(red);
+                line2.setStroke(red);
                 break;
             case 2:
-                line.setStroke(yellow);
+                line1.setStroke(yellow);
+                line2.setStroke(yellow);
                 break;
             case 3:
-                line.setStroke(blue);
+                line1.setStroke(blue);
+                line2.setStroke(blue);
                 break;
             default:
-                line.setStroke(white);
+                line1.setStroke(white);
+                line2.setStroke(white);
                 break;
         }
         this.update();
     }
 
+    /**
+     * Chooses the right color depending on how many elements are already in the graph
+     * and adds the Rectangle/Plane
+     * @param rectangle
+     */
     public void addPlaneToList(Circle rectangle) {
+        a++;
         rectangle.setOpacity(0.5);
         thingsToGraphList.add(rectangle);
-        switch (thingsToGraphList.size()) {
+        switch (a) {
             case 1:
                 rectangle.setFill(red);
                 break;
@@ -254,6 +311,10 @@ public class Graph extends Group {
         this.update();
     }
 
+    /**
+     * Creates the label and places it next to the Point/Sphere
+     * @param point
+     */
     private void createPointLabel(Point3D point) {
         Text label = new CustomText("(" + point.getX() + ", " + point.getY() + ", " + point.getZ() + ")");
         label.setScaleY(-1);
@@ -263,6 +324,11 @@ public class Graph extends Group {
         labelsList.add(label);
     }
 
+    /**
+     * Creates the label and places it next to the Line
+     * @param point1
+     * @param point2
+     */
     private void createLineLabel(Point3D point1, Point3D point2) {
         Text label = new CustomText("l(t) = (" + (int) point1.getX() + ", " + (int) point1.getY() + ", " + (int) point1.getZ() + ") +\nt <" + (int) point2.getX() + ", " + (int) point2.getY() + ", " + (int) point2.getZ() + ">");
         label.setScaleY(-1);
@@ -272,6 +338,10 @@ public class Graph extends Group {
         labelsList.add(label);
     }
 
+    /**
+     * Creates the label and places it at the origin cause I don't know where else
+     * @param equation
+     */
     private void createPlaneLabel(String equation) {
         Text label = new Text(equation);
         label.setScaleY(-1);
@@ -311,6 +381,9 @@ public class Graph extends Group {
         setCameraFromViewPoint(100, 100, 300);
     }
 
+    /**
+     * Needed to update everything when we add an element
+     */
     public void update() {
         scalable.getChildren().clear();
         scalable.getChildren().add(new AmbientLight());
@@ -328,7 +401,3 @@ public class Graph extends Group {
         return value;
     }
 }
-
-//    Text text = new Text(0, 0,
-//            String.format("(%1$d,%2$d,%3$d)", x, y,z));
-//                    text.setScaleY(-1);
