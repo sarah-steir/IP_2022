@@ -152,6 +152,8 @@ public class Model1 {
 
             // singular or nearly singular
             if (Math.abs(A[p][p]) <= EPSILON) {
+                // throws this exception when matrix is all zeroes
+                // also throws when matrix is {{1, 0, 0}, {0, 1, 0}}
                 throw new ArithmeticException("Matrix is singular or super close to being singular, try again :) ");
             }
 

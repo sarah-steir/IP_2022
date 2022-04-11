@@ -2,6 +2,7 @@ package pack.View;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
@@ -131,7 +132,7 @@ public class View1 extends Pane implements iView {
             }
         }
         Controller1 controller1 = new Controller1(this);
-        controller1.printOutput();
+        addOutput(controller1);
     }
 
     public void handleReset() {
@@ -143,10 +144,23 @@ public class View1 extends Pane implements iView {
         this.getChildren().addAll(this.vbLeft, this.vbRight);
     }
 
-    public void addVbPo() {
+    public void addOutput(Controller1 controller1) {
         this.vbPo.getChildren().clear();
         setVbPo("Systems of linear equations");
-        //this.vbPo.getChildren().add(new Graph());
+
+        VBox vbOutput = new VBox();
+        vbOutput.setSpacing(15);
+        vbOutput.setPadding(new Insets(15));
+        for (int i = 0; i < controller1.getOutput().length; i++) {
+            if (i == 0) {
+                vbOutput.getChildren().add(Custom.setTitle("X = " + controller1.getOutput()[i]));
+            } else if (i == 1) {
+                vbOutput.getChildren().add(Custom.setTitle("Y = " + controller1.getOutput()[i]));
+            } else if (i == 2) {
+                vbOutput.getChildren().add(Custom.setTitle("Z = " + controller1.getOutput()[i]));
+            }
+        }
+        this.vbPo.getChildren().add(vbOutput);
     }
 
     public CustomRadioButton getRb1() {
