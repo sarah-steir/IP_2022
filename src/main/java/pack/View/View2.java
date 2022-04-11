@@ -61,7 +61,7 @@ public class View2 extends Pane implements iView {
             doAction(cb.getValue().toString()); //Send the selected item to the method
         });
         cb.setPromptText("Saved Matrices");
-        this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "EigenValues and EigenVectors", null));
+        this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "EigenValues and EigenVectors", null, cb));
         //iView.handleStart.(2,false);
     }
 
@@ -140,14 +140,14 @@ public class View2 extends Pane implements iView {
     }
         @Override
         public VBox setLeft (CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[]
-        signsRb1, String[]signsRb2, Graph graph){
+        signsRb1, String[]signsRb2, Graph graph, ComboBox cb){
             VBox vbLeft = new VBox();
             vbLeft.setSpacing(10);
             vbLeft.setPrefSize(500, 695);
             vbLeft.setLayoutX(10);
             vbLeft.setLayoutY(14);
             vbLeft.setStyle("-fx-background-color: #333335"); // Grey
-            vbLeft.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2));
+            vbLeft.getChildren().add(setRadios(rb1, rb2, btnStart, signsRb1, signsRb2, cb));
             vbLeft.getChildren().add(cb);
             return vbLeft;
         }
