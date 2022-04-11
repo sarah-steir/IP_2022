@@ -8,7 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Controller.Controller1;
+//import pack.Controller.Controller1;
 import pack.Model.Model2for2x2;
 import pack.Model.Model2for3x3;
 import pack.Model.ModelForJSON;
@@ -266,13 +266,13 @@ public interface iView {
         switch (i) {
             case 1:
                 //view = new View1();
-                if (!isInvalid) {
-                    Controller1 controller1 = new Controller1();
-                    controller1.setFieldList(getCopyArray());
-                    controller1.transform();
-                    controller1.printOutput();
-                }
-                break;
+//                if (!isInvalid) {
+//                    Controller1 controller1 = new Controller1();
+//                    controller1.setFieldList(getCopyArray());
+//                    controller1.transform();
+//                    controller1.printOutput();
+//                }
+//                break;
             case 2:
 
                 /*

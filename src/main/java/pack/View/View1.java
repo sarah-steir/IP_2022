@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+//import pack.Controller.Controller1;
 import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
 
@@ -128,6 +129,7 @@ public class View1 extends Pane implements iView {
                 }
             }
         }
+        Controller1 controller1 = new Controller1(this);
     }
 
     public void handleReset() {
@@ -143,5 +145,21 @@ public class View1 extends Pane implements iView {
         this.vbPo.getChildren().clear();
         setVbPo("Systems of linear equations");
         //this.vbPo.getChildren().add(new Graph());
+    }
+
+    public CustomRadioButton getRb1() {
+        return rb1;
+    }
+
+    public CustomRadioButton getRb2() {
+        return rb2;
+    }
+
+    public CustomTextField[][] getFieldListRb1() {
+        return fieldListRb1;
+    }
+
+    public CustomTextField[][] getFieldListRb2() {
+        return fieldListRb2;
     }
 }
