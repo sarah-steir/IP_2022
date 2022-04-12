@@ -16,6 +16,7 @@ public class Controller3 {
         this.view = view;
     }
 
+
     private ArrayList<CustomTextField> fieldList;
     private ArrayList<Double> matrixCoefficients;
     private boolean is2by2;
@@ -64,4 +65,5 @@ public class Controller3 {
             System.out.println("X = "+ x[0]);
             System.out.println("Y = "+ x[1]);
     }
+
 }
