@@ -93,6 +93,7 @@ public class View3 extends Pane implements iView {
     }
 
     public void handleStart(boolean isRb1Selected) {
+        this.graph.reset();
         if (isRb1Selected) {
             for (int i = 0; i < fieldListRb1.length; i++) {
                 for (int j = 0; j < fieldListRb1[0].length; j++) {
@@ -117,8 +118,8 @@ public class View3 extends Pane implements iView {
         c3.transform(getFieldListRb2());
         c3.crossProduct();
         c3.solutionPoints(5);
-        graph.addPlane(c3.n1.get(0)/-c3.n1.get(3),c3.n1.get(1)/-c3.n1.get(3),c3.n1.get(2)/-c3.n1.get(3),"Plane1");
-        graph.addPlane(c3.n2.get(0)/-c3.n2.get(3),c3.n2.get(1)/-c3.n2.get(3),c3.n2.get(2)/-c3.n2.get(3),"Plane2");
+        graph.addPlane(c3.n1.get(3)/-c3.n1.get(0),c3.n1.get(3)/-c3.n1.get(1),c3.n1.get(3)/-c3.n1.get(2),"Plane1");
+        graph.addPlane(c3.n2.get(3)/-c3.n2.get(0),c3.n2.get(3)/-c3.n2.get(1),c3.n2.get(3)/-c3.n2.get(2),"Plane2");
         graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10));
         Controller3 controller3 = new Controller3(this);
         //addOutput(controller3);

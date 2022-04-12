@@ -33,8 +33,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static jdk.internal.org.jline.terminal.Terminal.MouseTracking.Button;
-
 public class View2 extends Pane implements iView {
 
     private CustomTextField[][] fieldListRb1, fieldListRb2;
