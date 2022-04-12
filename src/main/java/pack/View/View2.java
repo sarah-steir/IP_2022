@@ -1,18 +1,15 @@
 package pack.View;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Box;
 import javafx.scene.text.Text;
 import pack.Model.Model2for2x2;
 import pack.Model.Model2for3x3;
@@ -20,10 +17,12 @@ import pack.Model.ModelForJSON;
 import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
 import pack.View.Customs.CustomRadioButton;
+import pack.View.Customs.CustomTextField;
 import pack.View.GraphView.Graph;
 
-public class View2 extends Pane implements iView {
-    private CustomRadioButton rb1, rb2;
+public class View2<textField> extends Pane implements iView {
+    private static CustomRadioButton rb1;
+    private static CustomRadioButton rb2;
     private ComboBox cb = new ComboBox();
     private CustomButton btnStart, btnReset;
     private ToggleGroup group = new ToggleGroup();
@@ -38,7 +37,17 @@ public class View2 extends Pane implements iView {
     private double c1;
     private double c2;
     private double c3;
-    String gh = "fddd";
+    private static CustomTextField t1;
+    private static CustomTextField t2;
+    private static CustomTextField t3;
+    private static CustomTextField t4;
+    private static CustomTextField t5;
+    private static CustomTextField t6;
+    private static CustomTextField t7;
+    private static CustomTextField t8;
+    private static CustomTextField t9;
+
+
 
     public View2() {
         rb1 = new CustomRadioButton("2 x 2");
@@ -64,79 +73,114 @@ public class View2 extends Pane implements iView {
         this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "EigenValues and EigenVectors", null));
         //iView.handleStart.(2,false);
     }
+    private void getTextfields(){
+
+    }
 
     private void doAction(String listItem) {
         switch (listItem) {
             case "Lower Triangle":
-                a1=ModelForJSON.getLowerTriangle().get(0);
-                a2=ModelForJSON.getLowerTriangle().get(1);
-                a3=ModelForJSON.getLowerTriangle().get(2);
-                b1=ModelForJSON.getLowerTriangle().get(3);
-                b2=ModelForJSON.getLowerTriangle().get(4);
-                b3=ModelForJSON.getLowerTriangle().get(5);
-                c1=ModelForJSON.getLowerTriangle().get(6);
-                c2=ModelForJSON.getLowerTriangle().get(7);
-                c3=ModelForJSON.getLowerTriangle().get(8);
+                a1 = ModelForJSON.getLowerTriangle().get(0);
+                a2 = ModelForJSON.getLowerTriangle().get(1);
+                a3 = ModelForJSON.getLowerTriangle().get(2);
+                b1 = ModelForJSON.getLowerTriangle().get(3);
+                b2 = ModelForJSON.getLowerTriangle().get(4);
+                b3 = ModelForJSON.getLowerTriangle().get(5);
+                c1 = ModelForJSON.getLowerTriangle().get(6);
+                c2 = ModelForJSON.getLowerTriangle().get(7);
+                c3 = ModelForJSON.getLowerTriangle().get(8);
 
                 //Action for this item
                 break;
             case "Upper Triangle":
-                a1=ModelForJSON.getUpperTriangle().get(0);
-                a2=ModelForJSON.getUpperTriangle().get(1);
-                a3=ModelForJSON.getUpperTriangle().get(2);
-                b1=ModelForJSON.getUpperTriangle().get(3);
-                b2=ModelForJSON.getUpperTriangle().get(4);
-                b3=ModelForJSON.getUpperTriangle().get(5);
-                c1=ModelForJSON.getUpperTriangle().get(6);
-                c2=ModelForJSON.getUpperTriangle().get(7);
-                c3=ModelForJSON.getUpperTriangle().get(8);
+                a1 = ModelForJSON.getUpperTriangle().get(0);
+                a2 = ModelForJSON.getUpperTriangle().get(1);
+                a3 = ModelForJSON.getUpperTriangle().get(2);
+                b1 = ModelForJSON.getUpperTriangle().get(3);
+                b2 = ModelForJSON.getUpperTriangle().get(4);
+                b3 = ModelForJSON.getUpperTriangle().get(5);
+                c1 = ModelForJSON.getUpperTriangle().get(6);
+                c2 = ModelForJSON.getUpperTriangle().get(7);
+                c3 = ModelForJSON.getUpperTriangle().get(8);
                 break;
             case "Diagonal":
-                a1=ModelForJSON.getDiagonal().get(0);
-                a2=ModelForJSON.getDiagonal().get(1);
-                a3=ModelForJSON.getDiagonal().get(2);
-                b1=ModelForJSON.getDiagonal().get(3);
-                b2=ModelForJSON.getDiagonal().get(4);
-                b3=ModelForJSON.getDiagonal().get(5);
-                c1=ModelForJSON.getDiagonal().get(6);
-                c2=ModelForJSON.getDiagonal().get(7);
-                c3=ModelForJSON.getDiagonal().get(8);
+                a1 = ModelForJSON.getDiagonal().get(0);
+                a2 = ModelForJSON.getDiagonal().get(1);
+                a3 = ModelForJSON.getDiagonal().get(2);
+                b1 = ModelForJSON.getDiagonal().get(3);
+                b2 = ModelForJSON.getDiagonal().get(4);
+                b3 = ModelForJSON.getDiagonal().get(5);
+                c1 = ModelForJSON.getDiagonal().get(6);
+                c2 = ModelForJSON.getDiagonal().get(7);
+                c3 = ModelForJSON.getDiagonal().get(8);
                 break;
             case "identity":
-                a1=ModelForJSON.getIdentity().get(0);
-                a2=ModelForJSON.getIdentity().get(1);
-                a3=ModelForJSON.getIdentity().get(2);
-                b1=ModelForJSON.getIdentity().get(3);
-                b2=ModelForJSON.getIdentity().get(4);
-                b3=ModelForJSON.getIdentity().get(5);
-                c1=ModelForJSON.getIdentity().get(6);
-                c2=ModelForJSON.getIdentity().get(7);
-                c3=ModelForJSON.getIdentity().get(8);
+                a1 = ModelForJSON.getIdentity().get(0);
+                a2 = ModelForJSON.getIdentity().get(1);
+                a3 = ModelForJSON.getIdentity().get(2);
+                b1 = ModelForJSON.getIdentity().get(3);
+                b2 = ModelForJSON.getIdentity().get(4);
+                b3 = ModelForJSON.getIdentity().get(5);
+                c1 = ModelForJSON.getIdentity().get(6);
+                c2 = ModelForJSON.getIdentity().get(7);
+                c3 = ModelForJSON.getIdentity().get(8);
                 break;
             case "Null":
-                a1=ModelForJSON.getNul().get(0);
-                a2=ModelForJSON.getNul().get(1);
-                a3=ModelForJSON.getNul().get(2);
-                b1=ModelForJSON.getNul().get(4);
-                b3=ModelForJSON.getNul().get(5);
-                c1=ModelForJSON.getNul().get(6);
-                c2=ModelForJSON.getNul().get(7);
-                c3=ModelForJSON.getNul().get(8);
+                a1 = ModelForJSON.getNul().get(0);
+                a2 = ModelForJSON.getNul().get(1);
+                a3 = ModelForJSON.getNul().get(2);
+                b1 = ModelForJSON.getNul().get(4);
+                b3 = ModelForJSON.getNul().get(5);
+                c1 = ModelForJSON.getNul().get(6);
+                c2 = ModelForJSON.getNul().get(7);
+                c3 = ModelForJSON.getNul().get(8);
                 break;
             case "Symmetric":
-                a1=ModelForJSON.getSymmetric().get(0);
-                a2=ModelForJSON.getSymmetric().get(1);
-                a3=ModelForJSON.getSymmetric().get(2);
-                b1=ModelForJSON.getSymmetric().get(3);
-                b2=ModelForJSON.getSymmetric().get(4);
-                b3=ModelForJSON.getSymmetric().get(5);
-                c1=ModelForJSON.getSymmetric().get(6);
-                c2=ModelForJSON.getSymmetric().get(7);
-                c3=ModelForJSON.getSymmetric().get(8);
+                a1 = ModelForJSON.getSymmetric().get(0);
+                a2 = ModelForJSON.getSymmetric().get(1);
+                a3 = ModelForJSON.getSymmetric().get(2);
+                b1 = ModelForJSON.getSymmetric().get(3);
+                b2 = ModelForJSON.getSymmetric().get(4);
+                b3 = ModelForJSON.getSymmetric().get(5);
+                c1 = ModelForJSON.getSymmetric().get(6);
+                c2 = ModelForJSON.getSymmetric().get(7);
+                c3 = ModelForJSON.getSymmetric().get(8);
                 break;
             default: //Default action
                 break;
         }
+        if (rb1.isSelected()) {
+            t1= iView.getCopyArray().get(0);
+            t2= iView.getCopyArray().get(1);
+            t3= iView.getCopyArray().get(2);
+            t4= iView.getCopyArray().get(3);
+            t1.setText(String.valueOf(a1));
+            t2.setText(String.valueOf(a2));
+            t4.setText(String.valueOf(b1));
+            t5.setText(String.valueOf(b2));
+        }
+        if (rb2.isSelected()) {
+            t1= iView.getCopyArray().get(0);
+            t2= iView.getCopyArray().get(1);
+            t3= iView.getCopyArray().get(2);
+            t4= iView.getCopyArray().get(3);
+            t5= iView.getCopyArray().get(4);
+            t6= iView.getCopyArray().get(5);
+            t7= iView.getCopyArray().get(6);
+            t8= iView.getCopyArray().get(7);
+            t9= iView.getCopyArray().get(8);
+            t1.setText(String.valueOf(a1));
+            t2.setText(String.valueOf(a2));
+            t3.setText(String.valueOf(a3));
+            t4.setText(String.valueOf(b1));
+            t5.setText(String.valueOf(b2));
+            t6.setText(String.valueOf(63));
+            t7.setText(String.valueOf(c1));
+            t8.setText(String.valueOf(c2));
+            t9.setText(String.valueOf(c3));
+        }
+
+
     }
         @Override
         public VBox setLeft (CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[]
@@ -151,111 +195,145 @@ public class View2 extends Pane implements iView {
             vbLeft.getChildren().add(cb);
             return vbLeft;
         }
-   public GridPane RIGHT3X3(){
-        GridPane gpt = new GridPane();
+   public GridPane showDaRight() {
+       GridPane gpt = new GridPane();
        gpt.setPadding(new Insets(10, 10, 10, 10));
-       Text text = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX1() + " THE EIGEN VECTOR IS");
-       Text text1 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX2() + " THE EIGEN VECTOR IS");
-       Text text2 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX3() + " THE EIGEN VECTOR IS");
        gpt.setPrefSize(500, 695);
        gpt.setLayoutX(520);
        gpt.setLayoutY(14);
-        ImageView imL = new ImageView(new Image(Custom.p + "brack left.png"));
-       imL.setFitWidth(15);
-       imL.setFitHeight(75);
-       ImageView imL1 = new ImageView(new Image(Custom.p + "brack left.png"));
-       imL1.setFitWidth(15);
-       imL1.setFitHeight(75);
-       ImageView imL2 = new ImageView(new Image(Custom.p + "brack left.png"));
-       imL2.setFitWidth(15);
-       imL2.setFitHeight(75);
-       ImageView imR = new ImageView(new Image(Custom.p + "brack right.png"));
-       imR.setFitWidth(14);
-       imR.setFitHeight(75);
-       ImageView imR1 = new ImageView(new Image(Custom.p + "brack right.png"));
-       imR1.setFitWidth(14);
-       imR1.setFitHeight(75);
-       ImageView imR2 = new ImageView(new Image(Custom.p + "brack right.png"));
-       imR2.setFitWidth(14);
-       imR2.setFitHeight(75);
-       gpt.add(text,1,10);
-       gpt.add(imL,2,15);
-       gpt.add(imR,5,15);
-       gpt.add(text1,1,20);
-       gpt.add(imL1,2,25);
-       gpt.add(imR1,5,25);
-       gpt.add(text2,1,30);
-       gpt.add(imL2,2,35);
-       gpt.add(imR2,5,35);
+       if (rb2.isSelected()) {
+           Text text = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX1() + " THE EIGEN VECTOR IS");
+           Text text1 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX2() + " THE EIGEN VECTOR IS");
+           Text text2 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX3() + " THE EIGEN VECTOR IS");
+           gpt.add(text, 1, 10);
+           if (Model2for3x3.getS1().size() == 3) {
+               gpt.add(newVector(1,3), 2, 15);
+           } else if (Model2for3x3.getS1().size() == 6) {
+               gpt.add(newVector(1,3), 2, 15);
+               gpt.add(newVector(2,3), 3, 15);
+           } else {
+               gpt.add(newVector(1,3), 2, 15);
+               gpt.add(newVector(2,3), 3, 15);
+               gpt.add(newVector(3,3), 4, 15);
+           }
+           gpt.add(text1, 1, 10);
+           if (Model2for3x3.getS2().size() == 3) {
+               gpt.add(newVector(1,3), 2, 15);
+           } else if (Model2for3x3.getS2().size() == 6) {
+               gpt.add(newVector(1,3), 2, 15);
+               gpt.add(newVector(2,3), 3, 15);
+           } else {
+               gpt.add(newVector(1,3), 2, 15);
+               gpt.add(newVector(2,3), 3, 15);
+               gpt.add(newVector(3,3), 4, 15);
+           }
+           gpt.add(text2, 1, 10);
+           if (Model2for3x3.getS3().size() == 3) {
+               gpt.add(newVector(1,3), 2, 15);
+           } else if (Model2for3x3.getS3().size() == 6) {
+               gpt.add(newVector(1,3), 2, 15);
+               gpt.add(newVector(2,3), 3, 15);
+           } else {
+               gpt.add(newVector(1,3), 2, 15);
+               gpt.add(newVector(2,3), 3, 15);
+               gpt.add(newVector(3,3), 4, 15);
+           }
+       }
+       if (rb1.isSelected()) {
+           Text text = new Text("FOR THE EIGENVALUE " + Model2for2x2.getX1() + " THE EIGEN VECTOR IS");
+           Text text1 = new Text("FOR THE EIGENVALUE " + Model2for2x2.getX2() + " THE EIGEN VECTOR IS");
+           gpt.add(text, 1, 10);
+           if (Model2for2x2.getS1().size() == 2) {
+               gpt.add(newVector(1,2), 2, 15);
+           }
+           else{
+               gpt.add(newVector(1,2), 2, 15);
+               gpt.add(newVector(2,2), 3, 15);
+           }
+           gpt.add(text1, 1, 10);
+           if (Model2for2x2.getS2().size() == 2) {
+               gpt.add(newVector(1,2), 2, 15);
+           }
+           else{
+               gpt.add(newVector(1,2), 2, 15);
+               gpt.add(newVector(2,2), 3, 15);
+           }
 
+       }
+           return gpt;
+       }
 
-        return gpt;
-    }
-    public GridPane RIGHT2X2(){
-        GridPane gpt = new GridPane();
-        gpt.setPadding(new Insets(10, 10, 10, 10));
-        Text text = new Text("FOR THE EIGENVALUE " + Model2for2x2.getX1() + " THE EIGEN VECTOR IS");
-        Text text1 = new Text("FOR THE EIGENVALUE " + Model2for2x2.getX2() + " THE EIGEN VECTOR IS");
-
-        gpt.setPrefSize(500, 695);
-        gpt.setLayoutX(520);
-        gpt.setLayoutY(14);
-
+    public HBox newVector(int counter, int whatSize){ // counter is the vector if size=6 there is counter 1 and 2 possible
+        HBox hbx = new HBox();
+        VBox vbx1 = new VBox();
         ImageView imL = new ImageView(new Image(Custom.p + "brack left.png"));
         imL.setFitWidth(15);
         imL.setFitHeight(75);
-
-        ImageView imL1 = new ImageView(new Image(Custom.p + "brack left.png"));
-        imL1.setFitWidth(15);
-        imL1.setFitHeight(75);
-
         ImageView imR = new ImageView(new Image(Custom.p + "brack right.png"));
         imR.setFitWidth(14);
         imR.setFitHeight(75);
-
-        ImageView imR1 = new ImageView(new Image(Custom.p + "brack right.png"));
-        imR1.setFitWidth(14);
-        imR1.setFitHeight(75);
-
-        VBox vbx =  new VBox();
-        vbx.getChildren().add(new Text(Double. toString(Model2for2x2.getS1().get(0))));
-        vbx.getChildren().add(new Text(Double. toString(Model2for2x2.getS1().get(1))));
-
-
-        gpt.add(text,1,10);
-        gpt.add(imL,2,15);
-        gpt.add(vbx,3,15);
-        gpt.add(imR,5,15);
-        if(Model2for2x2.getS1().size()==4){
-            ImageView imR2 = new ImageView(new Image(Custom.p + "brack right.png"));
-            imR.setFitWidth(14);
-            imR.setFitHeight(75);
-
-            ImageView imL2 = new ImageView(new Image(Custom.p + "brack left.png"));
-            imL1.setFitWidth(15);
-            imL1.setFitHeight(75);
-            gpt.add(imL2,6,15);
-            gpt.add(imR2,8,15);
+        if(whatSize == 2){
+            vbx1 = putVertical2x2(counter);
+         vbx1.setPrefHeight(75);
         }
-
-        gpt.add(text1,1,20);
-        gpt.add(imL1,2,25);
-        gpt.add(imR1,5,25);
-        if(Model2for2x2.getS2().size()==4){
-            ImageView imR3 = new ImageView(new Image(Custom.p + "brack right.png"));
-            imR.setFitWidth(14);
-            imR.setFitHeight(75);
-
-            ImageView imL3 = new ImageView(new Image(Custom.p + "brack left.png"));
-            imL1.setFitWidth(15);
-            imL1.setFitHeight(75);
-            gpt.add(imL3,6,25);
-            gpt.add(imR3,8,25);
+        if(whatSize == 3){
+            vbx1 = putVertical3x3(counter);
+            vbx1.setPrefHeight(75);
         }
+        hbx.getChildren().addAll(imL,vbx1,imR);
 
-
-        return gpt;
+        return hbx;
     }
+    public VBox putVertical3x3(int counter){
+        VBox vbx1 = new VBox();
+        Double numba1 = null;
+        Double numba2 = null;
+        Double numba3 = null;
+        if(counter==1){
+             numba1 = Model2for3x3.getS1().get(0);
+             numba2 = Model2for3x3.getS1().get(1);
+             numba3 = Model2for3x3.getS1().get(2);
+        }
+        else if(counter==2){
+             numba1 = Model2for3x3.getS1().get(3);
+             numba2 = Model2for3x3.getS1().get(4);
+             numba3 = Model2for3x3.getS1().get(5);
+        }
+        else{
+             numba1 = Model2for3x3.getS1().get(6);
+             numba2 = Model2for3x3.getS1().get(7);
+             numba3 = Model2for3x3.getS1().get(8);
+        }
+        Text nb1 = new Text(Double.toString(numba1));
+        Text nb2 = new Text(Double.toString(numba2));
+        Text nb3 = new Text(Double.toString(numba3));
+        vbx1.getChildren().add(nb1);
+        vbx1.getChildren().add(nb2);
+        vbx1.getChildren().add(nb3);
+
+
+        return vbx1;
+    }
+
+    public VBox putVertical2x2(int counter){
+        VBox vbx1 = new VBox();
+        Double numba1 = null;
+        Double numba2= null;
+        if(counter==1){
+             numba1 = Model2for3x3.getS1().get(0);
+             numba2 = Model2for3x3.getS1().get(1);
+        }
+        if(counter==2){
+             numba1 = Model2for3x3.getS1().get(2);
+             numba2 = Model2for3x3.getS1().get(3);
+        }
+        Text nb1 = new Text(Double.toString(numba1));
+        Text nb2 = new Text(Double.toString(numba2));
+        vbx1.getChildren().add(nb1);
+        vbx1.getChildren().add(nb2);
+        return vbx1;
+    }
+
     @Override
     public VBox setRight(String title, CustomButton btnStart, CustomButton btnReset) {
         VBox vbRight = new VBox();
@@ -272,24 +350,24 @@ public class View2 extends Pane implements iView {
 
         vbPo.setStyle("-fx-background-color: #333335");
         vbPo.getChildren().add(Custom.setTitle(title));
-        /*if(rb2.isSelected()) {
+        if(rb2.isSelected()) { //THIS DONT WORK
             btnStart.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent e) {
-                    GridPane gpjCoaching = RIGHT3X3();
+                    GridPane gpjCoaching = showDaRight();
                     vbPo.getChildren().add(gpjCoaching);
                 }
             });
-      //  }
-*/          // if(rb1.isSelected()) {
+        }
+           if(rb1.isSelected()) {
         btnStart.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
-                        GridPane gpjCoaching = RIGHT2X2();
+                        GridPane gpjCoaching = showDaRight();
                         vbPo.getChildren().add(gpjCoaching);
                     }
                 });
-        //    }
+            }
 
 
         // HBox to hold buttons and logo
@@ -311,7 +389,7 @@ public class View2 extends Pane implements iView {
             this.signsRb2 = signsRb2;
         }
 
-        public CustomRadioButton getRb1 () {
+        public static CustomRadioButton getRb1() {
             return rb1;
         }
 
@@ -319,7 +397,7 @@ public class View2 extends Pane implements iView {
             this.rb1 = rb1;
         }
 
-        public CustomRadioButton getRb2 () {
+        public static CustomRadioButton getRb2() {
             return rb2;
         }
 
@@ -431,4 +509,84 @@ public class View2 extends Pane implements iView {
         public void setC3 ( double c3){
             this.c3 = c3;
         }
+
+    public static ComboBox getCb() {
+        return cb;
     }
+
+    public void setCb(ComboBox cb) {
+        this.cb = cb;
+    }
+
+    public static CustomTextField getT1() {
+        return t1;
+    }
+
+    public void setT1(CustomTextField t1) {
+        this.t1 = t1;
+    }
+
+    public static CustomTextField getT2() {
+        return t2;
+    }
+
+    public void setT2(CustomTextField t2) {
+        this.t2 = t2;
+    }
+
+    public static CustomTextField getT3() {
+        return t3;
+    }
+
+    public void setT3(CustomTextField t3) {
+        this.t3 = t3;
+    }
+
+    public static CustomTextField getT4() {
+        return t4;
+    }
+
+    public void setT4(CustomTextField t4) {
+        this.t4 = t4;
+    }
+
+    public static CustomTextField getT5() {
+        return t5;
+    }
+
+    public void setT5(CustomTextField t5) {
+        this.t5 = t5;
+    }
+
+    public static CustomTextField getT6() {
+        return t6;
+    }
+
+    public void setT6(CustomTextField t6) {
+        this.t6 = t6;
+    }
+
+    public static CustomTextField getT7() {
+        return t7;
+    }
+
+    public void setT7(CustomTextField t7) {
+        this.t7 = t7;
+    }
+
+    public static CustomTextField getT8() {
+        return t8;
+    }
+
+    public void setT8(CustomTextField t8) {
+        this.t8 = t8;
+    }
+
+    public static CustomTextField getT9() {
+        return t9;
+    }
+
+    public void setT9(CustomTextField t9) {
+        this.t9 = t9;
+    }
+}

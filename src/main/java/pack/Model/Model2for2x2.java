@@ -61,7 +61,7 @@ public class Model2for2x2 {
         x1 = Double.parseDouble(formatting.format(x1)); // format
         x2 = Double.parseDouble(formatting.format(x2));
     }
-
+//SEND THIS TO DE CONTROLLA
     private void answers2x2(double a1, double a2, double b1, double b2, double x1, double x2) {
         double aa1 = a1Initial - x1;//WITH FIRST LAMBA
         double bb2 = b2Initial - x1;//WITH FIRST LAMBA
