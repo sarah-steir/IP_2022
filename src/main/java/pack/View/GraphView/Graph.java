@@ -165,6 +165,10 @@ public class Graph extends Group {
      * @param point2 the second point the line passes through
      */
     public void addLine(Point3D point1, Point3D point2) {
+
+        this.addPoint(point1);
+        this.addPoint(point2);
+
         Line line1 = this.FindOneLine(point1, point2);
         Line line2 = this.FindOneLine(point2, point1);
 
@@ -212,6 +216,8 @@ public class Graph extends Group {
      * @param equation
      */
     public void addPlane(double x, double y, double z, String equation) {
+
+        System.out.println("x = " + x + ", y = " + y + ", z = " + z);
         Rectangle plane = new Rectangle(-500, -500, 1000, 1000);
 
         Point3D m = new Point3D(x/2, y/2, 0); // Midpoint between x and y
@@ -397,5 +403,6 @@ public class Graph extends Group {
 
     public void reset() {
         thingsToGraphList.clear();
+        a = 0;
     }
 }
