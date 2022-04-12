@@ -217,6 +217,11 @@ public class View2 extends Pane implements iView {
         }
 
         // Print eigenvectors
+        for (int i = 0; i < controller2.getEigenVectors().length; i++) {
+            // Print each vector
+            vbOutput.getChildren().add(Custom.setTitle("Eigenvector " + (i+1) + ": (" +
+                    controller2.getEigenVectors()[i].get(0) + ", " + controller2.getEigenVectors()[i].get(1) + ")"));
+        }
 
         /*for (int i = 0; i < controller1.getOutput().length; i++) {
             if (i == 0) {
