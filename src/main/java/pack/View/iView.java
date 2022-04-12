@@ -129,4 +129,5 @@ public interface iView {
         return iv;
     }
 
+    VBox setRight(String title, CustomButton btnStart, CustomButton btnReset);
 }

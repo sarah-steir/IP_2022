@@ -4,15 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import pack.Controller.Controller1;
 import pack.Controller.Controller2;
 import pack.Model.Model2for2x2;
 import pack.Model.Model2for3x3;
@@ -21,7 +18,6 @@ import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
 import pack.View.Customs.CustomRadioButton;
 import pack.View.Customs.CustomTextField;
-import pack.View.GraphView.Graph;
 
 import java.util.ArrayList;
 
