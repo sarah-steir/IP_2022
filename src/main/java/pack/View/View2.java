@@ -25,6 +25,8 @@ import pack.View.Customs.CustomTextField;
 
 import java.util.ArrayList;
 
+import static pack.View.Customs.Custom.p;
+
 public class View2 extends Pane implements iView {
 
     private CustomTextField[][] fieldListRb1, fieldListRb2;
@@ -179,10 +181,10 @@ public class View2 extends Pane implements iView {
     public HBox newVector(int counter, int whatSize, Controller2 controller2){ // counter is the vector if size=6 there is counter 1 and 2 possible
         HBox hbx = new HBox();
         VBox vbx1 = new VBox();
-        ImageView imL = new ImageView(new Image(Custom.p + "brack left.png"));
+        ImageView imL = new ImageView(new Image(p + "brack left.png"));
         imL.setFitWidth(15);
         imL.setFitHeight(75);
-        ImageView imR = new ImageView(new Image(Custom.p + "brack right.png"));
+        ImageView imR = new ImageView(new Image(p + "brack right.png"));
         imR.setFitWidth(14);
         imR.setFitHeight(75);
         if(whatSize == 2){
@@ -297,6 +299,17 @@ public class View2 extends Pane implements iView {
 
         int rows = textFields.length;
         int cols = textFields[0].length;
+
+        ImageView imageLeft = new ImageView(new Image(p + "Left.png"));
+        ImageView imageRight = new ImageView(new Image(p + "Right.png"));
+
+        imageLeft.setFitWidth(10);
+        imageLeft.setFitHeight(75);
+        imageRight.setFitWidth(10);
+        imageRight.setFitHeight(75);
+
+        gridPane.add(imageRight, 0, 0);
+        gridPane.add(imageLeft, cols, rows);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols;  j++) {
