@@ -19,7 +19,7 @@ public class MainView extends Pane {
     Pane currentPane = new Pane();      // GridPane that keeps track of the view the user will be on
     MainController controller = new MainController(this);
     Pane gif = new Pane();
-    Pane view1 = new View1(), view2 = new View2(), view3 = new View3();
+    public Pane view1 = new View1(), view2 = new View2(), view3 = new View3();
 
     public MainView() {
         this.setPrefSize(1050, 750);

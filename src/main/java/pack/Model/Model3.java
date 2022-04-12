@@ -104,25 +104,25 @@ public class Model3 {
     //B matrix storage
     public static double[] matrixB_2x2 = {1, 1};
 
-    public Model3(ArrayList<Double> matrixOfCoefficients) {
+    public Model3(ArrayList<Double> input,ArrayList<Double>constant) {
             n = 2;
             // A matrix for 2x2
             //Row 1
-            this.a1 = matrixOfCoefficients.get(0);
+            this.a1 = input.get(0);
             matrixA_2x2[0][0] = this.a1;
-            this.a2 = matrixOfCoefficients.get(1);
+            this.a2 = input.get(1);
             matrixA_2x2[0][1] = this.a2;
 
             //Row2
-            this.b1 = matrixOfCoefficients.get(2);
+            this.b1 = input.get(2);
             matrixA_2x2[1][0] = this.b1;
-            this.b2 = matrixOfCoefficients.get(3);
+            this.b2 = input.get(3);
             matrixA_2x2[1][1] = this.b2;
 
             //B Matrix (Constants)
-            this.d1 = matrixOfCoefficients.get(4);
+            this.d1 = constant.get(0);
             matrixB_2x2[0] = this.d1;
-            this.d2 = matrixOfCoefficients.get(5);
+            this.d2 = constant.get(1);
             matrixB_2x2[1] = this.d2;
 
         }
