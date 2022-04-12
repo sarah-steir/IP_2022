@@ -1,5 +1,8 @@
 package pack.View;
 
+import javafx.scene.layout.Pane;
+import pack.View.iView;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -103,7 +106,6 @@ public class View2 extends Pane implements iView {
     }
 
 
-
     public GridPane showDaRight(Controller2 controller2) {
         GridPane gpt = new GridPane();
         gpt.setPadding(new Insets(10, 10, 10, 10));
@@ -112,23 +114,23 @@ public class View2 extends Pane implements iView {
         gpt.setLayoutY(14);
 
         if (rb2.isSelected()) {
-            Text text = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX1() + " THE EIGEN VECTOR IS");
-            Text text1 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX2() + " THE EIGEN VECTOR IS");
-            Text text2 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX3() + " THE EIGEN VECTOR IS");
+            Text text = new Text("FOR THE EIGENVALUE " + controller2.getEigenValues()[0] + " THE EIGEN VECTOR IS");
+            Text text1 = new Text("FOR THE EIGENVALUE " + controller2.getEigenValues()[1] + " THE EIGEN VECTOR IS");
+            Text text2 = new Text("FOR THE EIGENVALUE " + controller2.getEigenValues()[2] + " THE EIGEN VECTOR IS");
             gpt.add(text, 1, 10);
             if (Model2for3x3.getS1().size() == 3) {
-                gpt.add(newVector(1,3,controller2), 2, 15);
+                gpt.add(newVector(1,3, controller2), 2, 15);
             } else if (Model2for3x3.getS1().size() == 6) {
-                gpt.add(newVector(1,3,controller2), 2, 15);
-                gpt.add(newVector(2,3,controller2), 3, 15);
+                gpt.add(newVector(1,3, controller2), 2, 15);
+                gpt.add(newVector(2,3, controller2), 3, 15);
             } else {
-                gpt.add(newVector(1,3,controller2), 2, 15);
-                gpt.add(newVector(2,3,controller2), 3, 15);
-                gpt.add(newVector(3,3,controller2), 4, 15);
+                gpt.add(newVector(1,3, controller2), 2, 15);
+                gpt.add(newVector(2,3, controller2), 3, 15);
+                gpt.add(newVector(3,3, controller2), 4, 15);
             }
             gpt.add(text1, 1, 10);
             if (Model2for3x3.getS2().size() == 3) {
-                gpt.add(newVector(1,3,controller2), 2, 15);
+                gpt.add(newVector(1,3, controller2), 2, 15);
             } else if (Model2for3x3.getS2().size() == 6) {
                 gpt.add(newVector(1,3, controller2), 2, 15);
                 gpt.add(newVector(2,3, controller2), 3, 15);
@@ -150,8 +152,8 @@ public class View2 extends Pane implements iView {
             }
         }
         if (rb1.isSelected()) {
-            Text text = new Text("FOR THE EIGENVALUE " + Model2for2x2.getX1() + " THE EIGEN VECTOR IS");
-            Text text1 = new Text("FOR THE EIGENVALUE " + Model2for2x2.getX2() + " THE EIGEN VECTOR IS");
+            Text text = new Text("FOR THE EIGENVALUE " + controller2.getEigenValues()[0] + " THE EIGEN VECTOR IS");
+            Text text1 = new Text("FOR THE EIGENVALUE " + controller2.getEigenValues()[1] + " THE EIGEN VECTOR IS");
             gpt.add(text, 1, 10);
             if (Model2for2x2.getS1().size() == 2) {
                 gpt.add(newVector(1,2,  controller2), 2, 15);

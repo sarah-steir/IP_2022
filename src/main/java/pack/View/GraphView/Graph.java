@@ -46,6 +46,9 @@ public class Graph extends Group {
         axisList = getAxis();
         this.update();
 
+        this.addPoint(new Point3D(-15.82, -19.82, 59.55));
+        this.addPoint(new Point3D(-95.82, -99.82, 299.55));
+
         Scale mirror = new Scale(1, -1, -1);
         scalable.getTransforms().add(mirror);
         root.getChildren().add(scalable);
@@ -165,7 +168,7 @@ public class Graph extends Group {
         Line line1 = this.FindOneLine(point1, point2);
         Line line2 = this.FindOneLine(point2, point1);
 
-//        createLineLabel(point1, point2);
+        createLineLabel(point1, point2);
         addLineToList(line1, line2);
     }
 
@@ -329,7 +332,7 @@ public class Graph extends Group {
      * @param point2
      */
     private void createLineLabel(Point3D point1, Point3D point2) {
-        Text label = new CustomText("l(t) = (" + (int) point1.getX() + ", " + (int) point1.getY() + ", " + (int) point1.getZ() + ") +\nt <" + (int) point2.getX() + ", " + (int) point2.getY() + ", " + (int) point2.getZ() + ">");
+        Text label = new CustomText("l(t) = (" + point1.getX() + ", " + point1.getY() + ", " + point1.getZ() + ") +\nt <" + point2.getX() + ", " + point2.getY() + ", " + point2.getZ() + ">");
         label.setScaleY(-1);
         label.setTranslateX(point1.getX());
         label.setTranslateY(point1.getY());
