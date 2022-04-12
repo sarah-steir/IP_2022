@@ -1,211 +1,196 @@
 package pack.View;
 
+import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import pack.Controller.Controller1;
+import pack.Controller.Controller3;
+import pack.View.Customs.Custom;
+import pack.View.Customs.CustomButton;
+import pack.View.Customs.CustomRadioButton;
+import pack.View.Customs.CustomTextField;
 import pack.View.GraphView.Graph;
 
-import java.util.ArrayList;
-
 public class View3 extends Pane implements iView {
-    public static RadioButton r1 = new RadioButton("Lines");
-    public static RadioButton r2 = new RadioButton("Planes");
-    Node n = setRadios(r1, r2);
-    public static ArrayList<TextField> arplanes = iView.createFields(8, 80);
-    public static ArrayList<TextField> arlines = iView.createFields(12, 30);
-    public  ArrayList<Label> labeling = iView.createSigns(signs("s+ ", "t+ "));
-    public static Graph graph3 = new Graph();
-    public static ArrayList planeSigns=iView.createSigns(4);
+
+    private CustomTextField[][] fieldListRb1, fieldListRb2;
+    private GridPane fieldsPane;
+    private CustomRadioButton rb1, rb2;
+    private CustomButton btnStart, btnReset;
+    private ToggleGroup group = new ToggleGroup();
+    private Graph graph = new Graph();
+    private String[] signsRb1 = {"X: ", "S + ", "Y: ", "S + ", "Z: ", "S + "};
+    private String[] signsRb2 = {"X +", "Y +", "Z +", "= 0"};
+
+    private VBox vbUi;
+    private VBox vbPo;
+
+    private VBox vbLeft;
+    private VBox vbRight;
 
     public View3() {
-        iView.createSigns(3);
-        Pane p = iView.setLeft(r1, r2, lines(), planes(), setRadios(r1, r2), graph3);
-        this.getChildren().add(setView("Lines And THe PLanes shit", p));
-        handleButton(3);
-        //graph3.addPlane(new Point3D(0,0,20),new Point3D(0,50,0),new Point3D(30,10,10),"fjdkskfkjsfjk");
-        //  graph3.addLine(new Point3D(0, 0, 20), new Point3D(0, 50, 0));
+
+        rb1 = new CustomRadioButton("Lines");
+        rb2 = new CustomRadioButton("Planes");
+        rb1.setToggleGroup(group);
+        rb2.setToggleGroup(group);
+        btnStart = new CustomButton("START\nTHE\nMAGIK");
+        btnStart.setDisable(true);
+        btnReset = new CustomButton("RESET\nTHE\nMAGIK");
+
+        fieldListRb1 = new CustomTextField[2][6];
+        fieldListRb2 = new CustomTextField[2][4];
+        fieldsPane = new GridPane();
+
+        vbUi = new VBox();
+        vbPo = new VBox();
+        vbLeft = new VBox();
+        vbRight = new VBox();
+
+        setVbUi(setHbRadios(this.rb1, this.rb2));
+        setVbPo("Systems of linear equations");
+
+        setVbLeft(setLeft(this.vbUi, setGraphPane(graph)));
+        setVbRight(setRight(this.vbPo, setHbBottom(this.btnStart, this.btnReset)));
+
+        setView3();
+        setActions();
     }
 
-    public static ArrayList<String> signs(String l, String l2) {
-        String s1 = new String("x: ");
-        String s2 = new String(" y: ");
-        String s3 = new String(" z: ");
-        String[] pr = {s1, s2, s3};
-        int j = 0;
-        ArrayList<String> arr = new ArrayList<String>();
-
-        while (j != 2) {
-            for (int i = 0; i <= 2; i++) {
-                arr.add(pr[i]);
-                arr.add(l);
-            }
-            j++;
-            if (j == 1) {
-                for (int i = 0; i <= 2; i++) {
-                    arr.add(pr[i]);
-                    arr.add(l2);
-                }
-            }
-            j++;
-        }
-        return arr;
+    public void setView3() {
+        this.setPrefSize(1050, 750);
+        this.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
+        this.getChildren().addAll(this.vbLeft, this.vbRight);
     }
 
-    public GridPane lines() {
-        Label l = new Label("Line 1:");
-        Label l2 = new Label("Line 2:");
-        l.setStyle("-fx-text-fill: E7EBEE;");
-        l2.setStyle("-fx-text-fill: E7EBEE;");
-        GridPane twoByTwo = new GridPane();
-        twoByTwo.setVgap(10);
-        twoByTwo.setHgap(10);
-        twoByTwo.setAlignment(Pos.BOTTOM_CENTER);
+    private void setVbLeft(VBox vbLeft) {
+        this.vbLeft = vbLeft;
+    }
 
-        int acounter = 0; //max 5
-        int i = 0; //max 11 (for textfields)
-        int j = 0;
-        int row = 0; //max 11
-        int n = 0;
+    private void setVbRight(VBox vbRight) {
+        this.vbRight = vbRight;
+    }
 
-        while (n != 4) {
-            if (n % 2 == 1) {
-                while (row != 12) {
-                    if (row % 2 == 1) {
-                        if (i != 3 * n + 3) {
-                            twoByTwo.add((Node) arlines.get(i), row, n);
-                            i++;
-                            row++;
-                        }
+    private void setVbUi(HBox hbRadios) {
+        this.vbUi.setSpacing(5);
+        this.vbUi.setPrefSize(500, 160);
+        this.vbUi.setStyle("-fx-background-color: #333335");
+        this.vbUi.getChildren().add(hbRadios);
+    }
+
+    private void setVbPo(String title) {
+        this.vbPo.setPrefSize(500, 595);
+        this.vbPo.setSpacing(15);
+        this.vbPo.setAlignment(Pos.TOP_CENTER);
+        this.vbPo.setStyle("-fx-background-color: #333335");
+        this.vbPo.getChildren().add(Custom.setTitle(title));
+    }
+
+    public void handleStart(boolean isRb1Selected) {
+        if (isRb1Selected) {
+            for (int i = 0; i < fieldListRb1.length; i++) {
+                for (int j = 0; j < fieldListRb1[0].length; j++) {
+                    if (fieldListRb1[i][j].getText().equals("")) {
+                        fieldListRb1[i][j].setText("0");
                     }
-                    if (row % 2 == 0) {
-                        if (j != 3 * n + 3) {
-                            twoByTwo.add((Node) labeling.get(j), row, n);
-                            j++;
-                            row++;
-                        }
-                    }
+                    System.out.println("YO: " + fieldListRb1[i][j].getText());
                 }
-                n++;
-                row = 0;
             }
-
-            if (n == 0) {
-                twoByTwo.add(l, 0, n);
-                n++;
-            }
-            if (n == 2) {
-                twoByTwo.add(l2, 0, n);
-                n++;
+        } else {
+            for (int i = 0; i < fieldListRb2.length; i++) {
+                for (int j = 0; j < fieldListRb2[0].length; j++) {
+                    if (fieldListRb2[i][j].getText().equals("")) {
+                        fieldListRb2[i][j].setText("0");
+                    }
+                    System.out.println("YO FROM 3x3: " + fieldListRb2[i][j].getText());
+                }
             }
         }
-        iView.checkFields(arlines);
-        return twoByTwo;
+        Controller3 controller3 = new Controller3(this);
+        //addOutput(controller3);
     }
 
-    public static GridPane planes() {
-        ArrayList planeSigns=iView.createSigns(4);
-        GridPane paprika = new GridPane();
-        paprika.setVgap(10);
-        paprika.setHgap(10);
-        paprika.setAlignment(Pos.BOTTOM_CENTER);
-        int acounter = 0; //max 5
-        int i = 0; //max 11 (for textfields)
-        int j = 0;
-        int row = 0; //max 11
-        int n = 0;
+    public void handleReset() {
+        this.getChildren().clear();
+        btnStart.setDisable(false);
+        rb1.setSelected(false);
+        rb2.setSelected(false);
+        this.vbUi.getChildren().remove(fieldsPane);
+        this.getChildren().addAll(this.vbLeft, this.vbRight);
+    }
+    public void setActions() {
+        rb1.setOnAction(event -> {
+            this.btnStart.setDisable(false);
+            fieldsPane = setFields(fieldListRb1, signsRb1, this.btnStart);
+            this.vbUi.getChildren().clear();
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
+        });
 
-        while (n != 2) {
-            while (row != 8) {
-                if (row % 2 == 1) {
-                    if (i != 4 * n + 4) {
-                        paprika.add((Node) planeSigns.get(i), row, n);
-                        i++;
-                        row++;
-                    }
-                }
-                if (row % 2 == 0) {
-                    if (j != 4 * n + 4) {
-                        paprika.add((Node) View3.arplanes.get(j), row, n);
-                        j++;
-                        row++;
-                    }
-                }
-            }
-            n++;
-            row = 0;
-
-
-        }
-        iView.checkFields(View3.arplanes);
-        return paprika;
+        rb2.setOnAction(event -> {
+            this.btnStart.setDisable(false);
+            fieldsPane = setFields(fieldListRb2, signsRb2, this.btnStart);
+            this.vbUi.getChildren().clear();
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
+        });
+        this.btnStart.setOnAction(event -> { handleStart(rb1.isSelected()); });
+        this.btnReset.setOnAction(event -> { handleReset(); });
     }
 
+    public void addOutput() {
 
-
-
-    public static double[][] constants() {
-        int n = 1;
-        double[][] constant = new double[2][1];
-
-        double d1 = Double.parseDouble(arlines.get(1).getText());
-        double d2 = Double.parseDouble(arlines.get(7).getText());
-        double d3 = Double.parseDouble(arlines.get(3).getText());
-        double d4 = Double.parseDouble(arlines.get(9).getText());
-        constant[0][0]=d2-d1;
-        constant[1][0]=d4-d3;
-        return constant;}
-
-    public static double[][] input() {
-        double[][] arr = new double[2][2];
-        double d1 = Double.parseDouble(arlines.get(0).getText());
-        arr[0][0] = d1;
-        double d2 = Double.parseDouble(arlines.get(2).getText());
-        arr[1][0] = d2;
-        double d3 = Double.parseDouble(arlines.get(6).getText());
-        arr[0][1] = d3;
-        double d4 = Double.parseDouble(arlines.get(8).getText());
-        arr[1][1] = d4;
-
-
-
-        return arr;
     }
 
-    public static void transform() {
-        int n = 1;
-        Double[][] constant = new Double[2][1];
-        for(int i=0; i<2;i++) {
-            while (n != 4) {
-                if (n % 2 == 1) {
-                    Double d1 = Double.parseDouble(arlines.get(n).getText());
-                    Double d2 = Double.parseDouble(arlines.get(n + 6).getText());
-                    constant[i][0]=d2-d1;
-                    for (int p = 0;p< constant.length; p++) {
-                        System.out.print(constant[p][0] + " ");
-                    }
+    @Override
+    public GridPane setFields(CustomTextField[][] textFields, String[] signs, CustomButton btnStart) {
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        gridPane.setAlignment(Pos.CENTER);
+
+        int rows = textFields.length;
+        int cols = textFields[0].length;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols;  j++) {
+                HBox hbTextField = new HBox();
+                hbTextField.setSpacing(10);
+
+                textFields[i][j] = new CustomTextField();
+                Label lblVariable = new Label();
+                lblVariable.setStyle("-fx-text-fill: E7EBEE;");
+                lblVariable.setFont(Custom.font);
+                lblVariable.setText(signs[j]);
+
+                if (signs[j].equals("S + ") && i == 1) {
+                    lblVariable.setText("T + ");
+                } else {
+                    lblVariable.setText(signs[j]);
                 }
-                n++;  }
-        } }
 
-    public static void toMatrix() {
-        Double[][] arr = new Double[2][2];
-        Double d1 = Double.parseDouble(arlines.get(0).getText());
-        arr[0][0] = d1;
-        Double d2 = Double.parseDouble(arlines.get(2).getText());
-        arr[1][0] = d2;
-        Double d3 = Double.parseDouble(arlines.get(6).getText());
-        arr[0][1] = d3;
-        Double d4 = Double.parseDouble(arlines.get(8).getText());
-        arr[1][1] = d4;
+                int finalI = i;
+                int finalJ = j;
 
-        for (int i = 0; i < arr.length; i++) { //this equals to the row in our matrix.
-            for (int j = 0; j < arr[i].length; j++) { //this equals to the column in each row.
-                System.out.print(arr[i][j] + " ");
+                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) ->
+                        btnStart.setDisable(textFields[finalI][finalJ].checkField()));
+
+                if (rb1.isSelected()) {
+                    textFields[i][j].setPrefSize(40, 30);
+                    hbTextField.getChildren().addAll(lblVariable, textFields[i][j]);
+                } else {
+                    hbTextField.getChildren().addAll(textFields[i][j], lblVariable);
+                }
+                gridPane.add(hbTextField, j, i);
             }
         }
+        return gridPane;
     }
+
 }
+

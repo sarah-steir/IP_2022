@@ -1,31 +1,33 @@
-package pack.Controller;
+package pack.Model;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
-public class Eigen2x2 {
+public class Model2for2x2 {
 
-    private double x1, x2;
-    private double first, second, third;
-    private double e1, e2;
-    private double a1, a2;
-    private double b1, b2;
+    private static double x1;
+    private static double x2;// eigenvalues
+    private double first, second, third;//square function
+    private double e1, e2;// to hold values in the reduce matrix
+    private double a1, a2;//first line
+    private double b1, b2;//second line
 
-    private double a1Initial;
+    private double a1Initial;// hold initiql value first row
     private double a2Initial;
-    private double b1Initial;
+    private double b1Initial;// hold initial value second row
     private double b2Initial;
 
-    double m1[];
+    double m1[];// reduced matrix
     double m2[];
-    static double[] s1;
-    static double[] s2;
+    static ArrayList<Double> s1;//eigenvectors
+    static ArrayList<Double> s2;
 
     static final DecimalFormat formatting = new DecimalFormat("0.000");// format the number to 3 decimals
 
-    public Eigen2x2(double a1, double a2, double b1, double b2) {
-        this.a1 = a1;
-        this.a2 = a2;
-        this.b1 = b1;
-        this.b2 = b2;
+    public Model2for2x2(ArrayList<Double> matrixCoefficients) {
+        this.a1 = matrixCoefficients.get(0);
+        this.a2 = matrixCoefficients.get(1);
+        this.b1 = matrixCoefficients.get(2);
+        this.b2 = matrixCoefficients.get(3);
         this.a1Initial = a1;
         this.a2Initial = a2;
         this.b1Initial = b1;
@@ -38,7 +40,8 @@ public class Eigen2x2 {
     private void findTheCubicEquation2x2(double a1, double a2, double b1, double b2) {
         //addiction
         double a1b2 = a1 * b2;
-        //substraction
+
+        //subtraction
         double a2b1 = -a2 * b1;
 
         third = a1b2 + a2b1; // ^1
@@ -59,7 +62,7 @@ public class Eigen2x2 {
         x1 = Double.parseDouble(formatting.format(x1)); // format
         x2 = Double.parseDouble(formatting.format(x2));
     }
-
+//SEND THIS TO DE CONTROLLA
     private void answers2x2(double a1, double a2, double b1, double b2, double x1, double x2) {
         double aa1 = a1Initial - x1;//WITH FIRST LAMBA
         double bb2 = b2Initial - x1;//WITH FIRST LAMBA
@@ -105,32 +108,83 @@ public class Eigen2x2 {
         return arr;
     }
 
-    private double[] findEigenVectors2x2(double[] v1) {
-        double[] y1 = new double[2]; // vector can max have 2 positions
-        int counterUp = 0;
-        for (int i = 0; i < v1.length; i++) {// loop until we went through all the numbers in the matrix  SHOULD GO THROUGH 2 TIME CUZ 2 ROWS
-            double t11 = Double.parseDouble(formatting.format(v1[i]));// T11 = FIRST NUMBER IN ROW T22= SECOND NUMBER IN ROW
-            double t22 = Double.parseDouble(formatting.format(v1[i + 1]));
-            if (t11 != 0 && t22 != 0) {// if the whole row has numbers ( which means other row is zero
-                y1[0] = -t22;
-                y1[1] = 1; // second number is 1 cuz its was the free number
-                return y1;
-            } else {
-                if ((t11 == 0 || t22 == 0) && (t11 != 0 || t22 != 0)) { //one 0 & one 1
-                    if (t11 == 0) {
-                        y1[counterUp] = 0; // will put zero on the first number in the vector
-                    }
-                    if (t22 == 0) {
-                        y1[counterUp] = 0;  // will put zero in the second number in the vector
-                    }
-                }
-                if (t11 == 0 && t22 == 0) { // if they both zero then one of em is free if first row firsgt number is free if second row second number in vector is free
-                    y1[counterUp] = 1;
-                }
-            }
-            counterUp++;
-            i++;
+    private ArrayList<Double> findEigenVectors2x2(double[] v1) {
+        ArrayList<Double> y1= new ArrayList<>(); // vector can max have 2 positions
+        y1.add(0,0.0);
+        y1.add(1,0.0);
+
+        if(v1[0]==0 && v1[1]==0 && v1[2]==0 && v1[3]==0 ){
+            y1.set(0,1.0);
+            y1.set(1,0.0);
+            y1.add(2,0.0);
+            y1.add(3,1.0);
+        }
+        if(v1[0]!=0 && v1[1]==0 && v1[2]==0 && v1[3]==0 ){
+            y1.set(0,0.0);
+            y1.set(1,1.0);
+
+        }
+        if(v1[0]==0 && v1[1]==0 && v1[2]==0 && v1[3]!=0 ){
+            y1.set(0,1.0);
+            y1.set(1,0.0);
+
+        }
+        if(v1[0]!=0 && v1[1]!=0 && v1[2]==0 && v1[3]==0 ){
+            y1.set(0,-v1[1]);
+            y1.set(1,1.0);
+
+        }
+        if(v1[0]==1 && v1[1]==0 && v1[2]==0 && v1[3]==1 ){
+            y1.set(0,0.0);
+            y1.set(1,0.0);
+
         }
         return y1;
+    }
+
+    public double[] getEigenValues() {
+        double[] eigenValues = new double[2];
+        eigenValues[0] = x1;
+        eigenValues[1] = x2;
+        return eigenValues;
+    }
+
+    public ArrayList<Double>[] getEigenVectors() {
+        ArrayList<Double>[] eigenVectors = new ArrayList[2];
+        eigenVectors[0] = s1;
+        eigenVectors[1] = s2;
+        return eigenVectors;
+    }
+
+    public static double getX1() {
+        return x1;
+    }
+
+    public static void setX1(double x1) {
+        Model2for2x2.x1 = x1;
+    }
+
+    public static double getX2() {
+        return x2;
+    }
+
+    public static void setX2(double x2) {
+        Model2for2x2.x2 = x2;
+    }
+
+    public static ArrayList<Double> getS1() {
+        return s1;
+    }
+
+    public static void setS1(ArrayList<Double> s1) {
+        Model2for2x2.s1 = s1;
+    }
+
+    public static ArrayList<Double> getS2() {
+        return s2;
+    }
+
+    public static void setS2(ArrayList<Double> s2) {
+        Model2for2x2.s2 = s2;
     }
 }

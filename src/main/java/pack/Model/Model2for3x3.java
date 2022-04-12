@@ -1,12 +1,14 @@
-package pack.Controller;
+package pack.Model;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class Eigen3x3 {
+public class Model2for3x3 {
 
     // idk if i need all of this
-    private double x1, x2, x3; // eigenvalues
+    private static double x1;
+    private static double x2;
+    private static double x3; // eigenvalues
     private double first, second, third, fourth; //cubic function
     private double e1, e2, e3; // to hold values in the reduce matrix
     private double a1, a2, a3; // first line of matrix
@@ -16,20 +18,20 @@ public class Eigen3x3 {
     private double b1Initial, b2Initial, b3Initial;// hold initial value second row
     private double c1Initial, c2Initial, c3Initial;// hold initial value third row
     double m1[], m2[], m3[]; // reduced matrix
-    static double[] s1,s2, s3;//eigenvectors
+    static ArrayList<Double> s1, s2, s3;//eigenvectors
 
     static final DecimalFormat formatting = new DecimalFormat("0.0000"); // format the number to 4 decimals
 
-    public Eigen3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3) {
-        this.a1 = a1;
-        this.a2 = a2;
-        this.a3 = a3;
-        this.b1 = b1;
-        this.b2 = b2;
-        this.b3 = b3;
-        this.c1 = c1;
-        this.c2 = c2;
-        this.c3 = c3;
+    public Model2for3x3(ArrayList<Double> matrixCoefficients) {
+        this.a1 = matrixCoefficients.get(0);
+        this.a2 = matrixCoefficients.get(1);
+        this.a3 = matrixCoefficients.get(2);
+        this.b1 = matrixCoefficients.get(3);
+        this.b2 = matrixCoefficients.get(4);
+        this.b3 = matrixCoefficients.get(5);
+        this.c1 = matrixCoefficients.get(6);
+        this.c2 = matrixCoefficients.get(7);
+        this.c3 = matrixCoefficients.get(8);
         this.a1Initial = a1;
         this.a2Initial = a2;
         this.a3Initial = a3;
@@ -74,61 +76,72 @@ public class Eigen3x3 {
         first = toTheCube; // x^3
     }
 
-// get the roots so the eigenvalues
-    private void roots3x3(double a, double b, double c, double d) {
+    // get the roots so the eigenvalues
+    private void roots3x3(double A, double B, double C, double D) {
 
-        if (a == 0.0){
-            double squareRoot = (b * b) - (4 * a * c); // numnber in the square root
-            if (squareRoot > 0) { // if # in the square root than it exist
-                x1 = (-b + Math.sqrt(squareRoot)) / (2 * a);
-                x2 = (-b - Math.sqrt(squareRoot)) / (2 * a);
-                x3 = 0.0; // because there is no cube
-            } else { // square root no exist
-                x1 = (-b) / (2 * a);
-                x2 = (-b) / (2 * a);
-                x3= 0.0;// because there is no cube
+        double a = (double) B / A;
+        double b = (double) C / A;
+        double c = (double) D / A;
+
+        System.out.println("Double values: ");
+        System.out.println(a + " " + b + " " + c);
+        double p = b - ((a * a) / 3.0);
+
+        double q = (2 * Math.pow(a, 3) / 27.0) - (a * b / 3.0) + c;
+
+        double delta = (Math.pow(q, 2) / 4) + (Math.pow(p, 3) / 27);
+
+        if (delta > 0.001) {
+
+            double mt1, mt2;
+
+            double t1 = (-q / 2.0) + Math.sqrt(delta);
+            double t2 = (-q / 2.0) - Math.sqrt(delta);
+
+            if (t1 < 0) {
+                mt1 = (-1) * (Math.pow(-t1, (double) 1 / 3));
+            } else {
+                mt1 = (Math.pow(t1, (double) 1 / 3));
             }
+
+            if (t2 < 0) {
+                mt2 = (-1) * (Math.pow(-t2, (double) 1 / 3));
+            } else {
+                mt2 = (Math.pow(t2, (double) 1 / 3));
+            }
+
+            x1 = mt1 + mt2 - (a / 3.0);
+
+        } else if (delta < 0.001 && delta > -0.001) {
+
+            if (q < 0) {
+
+                x1 = 2 * Math.pow(-q / 2, (double) 1 / 3) - (a / 3);
+                x2 = -1 * Math.pow(-q / 2, (double) 1 / 3) - (a / 3);
+
+            } else {
+
+                x1 = -2 * Math.pow(q / 2, (double) 1 / 3) - (a / 3);
+                x2 = Math.pow(q / 2, (double) 1 / 3) - (a / 3);
+
+            }
+
+        } else {
+
+            x1 = (2.0 / Math.sqrt(3)) * (Math.sqrt(-p) * Math.sin((1 / 3.0) * Math.asin(((3 * Math.sqrt(3) * q) / (2 * Math.pow(Math.pow(-p, (double) 1 / 2), 3)))))) - (a / 3.0);
+            x2 = (-2.0 / Math.sqrt(3)) * (Math.sqrt(-p) * Math.sin((1 / 3.0) * Math.asin(((3 * Math.sqrt(3) * q) / (2 * Math.pow(Math.pow(-p, (double) 1 / 2), 3)))) + (Math.PI / 3))) - (a / 3.0);
+            x3 = (2.0 / Math.sqrt(3)) * (Math.sqrt(-p) * Math.cos((1 / 3.0) * Math.asin(((3 * Math.sqrt(3) * q) / (2 * Math.pow(Math.pow(-p, (double) 1 / 2), 3)))) + (Math.PI / 6))) - (a / 3.0);
+
         }
 
-        double r = a;
-        a = b/r;
-        b = c/r;
-        c = d/r;
 
-        double SmallMath = (3 * b - a * a) / 9.0;
-        double v = SmallMath * SmallMath * SmallMath;
-        double bigMath = (9 * a * b - 27 * c - 2 * a * a * a) / 54.0;
-        double D = v + (bigMath * bigMath);
-
-        if (D < 0.0)// 3 different roots
-        {
-            double theta = Math.acos (bigMath / Math.sqrt (-v));
-            double SQRT_Q = Math.sqrt (-SmallMath);
-            x1 = 2.0 * SQRT_Q * Math.cos (theta/3.0) - (a/ 3.0);
-            x2 = 2.0 * SQRT_Q * Math.cos ((theta+(2.0 * Math.PI))/3.0) - (a/ 3.0);
-            x3 = 2.0 * SQRT_Q * Math.cos ((theta+(4.0 * Math.PI))/3.0) - (a/ 3.0);
-        }
-        else if (D > 0.0) // one root only
-        {
-            double sqrt = Math.sqrt (D);
-            double S = Math.cbrt (bigMath + sqrt);
-            double T = Math.cbrt (bigMath - sqrt);
-            x1 = (S + T) - (a/ 3.0);
-            x2 = Double.NaN;
-            x3 = Double.NaN;
-        }
-
-        else // 3 roots where 2 are the same
-        {
-            double cubeRoot = Math.cbrt (bigMath);
-            x1 = 2*cubeRoot - (a/ 3.0);
-            x2 = x3 = cubeRoot - (a/ 3.0);
-        }
         x1 = Double.parseDouble(formatting.format(x1)); // FORMAT TO 0.0000
         x2 = Double.parseDouble(formatting.format(x2));
         x3 = Double.parseDouble(formatting.format(x3));
+        System.out.println("x1: " + x1 + "x2: " + x2 + "x3: " + x3);
     }
-// find the eigenvectors and finds reduce matrix PUTS EVERYTHING TOGETHER
+    //SEND THIS TO DE CONTROLLA
+    // find the eigenvectors and finds reduce matrix PUTS EVERYTHING TOGETHER
     private void answers3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3, double x1, double x2, double x3) {
         double aa1 = a1Initial - x1;//WITH FIRST LAMBA
         double bb2 = b2Initial - x1;//WITH FIRST LAMBA
@@ -149,7 +162,8 @@ public class Eigen3x3 {
         s3 = findEigenVectors3x3(m3);
 
     }
-// reduces the matrix
+
+    // reduces the matrix
     private double[] reduceMatrix3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3) {
         a1 = Double.parseDouble(formatting.format(a1)); // format everything
         a2 = Double.parseDouble(formatting.format(a2));
@@ -238,8 +252,8 @@ public class Eigen3x3 {
             c3 = Double.parseDouble(formatting.format(c3 - (b3 * c2))); //MAKE THE FIRST NUMBER 0 AND THEN substract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
             c2 = Double.parseDouble(formatting.format(c2 - (b2 * c2)));
         }
-        if(c3<0.005){
-            c3=0;
+        if (c3 < 0.005) {
+            c3 = 0;
         }
         // second row done
         if (c3 != 1 && c3 != 0) { //if a not equal to one or zero
@@ -257,83 +271,231 @@ public class Eigen3x3 {
 
         return arr;
     }
-// find eigenvectors
-    private double[] findEigenVectors3x3(double[] v1) {
-        double[] y1 = new double[3]; // if only one vector for that one eigen value
-        double[] y2 = new double[6];// if two vectors for that one eigen value
+
+    // find eigenvectors
+    private ArrayList<Double> findEigenVectors3x3(double[] v1) {
+        ArrayList<Double> y1 = new ArrayList<>(); // if only one vector for that one eigen value
+        y1.add(0, 0.0);
+        y1.add(1, 0.0);
+        y1.add(2, 0.0);
         int counterUp = 0;
+        int counter = 0;
+        int lineCounter = 1;
+        boolean firstLine = false;
+        boolean secondLine = false;
+        boolean thirdLine = false;
+
+        for (int j = 0; j < v1.length; j++) {
+            if (v1[j] == 0) {
+                counter++;
+
+            }
+        }
+        if (counter == 9) {
+            y1.set(0, 1.0);
+            y1.set(1, 0.0);
+            y1.set(2, .0);
+            y1.add(3, 0.0);
+            y1.add(4, 1.0);
+            y1.add(5, 0.0);
+            y1.add(6, 0.0);
+            y1.add(7, 0.0);
+            y1.add(8, 1.0);
+
+            return y1;
+        }
+
+        if (v1[0] == 0 && v1[1] == 0 && v1[2] == 0 && v1[3] == 0 && v1[4] == 0 && v1[5] == 0) {
+
+            y1.set(0, 1.0);
+            y1.set(1, 0.0);
+            y1.set(2, 0.0);
+            y1.add(0.0);
+            y1.add(1.0);
+            y1.add(0.0);
+            return y1;
+        }
+
+
+        if (v1[0] == 0 && v1[1] == 0 && v1[2] == 0 && v1[6] == 0 && v1[7] == 0 && v1[8] == 0) {
+            y1.set(0, 1.0);
+            y1.set(1, 0.0);
+            y1.set(2, 0.0);
+            y1.add(0.0);
+            y1.add(0.0);
+            y1.add(1.0);
+            return y1;
+        }
+
+        if (v1[3] == 0 && v1[4] == 0 && v1[5] == 0 && v1[6] == 0 && v1[7] == 0 && v1[8] == 0) {
+            y1.set(0, 0.0);
+            y1.set(1, 1.0);
+            y1.set(2, 0.0);
+            y1.add(0.0);
+            y1.add(0.0);
+            y1.add(1.0);
+            return y1;
+        }
+
         for (int i = 0; i < v1.length; i++) { // loop until we went through all the numbers in the matrix  SHOULD GO THROUGH 3 TIME CUZ 3 ROWS
             double t11 = Double.parseDouble(formatting.format(v1[i])); // T11 = FIRST NUMBER IN ROW T22= SECOND NUMBER IN ROW T33 THRID NUMBER IN ROW
             double t22 = Double.parseDouble(formatting.format(v1[i + 1]));
             double t33 = Double.parseDouble(formatting.format(v1[i + 2]));
             if (t11 != 0 && t22 != 0 && t33 != 0) { // if the whole row has numbers ( which means other 2 rows are all zero
-                y2[0] = -t22; // x2
-                y2[1] = 1; //  vector for second number (x2) free number
-                y2[2] = 0;
-                y2[3] = -t33; // x3
-                y2[4] = 0;
-                y2[5] = 1;// vector for third number (x3) free number
-                return y2;
+                y1.set(0, -t22); // x2
+                y1.set(1, 1.0); //  vector for second number (x2) free number
+                y1.set(2, 0.0);
+                y1.add(3, -t33); // x3
+                y1.add(4, 0.0);
+                y1.add(5, 1.0);// vector for third number (x3) free number
+                return y1;
             } else {
                 if ((t11 == 0 || t22 == 0 || t33 == 0) && (t11 == 1 || t22 == 1 || t33 == 1)) { //one 0 & one 1
                     if (t11 == 1) { // FIND WHERE IS THE ONE
                         if (t22 == 0) { // FIND WHERE IS THE ZERO
                             if (t33 == 0) { // IF THERE IS ANOTHER ZERO THEN 0 IN THE VECTOR FOR THAT ROW (COUNTER =1 THEN ROW ONE AND THE TOP POSITION IN VECTOR)
-                                y1[counterUp] = 0;
+                                y1.set(counterUp, 0.0);
+
                             } else {
-                                y1[counterUp] = -t33; // else that position in the vector is the value of which ever number is not zero and not the first 1 free number
+                                y1.set(counterUp, -t33);// else that position in the vector is the value of which ever number is not zero and not the first 1 free number
                             }
                         }
+
                         if (t33 == 0) {
                             if (t22 == 0) {
-                                y1[counterUp] = 0;
+                                y1.set(counterUp, 0.0);
                             } else {
-                                y1[counterUp] = -t22;
+                                y1.set(counterUp, -t22);
                             }
                         }
                     }
                     if (t22 == 1) {
                         if (t33 == 0) {
                             if (t11 == 0) {
-                                y1[counterUp] = 0;
+                                y1.set(counterUp, 0.0);
                             } else {
 
-                                y1[counterUp] = -t11;
+                                y1.set(counterUp, -t11);
                             }
                         }
                         if (t11 == 0) {
                             if (t33 == 0) {
-                                y1[counterUp] = 0;
+                                y1.set(counterUp, 0.0);
                             } else {
-                                y1[counterUp] = -t33;
+                                y1.set(counterUp, -t33);
                             }
                         }
                     }
                     if (t33 == 1) {
                         if (t11 == 0) {
                             if (t22 == 0) {
-                                y1[counterUp] = 0;
+                                y1.set(counterUp, 0.0);
                             } else {
-                                y1[counterUp] = -t22;
+                                y1.set(counterUp, -t22);
                             }
                         }
                         if (t22 == 0) {
                             if (t11 == 0) {
-                                y1[counterUp] = 0;
+                                y1.set(counterUp, 0.0);
                             } else {
-                                y1[counterUp] = -t11;
+                                y1.set(counterUp, -t11);
                             }
                         }
                     }
+                    if (v1[6] == 0 && v1[7] == 0 && v1[8] == 0) {
+                        y1.set(2, 1.0);
+                    }
                 }
-                if (t11 == 0 && t22 == 0 && t33 == 0) { // if the whole row is zero then that position in the vector is 1
-                    y1[counterUp] = 1;
+                if (y1.get(0) == 0 && y1.get(1) == 0 && y1.get(0) == 0) {
+                    if (t11 == 0 && t22 == 0 && t33 == 0) { // if the whole row is zero then that position in the vector is 1
+                        if (lineCounter == 1) {
+                            y1.set(0, 1.0); // x2
+                            y1.set(1, 0.0); //  vector for second number (x2) free number
+                            y1.set(2, 0.0);
+                        } else if (lineCounter == 2) {
+                            y1.set(0, 0.0); // x2
+                            y1.set(1, 1.0); //  vector for second number (x2) free number
+                            y1.set(2, 0.0);
+                        } else {
+                            y1.set(0, 0.0); // x2
+                            y1.set(1, 0.0); //  vector for second number (x2) free number
+                            y1.set(2, 1.0);
+                        }
+                    }
+
                 }
             }
+
             counterUp++;
             i++; // up by two to switch row
             i++;
+            lineCounter++;
+
         }
         return y1;
+    }
+
+    public double[] getEigenValues() {
+        double[] eigenValues = new double[3];
+        eigenValues[0] = x1;
+        eigenValues[1] = x2;
+        eigenValues[2] = x3;
+        return eigenValues;
+    }
+
+    public ArrayList<Double>[] getEigenVectors() {
+        ArrayList<Double>[] eigenVectors = new ArrayList[3];
+        eigenVectors[0] = s1;
+        eigenVectors[1] = s2;
+        eigenVectors[2] = s3;
+        return eigenVectors;
+    }
+
+    public static double getX1() {
+        return x1;
+    }
+
+    public static void setX1(double x1) {
+        Model2for3x3.x1 = x1;
+    }
+
+    public static double getX2() {
+        return x2;
+    }
+
+    public static void setX2(double x2) {
+        Model2for3x3.x2 = x2;
+    }
+
+    public static double getX3() {
+        return x3;
+    }
+
+    public static void setX3(double x3) {
+        Model2for3x3.x3 = x3;
+    }
+
+    public static ArrayList<Double> getS1() {
+        return s1;
+    }
+
+    public static void setS1(ArrayList<Double> s1) {
+        Model2for3x3.s1 = s1;
+    }
+
+    public static ArrayList<Double> getS2() {
+        return s2;
+    }
+
+    public static void setS2(ArrayList<Double> s2) {
+        Model2for3x3.s2 = s2;
+    }
+
+    public static ArrayList<Double> getS3() {
+        return s3;
+    }
+
+    public static void setS3(ArrayList<Double> s3) {
+        Model2for3x3.s3 = s3;
     }
 }

@@ -7,7 +7,7 @@ public class CustomButton extends Button {
 
     public CustomButton(String message) {
         super(message);
-        this.setStyle("-fx-background-color: #333335;" +
+        this.setStyle("-fx-background-color: #F15152;" +
                 "-fx-text-fill: E7EBEE;");
         this.setTextAlignment(TextAlignment.CENTER);
         this.setFont(Custom.font);
