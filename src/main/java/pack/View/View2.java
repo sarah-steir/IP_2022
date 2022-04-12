@@ -1,18 +1,22 @@
 package pack.View;
 
-import javafx.scene.layout.Pane;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import pack.View.iView;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import pack.Controller.Controller2;
 import pack.Model.Model2for2x2;
@@ -23,7 +27,13 @@ import pack.View.Customs.CustomButton;
 import pack.View.Customs.CustomRadioButton;
 import pack.View.Customs.CustomTextField;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import static jdk.internal.org.jline.terminal.Terminal.MouseTracking.Button;
 
 public class View2 extends Pane implements iView {
 
@@ -34,6 +44,8 @@ public class View2 extends Pane implements iView {
     private CustomButton btnStart, btnReset, btnSave;
     private ToggleGroup group = new ToggleGroup();
     private static ComboBox cb;
+    private static CustomButton butt;
+    //public static Font font = Font.loadFont(p + "Font.otf", 15);
 
     private VBox vbUi;
     private VBox vbPo;
@@ -42,6 +54,8 @@ public class View2 extends Pane implements iView {
     private VBox vbRight;
     private static CustomTextField t1, t2, t3, t4, t5, t6, t7, t8, t9;
     private static double a1,a2,a3,b1,b2,b3,c1,c2,c3;
+    static FileWriter file;
+    private static ArrayList<Integer> other = new ArrayList<>();
 
     public View2() {
         this.rb1 = new CustomRadioButton("2 x 2");
@@ -58,6 +72,10 @@ public class View2 extends Pane implements iView {
        cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             doAction(cb.getValue().toString()); //Send the selected item to the method
+        });
+        btnSave.setOnAction(event -> {
+            //Call a method to determine which item in the list the user has selected
+            DaVoid(); //Send the selected item to the method
         });
         fieldListRb1 = new CustomTextField[2][2];
         fieldListRb2 = new CustomTextField[3][3];
@@ -86,7 +104,107 @@ public class View2 extends Pane implements iView {
         );
         cb.setPromptText("Saved Matrices");
     }
+    private static void YesImAGummyBear(){
 
+    }
+    private static void DaVoid(){
+
+
+        StackPane secondaryLayout = new StackPane();
+
+        secondaryLayout.getChildren().add(PANCAKES());
+        Scene secondScene = new Scene(secondaryLayout, 300, 300);
+
+        // New window (Stage)
+        Stage newWindow = new Stage();
+        newWindow.setTitle("Second Stage");
+        newWindow.setScene(secondScene);
+
+        // Set position of second window, related to primary window.
+//        newWindow.setX(primaryStage.getX() + 200);
+//        newWindow.setY(primaryStage.getY() + 100);
+
+        newWindow.show();
+    }
+    private static VBox PANCAKES(){
+        VBox payne = new VBox();
+        Label ll = new Label("Choose a name for your matrix");
+        ll.setTextFill(Color.web("#1985A1"));
+        //ll.setFont(font);
+        ll.setStyle("-fx-text-fill: E7EBEE;");
+
+        TextField ctf = new CustomTextField();
+        butt = new CustomButton("SEND IT");
+        payne.getChildren().add(ll);
+        payne.getChildren().add(ctf);
+        payne.getChildren().add(butt);
+        return payne;
+    }
+    private static void humptyDumptyFellOffAWall(String name) { //CONNECT TO BUTTON HANDL
+        JSONArray newMatrix = new JSONArray();
+        if (View2.getRb1().isSelected()) {
+            newMatrix.add(View2.getT1());//
+            newMatrix.add(View2.getT2());//
+            newMatrix.add("0");
+            newMatrix.add(View2.getT4());//
+            newMatrix.add(View2.getT5());//
+            newMatrix.add("0");
+            newMatrix.add("0");
+            newMatrix.add("0");
+            newMatrix.add("0");
+        }
+        if (View2.getRb2().isSelected()) {
+            newMatrix.add(View2.getT1());
+            newMatrix.add(View2.getT2());
+            newMatrix.add(View2.getT3());
+            newMatrix.add(View2.getT4());
+            newMatrix.add(View2.getT5());
+            newMatrix.add(View2.getT6());
+            newMatrix.add(View2.getT7());
+            newMatrix.add(View2.getT8());
+            newMatrix.add(View2.getT9());
+        }
+        ModelForJSON.getMatrix().put(name, newMatrix);
+        File newFile = new File("Resources/JsonFile.json");
+
+        try {
+            // Constructs a FileWriter given a file name, using the platform's default charset
+            file = new FileWriter("Resources/JsonFile.json");
+            file.write(ModelForJSON.getMatrix().toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                file.flush();
+                file.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static ArrayList<Integer> humptyDumptyCameBackToLife () {
+        JSONParser parser = new JSONParser();
+
+        Object obj = null;
+        try {
+            obj = parser.parse(new FileReader("Resources/JsonFile.json"));
+            JSONObject jsonObject = (JSONObject) obj;
+
+
+            try {
+                //other = makeTheArrayList((JSONArray) jsonObject.get(View2.getCb().getValue()));
+            }catch(Exception e){
+                e.printStackTrace();
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return other;
+    }
     private HBox setHbComboBox() {
         HBox hbComboBox = new HBox(100);
         hbComboBox.setPadding(new Insets(15));
@@ -141,17 +259,17 @@ public class View2 extends Pane implements iView {
                 gpt.add(newVector(2,3, controller2,1), 4, 40);
                 gpt.add(newVector(3,3,  controller2,1), 6, 40);
             }
-//            gpt.add(Custom.setTitle(text2), 1, 23);
-//            if (Model2for3x3.getS3().size() == 3) {
-//                gpt.add(newVector(1,3, controller2,2), 2, 27);
-//            } else if (Model2for3x3.getS3().size() == 6) {
-//                gpt.add(newVector(1,3,  controller2,2), 2, 27);
-//                gpt.add(newVector(2,3,  controller2,2), 4, 27);
-//            } else {
-//                gpt.add(newVector(1,3,  controller2,2), 2, 27);
-//                gpt.add(newVector(2,3,  controller2,2), 4, 27);
-//                gpt.add(newVector(3,3, controller2,2), 6, 27);
-//            }
+            gpt.add(Custom.setTitle(text2), 1, 23);
+            if (Model2for3x3.getS3().size() == 3) {
+                gpt.add(newVector(1,3, controller2,2), 2, 27);
+            } else if (Model2for3x3.getS3().size() == 6) {
+                gpt.add(newVector(1,3,  controller2,2), 2, 27);
+                gpt.add(newVector(2,3,  controller2,2), 4, 27);
+            } else {
+                gpt.add(newVector(1,3,  controller2,2), 2, 27);
+                gpt.add(newVector(2,3,  controller2,2), 4, 27);
+                gpt.add(newVector(3,3, controller2,2), 6, 27);
+            }
         }
         if (rb1.isSelected()) {
             Text text = new Text("FOR THE EIGENVALUE " + controller2.getEigenValues()[0] + " THE EIGEN VECTOR IS");
