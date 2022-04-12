@@ -149,6 +149,8 @@ public class Model2for3x3 {
         m1 = reduceMatrix3x3(aa1, a2Initial, a3Initial, b1Initial, bb2, b3Initial, c1Initial, c2Initial, cc3); // reduced matrix
         s1 = findEigenVectors3x3(m1); // find the vector
 
+        //System.out.println(eigenVectors[1].get(0) + " " +eigenVectors[1].get(1) + " " +eigenVectors[1].get(2));
+        //System.out.println(eigenVectors[2].get(0) + " " +eigenVectors[2].get(1) + " " +eigenVectors[2].get(2));
         aa1 = a1Initial - x2;//WITH FIRST LAMBA
         bb2 = b2Initial - x2;//WITH FIRST LAMBA
         cc3 = c3Initial - x2;//WITH FIRST LAMBA
@@ -294,7 +296,7 @@ public class Model2for3x3 {
         if (counter == 9) {
             y1.set(0, 1.0);
             y1.set(1, 0.0);
-            y1.set(2, .0);
+            y1.set(2, 0.0);
             y1.add(3, 0.0);
             y1.add(4, 1.0);
             y1.add(5, 0.0);
@@ -448,7 +450,10 @@ public class Model2for3x3 {
         eigenVectors[0] = s1;
         eigenVectors[1] = s2;
         eigenVectors[2] = s3;
+
+
         return eigenVectors;
+
     }
 
     public static double getX1() {

@@ -58,7 +58,7 @@ public class Controller2 {
         } else {
             return model2for3x3.getEigenVectors();
         }
-    }
+           }
 
     // Get the reduced matrix as well cause WHY NOT ya schmuck
 
