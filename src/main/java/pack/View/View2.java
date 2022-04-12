@@ -51,7 +51,7 @@ public class View2 extends Pane implements iView {
         this.btnSave = new CustomButton("Save Matrix");
         this.btnSave.setPrefSize(200, 20);
         JASONDERULO = new ModelForJSON();
-       cb.setOnAction(event -> {
+        cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             doAction(cb.getValue().toString()); //Send the selected item to the method
         });
@@ -102,51 +102,6 @@ public class View2 extends Pane implements iView {
         return  vbLeft;
     }
 
-    @Override
-    public VBox setRight(String title, CustomButton btnStart, CustomButton btnReset) {
-        VBox vbRight = new VBox();
-        vbRight.setPrefSize(500, 695);
-        vbRight.setLayoutX(520);
-        vbRight.setLayoutY(14);
-        vbRight.setSpacing(10);
-
-        // Program Output Box
-        VBox vbPo = new VBox();
-        vbPo.setPrefSize(500, 595);
-        vbPo.setSpacing(15);
-        vbPo.setAlignment(Pos.TOP_CENTER);
-
-        vbPo.setStyle("-fx-background-color: #333335");
-        vbPo.getChildren().add(Custom.setTitle(title));
-        if(rb2.isSelected()) { //THIS DONT WORK
-            btnStart.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent e) {
-                    GridPane gpjCoaching = showDaRight();
-                    vbPo.getChildren().add(gpjCoaching);
-                }
-            });
-        }
-        if(rb1.isSelected()) {
-            btnStart.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent e) {
-                    GridPane gpjCoaching = showDaRight();
-                    vbPo.getChildren().add(gpjCoaching);
-                }
-            });
-        }
-
-
-        // HBox to hold buttons and logo
-        HBox hbBottom = new HBox();
-        hbBottom.setMaxSize(500, 105);
-        hbBottom.setSpacing(55);
-        hbBottom.getChildren().addAll(setButtons(btnStart, btnReset), setLogo());
-
-        vbRight.getChildren().addAll(vbPo, hbBottom);
-        return vbRight;
-    }
 
     public GridPane showDaRight() {
         GridPane gpt = new GridPane();

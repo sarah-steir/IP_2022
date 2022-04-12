@@ -128,6 +128,4 @@ public interface iView {
         iv.setFitHeight(105);
         return iv;
     }
-
-    VBox setRight(String title, CustomButton btnStart, CustomButton btnReset);
 }

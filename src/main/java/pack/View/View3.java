@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pack.Controller.Controller1;
+import pack.Controller.Controller3;
 import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
 import pack.View.Customs.CustomRadioButton;
@@ -18,13 +19,6 @@ import pack.View.Customs.CustomTextField;
 import pack.View.GraphView.Graph;
 
 public class View3 extends Pane implements iView {
-//    public static RadioButton r1 = new RadioButton("Lines");
-//    public static RadioButton r2 = new RadioButton("Planes");
-//    Node n = setRadios(r1, r2);
-//    ArrayList<TextField> arplanes = createFields(8, 80);
-//    ArrayList<TextField> arlines = createFields(12, 30);
-//    public static ArrayList<Label> labeling = iView.createSigns(signs("s+ ", "t+ "));
-//    public static Graph graph3 = new Graph();
 
     private CustomTextField[][] fieldListRb1, fieldListRb2;
     private GridPane fieldsPane;
@@ -119,8 +113,8 @@ public class View3 extends Pane implements iView {
                 }
             }
         }
-        //Controller3 controller1 = new Controller1(this);
-        //addOutput(controller1);
+        Controller3 controller3 = new Controller3(this);
+        //addOutput(controller3);
     }
 
     public void handleReset() {
@@ -147,6 +141,10 @@ public class View3 extends Pane implements iView {
         });
         this.btnStart.setOnAction(event -> { handleStart(rb1.isSelected()); });
         this.btnReset.setOnAction(event -> { handleReset(); });
+    }
+
+    public void addOutput() {
+
     }
 
     @Override

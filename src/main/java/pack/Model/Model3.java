@@ -57,7 +57,6 @@ public class Model3 {
         return null;
     }
 
-
     public static double checkzeros(ArrayList<TextField> f) {
         int n = 0;
 
