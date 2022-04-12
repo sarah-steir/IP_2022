@@ -115,42 +115,43 @@ public class View2 extends Pane implements iView {
         gpt.setLayoutY(14);
 
         if (rb2.isSelected()) {
-            Text text = new Text("FOR THE EIGENVALUE " + controller2.getEigenValues()[0] + " THE EIGEN VECTOR IS");
-            Text text1 = new Text("FOR THE EIGENVALUE " + controller2.getEigenValues()[1] + " THE EIGEN VECTOR IS");
-            Text text2 = new Text("FOR THE EIGENVALUE " + controller2.getEigenValues()[2] + " THE EIGEN VECTOR IS");
-            gpt.add(text, 1, 10);
+            String text ="FOR THE EIGENVALUE " + controller2.getEigenValues()[0] + " THE EIGEN VECTOR IS";
+            String text1 = "FOR THE EIGENVALUE " + controller2.getEigenValues()[1] + " THE EIGEN VECTOR IS";
+            String text2 = "FOR THE EIGENVALUE " + controller2.getEigenValues()[2] + " THE EIGEN VECTOR IS";
+            //String text3 = "FOR THE EIGENVALUE " + controller2.getEigenValues()[0] + " THE EIGEN VECTOR IS";
+            gpt.add(Custom.setTitle(text), 2, 10);
             if (Model2for3x3.getS1().size() == 3) {
-                gpt.add(newVector(1,3, controller2,0), 2, 15);
+                gpt.add(newVector(1,3, controller2,0), 2, 20);
             } else if (Model2for3x3.getS1().size() == 6) {
-                gpt.add(newVector(1,3, controller2,0), 2, 15);
-                gpt.add(newVector(2,3, controller2,0), 3, 15);
+                gpt.add(newVector(1,3, controller2,0), 2, 20);
+                gpt.add(newVector(2,3, controller2,0), 3, 20);
             } else {
-                gpt.add(newVector(1,3, controller2,0), 2, 15);
-                gpt.add(newVector(2,3, controller2,0), 3, 15);
-                gpt.add(newVector(3,3, controller2,0), 4, 15);
+                gpt.add(newVector(1,3, controller2,0), 2, 20);
+                gpt.add(newVector(2,3, controller2,0), 3, 20);
+                gpt.add(newVector(3,3, controller2,0), 4, 20);
             }
-            gpt.add(text1, 1, 17);
+            gpt.add(Custom.setTitle(text1), 2, 30);
             if (Model2for3x3.getS2().size() == 3) {
-                gpt.add(newVector(1,3, controller2,1), 2, 23);
+                gpt.add(newVector(1,3, controller2,1), 2, 40);
             } else if (Model2for3x3.getS2().size() == 6) {
-                gpt.add(newVector(1,3, controller2,1), 2, 23);
-                gpt.add(newVector(2,3, controller2,1), 4, 23);
+                gpt.add(newVector(1,3, controller2,1), 2, 40);
+                gpt.add(newVector(2,3, controller2,1), 4, 40);
             } else {
-                gpt.add(newVector(1,3, controller2,1), 2, 23);
-                gpt.add(newVector(2,3, controller2,1), 4, 23);
-                gpt.add(newVector(3,3,  controller2,1), 6, 23);
+                gpt.add(newVector(1,3, controller2,1), 2, 40);
+                gpt.add(newVector(2,3, controller2,1), 4, 40);
+                gpt.add(newVector(3,3,  controller2,1), 6, 40);
             }
-            gpt.add(text2, 1, 23);
-            if (Model2for3x3.getS3().size() == 3) {
-                gpt.add(newVector(1,3, controller2,2), 2, 27);
-            } else if (Model2for3x3.getS3().size() == 6) {
-                gpt.add(newVector(1,3,  controller2,2), 2, 27);
-                gpt.add(newVector(2,3,  controller2,2), 4, 27);
-            } else {
-                gpt.add(newVector(1,3,  controller2,2), 2, 27);
-                gpt.add(newVector(2,3,  controller2,2), 4, 27);
-                gpt.add(newVector(3,3, controller2,2), 6, 27);
-            }
+//            gpt.add(Custom.setTitle(text2), 1, 23);
+//            if (Model2for3x3.getS3().size() == 3) {
+//                gpt.add(newVector(1,3, controller2,2), 2, 27);
+//            } else if (Model2for3x3.getS3().size() == 6) {
+//                gpt.add(newVector(1,3,  controller2,2), 2, 27);
+//                gpt.add(newVector(2,3,  controller2,2), 4, 27);
+//            } else {
+//                gpt.add(newVector(1,3,  controller2,2), 2, 27);
+//                gpt.add(newVector(2,3,  controller2,2), 4, 27);
+//                gpt.add(newVector(3,3, controller2,2), 6, 27);
+//            }
         }
         if (rb1.isSelected()) {
             Text text = new Text("FOR THE EIGENVALUE " + controller2.getEigenValues()[0] + " THE EIGEN VECTOR IS");
@@ -173,6 +174,9 @@ public class View2 extends Pane implements iView {
             }
 
         }
+        gpt.setStyle("-fx-border-width: 2px;\n" +
+                "    -fx-border-color: red;\n" +
+                "    -fx-border-insets: -2px;");
         return gpt;
     }
 
@@ -194,6 +198,9 @@ public class View2 extends Pane implements iView {
             vbx1.setPrefHeight(75);
         }
         hbx.getChildren().addAll(imL,vbx1,imR);
+        hbx.setStyle("-fx-border-width: 2px;\n" +
+                "    -fx-border-color: red;\n" +
+                "    -fx-border-insets: -2px;");
 
         return hbx;
     }
