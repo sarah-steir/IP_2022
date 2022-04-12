@@ -432,8 +432,6 @@ public class Model2for3x3 {
             lineCounter++;
 
         }
-
-
         return y1;
     }
 

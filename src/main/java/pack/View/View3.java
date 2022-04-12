@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import pack.Controller.Controller1;
 import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
 import pack.View.Customs.CustomRadioButton;
@@ -25,12 +26,20 @@ public class View3 extends Pane implements iView {
 //    public static ArrayList<Label> labeling = iView.createSigns(signs("s+ ", "t+ "));
 //    public static Graph graph3 = new Graph();
 
+    private CustomTextField[][] fieldListRb1, fieldListRb2;
+    private GridPane fieldsPane;
     private CustomRadioButton rb1, rb2;
     private CustomButton btnStart, btnReset;
     private ToggleGroup group = new ToggleGroup();
     private Graph graph = new Graph();
     private String[] signsRb1 = {"X: ", "S + ", "Y: ", "S + ", "Z: ", "S + "};
-    private String[] signsRb2 = {"X +", "Y +", "Z ="};
+    private String[] signsRb2 = {"X +", "Y +", "Z +", "= 0"};
+
+    private VBox vbUi;
+    private VBox vbPo;
+
+    private VBox vbLeft;
+    private VBox vbRight;
 
     public View3() {
 
@@ -38,63 +47,130 @@ public class View3 extends Pane implements iView {
         rb2 = new CustomRadioButton("Planes");
         rb1.setToggleGroup(group);
         rb2.setToggleGroup(group);
-
         btnStart = new CustomButton("START\nTHE\nMAGIK");
+        btnStart.setDisable(true);
         btnReset = new CustomButton("RESET\nTHE\nMAGIK");
-        this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "Lines and planes", graph, null));
+
+        fieldListRb1 = new CustomTextField[2][6];
+        fieldListRb2 = new CustomTextField[2][4];
+        fieldsPane = new GridPane();
+
+        vbUi = new VBox();
+        vbPo = new VBox();
+        vbLeft = new VBox();
+        vbRight = new VBox();
+
+        setVbUi(setHbRadios(this.rb1, this.rb2));
+        setVbPo("Systems of linear equations");
+
+        setVbLeft(setLeft(this.vbUi, setGraphPane(graph)));
+        setVbRight(setRight(this.vbPo, setHbBottom(this.btnStart, this.btnReset)));
+
+        setView3();
+        setActions();
     }
 
-    @Override
-    public VBox setRadios(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2,
-                          ComboBox cb) {
+    public void setView3() {
+        this.setPrefSize(1050, 750);
+        this.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
+        this.getChildren().addAll(this.vbLeft, this.vbRight);
+    }
 
-        VBox vbRadioBox = new VBox();
-        vbRadioBox.setPrefSize(500, 160);
+    private void setVbLeft(VBox vbLeft) {
+        this.vbLeft = vbLeft;
+    }
 
-        HBox hbRadios = new HBox();
-        hbRadios.setSpacing(20);
-        hbRadios.setPrefWidth(115);
-        hbRadios.getChildren().addAll(rb1, rb2);
-        vbRadioBox.getChildren().add(hbRadios);
+    private void setVbRight(VBox vbRight) {
+        this.vbRight = vbRight;
+    }
 
+    private void setVbUi(HBox hbRadios) {
+        this.vbUi.setSpacing(5);
+        this.vbUi.setPrefSize(500, 160);
+        this.vbUi.setStyle("-fx-background-color: #333335");
+        this.vbUi.getChildren().add(hbRadios);
+    }
+
+    private void setVbPo(String title) {
+        this.vbPo.setPrefSize(500, 595);
+        this.vbPo.setSpacing(15);
+        this.vbPo.setAlignment(Pos.TOP_CENTER);
+        this.vbPo.setStyle("-fx-background-color: #333335");
+        this.vbPo.getChildren().add(Custom.setTitle(title));
+    }
+
+    public void handleStart(boolean isRb1Selected) {
+        if (isRb1Selected) {
+            for (int i = 0; i < fieldListRb1.length; i++) {
+                for (int j = 0; j < fieldListRb1[0].length; j++) {
+                    if (fieldListRb1[i][j].getText().equals("")) {
+                        fieldListRb1[i][j].setText("0");
+                    }
+                    System.out.println("YO: " + fieldListRb1[i][j].getText());
+                }
+            }
+        } else {
+            for (int i = 0; i < fieldListRb2.length; i++) {
+                for (int j = 0; j < fieldListRb2[0].length; j++) {
+                    if (fieldListRb2[i][j].getText().equals("")) {
+                        fieldListRb2[i][j].setText("0");
+                    }
+                    System.out.println("YO FROM 3x3: " + fieldListRb2[i][j].getText());
+                }
+            }
+        }
+        //Controller3 controller1 = new Controller1(this);
+        //addOutput(controller1);
+    }
+
+    public void handleReset() {
+        this.getChildren().clear();
+        btnStart.setDisable(false);
+        rb1.setSelected(false);
+        rb2.setSelected(false);
+        this.vbUi.getChildren().remove(fieldsPane);
+        this.getChildren().addAll(this.vbLeft, this.vbRight);
+    }
+    public void setActions() {
         rb1.setOnAction(event -> {
-            vbRadioBox.getChildren().clear();
-            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 6, btnStart, signsRb1, cb));
+            this.btnStart.setDisable(false);
+            fieldsPane = setFields(fieldListRb1, signsRb1, this.btnStart);
+            this.vbUi.getChildren().clear();
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
         });
 
         rb2.setOnAction(event -> {
-            vbRadioBox.getChildren().clear();
-            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 4, btnStart, signsRb2, cb));
+            this.btnStart.setDisable(false);
+            fieldsPane = setFields(fieldListRb2, signsRb2, this.btnStart);
+            this.vbUi.getChildren().clear();
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
         });
-        return vbRadioBox;
+        this.btnStart.setOnAction(event -> { handleStart(rb1.isSelected()); });
+        this.btnReset.setOnAction(event -> { handleReset(); });
     }
 
     @Override
-    public GridPane setFields(int rows, int cols, CustomButton btnStart, String[] signs, ComboBox cb) {
+    public GridPane setFields(CustomTextField[][] textFields, String[] signs, CustomButton btnStart) {
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(10);
         gridPane.setAlignment(Pos.CENTER);
 
-        CustomTextField[][] fieldList = new CustomTextField[rows][cols];
+        int rows = textFields.length;
+        int cols = textFields[0].length;
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols;  j++) {
                 HBox hbTextField = new HBox();
                 hbTextField.setSpacing(10);
 
-                fieldList[i][j] = new CustomTextField();
+                textFields[i][j] = new CustomTextField();
                 Label lblVariable = new Label();
                 lblVariable.setStyle("-fx-text-fill: E7EBEE;");
                 lblVariable.setFont(Custom.font);
+                lblVariable.setText(signs[j]);
 
-                if (j == cols - 1) {
-                    if (cols == 6) {
-                        lblVariable.setText("T + ");
-                    } else {
-                        lblVariable.setText("");
-                    }
-                } else if (signs[j].equals("S + ") && i == 1) {
+                if (signs[j].equals("S + ") && i == 1) {
                     lblVariable.setText("T + ");
                 } else {
                     lblVariable.setText(signs[j]);
@@ -103,22 +179,14 @@ public class View3 extends Pane implements iView {
                 int finalI = i;
                 int finalJ = j;
 
-                btnStart.setOnAction(event -> {
-                    for (CustomTextField[] tfArray: fieldList) {
-                        for (CustomTextField tf: tfArray) {
-                            btnStart.setDisable(tf.checkField());
-                        }
-                    }
-                });
+                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) ->
+                        btnStart.setDisable(textFields[finalI][finalJ].checkField()));
 
-                fieldList[i][j].textProperty().addListener((observable, oldValue, newValue) ->
-                        btnStart.setDisable(fieldList[finalI][finalJ].checkField()));
-
-                if (cols == 6) {
-                    fieldList[i][j].setMaxWidth(35);
-                    hbTextField.getChildren().addAll(lblVariable, fieldList[i][j]);
+                if (rb1.isSelected()) {
+                    textFields[i][j].setPrefSize(40, 30);
+                    hbTextField.getChildren().addAll(lblVariable, textFields[i][j]);
                 } else {
-                    hbTextField.getChildren().addAll(fieldList[i][j], lblVariable);
+                    hbTextField.getChildren().addAll(textFields[i][j], lblVariable);
                 }
                 gridPane.add(hbTextField, j, i);
             }
