@@ -15,8 +15,7 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import pack.View.Customs.CustomText;
 
-import java.util.List;
-
+import static pack.View.Customs.Custom.*;
 
 public class Graph extends Group {
 
@@ -36,12 +35,6 @@ public class Graph extends Group {
     final Xform cameraXform3 = new Xform();
 
     Box map = bigCube();
-
-    Color white = Color.web("#E7EBEE");
-    Color grey = Color.web("#333234");
-    Color red = Color.web("#DF5C58");
-    Color yellow = Color.web("#F2C15F");
-    Color blue = Color.web("#1985A1");
 
     private int a = 0; // Serves as a counter to know which color should the added element be
 
@@ -66,7 +59,7 @@ public class Graph extends Group {
             double zoomRatio = 1;
             if (e.getDeltaY() > 0 && scalable.getScale() < 5) {
                 zoomRatio = 1.05;
-            } else if (e.getDeltaY() < 0 && scalable.getScale() > 0.5) {
+            } else if (e.getDeltaY() < 0 && scalable.getScale() > 0.3) {
                 zoomRatio = 0.95;
             }
             map.setScaleX(map.getScaleX() / zoomRatio);
@@ -130,15 +123,16 @@ public class Graph extends Group {
     private ObservableList<Node> getAxis() {
         ObservableList<Node> axisList = FXCollections.observableArrayList();
 
-        Cylinder xAxis = new Cylinder(1.5, 3000);
+        Cylinder xAxis = new Cylinder(2, 3000);
         xAxis.setMaterial(new PhongMaterial(Color.RED));
         xAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(0, 0, 1)));
-        Cylinder yAxis = new Cylinder(1.5, 3000);
+        Cylinder yAxis = new Cylinder(2, 3000);
         yAxis.setMaterial(new PhongMaterial(Color.GREEN));
-        yAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(1, 0, 0)));
-        Cylinder zAxis = new Cylinder(1.5, 3000);
+        yAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(0, 1, 0)));
+        Cylinder zAxis = new Cylinder(2, 3000);
         zAxis.setMaterial(new PhongMaterial(Color.BLUE));
-        zAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(0, 1, 0)));
+        zAxis.getTransforms().add(new Rotate(90, 0, 0, 0, new Point3D(1, 0, 0)));
+
         Xform axes = new Xform();
         axes.getChildren().addAll(xAxis, yAxis, zAxis);
         axisList.add(axes);
@@ -151,16 +145,19 @@ public class Graph extends Group {
      * @param point with the three coordinates to be added
      */
     public void addPoint(Point3D point) {
-        Sphere sphere = new Sphere(2);
+        Sphere sphere = new Sphere(3);
         sphere.setTranslateX(point.getX());
         sphere.setTranslateY(point.getY());
         sphere.setTranslateZ(point.getZ());
-        createPointLabel(point);
+//        createPointLabel(point);
         addPointToList(sphere);
     }
 
     /**
-     *
+     * This function finds two Lines that will form one Line.
+     * The first one, Line line1, goes from point1, passes through point2 and extends to 1000 pixels
+     * The second one, Line line2, goes from point2, passes through point1 and extends to 1000 pixels
+     * line1 is like line2 but in the opposite direction, so that it goes beyond each point
      * @param point1 the first point the line passes through
      * @param point2 the second point the line passes through
      */
@@ -168,10 +165,16 @@ public class Graph extends Group {
         Line line1 = this.FindOneLine(point1, point2);
         Line line2 = this.FindOneLine(point2, point1);
 
-        createLineLabel(point1, point2);
+//        createLineLabel(point1, point2);
         addLineToList(line1, line2);
     }
 
+    /**
+     * This function finds the first "half" of the line (so that it is veryyyyy long instead of being smol)
+     * @param point1
+     * @param point2
+     * @return the "first half" of the line
+     */
     public Line FindOneLine(Point3D point1, Point3D point2) {
         double dist = point1.distance(point2);
 
@@ -179,14 +182,10 @@ public class Graph extends Group {
 
         Point3D vector = point2.subtract(point1);
 
-        double x = vector.getX() + 0.0;
-        double y = vector.getY() + 0.0;
-        double z = vector.getZ() + 0.0;
-
-        double ry = Math.toDegrees(Math.atan2(-z, x));
+        double ry = Math.toDegrees(Math.atan2(-vector.getZ(), vector.getX()));
         Rotate yRotate = new Rotate(ry, Rotate.Y_AXIS);
 
-        double rx = Math.toDegrees(Math.asin(y / dist));
+        double rx = Math.toDegrees(Math.asin(vector.getY() / dist));
         Rotate xRotate = new Rotate(rx, Rotate.Z_AXIS);
 
         Translate tt = new Translate(point1.getX(), point1.getY(), point1.getZ());
@@ -210,7 +209,7 @@ public class Graph extends Group {
      * @param equation
      */
     public void addPlane(double x, double y, double z, String equation) {
-        Circle plane = new Circle(500);
+        Rectangle plane = new Rectangle(-500, -500, 1000, 1000);
 
         Point3D m = new Point3D(x/2, y/2, 0); // Midpoint between x and y
         double d = Math.sqrt(Math.pow(m.getX(), 2) + Math.pow(m.getY(), 2) + Math.pow(z, 2)); // Distance between m and z
@@ -247,7 +246,7 @@ public class Graph extends Group {
                 sphere.setMaterial(new PhongMaterial(blue));
                 break;
             default:
-                sphere.setMaterial(new PhongMaterial(white));
+                sphere.setMaterial(new PhongMaterial(yellow));
                 break;
         }
         this.update();
@@ -290,7 +289,7 @@ public class Graph extends Group {
      * and adds the Rectangle/Plane
      * @param rectangle
      */
-    public void addPlaneToList(Circle rectangle) {
+    public void addPlaneToList(Rectangle rectangle) {
         a++;
         rectangle.setOpacity(0.5);
         thingsToGraphList.add(rectangle);
@@ -393,11 +392,7 @@ public class Graph extends Group {
         scalable.getChildren().addAll(labelsList);
     }
 
-    public static double clamp( double value, double min, double max) {
-        if( Double.compare(value, min) < 0)
-            return min;
-        if( Double.compare(value, max) > 0)
-            return max;
-        return value;
+    public void reset() {
+        thingsToGraphList.clear();
     }
 }
