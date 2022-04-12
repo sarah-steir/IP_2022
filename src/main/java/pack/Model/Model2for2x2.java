@@ -1,9 +1,11 @@
 package pack.Model;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class Model2for2x2 {
 
-    private double x1, x2;// eigenvalues
+    private static double x1;
+    private static double x2;// eigenvalues
     private double first, second, third;//square function
     private double e1, e2;// to hold values in the reduce matrix
     private double a1, a2;//first line
@@ -16,8 +18,8 @@ public class Model2for2x2 {
 
     double m1[];// reduced matrix
     double m2[];
-    static double[] s1;//eigenvectors
-    static double[] s2;
+    static ArrayList<Double> s1;//eigenvectors
+    static ArrayList<Double> s2;
 
     static final DecimalFormat formatting = new DecimalFormat("0.000");// format the number to 3 decimals
 
@@ -105,36 +107,43 @@ public class Model2for2x2 {
         return arr;
     }
 
-    private double[] findEigenVectors2x2(double[] v1) {
-        double[] y1 = new double[2]; // vector can max have 2 positions
-        int counterUp = 0;
-        for (int i = 0; i < v1.length; i++) {// loop until we went through all the numbers in the matrix  SHOULD GO THROUGH 2 TIME CUZ 2 ROWS
-            double t11 = Double.parseDouble(formatting.format(v1[i]));// T11 = FIRST NUMBER IN ROW T22= SECOND NUMBER IN ROW
-            double t22 = Double.parseDouble(formatting.format(v1[i + 1]));
-            if (t11 != 0 && t22 != 0) {// if the whole row has numbers ( which means other row is zero
-                y1[0] = -t22;
-                y1[1] = 1; // second number is 1 cuz its was the free number
-                return y1;
-            } else {
-                if ((t11 == 0 || t22 == 0) && (t11 != 0 || t22 != 0)) { //one 0 & one 1
-                    if (t11 == 0) {
-                        y1[counterUp] = 0; // will put zero on the first number in the vector
-                    }
-                    if (t22 == 0) {
-                        y1[counterUp] = 0;  // will put zero in the second number in the vector
-                    }
-                }
-                if (t11 == 0 && t22 == 0) { // if they both zero then one of em is free if first row firsgt number is free if second row second number in vector is free
-                    y1[counterUp] = 1;
-                }
-            }
-            counterUp++;
-            i++;
+    private ArrayList<Double> findEigenVectors2x2(double[] v1) {
+        ArrayList<Double> y1= new ArrayList<>(); // vector can max have 2 positions
+        y1.add(0,0.0);
+        y1.add(1,0.0);
+
+        if(v1[0]==0 && v1[1]==0 && v1[2]==0 && v1[3]==0 ){
+            y1.set(0,1.0);
+            y1.set(1,0.0);
+            y1.add(2,0.0);
+            y1.add(3,1.0);
         }
+        if(v1[0]!=0 && v1[1]==0 && v1[2]==0 && v1[3]==0 ){
+            y1.set(0,0.0);
+            y1.set(1,1.0);
+
+        }
+        if(v1[0]==0 && v1[1]==0 && v1[2]==0 && v1[3]!=0 ){
+            y1.set(0,1.0);
+            y1.set(1,0.0);
+
+        }
+        if(v1[0]!=0 && v1[1]!=0 && v1[2]==0 && v1[3]==0 ){
+            y1.set(0,-v1[1]);
+            y1.set(1,1.0);
+
+        }
+        if(v1[0]==1 && v1[1]==0 && v1[2]==0 && v1[3]==1 ){
+            y1.set(0,0.0);
+            y1.set(1,0.0);
+
+        }
+
         return y1;
+
     }
 
-    public double getX1() {
+    public static double getX1() {
         return x1;
     }
 
@@ -142,7 +151,7 @@ public class Model2for2x2 {
         this.x1 = x1;
     }
 
-    public double getX2() {
+    public static double getX2() {
         return x2;
     }
 
@@ -270,19 +279,19 @@ public class Model2for2x2 {
         this.m2 = m2;
     }
 
-    public static double[] getS1() {
+    public static ArrayList<Double> getS1() {
         return s1;
     }
 
-    public static void setS1(double[] s1) {
+    public static void setS1(ArrayList<Double> s1) {
         Model2for2x2.s1 = s1;
     }
 
-    public static double[] getS2() {
+    public static ArrayList<Double> getS2() {
         return s2;
     }
 
-    public static void setS2(double[] s2) {
+    public static void setS2(ArrayList<Double> s2) {
         Model2for2x2.s2 = s2;
     }
 }

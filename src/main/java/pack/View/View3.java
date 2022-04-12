@@ -38,6 +38,7 @@ public class View3 extends Pane implements iView {
         rb2 = new CustomRadioButton("Planes");
         rb1.setToggleGroup(group);
         rb2.setToggleGroup(group);
+
         btnStart = new CustomButton("START\nTHE\nMAGIK");
         btnReset = new CustomButton("RESET\nTHE\nMAGIK");
         this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "Lines and planes", graph, null));
@@ -45,7 +46,7 @@ public class View3 extends Pane implements iView {
 
     @Override
     public VBox setRadios(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2,
-                          ComboBox comboBox) {
+                          ComboBox cb) {
 
         VBox vbRadioBox = new VBox();
         vbRadioBox.setPrefSize(500, 160);
@@ -58,18 +59,18 @@ public class View3 extends Pane implements iView {
 
         rb1.setOnAction(event -> {
             vbRadioBox.getChildren().clear();
-            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 6, btnStart, signsRb1, comboBox));
+            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 6, btnStart, signsRb1, cb));
         });
 
         rb2.setOnAction(event -> {
             vbRadioBox.getChildren().clear();
-            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 4, btnStart, signsRb2, comboBox));
+            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 4, btnStart, signsRb2, cb));
         });
         return vbRadioBox;
     }
 
     @Override
-    public GridPane setFields(int rows, int cols, CustomButton btnStart, String[] signs, ComboBox comboBox) {
+    public GridPane setFields(int rows, int cols, CustomButton btnStart, String[] signs, ComboBox cb) {
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(10);

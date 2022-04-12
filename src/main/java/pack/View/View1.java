@@ -1,18 +1,17 @@
 package pack.View;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
+import pack.Controller.Controller1;
 import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class View1 extends Pane implements iView {
@@ -38,6 +37,7 @@ public class View1 extends Pane implements iView {
         rb1.setToggleGroup(group);
         rb2.setToggleGroup(group);
         btnStart = new CustomButton("START\nTHE\nMAGIK");
+        this.btnStart.setDisable(true);
         btnReset = new CustomButton("RESET\nTHE\nMAGIK");
 
         fieldListRb1 = new CustomTextField[2][3];
@@ -90,36 +90,45 @@ public class View1 extends Pane implements iView {
 
     public void setActions() {
         rb1.setOnAction(event -> {
+            this.btnStart.setDisable(false);
             fieldsPane = setFields(fieldListRb1, signsRb1, this.btnStart);
             this.vbUi.getChildren().clear();
             this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
         });
 
         rb2.setOnAction(event -> {
+            this.btnStart.setDisable(false);
             fieldsPane = setFields(fieldListRb2, signsRb2, this.btnStart);
             this.vbUi.getChildren().clear();
             this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
         });
-
-        // when none are selected (doesn't work)
-        if (rb1.isSelected() && rb2.isSelected()) {
-            btnStart.setDisable(true);
-        }
-
-        this.btnStart.setOnAction(event -> { handleStart(this); });
+        this.btnStart.setOnAction(event -> { handleStart(rb1.isSelected()); });
         this.btnReset.setOnAction(event -> { handleReset(); });
     }
 
-    // null problem when start button is clicked without rb being clicked
-    public void handleStart(View1 view1) {
-        for (CustomTextField[] tfArray: fieldListRb1) {
-            for (CustomTextField tf: tfArray) {
-                if (tf.getText().equals("")) {  // find out why tf is sometimes null
-                    tf.setText("0");
+    // doesn't set text in text field to 0, also only works for rb1?
+    public void handleStart(boolean isRb1Selected) {
+        if (isRb1Selected) {
+            for (int i = 0; i < fieldListRb1.length; i++) {
+                for (int j = 0; j < fieldListRb1[0].length; j++) {
+                    if (fieldListRb1[i][j].getText().equals("")) {
+                        fieldListRb1[i][j].setText("0");
+                    }
+                    System.out.println("YO: " + fieldListRb1[i][j].getText());
                 }
-                System.out.println("YO: " + tf.getText());
+            }
+        } else {
+            for (int i = 0; i < fieldListRb2.length; i++) {
+                for (int j = 0; j < fieldListRb2[0].length; j++) {
+                    if (fieldListRb2[i][j].getText().equals("")) {
+                        fieldListRb2[i][j].setText("0");
+                    }
+                    System.out.println("YO FROM 3x3: " + fieldListRb2[i][j].getText());
+                }
             }
         }
+        Controller1 controller1 = new Controller1(this);
+        addOutput(controller1);
     }
 
     public void handleReset() {
@@ -131,10 +140,46 @@ public class View1 extends Pane implements iView {
         this.getChildren().addAll(this.vbLeft, this.vbRight);
     }
 
-    // Use to add elements in vbPo after calculations
-    public void addVbPo() {
+    public void addOutput(Controller1 controller1) {
         this.vbPo.getChildren().clear();
         setVbPo("Systems of linear equations");
-        //this.vbPo.getChildren().add(new Graph());
+
+        VBox vbOutput = new VBox();
+        vbOutput.setSpacing(15);
+        vbOutput.setPadding(new Insets(15));
+        for (int i = 0; i < controller1.getOutput().length; i++) {
+            if (i == 0) {
+                vbOutput.getChildren().add(Custom.setTitle("X = " + controller1.getOutput()[i]));
+            } else if (i == 1) {
+                vbOutput.getChildren().add(Custom.setTitle("Y = " + controller1.getOutput()[i]));
+            } else if (i == 2) {
+                vbOutput.getChildren().add(Custom.setTitle("Z = " + controller1.getOutput()[i]));
+            }
+        }
+        this.vbPo.getChildren().add(vbOutput);
+    }
+
+    public CustomRadioButton getRb1() {
+        return rb1;
+    }
+
+    public ArrayList<CustomTextField> getFieldListRb1() {
+        ArrayList<CustomTextField> fieldList = new ArrayList<>();
+        for (CustomTextField[] tfArray: this.fieldListRb1) {
+            for (CustomTextField tf: tfArray) {
+                fieldList.add(tf);
+            }
+        }
+        return fieldList;
+    }
+
+    public ArrayList<CustomTextField> getFieldListRb2() {
+        ArrayList<CustomTextField> fieldList = new ArrayList<>();
+        for (CustomTextField[] tfArray: this.fieldListRb2) {
+            for (CustomTextField tf: tfArray) {
+                fieldList.add(tf);
+            }
+        }
+        return fieldList;
     }
 }
