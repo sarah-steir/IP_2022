@@ -452,4 +452,52 @@ public class Model2for3x3 {
         eigenVectors[2] = s3;
         return eigenVectors;
     }
+
+    public static double getX1() {
+        return x1;
+    }
+
+    public static void setX1(double x1) {
+        Model2for3x3.x1 = x1;
+    }
+
+    public static double getX2() {
+        return x2;
+    }
+
+    public static void setX2(double x2) {
+        Model2for3x3.x2 = x2;
+    }
+
+    public static double getX3() {
+        return x3;
+    }
+
+    public static void setX3(double x3) {
+        Model2for3x3.x3 = x3;
+    }
+
+    public static ArrayList<Double> getS1() {
+        return s1;
+    }
+
+    public static void setS1(ArrayList<Double> s1) {
+        Model2for3x3.s1 = s1;
+    }
+
+    public static ArrayList<Double> getS2() {
+        return s2;
+    }
+
+    public static void setS2(ArrayList<Double> s2) {
+        Model2for3x3.s2 = s2;
+    }
+
+    public static ArrayList<Double> getS3() {
+        return s3;
+    }
+
+    public static void setS3(ArrayList<Double> s3) {
+        Model2for3x3.s3 = s3;
+    }
 }

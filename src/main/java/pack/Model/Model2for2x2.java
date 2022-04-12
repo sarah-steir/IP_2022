@@ -155,4 +155,36 @@ public class Model2for2x2 {
         eigenVectors[1] = s2;
         return eigenVectors;
     }
+
+    public static double getX1() {
+        return x1;
+    }
+
+    public static void setX1(double x1) {
+        Model2for2x2.x1 = x1;
+    }
+
+    public static double getX2() {
+        return x2;
+    }
+
+    public static void setX2(double x2) {
+        Model2for2x2.x2 = x2;
+    }
+
+    public static ArrayList<Double> getS1() {
+        return s1;
+    }
+
+    public static void setS1(ArrayList<Double> s1) {
+        Model2for2x2.s1 = s1;
+    }
+
+    public static ArrayList<Double> getS2() {
+        return s2;
+    }
+
+    public static void setS2(ArrayList<Double> s2) {
+        Model2for2x2.s2 = s2;
+    }
 }

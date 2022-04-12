@@ -12,6 +12,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import pack.View.View2;
 
 public class ModelForJSON {
     private static FileWriter file;
@@ -21,9 +22,11 @@ public class ModelForJSON {
     private static ArrayList<Integer> LowerTriangle = new ArrayList<>();
     private static ArrayList<Integer> Symmetric = new ArrayList<>();
     private static ArrayList<Integer> Nul = new ArrayList<>();
+    private static ArrayList<Integer> other = new ArrayList<>();
+    private static JSONObject matrix = new JSONObject();
 
     public ModelForJSON() {
-        writeBasics();
+        //writeBasics();
         readBasics();
     }
 
@@ -158,6 +161,71 @@ public static void writeBasics() {
             ints.add(Integer.valueOf(objs.get(i)));
         }
         return ints;
+    }
+    private static void humptyDumptyFellOffAWall(String name) { //CONNECT TO BUTTON HANDL
+        JSONArray newMatrix = new JSONArray();
+        if (View2.getRb1().isSelected()) {
+            newMatrix.add(View2.getT1());//
+            newMatrix.add(View2.getT2());//
+            newMatrix.add("0");
+            newMatrix.add(View2.getT4());//
+            newMatrix.add(View2.getT5());//
+            newMatrix.add("0");
+            newMatrix.add("0");
+            newMatrix.add("0");
+            newMatrix.add("0");
+        }
+        if (View2.getRb2().isSelected()) {
+            newMatrix.add(View2.getT1());
+            newMatrix.add(View2.getT2());
+            newMatrix.add(View2.getT3());
+            newMatrix.add(View2.getT4());
+            newMatrix.add(View2.getT5());
+            newMatrix.add(View2.getT6());
+            newMatrix.add(View2.getT7());
+            newMatrix.add(View2.getT8());
+            newMatrix.add(View2.getT9());
+        }
+        matrix.put(name, newMatrix);
+        File newFile = new File("Resources/JsonFile.json");
+
+        try {
+            // Constructs a FileWriter given a file name, using the platform's default charset
+            file = new FileWriter("Resources/JsonFile.json");
+            file.write(matrix.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                file.flush();
+                file.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static ArrayList<Integer> humptyDumptyCameBackToLife () {
+        JSONParser parser = new JSONParser();
+
+        Object obj = null;
+        try {
+            obj = parser.parse(new FileReader("C:\\Users\\naola\\Documents\\NetBeansProjects\\Json\\src\\json\\T1.json"));
+            JSONObject jsonObject = (JSONObject) obj;
+
+
+            try {
+                other = makeTheArrayList((JSONArray) jsonObject.get(View2.getCb().getValue()));
+            }catch(Exception e){
+                e.printStackTrace();
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return other;
     }
 
     public static ArrayList<Integer> getDiagonal() {
