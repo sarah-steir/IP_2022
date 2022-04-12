@@ -1,22 +1,21 @@
 package pack.View;
 
-import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Controller.Controller1;
 import pack.Controller.Controller3;
+import pack.Model.Model3;
 import pack.View.Customs.Custom;
 import pack.View.Customs.CustomButton;
 import pack.View.Customs.CustomRadioButton;
 import pack.View.Customs.CustomTextField;
 import pack.View.GraphView.Graph;
+
+import java.util.ArrayList;
 
 public class View3 extends Pane implements iView {
 
@@ -100,7 +99,7 @@ public class View3 extends Pane implements iView {
                     if (fieldListRb1[i][j].getText().equals("")) {
                         fieldListRb1[i][j].setText("0");
                     }
-                    System.out.println("YO: " + fieldListRb1[i][j].getText());
+
                 }
             }
         } else {
@@ -109,10 +108,18 @@ public class View3 extends Pane implements iView {
                     if (fieldListRb2[i][j].getText().equals("")) {
                         fieldListRb2[i][j].setText("0");
                     }
-                    System.out.println("YO FROM 3x3: " + fieldListRb2[i][j].getText());
+
                 }
             }
         }
+
+        Model3 c3=new Model3();
+        c3.transform(getFieldListRb2());
+        c3.crossProduct();
+        c3.solutionPoints(5);
+        graph.addPlane(c3.n1.get(0)/-c3.n1.get(3),c3.n1.get(1)/-c3.n1.get(3),c3.n1.get(2)/-c3.n1.get(3),"Plane1");
+        graph.addPlane(c3.n2.get(0)/-c3.n2.get(3),c3.n2.get(1)/-c3.n2.get(3),c3.n2.get(2)/-c3.n2.get(3),"Plane2");
+        graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10));
         Controller3 controller3 = new Controller3(this);
         //addOutput(controller3);
     }
@@ -190,6 +197,27 @@ public class View3 extends Pane implements iView {
             }
         }
         return gridPane;
+    }
+
+
+    public ArrayList<CustomTextField> getFieldListRb1() {
+        ArrayList<CustomTextField> fieldList = new ArrayList<>();
+        for (CustomTextField[] tfArray: this.fieldListRb1) {
+            for (CustomTextField tf: tfArray) {
+                fieldList.add(tf);
+            }
+        }
+        return fieldList;
+    }
+
+    public ArrayList<CustomTextField> getFieldListRb2() {
+        ArrayList<CustomTextField> fieldList = new ArrayList<>();
+        for (CustomTextField[] tfArray: this.fieldListRb2) {
+            for (CustomTextField tf: tfArray) {
+                fieldList.add(tf);
+            }
+        }
+        return fieldList;
     }
 
 }

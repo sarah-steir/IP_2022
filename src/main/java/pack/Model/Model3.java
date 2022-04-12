@@ -2,16 +2,19 @@ package pack.Model;
 
 import javafx.geometry.Point3D;
 import javafx.scene.control.TextField;
+import pack.View.Customs.CustomTextField;
 
 import java.util.ArrayList;
 
 public class Model3 {
     //Planes
-    public static ArrayList<Double> n1 = new ArrayList<Double>();
-    public static ArrayList<Double> n2 = new ArrayList<Double>();
-    static double crossProduct[] = new double[3];
+    public  ArrayList<Double> n1 = new ArrayList<Double>();
+    public  ArrayList<Double> n2 = new ArrayList<Double>();
+     double crossProduct[] = new double[3];
 
-    public static void transform(ArrayList<TextField> f) {
+    public Model3(){}
+
+    public  void transform(ArrayList<CustomTextField> f) {
         for (int i = 0; i < 4; i++) {
             Double d = Double.parseDouble(f.get(i).getText());
             n1.add(d);
@@ -22,7 +25,7 @@ public class Model3 {
         }
     }
 
-    public static void crossProduct() {
+    public  void crossProduct() {
         crossProduct[0] = n1.get(1) * n2.get(2) - n1.get(2) * n2.get(1);
         crossProduct[1] = n1.get(2) * n2.get(0) - n1.get(0) * n2.get(2);
         crossProduct[2] = n1.get(0) * n2.get(1) - n1.get(1) * n2.get(0);
@@ -32,7 +35,7 @@ public class Model3 {
         }
     }
 
-    public static Point3D point(int i) {
+    public Point3D solutionPoints(int i) {
 
         double x = i;
         double z = ((n2.get(1) / n1.get(1)) * (n1.get(0) * x + n1.get(3)) - n2.get(0) * x - n2.get(3)) / (n2.get(2) - n1.get(2) * n2.get(1) / n1.get(1));
@@ -45,7 +48,7 @@ public class Model3 {
         return point1;
     }
 
-    public static String st(int i) {
+    public  String st(int i) {
         switch (i) {
             case 1:
                 String st = n1.get(0).toString() + "x +" + n1.get(1).toString() + "y +" + n1.get(3).toString() + "z =" + n1.get(4).toString();

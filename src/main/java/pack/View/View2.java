@@ -3,15 +3,16 @@ package pack.View;
 import javafx.scene.layout.Pane;
 import pack.View.iView;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import pack.Controller.Controller2;
 import pack.Model.Model2for2x2;
@@ -53,7 +54,7 @@ public class View2 extends Pane implements iView {
         this.cb = new ComboBox();
         this.btnSave = new CustomButton("Save Matrix");
         this.btnSave.setPrefSize(200, 20);
-        JASONDERULO = new ModelForJSON();
+       // JASONDERULO = new ModelForJSON();
        cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             doAction(cb.getValue().toString()); //Send the selected item to the method
