@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import pack.Controller.Controller1;
+import pack.Controller.Controller2;
 import pack.Model.Model2for2x2;
 import pack.Model.Model2for3x3;
 import pack.Model.ModelForJSON;
@@ -21,6 +22,8 @@ import pack.View.Customs.CustomButton;
 import pack.View.Customs.CustomRadioButton;
 import pack.View.Customs.CustomTextField;
 import pack.View.GraphView.Graph;
+
+import java.util.ArrayList;
 
 public class View2 extends Pane implements iView {
 
@@ -46,8 +49,8 @@ public class View2 extends Pane implements iView {
         this.btnStart.setDisable(true);
         this.btnReset = new CustomButton("RESET\nTHE\nMAGIK");
         this.cb = new ComboBox();
-        this.btnSave = new CustomButton("Save\nMatrix");
-        this.btnSave.setPrefSize(115, 50);
+        this.btnSave = new CustomButton("Save Matrix");
+        this.btnSave.setPrefSize(200, 20);
 
         fieldListRb1 = new CustomTextField[2][2];
         fieldListRb2 = new CustomTextField[3][3];
@@ -66,7 +69,6 @@ public class View2 extends Pane implements iView {
 
         setView2();
         setActions();
-
         cb.getItems().addAll(
                 "Diagonal",
                 "identity",
@@ -75,18 +77,11 @@ public class View2 extends Pane implements iView {
                 "Symmetric",
                 "Upper Triangle"
         );
-//        Button button = new Button();
-//        button.setOnAction(event -> {
-//            //Call a method to determine which item in the list the user has selected
-//            doAction(cb.getValue().toString()); //Send the selected item to the method
-//        });
         cb.setPromptText("Saved Matrices");
-        //this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "EigenValues and EigenVectors", null, cb));
-        //iView.handleStart.(2,false);
     }
 
     private HBox setHbComboBox() {
-        HBox hbComboBox = new HBox(10);
+        HBox hbComboBox = new HBox(100);
         hbComboBox.setPadding(new Insets(15));
         hbComboBox.getChildren().addAll(this.cb, this.btnSave);
         return hbComboBox;
@@ -176,27 +171,27 @@ public class View2 extends Pane implements iView {
     }
 
     public void handleStart(boolean isRb1Selected) {
-//        if (isRb1Selected) {
-//            for (int i = 0; i < fieldListRb1.length; i++) {
-//                for (int j = 0; j < fieldListRb1[0].length; j++) {
-//                    if (fieldListRb1[i][j].getText().equals("")) {
-//                        fieldListRb1[i][j].setText("0");
-//                    }
-//                    System.out.println("YO: " + fieldListRb1[i][j].getText());
-//                }
-//            }
-//        } else {
-//            for (int i = 0; i < fieldListRb2.length; i++) {
-//                for (int j = 0; j < fieldListRb2[0].length; j++) {
-//                    if (fieldListRb2[i][j].getText().equals("")) {
-//                        fieldListRb2[i][j].setText("0");
-//                    }
-//                    System.out.println("YO FROM 3x3: " + fieldListRb2[i][j].getText());
-//                }
-//            }
-//        }
-//        Controller1 controller1 = new Controller1(this);
-//        addOutput(controller1);
+        if (isRb1Selected) {
+            for (int i = 0; i < fieldListRb1.length; i++) {
+                for (int j = 0; j < fieldListRb1[0].length; j++) {
+                    if (fieldListRb1[i][j].getText().equals("")) {
+                        fieldListRb1[i][j].setText("0");
+                    }
+                    System.out.println("YO: " + fieldListRb1[i][j].getText());
+                }
+            }
+        } else {
+            for (int i = 0; i < fieldListRb2.length; i++) {
+                for (int j = 0; j < fieldListRb2[0].length; j++) {
+                    if (fieldListRb2[i][j].getText().equals("")) {
+                        fieldListRb2[i][j].setText("0");
+                    }
+                    System.out.println("YO FROM 3x3: " + fieldListRb2[i][j].getText());
+                }
+            }
+        }
+        Controller2 controller2 = new Controller2(this);
+        addOutput(controller2);
     }
 
     public void handleReset() {
@@ -208,8 +203,58 @@ public class View2 extends Pane implements iView {
         this.getChildren().addAll(this.vbLeft, this.vbRight);
     }
 
+    public void addOutput(Controller2 controller2) {
+        this.vbPo.getChildren().clear();
+        setVbPo("Eigenvalues and eigenvectors");
 
-//
+        VBox vbOutput = new VBox();
+        vbOutput.setSpacing(15);
+        vbOutput.setPadding(new Insets(15));
+
+        // Print eigenvalues
+        for (int i = 0; i < controller2.getEigenValues().length; i++) {
+            vbOutput.getChildren().add(Custom.setTitle("Eigenvalue " + (i+1) + ": " + controller2.getEigenValues()[i]));
+        }
+
+        // Print eigenvectors
+
+        /*for (int i = 0; i < controller1.getOutput().length; i++) {
+            if (i == 0) {
+                vbOutput.getChildren().add(Custom.setTitle("X = " + controller1.getOutput()[i]));
+            } else if (i == 1) {
+                vbOutput.getChildren().add(Custom.setTitle("Y = " + controller1.getOutput()[i]));
+            } else if (i == 2) {
+                vbOutput.getChildren().add(Custom.setTitle("Z = " + controller1.getOutput()[i]));
+            }
+        }*/
+        this.vbPo.getChildren().add(vbOutput);
+    }
+
+    public CustomRadioButton getRb1() {
+        return this.rb1;
+    }
+
+    public ArrayList<CustomTextField> getFieldListRb1() {
+        ArrayList<CustomTextField> fieldList = new ArrayList<>();
+        for (CustomTextField[] tfArray: this.fieldListRb1) {
+            for (CustomTextField tf: tfArray) {
+                fieldList.add(tf);
+            }
+        }
+        return fieldList;
+    }
+
+    public ArrayList<CustomTextField> getFieldListRb2() {
+        ArrayList<CustomTextField> fieldList = new ArrayList<>();
+        for (CustomTextField[] tfArray: this.fieldListRb2) {
+            for (CustomTextField tf: tfArray) {
+                fieldList.add(tf);
+            }
+        }
+        return fieldList;
+    }
+
+    //
 //    private void doAction(String listItem) {
 //        switch (listItem) {
 //            case "Lower Triangle":

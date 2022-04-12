@@ -1,4 +1,5 @@
 package pack.Model;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -17,20 +18,20 @@ public class Model2for3x3 {
     private double b1Initial, b2Initial, b3Initial;// hold initial value second row
     private double c1Initial, c2Initial, c3Initial;// hold initial value third row
     double m1[], m2[], m3[]; // reduced matrix
-    static ArrayList<Double> s1,s2, s3;//eigenvectors
+    static ArrayList<Double> s1, s2, s3;//eigenvectors
 
     static final DecimalFormat formatting = new DecimalFormat("0.0000"); // format the number to 4 decimals
 
-    public Model2for3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3) {
-        this.a1 = a1;
-        this.a2 = a2;
-        this.a3 = a3;
-        this.b1 = b1;
-        this.b2 = b2;
-        this.b3 = b3;
-        this.c1 = c1;
-        this.c2 = c2;
-        this.c3 = c3;
+    public Model2for3x3(ArrayList<Double> matrixCoefficients) {
+        this.a1 = matrixCoefficients.get(0);
+        this.a2 = matrixCoefficients.get(1);
+        this.a3 = matrixCoefficients.get(2);
+        this.b1 = matrixCoefficients.get(3);
+        this.b2 = matrixCoefficients.get(4);
+        this.b3 = matrixCoefficients.get(5);
+        this.c1 = matrixCoefficients.get(6);
+        this.c2 = matrixCoefficients.get(7);
+        this.c3 = matrixCoefficients.get(8);
         this.a1Initial = a1;
         this.a2Initial = a2;
         this.a3Initial = a3;
@@ -75,7 +76,7 @@ public class Model2for3x3 {
         first = toTheCube; // x^3
     }
 
-// get the roots so the eigenvalues
+    // get the roots so the eigenvalues
     private void roots3x3(double A, double B, double C, double D) {
 
         double a = (double) B / A;
@@ -161,7 +162,8 @@ public class Model2for3x3 {
         s3 = findEigenVectors3x3(m3);
 
     }
-// reduces the matrix
+
+    // reduces the matrix
     private double[] reduceMatrix3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3) {
         a1 = Double.parseDouble(formatting.format(a1)); // format everything
         a2 = Double.parseDouble(formatting.format(a2));
@@ -250,8 +252,8 @@ public class Model2for3x3 {
             c3 = Double.parseDouble(formatting.format(c3 - (b3 * c2))); //MAKE THE FIRST NUMBER 0 AND THEN substract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
             c2 = Double.parseDouble(formatting.format(c2 - (b2 * c2)));
         }
-        if(c3<0.005){
-            c3=0;
+        if (c3 < 0.005) {
+            c3 = 0;
         }
         // second row done
         if (c3 != 1 && c3 != 0) { //if a not equal to one or zero
@@ -269,445 +271,185 @@ public class Model2for3x3 {
 
         return arr;
     }
-// find eigenvectors
-private ArrayList<Double> findEigenVectors3x3(double[] v1) {
-    ArrayList<Double> y1= new ArrayList<>(); // if only one vector for that one eigen value
-    y1.add(0,0.0);
-    y1.add(1,0.0);
-    y1.add(2,0.0);
-    int counterUp = 0;
-    int counter =0;
-    int lineCounter = 1;
-    boolean firstLine = false;
-    boolean secondLine = false;
-    boolean thirdLine = false;
 
-    for (int j = 0; j < v1.length; j++) {
-        if(v1[j]==0){
-            counter++;
+    // find eigenvectors
+    private ArrayList<Double> findEigenVectors3x3(double[] v1) {
+        ArrayList<Double> y1 = new ArrayList<>(); // if only one vector for that one eigen value
+        y1.add(0, 0.0);
+        y1.add(1, 0.0);
+        y1.add(2, 0.0);
+        int counterUp = 0;
+        int counter = 0;
+        int lineCounter = 1;
+        boolean firstLine = false;
+        boolean secondLine = false;
+        boolean thirdLine = false;
 
+        for (int j = 0; j < v1.length; j++) {
+            if (v1[j] == 0) {
+                counter++;
+
+            }
         }
-    }
-    if(counter==9){
-        y1.set(0,1.0);
-        y1.set(1,0.0);
-        y1.set(2,.0);
-        y1.add(3,0.0);
-        y1.add(4,1.0);
-        y1.add(5,0.0);
-        y1.add(6,0.0);
-        y1.add(7,0.0);
-        y1.add(8,1.0);
+        if (counter == 9) {
+            y1.set(0, 1.0);
+            y1.set(1, 0.0);
+            y1.set(2, .0);
+            y1.add(3, 0.0);
+            y1.add(4, 1.0);
+            y1.add(5, 0.0);
+            y1.add(6, 0.0);
+            y1.add(7, 0.0);
+            y1.add(8, 1.0);
 
-        return y1;
-    }
-
-    if(v1[0]==0 && v1[1]==0 && v1[2]==0 && v1[3]==0 && v1[4]==0 && v1[5]==0){
-
-        y1.set(0,1.0);
-        y1.set(1,0.0);
-        y1.set(2,0.0);
-        y1.add(0.0);
-        y1.add(1.0);
-        y1.add(0.0);
-        return y1;
-    }
-
-
-
-    if(v1[0]==0 && v1[1]==0 && v1[2]==0 && v1[6]==0 && v1[7]==0 && v1[8]==0){
-        y1.set(0,1.0);
-        y1.set(1,0.0);
-        y1.set(2,0.0);
-        y1.add(0.0);
-        y1.add(0.0);
-        y1.add(1.0);
-        return y1;
-    }
-
-    if(v1[3]==0 && v1[4]==0 && v1[5]==0 && v1[6]==0 && v1[7]==0 && v1[8]==0){
-        y1.set(0,0.0);
-        y1.set(1,1.0);
-        y1.set(2,0.0);
-        y1.add(0.0);
-        y1.add(0.0);
-        y1.add(1.0);
-        return y1;
-    }
-
-    for (int i = 0; i < v1.length; i++) { // loop until we went through all the numbers in the matrix  SHOULD GO THROUGH 3 TIME CUZ 3 ROWS
-        double t11 = Double.parseDouble(formatting.format(v1[i])); // T11 = FIRST NUMBER IN ROW T22= SECOND NUMBER IN ROW T33 THRID NUMBER IN ROW
-        double t22 = Double.parseDouble(formatting.format(v1[i + 1]));
-        double t33 = Double.parseDouble(formatting.format(v1[i + 2]));
-        if (t11 != 0 && t22 != 0 && t33 != 0) { // if the whole row has numbers ( which means other 2 rows are all zero
-            y1.set(0,-t22); // x2
-            y1.set(1,1.0); //  vector for second number (x2) free number
-            y1.set(2,0.0);
-            y1.add(3,-t33); // x3
-            y1.add(4,0.0);
-            y1.add(5,1.0);// vector for third number (x3) free number
             return y1;
-        } else {
-            if ((t11 == 0 || t22 == 0 || t33 == 0) && (t11 == 1 || t22 == 1 || t33 == 1)) { //one 0 & one 1
-                if (t11 == 1) { // FIND WHERE IS THE ONE
-                    if (t22 == 0) { // FIND WHERE IS THE ZERO
-                        if (t33 == 0) { // IF THERE IS ANOTHER ZERO THEN 0 IN THE VECTOR FOR THAT ROW (COUNTER =1 THEN ROW ONE AND THE TOP POSITION IN VECTOR)
-                            y1.set(counterUp, 0.0);
-
-                        } else {
-                            y1.set(counterUp, -t33);// else that position in the vector is the value of which ever number is not zero and not the first 1 free number
-                        }
-                    }
-
-                    if (t33 == 0) {
-                        if (t22 == 0) {
-                            y1.set(counterUp, 0.0);
-                        } else {
-                            y1.set(counterUp, -t22);
-                        }
-                    }
-                }
-                if (t22 == 1) {
-                    if (t33 == 0) {
-                        if (t11 == 0) {
-                            y1.set(counterUp, 0.0);
-                        } else {
-
-                            y1.set(counterUp, -t11);
-                        }
-                    }
-                    if (t11 == 0) {
-                        if (t33 == 0) {
-                            y1.set(counterUp, 0.0);
-                        } else {
-                            y1.set(counterUp, -t33);
-                        }
-                    }
-                }
-                if (t33 == 1) {
-                    if (t11 == 0) {
-                        if (t22 == 0) {
-                            y1.set(counterUp, 0.0);
-                        } else {
-                            y1.set(counterUp, -t22);
-                        }
-                    }
-                    if (t22 == 0) {
-                        if (t11 == 0) {
-                            y1.set(counterUp, 0.0);
-                        } else {
-                            y1.set(counterUp, -t11);
-                        }
-                    }
-                }
-                if(v1[6]==0 && v1[7]==0 && v1[8]==0){
-                    y1.set(2,1.0);
-                }
-            }
-            if(y1.get(0)==0 && y1.get(1)==0 && y1.get(0)==0){
-                if (t11 == 0 && t22 == 0 && t33 == 0) { // if the whole row is zero then that position in the vector is 1
-                    if(lineCounter == 1){
-                        y1.set(0,1.0); // x2
-                        y1.set(1,0.0); //  vector for second number (x2) free number
-                        y1.set(2,0.0);
-                    }
-                    else if (lineCounter == 2){
-                        y1.set(0,0.0); // x2
-                        y1.set(1,1.0); //  vector for second number (x2) free number
-                        y1.set(2,0.0);
-                    }
-                    else{
-                        y1.set(0,0.0); // x2
-                        y1.set(1,0.0); //  vector for second number (x2) free number
-                        y1.set(2,1.0);
-                    }
-                }
-
-            }
         }
 
-        counterUp++;
-        i++; // up by two to switch row
-        i++;
-        lineCounter++;
-
-    }
-
-
-
-    return y1;
-
-}
-
-    public static double getX1() {
-        return x1;
-    }
-
-    public void setX1(double x1) {
-        this.x1 = x1;
-    }
-
-    public static double getX2() {
-        return x2;
-    }
-
-    public void setX2(double x2) {
-        this.x2 = x2;
-    }
-
-    public static double getX3() {
-        return x3;
-    }
-
-    public void setX3(double x3) {
-        this.x3 = x3;
-    }
-
-    public double getFirst() {
-        return first;
-    }
-
-    public void setFirst(double first) {
-        this.first = first;
-    }
-
-    public double getSecond() {
-        return second;
-    }
-
-    public void setSecond(double second) {
-        this.second = second;
-    }
-
-    public double getThird() {
-        return third;
-    }
-
-    public void setThird(double third) {
-        this.third = third;
-    }
-
-    public double getFourth() {
-        return fourth;
-    }
-
-    public void setFourth(double fourth) {
-        this.fourth = fourth;
-    }
-
-    public double getE1() {
-        return e1;
-    }
-
-    public void setE1(double e1) {
-        this.e1 = e1;
-    }
-
-    public double getE2() {
-        return e2;
-    }
-
-    public void setE2(double e2) {
-        this.e2 = e2;
-    }
-
-    public double getE3() {
-        return e3;
-    }
-
-    public void setE3(double e3) {
-        this.e3 = e3;
-    }
-
-    public double getA1() {
-        return a1;
-    }
-
-    public void setA1(double a1) {
-        this.a1 = a1;
-    }
-
-    public double getA2() {
-        return a2;
-    }
-
-    public void setA2(double a2) {
-        this.a2 = a2;
-    }
-
-    public double getA3() {
-        return a3;
-    }
-
-    public void setA3(double a3) {
-        this.a3 = a3;
-    }
-
-    public double getB1() {
-        return b1;
-    }
-
-    public void setB1(double b1) {
-        this.b1 = b1;
-    }
-
-    public double getB2() {
-        return b2;
-    }
-
-    public void setB2(double b2) {
-        this.b2 = b2;
-    }
-
-    public double getB3() {
-        return b3;
-    }
-
-    public void setB3(double b3) {
-        this.b3 = b3;
-    }
-
-    public double getC1() {
-        return c1;
-    }
-
-    public void setC1(double c1) {
-        this.c1 = c1;
-    }
-
-    public double getC2() {
-        return c2;
-    }
-
-    public void setC2(double c2) {
-        this.c2 = c2;
-    }
-
-    public double getC3() {
-        return c3;
-    }
-
-    public void setC3(double c3) {
-        this.c3 = c3;
-    }
-
-    public double getA1Initial() {
-        return a1Initial;
-    }
-
-    public void setA1Initial(double a1Initial) {
-        this.a1Initial = a1Initial;
-    }
-
-    public double getA2Initial() {
-        return a2Initial;
-    }
-
-    public void setA2Initial(double a2Initial) {
-        this.a2Initial = a2Initial;
-    }
-
-    public double getA3Initial() {
-        return a3Initial;
-    }
-
-    public void setA3Initial(double a3Initial) {
-        this.a3Initial = a3Initial;
-    }
-
-    public double getB1Initial() {
-        return b1Initial;
-    }
-
-    public void setB1Initial(double b1Initial) {
-        this.b1Initial = b1Initial;
-    }
-
-    public double getB2Initial() {
-        return b2Initial;
-    }
-
-    public void setB2Initial(double b2Initial) {
-        this.b2Initial = b2Initial;
-    }
-
-    public double getB3Initial() {
-        return b3Initial;
-    }
-
-    public void setB3Initial(double b3Initial) {
-        this.b3Initial = b3Initial;
-    }
-
-    public double getC1Initial() {
-        return c1Initial;
-    }
-
-    public void setC1Initial(double c1Initial) {
-        this.c1Initial = c1Initial;
-    }
-
-    public double getC2Initial() {
-        return c2Initial;
-    }
-
-    public void setC2Initial(double c2Initial) {
-        this.c2Initial = c2Initial;
-    }
-
-    public double getC3Initial() {
-        return c3Initial;
-    }
-
-    public void setC3Initial(double c3Initial) {
-        this.c3Initial = c3Initial;
-    }
-
-    public double[] getM1() {
-        return m1;
-    }
-
-    public void setM1(double[] m1) {
-        this.m1 = m1;
-    }
-
-    public double[] getM2() {
-        return m2;
-    }
-
-    public void setM2(double[] m2) {
-        this.m2 = m2;
-    }
-
-    public double[] getM3() {
-        return m3;
-    }
-
-    public void setM3(double[] m3) {
-        this.m3 = m3;
-    }
-
-    public static ArrayList<Double> getS1() {
-        return s1;
-    }
-
-    public static void setS1(ArrayList<Double> s1) {
-        Model2for3x3.s1 = s1;
-    }
-
-    public static ArrayList<Double> getS2() {
-        return s2;
-    }
-
-    public static void setS2(ArrayList<Double> s2) {
-        Model2for3x3.s2 = s2;
-    }
-
-    public static ArrayList<Double> getS3() {
-        return s3;
-    }
-
-    public static void setS3(ArrayList<Double> s3) {
-        Model2for3x3.s3 = s3;
+        if (v1[0] == 0 && v1[1] == 0 && v1[2] == 0 && v1[3] == 0 && v1[4] == 0 && v1[5] == 0) {
+
+            y1.set(0, 1.0);
+            y1.set(1, 0.0);
+            y1.set(2, 0.0);
+            y1.add(0.0);
+            y1.add(1.0);
+            y1.add(0.0);
+            return y1;
+        }
+
+
+        if (v1[0] == 0 && v1[1] == 0 && v1[2] == 0 && v1[6] == 0 && v1[7] == 0 && v1[8] == 0) {
+            y1.set(0, 1.0);
+            y1.set(1, 0.0);
+            y1.set(2, 0.0);
+            y1.add(0.0);
+            y1.add(0.0);
+            y1.add(1.0);
+            return y1;
+        }
+
+        if (v1[3] == 0 && v1[4] == 0 && v1[5] == 0 && v1[6] == 0 && v1[7] == 0 && v1[8] == 0) {
+            y1.set(0, 0.0);
+            y1.set(1, 1.0);
+            y1.set(2, 0.0);
+            y1.add(0.0);
+            y1.add(0.0);
+            y1.add(1.0);
+            return y1;
+        }
+
+        for (int i = 0; i < v1.length; i++) { // loop until we went through all the numbers in the matrix  SHOULD GO THROUGH 3 TIME CUZ 3 ROWS
+            double t11 = Double.parseDouble(formatting.format(v1[i])); // T11 = FIRST NUMBER IN ROW T22= SECOND NUMBER IN ROW T33 THRID NUMBER IN ROW
+            double t22 = Double.parseDouble(formatting.format(v1[i + 1]));
+            double t33 = Double.parseDouble(formatting.format(v1[i + 2]));
+            if (t11 != 0 && t22 != 0 && t33 != 0) { // if the whole row has numbers ( which means other 2 rows are all zero
+                y1.set(0, -t22); // x2
+                y1.set(1, 1.0); //  vector for second number (x2) free number
+                y1.set(2, 0.0);
+                y1.add(3, -t33); // x3
+                y1.add(4, 0.0);
+                y1.add(5, 1.0);// vector for third number (x3) free number
+                return y1;
+            } else {
+                if ((t11 == 0 || t22 == 0 || t33 == 0) && (t11 == 1 || t22 == 1 || t33 == 1)) { //one 0 & one 1
+                    if (t11 == 1) { // FIND WHERE IS THE ONE
+                        if (t22 == 0) { // FIND WHERE IS THE ZERO
+                            if (t33 == 0) { // IF THERE IS ANOTHER ZERO THEN 0 IN THE VECTOR FOR THAT ROW (COUNTER =1 THEN ROW ONE AND THE TOP POSITION IN VECTOR)
+                                y1.set(counterUp, 0.0);
+
+                            } else {
+                                y1.set(counterUp, -t33);// else that position in the vector is the value of which ever number is not zero and not the first 1 free number
+                            }
+                        }
+
+                        if (t33 == 0) {
+                            if (t22 == 0) {
+                                y1.set(counterUp, 0.0);
+                            } else {
+                                y1.set(counterUp, -t22);
+                            }
+                        }
+                    }
+                    if (t22 == 1) {
+                        if (t33 == 0) {
+                            if (t11 == 0) {
+                                y1.set(counterUp, 0.0);
+                            } else {
+
+                                y1.set(counterUp, -t11);
+                            }
+                        }
+                        if (t11 == 0) {
+                            if (t33 == 0) {
+                                y1.set(counterUp, 0.0);
+                            } else {
+                                y1.set(counterUp, -t33);
+                            }
+                        }
+                    }
+                    if (t33 == 1) {
+                        if (t11 == 0) {
+                            if (t22 == 0) {
+                                y1.set(counterUp, 0.0);
+                            } else {
+                                y1.set(counterUp, -t22);
+                            }
+                        }
+                        if (t22 == 0) {
+                            if (t11 == 0) {
+                                y1.set(counterUp, 0.0);
+                            } else {
+                                y1.set(counterUp, -t11);
+                            }
+                        }
+                    }
+                    if (v1[6] == 0 && v1[7] == 0 && v1[8] == 0) {
+                        y1.set(2, 1.0);
+                    }
+                }
+                if (y1.get(0) == 0 && y1.get(1) == 0 && y1.get(0) == 0) {
+                    if (t11 == 0 && t22 == 0 && t33 == 0) { // if the whole row is zero then that position in the vector is 1
+                        if (lineCounter == 1) {
+                            y1.set(0, 1.0); // x2
+                            y1.set(1, 0.0); //  vector for second number (x2) free number
+                            y1.set(2, 0.0);
+                        } else if (lineCounter == 2) {
+                            y1.set(0, 0.0); // x2
+                            y1.set(1, 1.0); //  vector for second number (x2) free number
+                            y1.set(2, 0.0);
+                        } else {
+                            y1.set(0, 0.0); // x2
+                            y1.set(1, 0.0); //  vector for second number (x2) free number
+                            y1.set(2, 1.0);
+                        }
+                    }
+
+                }
+            }
+
+            counterUp++;
+            i++; // up by two to switch row
+            i++;
+            lineCounter++;
+
+        }
+
+
+        return y1;
+    }
+
+    public double[] getEigenValues() {
+        double[] eigenValues = new double[3];
+        eigenValues[0] = x1;
+        eigenValues[1] = x2;
+        eigenValues[2] = x3;
+        return eigenValues;
+    }
+
+    public ArrayList<Double>[] getEigenVectors() {
+        ArrayList<Double>[] eigenVectors = new ArrayList[3];
+        eigenVectors[0] = s1;
+        eigenVectors[1] = s2;
+        eigenVectors[2] = s3;
+        return eigenVectors;
     }
 }
