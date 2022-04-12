@@ -54,7 +54,7 @@ public class Controller2 {
         }
     }
 
-    public ArrayList<Double>[] getEigenVectors() {
+    public ArrayList<Double>[]getEigenVectors() {
         if (is2by2) {
             return model2for2x2.getEigenVectors();
         } else {
