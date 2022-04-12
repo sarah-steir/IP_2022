@@ -51,7 +51,7 @@ public class View2 extends Pane implements iView {
         this.btnSave = new CustomButton("Save Matrix");
         this.btnSave.setPrefSize(200, 20);
         JASONDERULO = new ModelForJSON();
-        cb.setOnAction(event -> {
+       cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             doAction(cb.getValue().toString()); //Send the selected item to the method
         });
@@ -103,48 +103,50 @@ public class View2 extends Pane implements iView {
     }
 
 
-    public GridPane showDaRight() {
+
+    public GridPane showDaRight(Controller2 controller2) {
         GridPane gpt = new GridPane();
         gpt.setPadding(new Insets(10, 10, 10, 10));
         gpt.setPrefSize(500, 695);
         gpt.setLayoutX(520);
         gpt.setLayoutY(14);
+
         if (rb2.isSelected()) {
             Text text = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX1() + " THE EIGEN VECTOR IS");
             Text text1 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX2() + " THE EIGEN VECTOR IS");
             Text text2 = new Text("FOR THE EIGENVALUE " + Model2for3x3.getX3() + " THE EIGEN VECTOR IS");
             gpt.add(text, 1, 10);
             if (Model2for3x3.getS1().size() == 3) {
-                gpt.add(newVector(1,3), 2, 15);
+                gpt.add(newVector(1,3,controller2), 2, 15);
             } else if (Model2for3x3.getS1().size() == 6) {
-                gpt.add(newVector(1,3), 2, 15);
-                gpt.add(newVector(2,3), 3, 15);
+                gpt.add(newVector(1,3,controller2), 2, 15);
+                gpt.add(newVector(2,3,controller2), 3, 15);
             } else {
-                gpt.add(newVector(1,3), 2, 15);
-                gpt.add(newVector(2,3), 3, 15);
-                gpt.add(newVector(3,3), 4, 15);
+                gpt.add(newVector(1,3,controller2), 2, 15);
+                gpt.add(newVector(2,3,controller2), 3, 15);
+                gpt.add(newVector(3,3,controller2), 4, 15);
             }
             gpt.add(text1, 1, 10);
             if (Model2for3x3.getS2().size() == 3) {
-                gpt.add(newVector(1,3), 2, 15);
+                gpt.add(newVector(1,3,controller2), 2, 15);
             } else if (Model2for3x3.getS2().size() == 6) {
-                gpt.add(newVector(1,3), 2, 15);
-                gpt.add(newVector(2,3), 3, 15);
+                gpt.add(newVector(1,3, controller2), 2, 15);
+                gpt.add(newVector(2,3, controller2), 3, 15);
             } else {
-                gpt.add(newVector(1,3), 2, 15);
-                gpt.add(newVector(2,3), 3, 15);
-                gpt.add(newVector(3,3), 4, 15);
+                gpt.add(newVector(1,3, controller2), 2, 15);
+                gpt.add(newVector(2,3, controller2), 3, 15);
+                gpt.add(newVector(3,3,  controller2), 4, 15);
             }
             gpt.add(text2, 1, 10);
             if (Model2for3x3.getS3().size() == 3) {
-                gpt.add(newVector(1,3), 2, 15);
+                gpt.add(newVector(1,3, controller2), 2, 15);
             } else if (Model2for3x3.getS3().size() == 6) {
-                gpt.add(newVector(1,3), 2, 15);
-                gpt.add(newVector(2,3), 3, 15);
+                gpt.add(newVector(1,3,  controller2), 2, 15);
+                gpt.add(newVector(2,3,  controller2), 3, 15);
             } else {
-                gpt.add(newVector(1,3), 2, 15);
-                gpt.add(newVector(2,3), 3, 15);
-                gpt.add(newVector(3,3), 4, 15);
+                gpt.add(newVector(1,3,  controller2), 2, 15);
+                gpt.add(newVector(2,3,  controller2), 3, 15);
+                gpt.add(newVector(3,3, controller2), 4, 15);
             }
         }
         if (rb1.isSelected()) {
@@ -152,26 +154,26 @@ public class View2 extends Pane implements iView {
             Text text1 = new Text("FOR THE EIGENVALUE " + Model2for2x2.getX2() + " THE EIGEN VECTOR IS");
             gpt.add(text, 1, 10);
             if (Model2for2x2.getS1().size() == 2) {
-                gpt.add(newVector(1,2), 2, 15);
+                gpt.add(newVector(1,2,  controller2), 2, 15);
             }
             else{
-                gpt.add(newVector(1,2), 2, 15);
-                gpt.add(newVector(2,2), 3, 15);
+                gpt.add(newVector(1,2, controller2), 2, 15);
+                gpt.add(newVector(2,2,  controller2), 3, 15);
             }
             gpt.add(text1, 1, 10);
             if (Model2for2x2.getS2().size() == 2) {
-                gpt.add(newVector(1,2), 2, 15);
+                gpt.add(newVector(1,2,  controller2), 2, 15);
             }
             else{
-                gpt.add(newVector(1,2), 2, 15);
-                gpt.add(newVector(2,2), 3, 15);
+                gpt.add(newVector(1,2,  controller2), 2, 15);
+                gpt.add(newVector(2,2,  controller2), 3, 15);
             }
 
         }
         return gpt;
     }
 
-    public HBox newVector(int counter, int whatSize){ // counter is the vector if size=6 there is counter 1 and 2 possible
+    public HBox newVector(int counter, int whatSize, Controller2 controller2){ // counter is the vector if size=6 there is counter 1 and 2 possible
         HBox hbx = new HBox();
         VBox vbx1 = new VBox();
         ImageView imL = new ImageView(new Image(Custom.p + "brack left.png"));
@@ -181,36 +183,37 @@ public class View2 extends Pane implements iView {
         imR.setFitWidth(14);
         imR.setFitHeight(75);
         if(whatSize == 2){
-            vbx1 = putVertical2x2(counter);
+            vbx1 = putVertical2x2(counter,  controller2);
             vbx1.setPrefHeight(75);
         }
         if(whatSize == 3){
-            vbx1 = putVertical3x3(counter);
+            vbx1 = putVertical3x3(counter,  controller2);
             vbx1.setPrefHeight(75);
         }
         hbx.getChildren().addAll(imL,vbx1,imR);
 
         return hbx;
     }
-    public VBox putVertical3x3(int counter){
+    public VBox putVertical3x3(int counter,  Controller2 controller2){
         VBox vbx1 = new VBox();
         Double numba1 = null;
         Double numba2 = null;
         Double numba3 = null;
+
         if(counter==1){
-            numba1 = Model2for3x3.getS1().get(0);
-            numba2 = Model2for3x3.getS1().get(1);
-            numba3 = Model2for3x3.getS1().get(2);
+            numba1 = controller2.getEigenVectors()[1].get(0);
+            numba2 = controller2.getEigenVectors()[1].get(1);
+            numba3 = controller2.getEigenVectors()[1].get(2);
         }
         else if(counter==2){
-            numba1 = Model2for3x3.getS1().get(3);
-            numba2 = Model2for3x3.getS1().get(4);
-            numba3 = Model2for3x3.getS1().get(5);
+            numba1 = controller2.getEigenVectors()[2].get(0);
+            numba2 = controller2.getEigenVectors()[2].get(1);
+            numba3 = controller2.getEigenVectors()[2].get(2);
         }
         else{
-            numba1 = Model2for3x3.getS1().get(6);
-            numba2 = Model2for3x3.getS1().get(7);
-            numba3 = Model2for3x3.getS1().get(8);
+            numba1 = controller2.getEigenVectors()[3].get(0);
+            numba2 = controller2.getEigenVectors()[3].get(1);
+            numba3 = controller2.getEigenVectors()[3].get(2);
         }
         Text nb1 = new Text(Double.toString(numba1));
         Text nb2 = new Text(Double.toString(numba2));
@@ -223,17 +226,17 @@ public class View2 extends Pane implements iView {
         return vbx1;
     }
 
-    public VBox putVertical2x2(int counter){
+    public VBox putVertical2x2(int counter, Controller2 controller2){
         VBox vbx1 = new VBox();
         Double numba1 = null;
         Double numba2= null;
         if(counter==1){
-            numba1 = Model2for3x3.getS1().get(0);
-            numba2 = Model2for3x3.getS1().get(1);
+            numba1 = controller2.getEigenVectors()[1].get(0);
+            numba2 = controller2.getEigenVectors()[1].get(1);
         }
         if(counter==2){
-            numba1 = Model2for3x3.getS1().get(2);
-            numba2 = Model2for3x3.getS1().get(3);
+            numba1 = controller2.getEigenVectors()[2].get(0);
+            numba2 = controller2.getEigenVectors()[2].get(1);
         }
         Text nb1 = new Text(Double.toString(numba1));
         Text nb2 = new Text(Double.toString(numba2));
@@ -349,16 +352,7 @@ public class View2 extends Pane implements iView {
         vbOutput.setPadding(new Insets(15));
 
         // Print eigenvalues
-        for (int i = 0; i < controller2.getEigenValues().length; i++) {
-            vbOutput.getChildren().add(Custom.setTitle("Eigenvalue " + (i+1) + ": " + controller2.getEigenValues()[i]));
-        }
 
-        // Print eigenvectors
-        for (int i = 0; i < controller2.getEigenVectors().length; i++) {
-            // Print each vector
-            vbOutput.getChildren().add(Custom.setTitle("Eigenvector " + (i+1) + ": (" +
-                    controller2.getEigenVectors()[i].get(0) + ", " + controller2.getEigenVectors()[i].get(1) + ")"));
-        }
 
         /*for (int i = 0; i < controller1.getOutput().length; i++) {
             if (i == 0) {
@@ -370,6 +364,7 @@ public class View2 extends Pane implements iView {
             }
         }*/
         this.vbPo.getChildren().add(vbOutput);
+        this.vbPo.getChildren().add(showDaRight(controller2));
     }
 
 
