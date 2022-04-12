@@ -37,7 +37,7 @@ public class View2 extends Pane implements iView {
 
     private VBox vbUi;
     private VBox vbPo;
-
+    private ModelForJSON JASONDERULO;
     private VBox vbLeft;
     private VBox vbRight;
     private static CustomTextField t1, t2, t3, t4, t5, t6, t7, t8, t9;
@@ -54,6 +54,7 @@ public class View2 extends Pane implements iView {
         this.cb = new ComboBox();
         this.btnSave = new CustomButton("Save Matrix");
         this.btnSave.setPrefSize(200, 20);
+        JASONDERULO = new ModelForJSON();
        cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             doAction(cb.getValue().toString()); //Send the selected item to the method
@@ -443,6 +444,7 @@ public class View2 extends Pane implements iView {
     }
 
     private void doAction(String listItem) {
+        System.out.println("pepepepe");
         switch (listItem) {
             case "Lower Triangle":
                 a1 = ModelForJSON.getLowerTriangle().get(0);
@@ -494,7 +496,8 @@ public class View2 extends Pane implements iView {
                 a1 = ModelForJSON.getNul().get(0);
                 a2 = ModelForJSON.getNul().get(1);
                 a3 = ModelForJSON.getNul().get(2);
-                b1 = ModelForJSON.getNul().get(4);
+                b1 = ModelForJSON.getNul().get(3);
+                b2 = ModelForJSON.getNul().get(4);
                 b3 = ModelForJSON.getNul().get(5);
                 c1 = ModelForJSON.getNul().get(6);
                 c2 = ModelForJSON.getNul().get(7);
@@ -531,7 +534,7 @@ public class View2 extends Pane implements iView {
             fieldListRb2[2][1].setText(String.valueOf(c2));
             fieldListRb2[2][2].setText(String.valueOf(c3));
         }
-    }
+    } //DONE DONE DONE
 
 
 
