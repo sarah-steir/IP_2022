@@ -2,6 +2,7 @@ package pack.View;
 
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 import javafx.scene.control.ToggleGroup;
@@ -40,11 +41,12 @@ public class View3 extends Pane implements iView {
 
         btnStart = new CustomButton("START\nTHE\nMAGIK");
         btnReset = new CustomButton("RESET\nTHE\nMAGIK");
-        this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "Lines and planes", graph));
+        this.getChildren().addAll(setView(rb1, rb2, btnStart, btnReset, signsRb1, signsRb2, "Lines and planes", graph, null));
     }
 
     @Override
-    public VBox setRadios(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2) {
+    public VBox setRadios(CustomRadioButton rb1, CustomRadioButton rb2, CustomButton btnStart, String[] signsRb1, String[] signsRb2,
+                          ComboBox cb) {
 
         VBox vbRadioBox = new VBox();
         vbRadioBox.setPrefSize(500, 160);
@@ -57,18 +59,18 @@ public class View3 extends Pane implements iView {
 
         rb1.setOnAction(event -> {
             vbRadioBox.getChildren().clear();
-            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 6, btnStart, signsRb1));
+            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 6, btnStart, signsRb1, cb));
         });
 
         rb2.setOnAction(event -> {
             vbRadioBox.getChildren().clear();
-            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 4, btnStart, signsRb2));
+            vbRadioBox.getChildren().addAll(hbRadios, setFields(2, 4, btnStart, signsRb2, cb));
         });
         return vbRadioBox;
     }
 
     @Override
-    public GridPane setFields(int rows, int cols, CustomButton btnStart, String[] signs) {
+    public GridPane setFields(int rows, int cols, CustomButton btnStart, String[] signs, ComboBox cb) {
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(10);
