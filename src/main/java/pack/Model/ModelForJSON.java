@@ -12,7 +12,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import pack.View.View2;
+//import pack.View.View2;
 
 public class ModelForJSON {
     private static FileWriter file;
@@ -164,28 +164,28 @@ public static void writeBasics() {
     }
     private static void humptyDumptyFellOffAWall(String name) { //CONNECT TO BUTTON HANDL
         JSONArray newMatrix = new JSONArray();
-        if (View2.getRb1().isSelected()) {
-            newMatrix.add(View2.getT1());//
-            newMatrix.add(View2.getT2());//
-            newMatrix.add("0");
-            newMatrix.add(View2.getT4());//
-            newMatrix.add(View2.getT5());//
-            newMatrix.add("0");
-            newMatrix.add("0");
-            newMatrix.add("0");
-            newMatrix.add("0");
-        }
-        if (View2.getRb2().isSelected()) {
-            newMatrix.add(View2.getT1());
-            newMatrix.add(View2.getT2());
-            newMatrix.add(View2.getT3());
-            newMatrix.add(View2.getT4());
-            newMatrix.add(View2.getT5());
-            newMatrix.add(View2.getT6());
-            newMatrix.add(View2.getT7());
-            newMatrix.add(View2.getT8());
-            newMatrix.add(View2.getT9());
-        }
+//        if (View2.getRb1().isSelected()) {
+//            newMatrix.add(View2.getT1());//
+//            newMatrix.add(View2.getT2());//
+//            newMatrix.add("0");
+//            newMatrix.add(View2.getT4());//
+//            newMatrix.add(View2.getT5());//
+//            newMatrix.add("0");
+//            newMatrix.add("0");
+//            newMatrix.add("0");
+//            newMatrix.add("0");
+//        }
+//        if (View2.getRb2().isSelected()) {
+//            newMatrix.add(View2.getT1());
+//            newMatrix.add(View2.getT2());
+//            newMatrix.add(View2.getT3());
+//            newMatrix.add(View2.getT4());
+//            newMatrix.add(View2.getT5());
+//            newMatrix.add(View2.getT6());
+//            newMatrix.add(View2.getT7());
+//            newMatrix.add(View2.getT8());
+//            newMatrix.add(View2.getT9());
+//        }
         matrix.put(name, newMatrix);
         File newFile = new File("Resources/JsonFile.json");
 
@@ -215,7 +215,7 @@ public static void writeBasics() {
 
 
             try {
-                other = makeTheArrayList((JSONArray) jsonObject.get(View2.getCb().getValue()));
+                //other = makeTheArrayList((JSONArray) jsonObject.get(View2.getCb().getValue()));
             }catch(Exception e){
                 e.printStackTrace();
 
