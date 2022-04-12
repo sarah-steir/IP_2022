@@ -14,32 +14,22 @@ public class Controller1 {
     private ArrayList<Double> matrixCoefficients;
     private boolean is2by2;
 
-    public Controller1() {
+    public Controller1(View1 view) {
+        this.view = view;
+        is2by2 = view.getRb1().isSelected();
         fieldList = new ArrayList<>();
         matrixCoefficients = new ArrayList<>();
-    }
-    public Controller1 (View1 view) {
-        this.view = view;
-    }
-
-    public void setFieldList(ArrayList<CustomTextField> copyArray) {
-        this.fieldList = copyArray;
-    }
-
-    public void printFields() {
-        for (CustomTextField tf: this.fieldList) {
-            System.out.println(tf.getText());
-        }
+        transform();
     }
 
     // Include 2x2 as well later
     public void transform() {
-        if (this.fieldList.size() == 6) {
+        if (is2by2) {
+            fieldList = view.getFieldListRb1();
             transform2x2();
-            is2by2 = true;
         } else {
+            fieldList = view.getFieldListRb2();
             transform3x3();
-            is2by2 = false;
         }
     }
 

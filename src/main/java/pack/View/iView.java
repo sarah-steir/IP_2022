@@ -8,7 +8,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-//import pack.Controller.Controller1;
 import pack.Model.Model2for2x2;
 import pack.Model.Model2for3x3;
 import pack.Model.ModelForJSON;
@@ -41,8 +40,6 @@ public interface iView {
                 Label lblVariable = new Label();
                 lblVariable.setStyle("-fx-text-fill: E7EBEE;");
                 lblVariable.setFont(Custom.font);
-                lblVariable.setText(signs[j]);
-
                 if (j == cols - 1) {
                     lblVariable.setText("");
                 } else {
@@ -54,6 +51,22 @@ public interface iView {
 
                 textFields[i][j].textProperty().addListener((observable, oldValue, newValue) ->
                         btnStart.setDisable(textFields[finalI][finalJ].checkField()));
+
+//                btnStart.setOnAction(event -> {
+//                    boolean isInvalid = false;
+//                    for (CustomTextField[] tfArray: textFields) {
+//                        for (CustomTextField tf: tfArray) {
+//                            if (tf.checkField()) {
+//                                btnStart.setDisable(true);
+//                                //isInvalid = true;
+//                            } else {
+//                                copyArray.add(tf);
+//                               //isInvalid = false;
+//                            }
+//                        }
+//                    }
+//                    //handleStart(getWhichView(signs), isInvalid);
+//                });
 
                 hbTextField.getChildren().addAll(textFields[i][j], lblVariable);
                 gridPane.add(hbTextField, j, i);

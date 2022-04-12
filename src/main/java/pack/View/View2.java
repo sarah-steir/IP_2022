@@ -1,5 +1,8 @@
 package pack.View;
 
+import javafx.scene.layout.Pane;
+import pack.View.iView;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
