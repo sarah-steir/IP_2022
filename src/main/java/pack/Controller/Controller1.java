@@ -67,25 +67,18 @@ public class Controller1 {
         this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(11).getText()));
     }
 
-    public void printOutput() {
+    public double[] getOutput() {
         Model1 model1 = new Model1(this.matrixCoefficients, is2by2);
         if (is2by2) {
-            double [][]A = Model1.getMatrixA_2x2();
+            double [][] A = Model1.getMatrixA_2x2();
             double[] b = Model1.getMatrixB_2x2();
             double[] x = model1.SLESolve(A, b);
-
-            System.out.println("X = "+ x[0]);
-            System.out.println("Y = "+ x[1]);
-
-
+            return x;
         } else {
             double [][]A = Model1.getMatrixA_3x3();
             double[] b = Model1.getMatrixB_3x3();
             double[] x = model1.SLESolve(A, b);
-
-            System.out.println("X = "+ x[0]);
-            System.out.println("Y = "+ x[1]);
-            System.out.println("Z = "+ x[2]);
+            return x;
         }
     }
 }

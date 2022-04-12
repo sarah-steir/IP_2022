@@ -129,7 +129,7 @@ public static void writeBasics() {
 
             Object obj = null;
             try {
-                obj = parser.parse(new FileReader("Resources/JsonFile.json"));
+                obj = parser.parse(new FileReader("C:\\Users\\naola\\Documents\\NetBeansProjects\\Json\\src\\json\\T1.json"));
                 JSONObject jsonObject = (JSONObject) obj;
 
 
@@ -210,7 +210,7 @@ public static void writeBasics() {
 
         Object obj = null;
         try {
-            obj = parser.parse(new FileReader("Resources/JsonFile.json"));
+            obj = parser.parse(new FileReader("C:\\Users\\naola\\Documents\\NetBeansProjects\\Json\\src\\json\\T1.json"));
             JSONObject jsonObject = (JSONObject) obj;
 
 
