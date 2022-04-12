@@ -203,19 +203,19 @@ public class View2 extends Pane implements iView {
         Double numba3 = null;
 
         if(counter==1){
+            numba1 = controller2.getEigenVectors()[0].get(0);
+            numba2 = controller2.getEigenVectors()[0].get(1);
+            numba3 = controller2.getEigenVectors()[0].get(2);
+        }
+        else if(counter==2){
             numba1 = controller2.getEigenVectors()[1].get(0);
             numba2 = controller2.getEigenVectors()[1].get(1);
             numba3 = controller2.getEigenVectors()[1].get(2);
         }
-        else if(counter==2){
+        else{
             numba1 = controller2.getEigenVectors()[2].get(0);
             numba2 = controller2.getEigenVectors()[2].get(1);
             numba3 = controller2.getEigenVectors()[2].get(2);
-        }
-        else{
-            numba1 = controller2.getEigenVectors()[3].get(0);
-            numba2 = controller2.getEigenVectors()[3].get(1);
-            numba3 = controller2.getEigenVectors()[3].get(2);
         }
         Text nb1 = new Text(Double.toString(numba1));
         Text nb2 = new Text(Double.toString(numba2));
@@ -233,12 +233,12 @@ public class View2 extends Pane implements iView {
         Double numba1 = null;
         Double numba2= null;
         if(counter==1){
-            numba1 = controller2.getEigenVectors()[1].get(0);
-            numba2 = controller2.getEigenVectors()[1].get(1);
+            numba1 = controller2.getEigenVectors()[0].get(0);
+            numba2 = controller2.getEigenVectors()[0].get(1);
         }
         if(counter==2){
-            numba1 = controller2.getEigenVectors()[2].get(0);
-            numba2 = controller2.getEigenVectors()[2].get(1);
+            numba1 = controller2.getEigenVectors()[1].get(0);
+            numba2 = controller2.getEigenVectors()[1].get(1);
         }
         Text nb1 = new Text(Double.toString(numba1));
         Text nb2 = new Text(Double.toString(numba2));
