@@ -1,6 +1,7 @@
 package pack.View;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
@@ -56,6 +57,11 @@ public class View1 extends Pane implements iView {
         setView1();
         setActions();
     }
+
+    public Graph getGraph() {
+        return this.graph;
+    }
+
 
     public void setView1() {
         this.setPrefSize(1050, 750);
@@ -125,8 +131,9 @@ public class View1 extends Pane implements iView {
                 }
             }
         }
-        Controller1 controller1 = new Controller1(this);
-        addOutput(controller1);
+        Controller1 controller = new Controller1(this);
+        addOutput(controller);
+        controller.humptyDumptyRevival();
     }
 
     public void handleReset() {

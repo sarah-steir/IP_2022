@@ -2,6 +2,8 @@
 
 package pack.Model;
 
+import javafx.geometry.Point3D;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 public class Model1 {
@@ -184,5 +186,29 @@ public class Model1 {
             x[i] = (b[i] - sum) / A[i][i];
         }
         return x;
+    }
+
+//
+//    public Point3D solutionPoints(int i) {
+//
+//        double x = i;
+//        double z = ((n2.get(1) / n1.get(1)) * (n1.get(0) * x + n1.get(3)) - n2.get(0) * x - n2.get(3)) / (n2.get(2) - n1.get(2) * n2.get(1) / n1.get(1));
+//        double y = (-n1.get(2) * z - n1.get(0) * x - n1.get(3)) / n1.get(1);
+//        //double z= ((-n2.get(1)/n1.get(1))*(n1.get(0)*x+n1.get(3))-n2.get(0)*x- -n2.get(3)) /(n2.get(2)-n1.get(2)*n2.get(1)/n1.get(1));
+//        //double z=((-n2.get(1/n1.get(1)))*n1.get(3)-n2.get(3))/((n2.get(2)*n2.get(1)/n1.get(1))*n1.get(2));
+//        //double y=(-n1.get(3)-n1.get(2)*z)/n1.get(1);
+//        System.out.println("x: " + x + " y: " + y + " z: " + z);
+//        Point3D point1 = new Point3D(x, y, z);
+//        return point1;
+//    }
+
+    /**
+     * This function returns a
+     * @param i random number to plug as x-value
+     * @return
+     */
+    public Point3D solutionPoints(int i) {
+        double y = (d1 - a1*i)/a2;
+        return new Point3D(i, y, 0);
     }
 }
