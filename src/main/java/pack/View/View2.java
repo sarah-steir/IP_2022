@@ -29,7 +29,7 @@ public class View2 extends Pane implements iView {
 
     private CustomTextField[][] fieldListRb1, fieldListRb2;
     private GridPane fieldsPane;
-    private CustomRadioButton rb1;
+    private static CustomRadioButton rb1;
     private static CustomRadioButton rb2;
     private CustomButton btnStart, btnReset, btnSave;
     private ToggleGroup group = new ToggleGroup();
@@ -54,10 +54,10 @@ public class View2 extends Pane implements iView {
         this.cb = new ComboBox();
         this.btnSave = new CustomButton("Save Matrix");
         this.btnSave.setPrefSize(200, 20);
-     /*   btnSave.setOnAction(event -> {
+       cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             doAction(cb.getValue().toString()); //Send the selected item to the method
-        });*/
+        });
         fieldListRb1 = new CustomTextField[2][2];
         fieldListRb2 = new CustomTextField[3][3];
         fieldsPane = new GridPane();
@@ -305,13 +305,7 @@ public class View2 extends Pane implements iView {
         this.vbPo.getChildren().add(Custom.setTitle(title));
     }
 
-    private void setVbRight(VBox vbRight) {
-        this.vbRight = vbRight;
-    }
 
-    private void setVbLeft(VBox vbLeft) {
-        this.vbLeft = vbLeft;
-    }
 
     public void setView2() {
         this.setPrefSize(1050, 750);
@@ -521,34 +515,21 @@ public class View2 extends Pane implements iView {
                 break;
         }
         if (rb1.isSelected()) {
-            t1 = iView.getCopyArray().get(0);
-            t2 = iView.getCopyArray().get(1);
-            t3 = iView.getCopyArray().get(2);
-            t4 = iView.getCopyArray().get(3);
-            t1.setText(String.valueOf(a1));
-            t2.setText(String.valueOf(a2));
-            t4.setText(String.valueOf(b1));
-            t5.setText(String.valueOf(b2));
+            fieldListRb1[0][0].setText(String.valueOf(a1));
+            fieldListRb1[0][1].setText(String.valueOf(a2));
+            fieldListRb1[1][0].setText(String.valueOf(b1));
+            fieldListRb1[1][1].setText(String.valueOf(b2));
         }
         if (rb2.isSelected()) {
-            t1 = iView.getCopyArray().get(0);
-            t2 = iView.getCopyArray().get(1);
-            t3 = iView.getCopyArray().get(2);
-            t4 = iView.getCopyArray().get(3);
-            t5 = iView.getCopyArray().get(4);
-            t6 = iView.getCopyArray().get(5);
-            t7 = iView.getCopyArray().get(6);
-            t8 = iView.getCopyArray().get(7);
-            t9 = iView.getCopyArray().get(8);
-            t1.setText(String.valueOf(a1));
-            t2.setText(String.valueOf(a2));
-            t3.setText(String.valueOf(a3));
-            t4.setText(String.valueOf(b1));
-            t5.setText(String.valueOf(b2));
-            t6.setText(String.valueOf(b3));
-            t7.setText(String.valueOf(c1));
-            t8.setText(String.valueOf(c2));
-            t9.setText(String.valueOf(c3));
+            fieldListRb2[0][0].setText(String.valueOf(a1));
+            fieldListRb2[0][1].setText(String.valueOf(a2));
+            fieldListRb2[0][2].setText(String.valueOf(a3));
+            fieldListRb2[1][0].setText(String.valueOf(b1));
+            fieldListRb2[1][1].setText(String.valueOf(b2));
+            fieldListRb2[1][2].setText(String.valueOf(b3));
+            fieldListRb2[2][0].setText(String.valueOf(c1));
+            fieldListRb2[2][1].setText(String.valueOf(c2));
+            fieldListRb2[2][2].setText(String.valueOf(c3));
         }
     }
 
@@ -721,4 +702,12 @@ public class View2 extends Pane implements iView {
     public static void setT9(CustomTextField t9) {
         View2.t9 = t9;
     }
+    private void setVbRight(VBox vbRight) {
+        this.vbRight = vbRight;
+    }
+
+    private void setVbLeft(VBox vbLeft) {
+        this.vbLeft = vbLeft;
+    }
+
 }
