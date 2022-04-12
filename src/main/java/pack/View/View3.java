@@ -191,4 +191,6 @@ public class View3 extends Pane implements iView {
         }
         return gridPane;
     }
+
 }
+

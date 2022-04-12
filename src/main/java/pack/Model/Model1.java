@@ -14,13 +14,18 @@ public class Model1 {
     double d1, d2, d3; // Last Column
     int n;
 
+//Ax=B
 
     // storing arraylist variables for the SLE calculation 2x2
+    //A matrix storage
     public static double[][] matrixA_2x2 = {{1, 1}, {1, 1}};
+    //B matrix storage
     public static double[] matrixB_2x2 = {1, 1};
 
     // storing arraylist variables for the SLE calculation 3x3
+    //A matrix storage
     public static double[][] matrixA_3x3 = {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}};
+    //B matrix storage
     public static double[] matrixB_3x3 = {1, 1, 1};
 
     //Storing A matrix variables
@@ -130,6 +135,8 @@ public class Model1 {
         return matrixB_3x3;
     }
 
+
+
 // SLE SOLVER
 
     // Gaussian elimination with partial pivoting
@@ -152,9 +159,9 @@ public class Model1 {
             b[p] = b[max];
             b[max] = t;
 
-            // singular or nearly singular
+            // singular or almost singular
             if (Math.abs(A[p][p]) <= EPSILON) {
-                throw new ArithmeticException("Matrix is singular or super close to being singular, try again :) ");
+                System.out.println("Matrix is singular or super close to being singular, try again :) ");
             }
 
             // pivot within A and b

@@ -6,7 +6,7 @@ import javafx.scene.control.TextField;
 import java.util.ArrayList;
 
 public class Model3 {
-    static int n = 3;
+    //Planes
     public static ArrayList<Double> n1 = new ArrayList<Double>();
     public static ArrayList<Double> n2 = new ArrayList<Double>();
     static double crossProduct[] = new double[3];
@@ -85,4 +85,105 @@ public class Model3 {
         }
         return 0;
     }
+
+
+    //Lines
+
+    private static final double EPSILON = 1e-10;
+    double a1, a2; // Row 1
+    double b1, b2; // Row 2
+    double d1, d2; // Last Column
+    int n;
+
+    // storing arraylist variables for the SLE calculation 2x2
+    //A matrix storage
+    public static double[][] matrixA_2x2 = {{1, 1}, {1, 1}};
+    //B matrix storage
+    public static double[] matrixB_2x2 = {1, 1};
+
+    public Model3(ArrayList<Double> matrixOfCoefficients) {
+            n = 2;
+            // A matrix for 2x2
+            //Row 1
+            this.a1 = matrixOfCoefficients.get(0);
+            matrixA_2x2[0][0] = this.a1;
+            this.a2 = matrixOfCoefficients.get(1);
+            matrixA_2x2[0][1] = this.a2;
+
+            //Row2
+            this.b1 = matrixOfCoefficients.get(2);
+            matrixA_2x2[1][0] = this.b1;
+            this.b2 = matrixOfCoefficients.get(3);
+            matrixA_2x2[1][1] = this.b2;
+
+            //B Matrix (Constants)
+            this.d1 = matrixOfCoefficients.get(4);
+            matrixB_2x2[0] = this.d1;
+            this.d2 = matrixOfCoefficients.get(5);
+            matrixB_2x2[1] = this.d2;
+
+        }
+
+    public static double[][] getMatrixA_2x2() {
+        return matrixA_2x2;
+    }
+
+    public static double[] getMatrixB_2x2() {
+        return matrixB_2x2;
+    }
+
+    // Gaussian elimination with partial pivoting
+    public double[] SLESolve(double[][] A, double[] b) {
+        n = b.length;
+
+        for (int p = 0; p < n; p++) {
+
+            // find pivot row and swap
+            int max = p;
+            for (int i = p + 1; i < n; i++) {
+                if (Math.abs(A[i][p]) > Math.abs(A[max][p])) {
+                    max = i;
+                }
+            }
+            double[] temp = A[p];
+            A[p] = A[max];
+            A[max] = temp;
+            double t = b[p];
+            b[p] = b[max];
+            b[max] = t;
+
+            // singular or almost singular
+            if (Math.abs(A[p][p]) <= EPSILON) {
+                System.out.println("Matrix is singular or super close to being singular, try again :) ");
+            }
+
+            // pivot within A and b
+            for (int i = p + 1; i < n; i++) {
+                double alpha = A[i][p] / A[p][p];
+                b[i] -= alpha * b[p];
+                for (int j = p; j < n; j++) {
+                    A[i][j] -= alpha * A[p][j];
+                }
+            }
+        }
+
+        // back substitution
+        double[] x = new double[n];
+        for (int i = n - 1; i >= 0; i--) {
+            double sum = 0.0;
+            for (int j = i + 1; j < n; j++) {
+                sum += A[i][j] * x[j];
+            }
+            x[i] = (b[i] - sum) / A[i][i];
+        }
+        return x;
+    }
+
+
+
+
+
+
+
+
 }
