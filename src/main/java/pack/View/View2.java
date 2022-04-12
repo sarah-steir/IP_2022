@@ -63,8 +63,8 @@ public class View2 extends Pane implements iView {
         fieldListRb2 = new CustomTextField[3][3];
         fieldsPane = new GridPane();
 
-        vbUi = new VBox();
-        vbPo = new VBox();
+        vbUi = new VBox();  // user input
+        vbPo = new VBox();  // program output
         vbLeft = new VBox();
         vbRight = new VBox();
 
