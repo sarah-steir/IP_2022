@@ -54,7 +54,7 @@ public class View3 extends Pane implements iView {
         vbRight = new VBox();
 
         setVbUi(setHbRadios(this.rb1, this.rb2));
-        setVbPo("Systems of linear equations");
+        setVbPo("Planes and lines ");
 
         setVbLeft(setLeft(this.vbUi, setGraphPane(graph)));
         setVbRight(setRight(this.vbPo, setHbBottom(this.btnStart, this.btnReset)));
@@ -113,6 +113,12 @@ public class View3 extends Pane implements iView {
             System.out.println("T = "+ x[1]);
             graph.addPoint(model3.intersectionLines(getFieldListRb1()));
 
+           //First line
+            graph.addLine(  model3.linesPoints(1,1,getFieldListRb1()), model3.linesPoints(1,2,getFieldListRb1()));
+
+            //Second line
+            graph.addLine(model3.linesPoints(2,1,getFieldListRb1()),model3.linesPoints(2,2,getFieldListRb1()));
+
 
 
         } else {
@@ -143,7 +149,7 @@ public class View3 extends Pane implements iView {
         btnStart.setDisable(false);
         rb1.setSelected(false);
         rb2.setSelected(false);
-        this.vbUi.getChildren().remove(fieldsPane);
+        this.vbUi.getChildren().remove(fieldsPane); //Why?
         this.getChildren().addAll(this.vbLeft, this.vbRight);
     }
     public void setActions() {
@@ -245,8 +251,7 @@ public class View3 extends Pane implements iView {
         double d4 = Double.parseDouble(getFieldListRb1().get(9).getText());
         constant.add( d1-d2);
         constant.add(d3-d4);
-        System.out.println("First constant"+constant.get(0));
-        System.out.println("Second constant"+constant.get(1));
+
         return constant;
     }
 
@@ -261,17 +266,7 @@ public class View3 extends Pane implements iView {
         arr.add(d3);
         arr.add(-d2);
         arr.add(d4);
-
-        System.out.println("First "+arr.get(0)); //-1
-        System.out.println("Second "+arr.get(1));///-2
-        System.out.println("Third"+arr.get(2));//-1
-        System.out.println("Fourth"+arr.get(3));//3
-
-
-
-
-        return arr;
-    }
+        return arr;}
 
 }
 

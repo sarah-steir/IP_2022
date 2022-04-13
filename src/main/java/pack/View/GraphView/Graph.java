@@ -46,8 +46,8 @@ public class Graph extends Group {
         axisList = getAxis();
         this.update();
 
-        this.addPoint(new Point3D(-15.82, -19.82, 59.55));
-        this.addPoint(new Point3D(-95.82, -99.82, 299.55));
+      //  this.addPoint(new Point3D(-15.82, -19.82, 59.55));
+     //   this.addPoint(new Point3D(-95.82, -99.82, 299.55));
 
         Scale mirror = new Scale(1, -1, -1);
         scalable.getTransforms().add(mirror);
