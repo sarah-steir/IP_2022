@@ -182,6 +182,48 @@ public class Model3 {
         return x;
     }
 
+    public Point3D intersectionLines(ArrayList<CustomTextField> tf){
+        double [][]A = Model3.getMatrixA_2x2();
+        double[] b = Model3.getMatrixB_2x2();
+        double[] x = SLESolve(A, b);
+        //S=x[0]
+
+
+        double xpoint=Double.parseDouble(tf.get(0).getText())*x[0]+Double.parseDouble(tf.get(1).getText());
+        double ypoint=Double.parseDouble(tf.get(2).getText())*x[0]+Double.parseDouble(tf.get(3).getText());
+        double zpoint=Double.parseDouble(tf.get(4).getText())*x[0]+Double.parseDouble(tf.get(5).getText());
+
+        Point3D solution= new Point3D(xpoint,ypoint,zpoint);
+
+        return solution;
+    }
+
+     //TODO make loop and simplify code
+
+    public Point3D linesPoints(int i, int t,ArrayList<CustomTextField> tf){
+
+        switch (i) {
+        case 1:
+            double xpoint=Double.parseDouble(tf.get(0).getText())*t+Double.parseDouble(tf.get(1).getText());
+            double ypoint=Double.parseDouble(tf.get(2).getText())*t+Double.parseDouble(tf.get(3).getText());
+            double zpoint=Double.parseDouble(tf.get(4).getText())*t+Double.parseDouble(tf.get(5).getText());
+            System.out.println("First line" +xpoint+" "+ypoint+ " "+zpoint);
+            return new Point3D(xpoint,ypoint,zpoint);
+
+            case 2:
+
+                 xpoint=Double.parseDouble(tf.get(6).getText())*t+Double.parseDouble(tf.get(7).getText());
+                 ypoint=Double.parseDouble(tf.get(8).getText())*t+Double.parseDouble(tf.get(9).getText());
+                 zpoint=Double.parseDouble(tf.get(10).getText())*t+Double.parseDouble(tf.get(11).getText());
+
+                System.out.println("Second line" +xpoint+" "+ypoint+ " "+zpoint);
+                return new Point3D(xpoint,ypoint,zpoint);
+        }
+
+        return null;}
+
+
+
 
 
 

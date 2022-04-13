@@ -93,7 +93,6 @@ public class View3 extends Pane implements iView {
     }
 
     public void handleStart(boolean isRb1Selected) {
-        this.graph.reset();
         if (isRb1Selected) {
             for (int i = 0; i < fieldListRb1.length; i++) {
                 for (int j = 0; j < fieldListRb1[0].length; j++) {
@@ -103,26 +102,40 @@ public class View3 extends Pane implements iView {
 
                 }
             }
+
+            Model3 model3 = new Model3(input(),constants());
+
+            double [][]A = Model3.getMatrixA_2x2();
+            double[] b = Model3.getMatrixB_2x2();
+            double[] x = model3.SLESolve(A, b);
+
+            System.out.println("S = "+ x[0]);
+            System.out.println("T = "+ x[1]);
+            graph.addPoint(model3.intersectionLines(getFieldListRb1()));
+
+
+
         } else {
             for (int i = 0; i < fieldListRb2.length; i++) {
                 for (int j = 0; j < fieldListRb2[0].length; j++) {
                     if (fieldListRb2[i][j].getText().equals("")) {
                         fieldListRb2[i][j].setText("0");
+                        Model3 c3=new Model3();
+                        c3.transform(getFieldListRb2());
+                        c3.crossProduct();
+                        c3.solutionPoints(5);
+                        graph.addPlane(c3.n1.get(0)/-c3.n1.get(3),c3.n1.get(1)/-c3.n1.get(3),c3.n1.get(2)/-c3.n1.get(3),"Plane1");
+                        graph.addPlane(c3.n2.get(0)/-c3.n2.get(3),c3.n2.get(1)/-c3.n2.get(3),c3.n2.get(2)/-c3.n2.get(3),"Plane2");
+                        graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10));
+                        Controller3 controller3 = new Controller3(this);
                     }
 
                 }
             }
+
+            //addOutput(controller3);
         }
 
-        Model3 c3=new Model3();
-        c3.transform(getFieldListRb2());
-        c3.crossProduct();
-        c3.solutionPoints(5);
-        graph.addPlane(c3.n1.get(3)/-c3.n1.get(0),c3.n1.get(3)/-c3.n1.get(1),c3.n1.get(3)/-c3.n1.get(2),"Plane1");
-        graph.addPlane(c3.n2.get(3)/-c3.n2.get(0),c3.n2.get(3)/-c3.n2.get(1),c3.n2.get(3)/-c3.n2.get(2),"Plane2");
-        graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10));
-        Controller3 controller3 = new Controller3(this);
-        //addOutput(controller3);
     }
 
     public void handleReset() {
@@ -219,6 +232,45 @@ public class View3 extends Pane implements iView {
             }
         }
         return fieldList;
+    }
+
+
+    public  ArrayList<Double> constants() {
+        int n = 1;
+      ArrayList<Double> constant = new ArrayList<>();
+
+        double d1 = Double.parseDouble(getFieldListRb1().get(1).getText());
+        double d2 = Double.parseDouble(getFieldListRb1().get(7).getText());
+        double d3 = Double.parseDouble(getFieldListRb1().get(3).getText());
+        double d4 = Double.parseDouble(getFieldListRb1().get(9).getText());
+        constant.add( d1-d2);
+        constant.add(d3-d4);
+        System.out.println("First constant"+constant.get(0));
+        System.out.println("Second constant"+constant.get(1));
+        return constant;
+    }
+
+    public   ArrayList<Double> input() {
+        ArrayList<Double> arr = new ArrayList<>();
+        double d1 = Double.parseDouble(getFieldListRb1().get(0).getText());
+        double d2 = Double.parseDouble(getFieldListRb1().get(2).getText());
+        double d3 = Double.parseDouble(getFieldListRb1().get(6).getText());
+        double d4 = Double.parseDouble(getFieldListRb1().get(8).getText());
+
+        arr.add(-d1);
+        arr.add(d3);
+        arr.add(-d2);
+        arr.add(d4);
+
+        System.out.println("First "+arr.get(0)); //-1
+        System.out.println("Second "+arr.get(1));///-2
+        System.out.println("Third"+arr.get(2));//-1
+        System.out.println("Fourth"+arr.get(3));//3
+
+
+
+
+        return arr;
     }
 
 }
