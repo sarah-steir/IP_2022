@@ -33,10 +33,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static pack.View.Customs.Custom.p;
+
 public class View2 extends Pane implements iView {
 
     private CustomTextField[][] fieldListRb1, fieldListRb2;
-    private GridPane fieldsPane;
+    private HBox fieldsPane;
     private static CustomRadioButton rb1;
     private static CustomRadioButton rb2;
     private CustomButton btnStart, btnReset, btnSave;
@@ -77,7 +79,7 @@ public class View2 extends Pane implements iView {
         });
         fieldListRb1 = new CustomTextField[2][2];
         fieldListRb2 = new CustomTextField[3][3];
-        fieldsPane = new GridPane();
+        fieldsPane = new HBox();
 
         vbUi = new VBox();  // user input
         vbPo = new VBox();  // program output
@@ -299,10 +301,10 @@ public class View2 extends Pane implements iView {
     public HBox newVector(int counter, int whatSize, Controller2 controller2, int i ){ // counter is the vector if size=6 there is counter 1 and 2 possible
         HBox hbx = new HBox();
         VBox vbx1 = new VBox();
-        ImageView imL = new ImageView(new Image(Custom.p + "Right.png"));
+        ImageView imL = new ImageView(new Image(p + "Right.png"));
         imL.setFitWidth(10);
         imL.setFitHeight(75);
-        ImageView imR = new ImageView(new Image(Custom.p + "Left.png"));
+        ImageView imR = new ImageView(new Image(p + "Left.png"));
         imR.setFitWidth(10);
         imR.setFitHeight(75);
         if(whatSize == 2){
@@ -400,20 +402,27 @@ public class View2 extends Pane implements iView {
             this.btnStart.setDisable(false);
             fieldsPane = setFields(fieldListRb1);
             this.vbUi.getChildren().clear();
-            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), fieldsPane);
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), getEmptyVBox(), fieldsPane);
         });
 
         rb2.setOnAction(event -> {
             this.btnStart.setDisable(false);
             fieldsPane = setFields(fieldListRb2);
             this.vbUi.getChildren().clear();
-            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), fieldsPane);
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), getEmptyVBox(), fieldsPane);
         });
         this.btnStart.setOnAction(event -> { handleStart(rb1.isSelected()); });
         this.btnReset.setOnAction(event -> { handleReset(); });
     }
 
-    public GridPane setFields (CustomTextField[][] textFields) {
+    public HBox setFields (CustomTextField[][] textFields) {
+        ImageView iv1 = new ImageView(new Image(p + "Right.png"));
+        iv1.setFitWidth(50);
+        iv1.setFitHeight(272.4);
+        ImageView iv2 = new ImageView(new Image(p + "Left.png"));
+        iv2.setFitWidth(50);
+        iv2.setFitHeight(272.4);
+
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(10);
@@ -434,7 +443,10 @@ public class View2 extends Pane implements iView {
                 gridPane.add(textFields[i][j], j, i);
             }
         }
-        return gridPane;
+        HBox hbFields = new HBox();
+        hbFields.getChildren().addAll(iv1, gridPane, iv2);
+        hbFields.setAlignment(Pos.CENTER);
+        return hbFields;
     }
 
     public void handleStart(boolean isRb1Selected) {
@@ -609,9 +621,14 @@ public class View2 extends Pane implements iView {
         }
     } //DONE DONE DONE
 
+    public VBox getEmptyVBox() {
+        VBox vbox = new VBox();
+        vbox.setPrefSize(500, 150);
+        return vbox;
+    }
 
 
-        public void setFieldListRb1(CustomTextField[][] fieldListRb1) {
+    public void setFieldListRb1(CustomTextField[][] fieldListRb1) {
         this.fieldListRb1 = fieldListRb1;
     }
 
@@ -619,13 +636,13 @@ public class View2 extends Pane implements iView {
         this.fieldListRb2 = fieldListRb2;
     }
 
-    public GridPane getFieldsPane() {
-        return fieldsPane;
-    }
-
-    public void setFieldsPane(GridPane fieldsPane) {
-        this.fieldsPane = fieldsPane;
-    }
+//    public GridPane getFieldsPane() {
+//        return fieldsPane;
+//    }
+//
+//    public void setFieldsPane(GridPane fieldsPane) {
+//        this.fieldsPane = fieldsPane;
+//    }
 
     public void setRb1(CustomRadioButton rb1) {
         this.rb1 = rb1;
