@@ -403,6 +403,8 @@ public class Graph extends Group {
 
     public void reset() {
         thingsToGraphList.clear();
+        labelsList.clear();
+        this.update();
         a = 0;
     }
 }

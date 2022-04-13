@@ -126,18 +126,19 @@ public class View3 extends Pane implements iView {
                 for (int j = 0; j < fieldListRb2[0].length; j++) {
                     if (fieldListRb2[i][j].getText().equals("")) {
                         fieldListRb2[i][j].setText("0");
-                        Model3 c3=new Model3();
-                        c3.transform(getFieldListRb2());
-                        c3.crossProduct();
-                        c3.solutionPoints(5);
-                        graph.addPlane(c3.n1.get(0)/-c3.n1.get(3),c3.n1.get(1)/-c3.n1.get(3),c3.n1.get(2)/-c3.n1.get(3),"Plane1");
-                        graph.addPlane(c3.n2.get(0)/-c3.n2.get(3),c3.n2.get(1)/-c3.n2.get(3),c3.n2.get(2)/-c3.n2.get(3),"Plane2");
-                        graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10));
-                        Controller3 controller3 = new Controller3(this);
+
                     }
 
                 }
             }
+            Model3 c3=new Model3();
+            c3.transform(getFieldListRb2());
+            c3.crossProduct();
+            c3.solutionPoints(5);
+            graph.addPlane(c3.n1.get(0)/-c3.n1.get(3),c3.n1.get(1)/-c3.n1.get(3),c3.n1.get(2)/-c3.n1.get(3),"Plane1");
+            graph.addPlane(c3.n2.get(0)/-c3.n2.get(3),c3.n2.get(1)/-c3.n2.get(3),c3.n2.get(2)/-c3.n2.get(3),"Plane2");
+            graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10));
+            Controller3 controller3 = new Controller3(this);
 
             //addOutput(controller3);
         }
@@ -145,11 +146,12 @@ public class View3 extends Pane implements iView {
     }
 
     public void handleReset() {
+        this.graph.reset();
         this.getChildren().clear();
         btnStart.setDisable(false);
         rb1.setSelected(false);
         rb2.setSelected(false);
-        this.vbUi.getChildren().remove(fieldsPane); //Why?
+        this.vbUi.getChildren().remove(fieldsPane);
         this.getChildren().addAll(this.vbLeft, this.vbRight);
     }
     public void setActions() {
