@@ -37,23 +37,25 @@ public class View2 extends Pane implements iView {
 
     private CustomTextField[][] fieldListRb1, fieldListRb2;
     private GridPane fieldsPane;
-    private static CustomRadioButton rb1;
-    private static CustomRadioButton rb2;
+    private CustomRadioButton rb1;
+    private CustomRadioButton rb2;
     private CustomButton btnStart, btnReset, btnSave;
     private ToggleGroup group = new ToggleGroup();
-    private static ComboBox cb;
-    private static CustomButton butt;
+    private ComboBox cb;
+    private CustomButton butt;
     //public static Font font = Font.loadFont(p + "Font.otf", 15);
+    private  Label ll;
+    private JSONObject jsonObject;
 
     private VBox vbUi;
     private VBox vbPo;
     private ModelForJSON JASONDERULO;
     private VBox vbLeft;
     private VBox vbRight;
-    private static CustomTextField t1, t2, t3, t4, t5, t6, t7, t8, t9;
-    private static double a1,a2,a3,b1,b2,b3,c1,c2,c3;
+    private CustomTextField t1, t2, t3, t4, t5, t6, t7, t8, t9;
+    private double a1,a2,a3,b1,b2,b3,c1,c2,c3;
     static FileWriter file;
-    private static ArrayList<Integer> other = new ArrayList<>();
+    private ArrayList<Integer> other = new ArrayList<>();
 
     public View2() {
         this.rb1 = new CustomRadioButton("2 x 2");
@@ -75,6 +77,7 @@ public class View2 extends Pane implements iView {
             //Call a method to determine which item in the list the user has selected
             DaVoid(); //Send the selected item to the method
         });
+
         fieldListRb1 = new CustomTextField[2][2];
         fieldListRb2 = new CustomTextField[3][3];
         fieldsPane = new GridPane();
@@ -102,10 +105,10 @@ public class View2 extends Pane implements iView {
         );
         cb.setPromptText("Saved Matrices");
     }
-    private static void YesImAGummyBear(){
+    private void YesImAGummyBear(){
 
     }
-    private static void DaVoid(){
+    private void DaVoid(){
 
 
         StackPane secondaryLayout = new StackPane();
@@ -123,13 +126,14 @@ public class View2 extends Pane implements iView {
 //        newWindow.setY(primaryStage.getY() + 100);
 
         newWindow.show();
-    }
-    private static VBox PANCAKES(){
+    } //open new scene
+    private VBox PANCAKES(){
         VBox payne = new VBox();
-        Label ll = new Label("Choose a name for your matrix");
-        ll.setTextFill(Color.web("#1985A1"));
+        payne.setPadding(new Insets(10));
+        this.ll = new Label("Choose a name for your matrix");
+        ll.setTextFill(Color.BLUE);
         //ll.setFont(font);
-        ll.setStyle("-fx-text-fill: E7EBEE;");
+        //ll.setStyle("-fx-text-fill: E7EBEE;");
 
         TextField ctf = new CustomTextField();
         butt = new CustomButton("SEND IT");
@@ -137,30 +141,24 @@ public class View2 extends Pane implements iView {
         payne.getChildren().add(ctf);
         payne.getChildren().add(butt);
         return payne;
-    }
-    private static void humptyDumptyFellOffAWall(String name) { //CONNECT TO BUTTON HANDL
+    } //vbox for scene
+    private void humptyDumptyFellOffAWall(String name) { //CONNECT TO BUTTON HANDL
         JSONArray newMatrix = new JSONArray();
-        if (View2.getRb1().isSelected()) {
-            newMatrix.add(View2.getT1());//
-            newMatrix.add(View2.getT2());//
+        if (this.getRb1().isSelected()) {
+            newMatrix.add(this.getFieldListRb1().get(0));//
+            newMatrix.add(this.getFieldListRb1().get(1));//
             newMatrix.add("0");
-            newMatrix.add(View2.getT4());//
-            newMatrix.add(View2.getT5());//
+            newMatrix.add(this.getFieldListRb1().get(2));//
+            newMatrix.add(this.getFieldListRb1().get(3));//
             newMatrix.add("0");
             newMatrix.add("0");
             newMatrix.add("0");
             newMatrix.add("0");
         }
-        if (View2.getRb2().isSelected()) {
-            newMatrix.add(View2.getT1());
-            newMatrix.add(View2.getT2());
-            newMatrix.add(View2.getT3());
-            newMatrix.add(View2.getT4());
-            newMatrix.add(View2.getT5());
-            newMatrix.add(View2.getT6());
-            newMatrix.add(View2.getT7());
-            newMatrix.add(View2.getT8());
-            newMatrix.add(View2.getT9());
+        if (this.getRb2().isSelected()) {
+            for(int i=0; i<9; i++) {
+                newMatrix.add(this.getFieldListRb1().get(i));
+            }
         }
         ModelForJSON.getMatrix().put(name, newMatrix);
         File newFile = new File("Resources/JsonFile.json");
@@ -181,17 +179,43 @@ public class View2 extends Pane implements iView {
         }
     }
 
-    private static ArrayList<Integer> humptyDumptyCameBackToLife () {
+    private ArrayList<Integer> humptyDumptyCameBackToLife () {
         JSONParser parser = new JSONParser();
 
         Object obj = null;
         try {
             obj = parser.parse(new FileReader("Resources/JsonFile.json"));
-            JSONObject jsonObject = (JSONObject) obj;
+            this.jsonObject = (JSONObject) obj;
 
 
             try {
-                //other = makeTheArrayList((JSONArray) jsonObject.get(View2.getCb().getValue()));
+                this.other = ModelForJSON.makeTheArrayList((JSONArray) jsonObject.get(this.getCb().getValue()));
+                a1 = getOther().get(0);
+                a2 = getOther().get(1);
+                a3 = getOther().get(2);
+                b1 = getOther().get(3);
+                b2 = getOther().get(4);
+                b3 = getOther().get(5);
+                c1 = getOther().get(6);
+                c2 = getOther().get(7);
+                c3 = getOther().get(8);
+                if (rb1.isSelected()) {
+                    fieldListRb1[0][0].setText(String.valueOf(a1));
+                    fieldListRb1[0][1].setText(String.valueOf(a2));
+                    fieldListRb1[1][0].setText(String.valueOf(b1));
+                    fieldListRb1[1][1].setText(String.valueOf(b2));
+                }
+                if (rb2.isSelected()) {
+                    fieldListRb2[0][0].setText(String.valueOf(a1));
+                    fieldListRb2[0][1].setText(String.valueOf(a2));
+                    fieldListRb2[0][2].setText(String.valueOf(a3));
+                    fieldListRb2[1][0].setText(String.valueOf(b1));
+                    fieldListRb2[1][1].setText(String.valueOf(b2));
+                    fieldListRb2[1][2].setText(String.valueOf(b3));
+                    fieldListRb2[2][0].setText(String.valueOf(c1));
+                    fieldListRb2[2][1].setText(String.valueOf(c2));
+                    fieldListRb2[2][2].setText(String.valueOf(c3));
+                }
             }catch(Exception e){
                 e.printStackTrace();
 
@@ -352,7 +376,6 @@ public class View2 extends Pane implements iView {
 
         return vbx1;
     }
-
     public VBox putVertical2x2(int counter, Controller2 controller2, int i){
         VBox vbx1 = new VBox();
         Double numba1 = null;
@@ -411,6 +434,13 @@ public class View2 extends Pane implements iView {
         });
         this.btnStart.setOnAction(event -> { handleStart(rb1.isSelected()); });
         this.btnReset.setOnAction(event -> { handleReset(); });
+        butt.setOnAction(event -> {
+            if(ll.getText()==jsonObject.get(ll.getText())){
+            }
+            else{
+                humptyDumptyFellOffAWall(ll.getText());
+            }
+        });
     }
 
     public GridPane setFields (CustomTextField[][] textFields) {
@@ -519,8 +549,8 @@ public class View2 extends Pane implements iView {
     private void doAction(String listItem) {
         System.out.println("pepepepe");
         switch (listItem) {
-            case "Lower Triangle":
-                a1 = ModelForJSON.getLowerTriangle().get(0);
+            case "Lower Triangle" -> {
+                this.a1 = ModelForJSON.getLowerTriangle().get(0);
                 a2 = ModelForJSON.getLowerTriangle().get(1);
                 a3 = ModelForJSON.getLowerTriangle().get(2);
                 b1 = ModelForJSON.getLowerTriangle().get(3);
@@ -529,10 +559,10 @@ public class View2 extends Pane implements iView {
                 c1 = ModelForJSON.getLowerTriangle().get(6);
                 c2 = ModelForJSON.getLowerTriangle().get(7);
                 c3 = ModelForJSON.getLowerTriangle().get(8);
+            }
 
-                //Action for this item
-                break;
-            case "Upper Triangle":
+            //Action for this item
+            case "Upper Triangle" -> {
                 a1 = ModelForJSON.getUpperTriangle().get(0);
                 a2 = ModelForJSON.getUpperTriangle().get(1);
                 a3 = ModelForJSON.getUpperTriangle().get(2);
@@ -542,8 +572,8 @@ public class View2 extends Pane implements iView {
                 c1 = ModelForJSON.getUpperTriangle().get(6);
                 c2 = ModelForJSON.getUpperTriangle().get(7);
                 c3 = ModelForJSON.getUpperTriangle().get(8);
-                break;
-            case "Diagonal":
+            }
+            case "Diagonal" -> {
                 a1 = ModelForJSON.getDiagonal().get(0);
                 a2 = ModelForJSON.getDiagonal().get(1);
                 a3 = ModelForJSON.getDiagonal().get(2);
@@ -553,8 +583,8 @@ public class View2 extends Pane implements iView {
                 c1 = ModelForJSON.getDiagonal().get(6);
                 c2 = ModelForJSON.getDiagonal().get(7);
                 c3 = ModelForJSON.getDiagonal().get(8);
-                break;
-            case "identity":
+            }
+            case "identity" -> {
                 a1 = ModelForJSON.getIdentity().get(0);
                 a2 = ModelForJSON.getIdentity().get(1);
                 a3 = ModelForJSON.getIdentity().get(2);
@@ -564,8 +594,8 @@ public class View2 extends Pane implements iView {
                 c1 = ModelForJSON.getIdentity().get(6);
                 c2 = ModelForJSON.getIdentity().get(7);
                 c3 = ModelForJSON.getIdentity().get(8);
-                break;
-            case "Null":
+            }
+            case "Null" -> {
                 a1 = ModelForJSON.getNul().get(0);
                 a2 = ModelForJSON.getNul().get(1);
                 a3 = ModelForJSON.getNul().get(2);
@@ -575,8 +605,8 @@ public class View2 extends Pane implements iView {
                 c1 = ModelForJSON.getNul().get(6);
                 c2 = ModelForJSON.getNul().get(7);
                 c3 = ModelForJSON.getNul().get(8);
-                break;
-            case "Symmetric":
+            }
+            case "Symmetric" -> {
                 a1 = ModelForJSON.getSymmetric().get(0);
                 a2 = ModelForJSON.getSymmetric().get(1);
                 a3 = ModelForJSON.getSymmetric().get(2);
@@ -586,9 +616,9 @@ public class View2 extends Pane implements iView {
                 c1 = ModelForJSON.getSymmetric().get(6);
                 c2 = ModelForJSON.getSymmetric().get(7);
                 c3 = ModelForJSON.getSymmetric().get(8);
-                break;
-            default: //Default action
-                break;
+            }
+            default -> {
+            } //Default action
         }
         if (rb1.isSelected()) {
             fieldListRb1[0][0].setText(String.valueOf(a1));
@@ -631,11 +661,11 @@ public class View2 extends Pane implements iView {
         this.rb1 = rb1;
     }
 
-    public static CustomRadioButton getRb1() {
+    public CustomRadioButton getRb1() {
         return rb1;
     }
 
-    public static CustomRadioButton getRb2() {
+    public CustomRadioButton getRb2() {
         return rb2;
     }
 
@@ -675,12 +705,36 @@ public class View2 extends Pane implements iView {
         this.group = group;
     }
 
-    public static ComboBox getCb() {
+    public ComboBox getCb() {
         return cb;
     }
 
     public void setCb(ComboBox cb) {
         this.cb = cb;
+    }
+
+    public CustomButton getButt() {
+        return butt;
+    }
+
+    public void setButt(CustomButton butt) {
+        this.butt = butt;
+    }
+
+    public Label getLl() {
+        return ll;
+    }
+
+    public void setLl(Label ll) {
+        this.ll = ll;
+    }
+
+    public JSONObject getJsonObject() {
+        return jsonObject;
+    }
+
+    public void setJsonObject(JSONObject jsonObject) {
+        this.jsonObject = jsonObject;
     }
 
     public VBox getVbUi() {
@@ -699,91 +753,187 @@ public class View2 extends Pane implements iView {
         this.vbPo = vbPo;
     }
 
+    public ModelForJSON getJASONDERULO() {
+        return JASONDERULO;
+    }
+
+    public void setJASONDERULO(ModelForJSON JASONDERULO) {
+        this.JASONDERULO = JASONDERULO;
+    }
+
     public VBox getVbLeft() {
         return vbLeft;
+    }
+
+    public void setVbLeft(VBox vbLeft) {
+        this.vbLeft = vbLeft;
     }
 
     public VBox getVbRight() {
         return vbRight;
     }
 
-    public static CustomTextField getT1() {
-        return t1;
-    }
-
-    public static void setT1(CustomTextField t1) {
-        View2.t1 = t1;
-    }
-
-    public static CustomTextField getT2() {
-        return t2;
-    }
-
-    public static void setT2(CustomTextField t2) {
-        View2.t2 = t2;
-    }
-
-    public static CustomTextField getT3() {
-        return t3;
-    }
-
-    public static void setT3(CustomTextField t3) {
-        View2.t3 = t3;
-    }
-
-    public static CustomTextField getT4() {
-        return t4;
-    }
-
-    public static void setT4(CustomTextField t4) {
-        View2.t4 = t4;
-    }
-
-    public static CustomTextField getT5() {
-        return t5;
-    }
-
-    public static void setT5(CustomTextField t5) {
-        View2.t5 = t5;
-    }
-
-    public static CustomTextField getT6() {
-        return t6;
-    }
-
-    public static void setT6(CustomTextField t6) {
-        View2.t6 = t6;
-    }
-
-    public static CustomTextField getT7() {
-        return t7;
-    }
-
-    public static void setT7(CustomTextField t7) {
-        View2.t7 = t7;
-    }
-
-    public static CustomTextField getT8() {
-        return t8;
-    }
-
-    public static void setT8(CustomTextField t8) {
-        View2.t8 = t8;
-    }
-
-    public static CustomTextField getT9() {
-        return t9;
-    }
-
-    public static void setT9(CustomTextField t9) {
-        View2.t9 = t9;
-    }
-    private void setVbRight(VBox vbRight) {
+    public void setVbRight(VBox vbRight) {
         this.vbRight = vbRight;
     }
 
-    private void setVbLeft(VBox vbLeft) {
-        this.vbLeft = vbLeft;
+    public CustomTextField getT1() {
+        return t1;
     }
 
+    public void setT1(CustomTextField t1) {
+        this.t1 = t1;
+    }
+
+    public CustomTextField getT2() {
+        return t2;
+    }
+
+    public void setT2(CustomTextField t2) {
+        this.t2 = t2;
+    }
+
+    public CustomTextField getT3() {
+        return t3;
+    }
+
+    public void setT3(CustomTextField t3) {
+        this.t3 = t3;
+    }
+
+    public CustomTextField getT4() {
+        return t4;
+    }
+
+    public void setT4(CustomTextField t4) {
+        this.t4 = t4;
+    }
+
+    public CustomTextField getT5() {
+        return t5;
+    }
+
+    public void setT5(CustomTextField t5) {
+        this.t5 = t5;
+    }
+
+    public CustomTextField getT6() {
+        return t6;
+    }
+
+    public void setT6(CustomTextField t6) {
+        this.t6 = t6;
+    }
+
+    public CustomTextField getT7() {
+        return t7;
+    }
+
+    public void setT7(CustomTextField t7) {
+        this.t7 = t7;
+    }
+
+    public CustomTextField getT8() {
+        return t8;
+    }
+
+    public void setT8(CustomTextField t8) {
+        this.t8 = t8;
+    }
+
+    public CustomTextField getT9() {
+        return t9;
+    }
+
+    public void setT9(CustomTextField t9) {
+        this.t9 = t9;
+    }
+
+    public double getA1() {
+        return a1;
+    }
+
+    public void setA1(double a1) {
+        this.a1 = a1;
+    }
+
+    public double getA2() {
+        return a2;
+    }
+
+    public void setA2(double a2) {
+        this.a2 = a2;
+    }
+
+    public double getA3() {
+        return a3;
+    }
+
+    public void setA3(double a3) {
+        this.a3 = a3;
+    }
+
+    public double getB1() {
+        return b1;
+    }
+
+    public void setB1(double b1) {
+        this.b1 = b1;
+    }
+
+    public double getB2() {
+        return b2;
+    }
+
+    public void setB2(double b2) {
+        this.b2 = b2;
+    }
+
+    public double getB3() {
+        return b3;
+    }
+
+    public void setB3(double b3) {
+        this.b3 = b3;
+    }
+
+    public double getC1() {
+        return c1;
+    }
+
+    public void setC1(double c1) {
+        this.c1 = c1;
+    }
+
+    public double getC2() {
+        return c2;
+    }
+
+    public void setC2(double c2) {
+        this.c2 = c2;
+    }
+
+    public double getC3() {
+        return c3;
+    }
+
+    public void setC3(double c3) {
+        this.c3 = c3;
+    }
+
+    public static FileWriter getFile() {
+        return file;
+    }
+
+    public static void setFile(FileWriter file) {
+        View2.file = file;
+    }
+
+    public ArrayList<Integer> getOther() {
+        return other;
+    }
+
+    public void setOther(ArrayList<Integer> other) {
+        this.other = other;
+    }
 }
