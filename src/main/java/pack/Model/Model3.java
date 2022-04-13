@@ -4,13 +4,15 @@ import javafx.geometry.Point3D;
 import javafx.scene.control.TextField;
 import pack.View.Customs.CustomTextField;
 
+import javax.crypto.spec.PSource;
 import java.util.ArrayList;
 
 public class Model3 {
     //Planes
     public  ArrayList<Double> n1 = new ArrayList<Double>();
     public  ArrayList<Double> n2 = new ArrayList<Double>();
-     double crossProduct[] = new double[3];
+    double crossProduct[] = new double[3];
+    public Point3D solutions[] = new Point3D[2];
 
     public Model3(){}
 
@@ -25,14 +27,34 @@ public class Model3 {
         }
     }
 
-    public  void crossProduct() {
+    public double[] crossProduct() {
+
         crossProduct[0] = n1.get(1) * n2.get(2) - n1.get(2) * n2.get(1);
         crossProduct[1] = n1.get(2) * n2.get(0) - n1.get(0) * n2.get(2);
         crossProduct[2] = n1.get(0) * n2.get(1) - n1.get(1) * n2.get(0);
 
         for (int i = 0; i < 3; i++) {
-            System.out.print(crossProduct[i] + " ");
+//            System.out.print(crossProduct[i] + " ");
         }
+        return crossProduct;
+    }
+
+    public void solutionPoint() {
+        double determinantWithZis0 = n1.get(0) * n2.get(1) - n2.get(0) * n1.get(1);
+        double determinantXwithZis0 = -n1.get(3) * n2.get(1) - -n2.get(3) * n1.get(1);
+        double determinantYwithZis0 = n1.get(0) * -n2.get(3) - n2.get(0) * -n1.get(3);
+        double x1 = determinantXwithZis0 / determinantWithZis0;
+        double y1 = determinantYwithZis0 / determinantWithZis0;
+        double z1 = 0;
+        solutions[0] = new Point3D(x1, y1, z1);
+
+        double determinantWithYis0 = n1.get(0) * n2.get(2) - n2.get(0) * n1.get(2);
+        double determinantXwithYis0 = -n1.get(3) * n2.get(2) - -n2.get(3) * n1.get(2);
+        double determinantZwithYis0 = n1.get(0) * -n2.get(3) - n2.get(0) * -n1.get(3);
+        double x2 = determinantXwithYis0 / determinantWithYis0;
+        double y2 = 0;
+        double z2 = determinantZwithYis0 / determinantWithYis0;
+        solutions[1] = new Point3D(x2, y2, z2);
     }
 
     public Point3D solutionPoints(int i) {
@@ -43,7 +65,7 @@ public class Model3 {
         //double z= ((-n2.get(1)/n1.get(1))*(n1.get(0)*x+n1.get(3))-n2.get(0)*x- -n2.get(3)) /(n2.get(2)-n1.get(2)*n2.get(1)/n1.get(1));
         //double z=((-n2.get(1/n1.get(1)))*n1.get(3)-n2.get(3))/((n2.get(2)*n2.get(1)/n1.get(1))*n1.get(2));
         //double y=(-n1.get(3)-n1.get(2)*z)/n1.get(1);
-        System.out.println("x: " + x + " y: " + y + " z: " + z);
+//        System.out.println("x: " + x + " y: " + y + " z: " + z);
         Point3D point1 = new Point3D(x, y, z);
         return point1;
     }
@@ -59,36 +81,6 @@ public class Model3 {
         }
         return null;
     }
-
-    public static double checkzeros(ArrayList<TextField> f) {
-        int n = 0;
-
-        while (n != 6) {
-            int j = 2 * n;
-            if (j < f.size()) {
-                if (f.get(j).getText().toString().equals("0")) {
-
-                    double x=Double.parseDouble(f.get(j + 1).getText().toString());
-                    if(n==0||n==3 ) {
-
-                    }
-
-                    if(n==1||n==4 ) {
-
-                    }
-                    if(n==2||n==5 ) {
-
-                    }
-
-                    return x;
-                } else {
-                    n++;
-                }
-            }
-        }
-        return 0;
-    }
-
 
     //Lines
 

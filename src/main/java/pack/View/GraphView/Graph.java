@@ -46,9 +46,6 @@ public class Graph extends Group {
         axisList = getAxis();
         this.update();
 
-      //  this.addPoint(new Point3D(-15.82, -19.82, 59.55));
-     //   this.addPoint(new Point3D(-95.82, -99.82, 299.55));
-
         Scale mirror = new Scale(1, -1, -1);
         scalable.getTransforms().add(mirror);
         root.getChildren().add(scalable);
@@ -165,10 +162,6 @@ public class Graph extends Group {
      * @param point2 the second point the line passes through
      */
     public void addLine(Point3D point1, Point3D point2) {
-
-        this.addPoint(point1);
-        this.addPoint(point2);
-
         Line line1 = this.FindOneLine(point1, point2);
         Line line2 = this.FindOneLine(point2, point1);
 
@@ -186,6 +179,7 @@ public class Graph extends Group {
         double dist = point1.distance(point2);
 
         Line line = new Line(0, 0, 1000, 0);
+        line.setStrokeWidth(5);
 
         Point3D vector = point2.subtract(point1);
 
@@ -204,8 +198,8 @@ public class Graph extends Group {
     /**
      *
      * Boy oh boy was this function a pain in the ass to program... Anyways here we go
-     * It creates the plane (a circle because it is too hard to take a rectangle and transform it since the pivot point is in the corner, not in the center)
-     * When the circle is added, it goes automatically through x and y, so we just to rotate along this vector (x -> y) to make it pass through z
+     * It creates the plane (a Rectangle)
+     * When the plane is added, it goes automatically through x and y, so we just have to rotate along this vector (x -> y) to make it pass through z
      * It finds the midpoint m between the x and y
      * It finds the angle it needs to rotate the circle in order to pass through z
      * It rotates the circle
@@ -216,17 +210,15 @@ public class Graph extends Group {
      * @param equation
      */
     public void addPlane(double x, double y, double z, String equation) {
-
-        System.out.println("x = " + x + ", y = " + y + ", z = " + z);
         Rectangle plane = new Rectangle(-500, -500, 1000, 1000);
 
-        Point3D m = new Point3D(x/2, y/2, 0); // Midpoint between x and y
-        double d = Math.sqrt(Math.pow(m.getX(), 2) + Math.pow(m.getY(), 2) + Math.pow(z, 2)); // Distance between m and z
+        Point3D m = new Point3D(x/2, y/2, 0); // Midpoint m between x and y
+        double d = m.distance(new Point3D(0, 0, z)); // Distance between m and z
         double angle = Math.toDegrees(Math.asin(z / d)); // Angle it needs to rotate
-        Point3D vector = new Point3D(-x, y, 0); // "Axis" of rotation, aka vector from x to y
+        Point3D vector = new Point3D( -x, y, 0); // "Axis" of rotation, aka vector from y to x
 
         if (x * y < 0) { // If the coordinates are a bit weird we need to do this
-            angle = 360 - angle;
+            angle = (double) 360 - angle;
         }
 
         Rotate rotate = new Rotate(angle, m.getX(), m.getY(), 0, vector);
