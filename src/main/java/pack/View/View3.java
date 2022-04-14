@@ -54,7 +54,7 @@ public class View3 extends Pane implements iView {
         vbRight = new VBox();
 
         setVbUi(setHbRadios(this.rb1, this.rb2));
-        setVbPo("Systems of linear equations");
+        setVbPo("Planes and lines ");
 
         setVbLeft(setLeft(this.vbUi, setGraphPane(graph)));
         setVbRight(setRight(this.vbPo, setHbBottom(this.btnStart, this.btnReset)));
@@ -102,29 +102,51 @@ public class View3 extends Pane implements iView {
 
                 }
             }
+
+            Model3 model3 = new Model3(input(),constants());
+
+            double [][]A = Model3.getMatrixA_2x2();
+            double[] b = Model3.getMatrixB_2x2();
+            double[] x = model3.SLESolve(A, b);
+
+            System.out.println("S = "+ x[0]);
+            System.out.println("T = "+ x[1]);
+            graph.addPoint(model3.intersectionLines(getFieldListRb1()));
+
+           //First line
+            graph.addLine(  model3.linesPoints(1,1,getFieldListRb1()), model3.linesPoints(1,2,getFieldListRb1()),model3.dirVector(1,getFieldListRb1()));
+
+            //Second line
+            graph.addLine(model3.linesPoints(2,1,getFieldListRb1()),model3.linesPoints(2,2,getFieldListRb1()),model3.dirVector(2,getFieldListRb1()));
+
+
+
         } else {
             for (int i = 0; i < fieldListRb2.length; i++) {
                 for (int j = 0; j < fieldListRb2[0].length; j++) {
                     if (fieldListRb2[i][j].getText().equals("")) {
                         fieldListRb2[i][j].setText("0");
+
                     }
 
                 }
             }
+            Model3 c3=new Model3();
+            c3.transform(getFieldListRb2());
+            c3.crossProduct();
+            c3.solutionPoints(5);
+            graph.addPlane(c3.n1.get(0)/-c3.n1.get(3),c3.n1.get(1)/-c3.n1.get(3),c3.n1.get(2)/-c3.n1.get(3),"Plane1");
+            graph.addPlane(c3.n2.get(0)/-c3.n2.get(3),c3.n2.get(1)/-c3.n2.get(3),c3.n2.get(2)/-c3.n2.get(3),"Plane2");
+            graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10),c3.crossProduct());
+            Controller3 controller3 = new Controller3(this);
+
+            //addOutput(controller3);
         }
 
-        Model3 c3=new Model3();
-        c3.transform(getFieldListRb2());
-        c3.crossProduct();
-        c3.solutionPoints(5);
-        graph.addPlane(c3.n1.get(0)/-c3.n1.get(3),c3.n1.get(1)/-c3.n1.get(3),c3.n1.get(2)/-c3.n1.get(3),"Plane1");
-        graph.addPlane(c3.n2.get(0)/-c3.n2.get(3),c3.n2.get(1)/-c3.n2.get(3),c3.n2.get(2)/-c3.n2.get(3),"Plane2");
-        graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10));
-        Controller3 controller3 = new Controller3(this);
-        //addOutput(controller3);
     }
 
     public void handleReset() {
+        this.graph.reset();
         this.getChildren().clear();
         btnStart.setDisable(false);
         rb1.setSelected(false);
@@ -219,6 +241,34 @@ public class View3 extends Pane implements iView {
         }
         return fieldList;
     }
+
+    //TODO see if these two functions can be moved into Model3 or Controller3
+    public  ArrayList<Double> constants() {
+        int n = 1;
+      ArrayList<Double> constant = new ArrayList<>();
+
+        double d1 = Double.parseDouble(getFieldListRb1().get(1).getText());
+        double d2 = Double.parseDouble(getFieldListRb1().get(7).getText());
+        double d3 = Double.parseDouble(getFieldListRb1().get(3).getText());
+        double d4 = Double.parseDouble(getFieldListRb1().get(9).getText());
+        constant.add( d1-d2);
+        constant.add(d3-d4);
+
+        return constant;
+    }
+
+    public   ArrayList<Double> input() {
+        ArrayList<Double> arr = new ArrayList<>();
+        double d1 = Double.parseDouble(getFieldListRb1().get(0).getText());
+        double d2 = Double.parseDouble(getFieldListRb1().get(2).getText());
+        double d3 = Double.parseDouble(getFieldListRb1().get(6).getText());
+        double d4 = Double.parseDouble(getFieldListRb1().get(8).getText());
+
+        arr.add(-d1);
+        arr.add(d3);
+        arr.add(-d2);
+        arr.add(d4);
+        return arr;}
 
 }
 

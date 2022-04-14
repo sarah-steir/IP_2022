@@ -46,8 +46,8 @@ public class Graph extends Group {
         axisList = getAxis();
         this.update();
 
-        this.addPoint(new Point3D(-15.82, -19.82, 59.55));
-        this.addPoint(new Point3D(-95.82, -99.82, 299.55));
+      //  this.addPoint(new Point3D(-15.82, -19.82, 59.55));
+     //   this.addPoint(new Point3D(-95.82, -99.82, 299.55));
 
         Scale mirror = new Scale(1, -1, -1);
         scalable.getTransforms().add(mirror);
@@ -164,11 +164,15 @@ public class Graph extends Group {
      * @param point1 the first point the line passes through
      * @param point2 the second point the line passes through
      */
-    public void addLine(Point3D point1, Point3D point2) {
+    public void addLine(Point3D point1, Point3D point2, double[]direction) {
+
+        this.addPoint(point1);
+        this.addPoint(point2);
+
         Line line1 = this.FindOneLine(point1, point2);
         Line line2 = this.FindOneLine(point2, point1);
 
-        createLineLabel(point1, point2);
+        createLineLabel(point1, direction);
         addLineToList(line1, line2);
     }
 
@@ -212,6 +216,8 @@ public class Graph extends Group {
      * @param equation
      */
     public void addPlane(double x, double y, double z, String equation) {
+
+        System.out.println("x = " + x + ", y = " + y + ", z = " + z);
         Rectangle plane = new Rectangle(-500, -500, 1000, 1000);
 
         Point3D m = new Point3D(x/2, y/2, 0); // Midpoint between x and y
@@ -329,10 +335,10 @@ public class Graph extends Group {
     /**
      * Creates the label and places it next to the Line
      * @param point1
-     * @param point2
+     * @param direction
      */
-    private void createLineLabel(Point3D point1, Point3D point2) {
-        Text label = new CustomText("l(t) = (" + point1.getX() + ", " + point1.getY() + ", " + point1.getZ() + ") +\nt <" + point2.getX() + ", " + point2.getY() + ", " + point2.getZ() + ">");
+    private void createLineLabel(Point3D point1,  double[]direction) {
+        Text label = new CustomText("l(t) = (" + point1.getX() + ", " + point1.getY() + ", " + point1.getZ() + ") +\nt <" + direction[0] + ", " +direction[1] + ", " +direction[2] + ">");
         label.setScaleY(-1);
         label.setTranslateX(point1.getX());
         label.setTranslateY(point1.getY());
@@ -397,5 +403,8 @@ public class Graph extends Group {
 
     public void reset() {
         thingsToGraphList.clear();
+        labelsList.clear();
+        this.update();
+        a = 0;
     }
 }
