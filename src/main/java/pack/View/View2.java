@@ -10,6 +10,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import pack.View.Customs.*;
 import pack.View.iView;
 
 import javafx.geometry.Insets;
@@ -22,10 +23,6 @@ import pack.Controller.Controller2;
 import pack.Model.Model2for2x2;
 import pack.Model.Model2for3x3;
 import pack.Model.ModelForJSON;
-import pack.View.Customs.Custom;
-import pack.View.Customs.CustomButton;
-import pack.View.Customs.CustomRadioButton;
-import pack.View.Customs.CustomTextField;
 
 import java.io.File;
 import java.io.FileReader;
@@ -67,6 +64,7 @@ public class View2 extends Pane implements iView {
         this.btnReset = new CustomButton("RESET\nTHE\nMAGIK");
         this.cb = new ComboBox();
         this.btnSave = new CustomButton("Save Matrix");
+        this.btnSave.setDisable(true);
         this.btnSave.setPrefSize(200, 20);
        JASONDERULO = new ModelForJSON();
        cb.setOnAction(event -> {
@@ -229,8 +227,8 @@ public class View2 extends Pane implements iView {
         GridPane gpt = new GridPane();
         gpt.setPadding(new Insets(10, 10, 10, 10));
         gpt.setPrefSize(500, 695);
-        gpt.setLayoutX(520);
-        gpt.setLayoutY(14);
+        //gpt.setLayoutX(520);
+        //gpt.setLayoutY(14);
 
         if (rb2.isSelected()) {
             String text ="FOR THE EIGENVALUE " + controller2.getEigenValues()[0] + " THE EIGEN VECTOR IS";
@@ -400,16 +398,18 @@ public class View2 extends Pane implements iView {
     public void setActions() {
         rb1.setOnAction(event -> {
             this.btnStart.setDisable(false);
+            this.btnSave.setDisable(false);
             fieldsPane = setFields(fieldListRb1);
             this.vbUi.getChildren().clear();
-            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), getEmptyVBox(), fieldsPane);
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), fieldsPane);
         });
 
         rb2.setOnAction(event -> {
             this.btnStart.setDisable(false);
+            this.btnSave.setDisable(false);
             fieldsPane = setFields(fieldListRb2);
             this.vbUi.getChildren().clear();
-            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), getEmptyVBox(), fieldsPane);
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), fieldsPane);
         });
         this.btnStart.setOnAction(event -> { handleStart(rb1.isSelected()); });
         this.btnReset.setOnAction(event -> { handleReset(); });
@@ -417,23 +417,36 @@ public class View2 extends Pane implements iView {
 
     public HBox setFields (CustomTextField[][] textFields) {
         ImageView iv1 = new ImageView(new Image(p + "Right.png"));
-        iv1.setFitWidth(50);
-        iv1.setFitHeight(272.4);
+        iv1.setFitWidth(40);
+        iv1.setFitHeight(252.4);
         ImageView iv2 = new ImageView(new Image(p + "Left.png"));
-        iv2.setFitWidth(50);
-        iv2.setFitHeight(272.4);
+        iv2.setFitWidth(40);
+        iv2.setFitHeight(252.4);
 
         GridPane gridPane = new GridPane();
-        gridPane.setVgap(10);
-        gridPane.setHgap(10);
+        gridPane.setVgap(20);
+        gridPane.setHgap(20);
         gridPane.setAlignment(Pos.CENTER);
+
+        HBox hbText = new HBox();
+        hbText.setPadding(new Insets(15));
+        hbText.setAlignment(Pos.CENTER);
+        CustomText stringEqualZero = new CustomText("= 0");
+        stringEqualZero.setStyle("-fx-fill: #E7EBEE");
+        stringEqualZero.changeSize(30);
+        hbText.getChildren().add(stringEqualZero);
 
         int rows = textFields.length;
         int cols = textFields[0].length;
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols;  j++) {
+                if (rows == 2) {
+                    iv1.setFitHeight(200.4);
+                    iv2.setFitHeight(200.4);
+                }
                 textFields[i][j] = new CustomTextField();
+                textFields[i][j].setPrefSize(75, 40);
                 int finalI = i;
                 int finalJ = j;
 
@@ -444,7 +457,8 @@ public class View2 extends Pane implements iView {
             }
         }
         HBox hbFields = new HBox();
-        hbFields.getChildren().addAll(iv1, gridPane, iv2);
+        hbFields.setPadding(new Insets(50, 0, 0, 0));
+        hbFields.getChildren().addAll(iv1, gridPane, iv2, hbText);
         hbFields.setAlignment(Pos.CENTER);
         return hbFields;
     }
@@ -475,7 +489,8 @@ public class View2 extends Pane implements iView {
 
     public void handleReset() {
         this.getChildren().clear();
-        btnStart.setDisable(false);
+        btnStart.setDisable(true);
+        btnSave.setDisable(true);
         rb1.setSelected(false);
         rb2.setSelected(false);
         this.vbUi.getChildren().remove(fieldsPane);

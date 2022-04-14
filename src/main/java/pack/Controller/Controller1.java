@@ -79,6 +79,6 @@ public class Controller1 {
         Point3D point2 = model.solutionPoints(69);
         System.out.println(point1);
         System.out.println(point2);
-        this.view.getGraph().addLine(point1, point2);
+        //this.view.getGraph().addLine(point1, point2);
     }
 }
