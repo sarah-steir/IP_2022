@@ -26,7 +26,7 @@ public class ModelForJSON {
     private static JSONObject matrix = new JSONObject();
 
     public ModelForJSON() {
-        //writeBasics();
+        writeBasics();
         readBasics();
     }
 

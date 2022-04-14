@@ -58,6 +58,7 @@ public class View2 extends Pane implements iView {
     private ArrayList<Integer> other = new ArrayList<>();
 
     public View2() {
+
         this.rb1 = new CustomRadioButton("2 x 2");
         this.rb2 = new CustomRadioButton("3 x 3");
         this.rb1.setToggleGroup(group);
@@ -132,6 +133,7 @@ public class View2 extends Pane implements iView {
         payne.setPadding(new Insets(10));
         this.ll = new Label("Choose a name for your matrix");
         ll.setTextFill(Color.BLUE);
+        Text txt = new Text("YO SWITCH IT UP");
         //ll.setFont(font);
         //ll.setStyle("-fx-text-fill: E7EBEE;");
 
@@ -140,6 +142,32 @@ public class View2 extends Pane implements iView {
         payne.getChildren().add(ll);
         payne.getChildren().add(ctf);
         payne.getChildren().add(butt);
+        butt.setOnAction(event -> {
+           // boolean exist = false;
+            try {
+                if (jsonObject.containsValue(ll.getText()) == true) {
+                    payne.getChildren().add(txt);
+                    System.out.println("THICK BITCHES ONLY");
+                }
+            }catch(NullPointerException e) {
+                System.out.println("BAD BITCHES ONLY");
+            humptyDumptyFellOffAWall(ctf.getText());
+            }
+//                exist=false;
+//               System.out.println("INDEPENDANT BITCHES ONLY");
+//            }
+//            System.out.println("111");
+//            if (exist =true) {
+//                payne.getChildren().add(txt);
+//                System.out.println("THICK BITCHES ONLY");
+//            } else {
+//                System.out.println("BAD BITCHES ONLY");
+//            humptyDumptyFellOffAWall(ll.getText());
+//            };
+
+            payne.getChildren().remove(txt);
+        });
+
         return payne;
     } //vbox for scene
     private void humptyDumptyFellOffAWall(String name) { //CONNECT TO BUTTON HANDL
@@ -157,7 +185,7 @@ public class View2 extends Pane implements iView {
         }
         if (this.getRb2().isSelected()) {
             for(int i=0; i<9; i++) {
-                newMatrix.add(this.getFieldListRb1().get(i));
+                newMatrix.add(this.getFieldListRb2().get(i).getText());
             }
         }
         ModelForJSON.getMatrix().put(name, newMatrix);
@@ -166,7 +194,7 @@ public class View2 extends Pane implements iView {
         try {
             // Constructs a FileWriter given a file name, using the platform's default charset
             file = new FileWriter("Resources/JsonFile.json");
-            file.write(ModelForJSON.getMatrix().toJSONString());
+            file.write(ModelForJSON.getMatrix().toJSONString()); // read before right
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -434,13 +462,7 @@ public class View2 extends Pane implements iView {
         });
         this.btnStart.setOnAction(event -> { handleStart(rb1.isSelected()); });
         this.btnReset.setOnAction(event -> { handleReset(); });
-        butt.setOnAction(event -> {
-            if(ll.getText()==jsonObject.get(ll.getText())){
-            }
-            else{
-                humptyDumptyFellOffAWall(ll.getText());
-            }
-        });
+
     }
 
     public GridPane setFields (CustomTextField[][] textFields) {
