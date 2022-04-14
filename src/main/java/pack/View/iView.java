@@ -1,21 +1,15 @@
 package pack.View;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import pack.Model.Model2for2x2;
-import pack.Model.Model2for3x3;
-import pack.Model.ModelForJSON;
 import pack.View.Customs.*;
 import javafx.scene.control.Label;
 import pack.View.GraphView.Graph;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import static pack.View.Customs.Custom.p;
 

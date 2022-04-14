@@ -4,8 +4,6 @@ import pack.Model.Model2for2x2;
 import pack.Model.Model2for3x3;
 import pack.View.Customs.CustomTextField;
 import pack.View.View2;
-
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class Controller2 {

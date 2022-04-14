@@ -1,11 +1,9 @@
-
-
 package pack.Model;
 
 import javafx.geometry.Point3D;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+
 public class Model1 {
     private static final double EPSILON = 1e-10;
 
