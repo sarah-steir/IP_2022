@@ -114,10 +114,10 @@ public class View3 extends Pane implements iView {
             graph.addPoint(model3.intersectionLines(getFieldListRb1()));
 
            //First line
-            graph.addLine(  model3.linesPoints(1,1,getFieldListRb1()), model3.linesPoints(1,2,getFieldListRb1()));
+            graph.addLine(  model3.linesPoints(1,1,getFieldListRb1()), model3.linesPoints(1,2,getFieldListRb1()),model3.dirVector(1,getFieldListRb1()));
 
             //Second line
-            graph.addLine(model3.linesPoints(2,1,getFieldListRb1()),model3.linesPoints(2,2,getFieldListRb1()));
+            graph.addLine(model3.linesPoints(2,1,getFieldListRb1()),model3.linesPoints(2,2,getFieldListRb1()),model3.dirVector(2,getFieldListRb1()));
 
 
 
@@ -137,7 +137,7 @@ public class View3 extends Pane implements iView {
             c3.solutionPoints(5);
             graph.addPlane(c3.n1.get(0)/-c3.n1.get(3),c3.n1.get(1)/-c3.n1.get(3),c3.n1.get(2)/-c3.n1.get(3),"Plane1");
             graph.addPlane(c3.n2.get(0)/-c3.n2.get(3),c3.n2.get(1)/-c3.n2.get(3),c3.n2.get(2)/-c3.n2.get(3),"Plane2");
-            graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10));
+            graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10),c3.crossProduct());
             Controller3 controller3 = new Controller3(this);
 
             //addOutput(controller3);
@@ -242,7 +242,7 @@ public class View3 extends Pane implements iView {
         return fieldList;
     }
 
-
+    //TODO see if these two functions can be moved into Model3 or Controller3
     public  ArrayList<Double> constants() {
         int n = 1;
       ArrayList<Double> constant = new ArrayList<>();

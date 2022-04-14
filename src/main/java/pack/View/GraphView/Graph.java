@@ -164,7 +164,7 @@ public class Graph extends Group {
      * @param point1 the first point the line passes through
      * @param point2 the second point the line passes through
      */
-    public void addLine(Point3D point1, Point3D point2) {
+    public void addLine(Point3D point1, Point3D point2, double[]direction) {
 
         this.addPoint(point1);
         this.addPoint(point2);
@@ -172,7 +172,7 @@ public class Graph extends Group {
         Line line1 = this.FindOneLine(point1, point2);
         Line line2 = this.FindOneLine(point2, point1);
 
-        createLineLabel(point1, point2);
+        createLineLabel(point1, direction);
         addLineToList(line1, line2);
     }
 
@@ -335,10 +335,10 @@ public class Graph extends Group {
     /**
      * Creates the label and places it next to the Line
      * @param point1
-     * @param point2
+     * @param direction
      */
-    private void createLineLabel(Point3D point1, Point3D point2) {
-        Text label = new CustomText("l(t) = (" + point1.getX() + ", " + point1.getY() + ", " + point1.getZ() + ") +\nt <" + point2.getX() + ", " + point2.getY() + ", " + point2.getZ() + ">");
+    private void createLineLabel(Point3D point1,  double[]direction) {
+        Text label = new CustomText("l(t) = (" + point1.getX() + ", " + point1.getY() + ", " + point1.getZ() + ") +\nt <" + direction[0] + ", " +direction[1] + ", " +direction[2] + ">");
         label.setScaleY(-1);
         label.setTranslateX(point1.getX());
         label.setTranslateY(point1.getY());
