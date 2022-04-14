@@ -26,5 +26,6 @@ public class Custom {
         t.setStyle("-fx-text-fill: E7EBEE;");
         t.setAlignment(Pos.CENTER);
 
-        return t;}
+        return t;
+    }
 }

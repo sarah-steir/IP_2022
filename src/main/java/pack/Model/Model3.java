@@ -23,7 +23,7 @@ public class Model3 {
      * their respective double arrayList
      * @param f The ArrayList that contains the Textfields on the plane section
      */
-    public  void transform(ArrayList<CustomTextField> f) {
+    public void transform(ArrayList<CustomTextField> f) {
 
         for (int i = 0; i < 4; i++) {
             Double d = Double.parseDouble(f.get(i).getText());
@@ -35,6 +35,19 @@ public class Model3 {
         }
     }
 
+    /**
+     * This function finds 2 points on the line of intersection of th two planes given (so just two points on the line)
+     * It uses Cramer's Rule,
+     * The first part sets Z to 0, se we find det(A), det(Ax), det(Ay).
+     *      Then x = det(Ax) / det(A)
+     *          y = det(Ay) / det(A)
+     *
+     * The second parts sets Y to 0, se we find det(A), det(Ax), det(Az).
+     *      Then x = det(Ax) / det(A)
+     *          z = det(Az) / det(A)
+     *
+     *  The solutions are stored in an array of Point3D solutions[], to pass to the Graph to graph the line
+     */
     public void solutionPoint() {
         double determinantWithZis0 = n1.get(0) * n2.get(1) - n2.get(0) * n1.get(1);
         double determinantXwithZis0 = -n1.get(3) * n2.get(1) - -n2.get(3) * n1.get(1);
