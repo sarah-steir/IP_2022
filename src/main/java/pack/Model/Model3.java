@@ -7,15 +7,15 @@ import java.util.ArrayList;
 
 public class Model3 {
     //Planes
-    public  ArrayList<Double> n1 = new ArrayList<Double>();
-    public  ArrayList<Double> n2 = new ArrayList<Double>();
-     double crossProduct[] = new double[3];
+    public  ArrayList<Double> n1 = new ArrayList<>();
+    public  ArrayList<Double> n2 = new ArrayList<>();
+    double crossProduct[] = new double[3];
+    public Point3D solutions[] = new Point3D[2];
 
     /**
      * Empty constructor for the planes
      */
     public Model3(){
-
      }
 
     /**
@@ -34,6 +34,25 @@ public class Model3 {
             n2.add(d2);
         }
     }
+
+    public void solutionPoint() {
+        double determinantWithZis0 = n1.get(0) * n2.get(1) - n2.get(0) * n1.get(1);
+        double determinantXwithZis0 = -n1.get(3) * n2.get(1) - -n2.get(3) * n1.get(1);
+        double determinantYwithZis0 = n1.get(0) * -n2.get(3) - n2.get(0) * -n1.get(3);
+        double x1 = determinantXwithZis0 / determinantWithZis0;
+        double y1 = determinantYwithZis0 / determinantWithZis0;
+        double z1 = 0;
+        solutions[0] = new Point3D(x1, y1, z1);
+
+        double determinantWithYis0 = n1.get(0) * n2.get(2) - n2.get(0) * n1.get(2);
+        double determinantXwithYis0 = -n1.get(3) * n2.get(2) - -n2.get(3) * n1.get(2);
+        double determinantZwithYis0 = n1.get(0) * -n2.get(3) - n2.get(0) * -n1.get(3);
+        double x2 = determinantXwithYis0 / determinantWithYis0;
+        double y2 = 0;
+        double z2 = determinantZwithYis0 / determinantWithYis0;
+        solutions[1] = new Point3D(x2, y2, z2);
+    }
+
 
     //TODO GCD of the elements of the cross product
     /**
@@ -253,14 +272,5 @@ public class Model3 {
 
 
     } return direction; }
-
-
-
-
-
-
-
-
-
 
 }

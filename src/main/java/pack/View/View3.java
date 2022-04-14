@@ -134,12 +134,13 @@ public class View3 extends Pane implements iView {
             Model3 c3=new Model3();
             c3.transform(getFieldListRb2());
             c3.crossProduct();
+            c3.solutionPoint();
             c3.solutionPoints(5);
             graph.addPlane(c3.n1.get(0)/-c3.n1.get(3),c3.n1.get(1)/-c3.n1.get(3),c3.n1.get(2)/-c3.n1.get(3),"Plane1");
             graph.addPlane(c3.n2.get(0)/-c3.n2.get(3),c3.n2.get(1)/-c3.n2.get(3),c3.n2.get(2)/-c3.n2.get(3),"Plane2");
-            graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10),c3.crossProduct());
+//            graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10),c3.crossProduct());
+            graph.addLine(c3.solutions[0], c3.solutions[1], c3.crossProduct());
             Controller3 controller3 = new Controller3(this);
-
             //addOutput(controller3);
         }
 

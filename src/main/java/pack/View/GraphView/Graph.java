@@ -182,7 +182,7 @@ public class Graph extends Group {
      * @param point2
      * @return the "first half" of the line
      */
-    public Line FindOneLine(Point3D point1, Point3D point2) {
+    private Line FindOneLine(Point3D point1, Point3D point2) {
         double dist = point1.distance(point2);
 
         Line line = new Line(0, 0, 1000, 0);
@@ -241,7 +241,7 @@ public class Graph extends Group {
      * and adds the Point/Sphere
      * @param sphere
      */
-    public void addPointToList(Sphere sphere) {
+    private void addPointToList(Sphere sphere) {
         a++;
         thingsToGraphList.add(sphere);
         switch (a) {
@@ -268,7 +268,7 @@ public class Graph extends Group {
      * @param line1
      * @param line2
      */
-    public void addLineToList(Line line1, Line line2) {
+    private void addLineToList(Line line1, Line line2) {
         a++;
         thingsToGraphList.add(line1);
         thingsToGraphList.add(line2);
