@@ -113,7 +113,7 @@ public class Graph extends Group {
      * This function is used so that the user doesn't have to click on a specific element to rotate/move the graph
      * @return a big, transparent box that will serve as a "grip" so the user can click anywhere on the graph and rotate it
      */
-    public Box bigCube() {
+    private Box bigCube() {
         map = new Box(400, 400, 400);
         map.setMaterial(new PhongMaterial(Color.TRANSPARENT));
         return map;
@@ -152,7 +152,7 @@ public class Graph extends Group {
         sphere.setTranslateX(point.getX());
         sphere.setTranslateY(point.getY());
         sphere.setTranslateZ(point.getZ());
-//        createPointLabel(point);
+        createPointLabel(point);
         addPointToList(sphere);
     }
 
@@ -298,7 +298,7 @@ public class Graph extends Group {
      * and adds the Rectangle/Plane
      * @param rectangle
      */
-    public void addPlaneToList(Rectangle rectangle) {
+    private void addPlaneToList(Rectangle rectangle) {
         a++;
         rectangle.setOpacity(0.5);
         thingsToGraphList.add(rectangle);
@@ -392,7 +392,7 @@ public class Graph extends Group {
     /**
      * Needed to update everything when we add an element
      */
-    public void update() {
+    private void update() {
         scalable.getChildren().clear();
         scalable.getChildren().add(new AmbientLight());
         scalable.getChildren().addAll(axisList);
