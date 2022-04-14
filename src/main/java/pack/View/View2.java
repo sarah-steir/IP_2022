@@ -27,11 +27,9 @@ import pack.View.Customs.CustomButton;
 import pack.View.Customs.CustomRadioButton;
 import pack.View.Customs.CustomTextField;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class View2 extends Pane implements iView {
 
@@ -45,8 +43,8 @@ public class View2 extends Pane implements iView {
     private CustomButton butt;
     //public static Font font = Font.loadFont(p + "Font.otf", 15);
     private  Label ll;
-    private JSONObject jsonObject;
-
+    private JSONObject jsonObject ;
+private BufferedWriter bufferedWriter;
     private VBox vbUi;
     private VBox vbPo;
     private ModelForJSON JASONDERULO;
@@ -58,7 +56,7 @@ public class View2 extends Pane implements iView {
     private ArrayList<Integer> other = new ArrayList<>();
 
     public View2() {
-
+        jsonObject = ModelForJSON.getMatrix();
         this.rb1 = new CustomRadioButton("2 x 2");
         this.rb2 = new CustomRadioButton("3 x 3");
         this.rb1.setToggleGroup(group);
@@ -96,18 +94,33 @@ public class View2 extends Pane implements iView {
 
         setView2();
         setActions();
-        cb.getItems().addAll(
-                "Diagonal",
-                "identity",
-                "Null",
-                "Lower Triangle",
-                "Symmetric",
-                "Upper Triangle"
-        );
+        ArrayList<String> stuff = YesImAGummyBear();
+        for(int i =0; i<stuff.size(); i++) {
+            System.out.println(stuff.get(i).toString());
+            cb.getItems().add(stuff.get(i));
+        }
         cb.setPromptText("Saved Matrices");
     }
-    private void YesImAGummyBear(){
+    private ArrayList<String> YesImAGummyBear(){ // cmbox moves
+        ArrayList<String> objs = new ArrayList<>();
 
+        Iterator<String> keys = jsonObject.values().iterator();
+        while (keys.hasNext()) {
+            objs.add(String.valueOf(keys.next()));
+        }
+        System.out.println(objs.get(3));
+        return objs;
+//        while(keys.hasNext()) {
+//            String key = keys.next();
+//            System.out.println(key);
+//            if(jsonObject.get(key) instanceof JSONArray) {
+//                JSONArray array = (JSONArray) jsonObject.get(key);
+//                JSONObject object = (JSONObject) array.get(0);
+//                Iterator<String> innerKeys = object.keys();
+//                while(innerKeys.hasNext()) {
+//                    String innerKey = innerKeys.next();
+//                    System.out.println(innerKey);
+//                }
     }
     private void DaVoid(){
 
@@ -143,29 +156,32 @@ public class View2 extends Pane implements iView {
         payne.getChildren().add(ctf);
         payne.getChildren().add(butt);
         butt.setOnAction(event -> {
+//            System.out.println("juhegfcufeefehf");
+//            System.out.println(ctf.getText());
+//             ArrayList<Integer> Nul = new ArrayList<>();
+//
+//            Nul = ModelForJSON.makeTheArrayList((JSONArray) jsonObject.get("null"));
+//            System.out.println(Nul.get(0));
+//            System.out.println(jsonObject.get("null"));
            // boolean exist = false;
             try {
-                if (jsonObject.containsValue(ll.getText()) == true) {
-                    payne.getChildren().add(txt);
-                    System.out.println("THICK BITCHES ONLY");
+                if (jsonObject.containsKey(ctf.getText()) == true) {
+                    if (!payne.getChildren().contains(txt)) {
+                        payne.getChildren().add(txt);
+                        System.out.println("THICK BITCHES ONLY");
+
+                    }
+                }else{
+                    System.out.println("BAD BITCHES ONLY");
+
+                    humptyDumptyFellOffAWall(ctf.getText());
+                    payne.getChildren().remove(txt);
                 }
             }catch(NullPointerException e) {
-                System.out.println("BAD BITCHES ONLY");
-            humptyDumptyFellOffAWall(ctf.getText());
-            }
-//                exist=false;
-//               System.out.println("INDEPENDANT BITCHES ONLY");
-//            }
-//            System.out.println("111");
-//            if (exist =true) {
-//                payne.getChildren().add(txt);
-//                System.out.println("THICK BITCHES ONLY");
-//            } else {
-//                System.out.println("BAD BITCHES ONLY");
-//            humptyDumptyFellOffAWall(ll.getText());
-//            };
+                System.out.println("THIS AINT GOOD");
 
-            payne.getChildren().remove(txt);
+            }
+            System.out.println("3jhuyruefhbwkmef");
         });
 
         return payne;
@@ -188,19 +204,24 @@ public class View2 extends Pane implements iView {
                 newMatrix.add(this.getFieldListRb2().get(i).getText());
             }
         }
-        ModelForJSON.getMatrix().put(name, newMatrix);
-        File newFile = new File("Resources/JsonFile.json");
+        jsonObject.put(name, newMatrix);
+        //File newFile = new File("Resources/JsonFile.json");
 
         try {
-            // Constructs a FileWriter given a file name, using the platform's default charset
+            //PrintWriter pw = new PrintWriter(new FileWriter("Resources/JsonFile.json", true));
             file = new FileWriter("Resources/JsonFile.json");
-            file.write(ModelForJSON.getMatrix().toJSONString()); // read before right
+            //FileWriter fileWriter = new FileWriter(log, true);
+
+            // bufferedWriter = new BufferedWriter(file);
+            //BufferedWriter out = new BufferedWriter(file);
+            file.write(jsonObject.toJSONString()); // read before right
+            file.close();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {
-                file.flush();
                 file.close();
+                //file.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
