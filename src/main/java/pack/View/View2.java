@@ -34,6 +34,7 @@ import static pack.View.Customs.Custom.p;
 
 public class View2 extends Pane implements iView {
 
+    // Don't delete this comment. TAYBA FIX THE BUTTON GETTING NOT DISABLED WHEN THERES SITLL A WRONG VALUE BUT THE NEXT ONE IS RIGHT
     private CustomTextField[][] fieldListRb1, fieldListRb2;
     private HBox fieldsPane;
     private CustomRadioButton rb1;
@@ -42,7 +43,6 @@ public class View2 extends Pane implements iView {
     private ToggleGroup group = new ToggleGroup();
     private ComboBox cb;
     private CustomButton butt;
-    //public static Font font = Font.loadFont(p + "Font.otf", 15);
 
     private VBox vbUi;
     private VBox vbPo;
@@ -226,7 +226,7 @@ public class View2 extends Pane implements iView {
     public GridPane showDaRight(Controller2 controller2) {
         GridPane gpt = new GridPane();
         gpt.setVgap(20);
-        gpt.setPrefSize(500, 695);
+        gpt.setPrefSize(500, 595);
 
         if (rb2.isSelected()) {
             CustomText text = new CustomText("FOR THE EIGENVALUE: " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
@@ -267,8 +267,8 @@ public class View2 extends Pane implements iView {
             }
         }
         if (rb1.isSelected()) {
-            Text text = new Text("FOR THE EIGENVALUE: " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
-            Text text1 = new Text("FOR THE EIGENVALUE: " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
+            CustomText text = new CustomText("FOR THE EIGENVALUE: " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
+            CustomText text1 = new CustomText("FOR THE EIGENVALUE: " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
             gpt.add(text, 0, 0);
             if (controller2.getEigenVectors()[0].size() == 2) {
                 gpt.add(newVector(1,  controller2,0), 0, 1);
@@ -313,6 +313,7 @@ public class View2 extends Pane implements iView {
     }
     public VBox putVertical3x3(int counter,  Controller2 controller2, int i){
         VBox vbx1 = new VBox();
+        vbx1.setAlignment(Pos.CENTER);
         Double numba1, numba2, numba3;
 
         if (counter == 1){
@@ -331,19 +332,19 @@ public class View2 extends Pane implements iView {
             numba3 = controller2.getEigenVectors()[i].get(8);
         }
 
-        Text nb1 = new Text(Double.toString(numba1));
-        Text nb2 = new Text(Double.toString(numba2));
-        Text nb3 = new Text(Double.toString(numba3));
+        CustomText nb1 = new CustomText(Double.toString(numba1));
+        CustomText nb2 = new CustomText(Double.toString(numba2));
+        CustomText nb3 = new CustomText(Double.toString(numba3));
         vbx1.getChildren().add(nb1);
         vbx1.getChildren().add(nb2);
         vbx1.getChildren().add(nb3);
-
 
         return vbx1;
     }
 
     public VBox putVertical2x2(int counter, Controller2 controller2, int i){
-        VBox vbx1 = new VBox();
+        VBox vbx1 = new VBox(15);
+        vbx1.setAlignment(Pos.CENTER);
         Double numba1, numba2;
 
         if (counter == 1) {
@@ -351,14 +352,12 @@ public class View2 extends Pane implements iView {
             numba2 = controller2.getEigenVectors()[i].get(1);
         }
         else {  // if counter == 2
-            System.out.println("COUNTER IS 2 NOW");
             numba1 = controller2.getEigenVectors()[1].get(2);
             numba2 = controller2.getEigenVectors()[1].get(3);
         }
-        Text nb1 = new Text(Double.toString(numba1));
-        Text nb2 = new Text(Double.toString(numba2));
-        vbx1.getChildren().add(nb1);
-        vbx1.getChildren().add(nb2);
+        CustomText nb1 = new CustomText(Double.toString(numba1));
+        CustomText nb2 = new CustomText(Double.toString(numba2));
+        vbx1.getChildren().addAll(nb1, nb2);
         return vbx1;
     }
 
@@ -371,6 +370,7 @@ public class View2 extends Pane implements iView {
 
     private void setVbPo(String title) {
         this.vbPo.setPrefSize(500, 595);
+        this.vbPo.setPadding(new Insets(15));
         this.vbPo.setSpacing(15);
         this.vbPo.setAlignment(Pos.TOP_CENTER);
         this.vbPo.setStyle("-fx-background-color: #333335");
@@ -439,7 +439,7 @@ public class View2 extends Pane implements iView {
                     iv2.setFitWidth(40);
                 }
                 textFields[i][j] = new CustomTextField();
-                textFields[i][j].setPrefSize(75, 40);
+                textFields[i][j].setPrefSize(50, 40);
                 int finalI = i;
                 int finalJ = j;
 
@@ -613,13 +613,6 @@ public class View2 extends Pane implements iView {
         }
     } //DONE DONE DONE
 
-    public VBox getEmptyVBox() {
-        VBox vbox = new VBox();
-        vbox.setPrefSize(500, 150);
-        return vbox;
-    }
-
-
     public void setFieldListRb1(CustomTextField[][] fieldListRb1) {
         this.fieldListRb1 = fieldListRb1;
     }
@@ -627,14 +620,6 @@ public class View2 extends Pane implements iView {
     public void setFieldListRb2(CustomTextField[][] fieldListRb2) {
         this.fieldListRb2 = fieldListRb2;
     }
-
-//    public GridPane getFieldsPane() {
-//        return fieldsPane;
-//    }
-//
-//    public void setFieldsPane(GridPane fieldsPane) {
-//        this.fieldsPane = fieldsPane;
-//    }
 
     public void setRb1(CustomRadioButton rb1) {
         this.rb1 = rb1;
