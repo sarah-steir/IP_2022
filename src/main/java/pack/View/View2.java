@@ -290,8 +290,8 @@ public class View2 extends Pane implements iView {
     }
 
     // if i == 0, then it's s1 otherwise i == 1, then it's s2
-    public HBox newVector(int counter, Controller2 controller2, int i ){ // counter is the vector if size=6 there is counter 1 and 2 possible
-        HBox hbx = new HBox();
+    public HBox newVector(int counter, Controller2 controller2, int i ) { // counter is the vector if size=6 there is counter 1 and 2 possible
+        HBox hbx = new HBox(10);
         VBox vbx1 = new VBox();
         ImageView imL = new ImageView(new Image(p + "Right.png"));
         imL.setFitWidth(10);
@@ -352,8 +352,8 @@ public class View2 extends Pane implements iView {
             numba2 = controller2.getEigenVectors()[i].get(1);
         }
         else {  // if counter == 2
-            numba1 = controller2.getEigenVectors()[1].get(2);
-            numba2 = controller2.getEigenVectors()[1].get(3);
+            numba1 = controller2.getEigenVectors()[i].get(2);   // changed 1 to i
+            numba2 = controller2.getEigenVectors()[i].get(3);   // changed 1 to i
         }
         CustomText nb1 = new CustomText(Double.toString(numba1));
         CustomText nb2 = new CustomText(Double.toString(numba2));
