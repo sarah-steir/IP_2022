@@ -36,12 +36,12 @@ public class View2 extends Pane implements iView {
 
     private CustomTextField[][] fieldListRb1, fieldListRb2;
     private HBox fieldsPane;
-    private static CustomRadioButton rb1;
-    private static CustomRadioButton rb2;
+    private CustomRadioButton rb1;
+    private CustomRadioButton rb2;
     private CustomButton btnStart, btnReset, btnSave;
     private ToggleGroup group = new ToggleGroup();
-    private static ComboBox cb;
-    private static CustomButton butt;
+    private ComboBox cb;
+    private CustomButton butt;
     //public static Font font = Font.loadFont(p + "Font.otf", 15);
 
     private VBox vbUi;
@@ -63,6 +63,7 @@ public class View2 extends Pane implements iView {
         this.btnStart.setDisable(true);
         this.btnReset = new CustomButton("RESET\nTHE\nMAGIK");
         this.cb = new ComboBox();
+        this.cb.setDisable(true);
         this.btnSave = new CustomButton("Save Matrix");
         this.btnSave.setDisable(true);
         this.btnSave.setPrefSize(200, 20);
@@ -105,7 +106,7 @@ public class View2 extends Pane implements iView {
     private static void YesImAGummyBear(){
 
     }
-    private static void DaVoid(){
+    private void DaVoid(){
 
 
         StackPane secondaryLayout = new StackPane();
@@ -124,7 +125,7 @@ public class View2 extends Pane implements iView {
 
         newWindow.show();
     }
-    private static VBox PANCAKES(){
+    private VBox PANCAKES(){
         VBox payne = new VBox();
         Label ll = new Label("Choose a name for your matrix");
         ll.setTextFill(Color.web("#1985A1"));
@@ -138,9 +139,9 @@ public class View2 extends Pane implements iView {
         payne.getChildren().add(butt);
         return payne;
     }
-    private static void humptyDumptyFellOffAWall(String name) { //CONNECT TO BUTTON HANDL
+    private void humptyDumptyFellOffAWall(String name) { //CONNECT TO BUTTON HANDL
         JSONArray newMatrix = new JSONArray();
-        if (View2.getRb1().isSelected()) {
+        if (rb1.isSelected()) {
             newMatrix.add(View2.getT1());//
             newMatrix.add(View2.getT2());//
             newMatrix.add("0");
@@ -151,7 +152,7 @@ public class View2 extends Pane implements iView {
             newMatrix.add("0");
             newMatrix.add("0");
         }
-        if (View2.getRb2().isSelected()) {
+        if (rb2.isSelected()) {
             newMatrix.add(View2.getT1());
             newMatrix.add(View2.getT2());
             newMatrix.add(View2.getT3());
@@ -225,10 +226,7 @@ public class View2 extends Pane implements iView {
 
     public GridPane showDaRight(Controller2 controller2) {
         GridPane gpt = new GridPane();
-        gpt.setPadding(new Insets(10, 10, 10, 10));
         gpt.setPrefSize(500, 695);
-        //gpt.setLayoutX(520);
-        //gpt.setLayoutY(14);
 
         if (rb2.isSelected()) {
             String text ="FOR THE EIGENVALUE " + controller2.getEigenValues()[0] + " THE EIGEN VECTOR IS";
@@ -290,9 +288,9 @@ public class View2 extends Pane implements iView {
             }
 
         }
-        gpt.setStyle("-fx-border-width: 2px;\n" +
-                "    -fx-border-color: red;\n" +
-                "    -fx-border-insets: -2px;");
+//        gpt.setStyle("-fx-border-width: 2px;\n" +
+//                "    -fx-border-color: red;\n" +
+//                "    -fx-border-insets: -2px;");
         return gpt;
     }
 
@@ -399,6 +397,8 @@ public class View2 extends Pane implements iView {
         rb1.setOnAction(event -> {
             this.btnStart.setDisable(false);
             this.btnSave.setDisable(false);
+            this.cb.setDisable(false);
+
             fieldsPane = setFields(fieldListRb1);
             this.vbUi.getChildren().clear();
             this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), fieldsPane);
@@ -407,6 +407,7 @@ public class View2 extends Pane implements iView {
         rb2.setOnAction(event -> {
             this.btnStart.setDisable(false);
             this.btnSave.setDisable(false);
+            this.cb.setDisable(false);
             fieldsPane = setFields(fieldListRb2);
             this.vbUi.getChildren().clear();
             this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), fieldsPane);
@@ -491,6 +492,7 @@ public class View2 extends Pane implements iView {
         this.getChildren().clear();
         btnStart.setDisable(true);
         btnSave.setDisable(true);
+        cb.setDisable(true);
         rb1.setSelected(false);
         rb2.setSelected(false);
         this.vbUi.getChildren().remove(fieldsPane);
@@ -505,18 +507,6 @@ public class View2 extends Pane implements iView {
         vbOutput.setSpacing(15);
         vbOutput.setPadding(new Insets(15));
 
-        // Print eigenvalues
-
-
-        /*for (int i = 0; i < controller1.getOutput().length; i++) {
-            if (i == 0) {
-                vbOutput.getChildren().add(Custom.setTitle("X = " + controller1.getOutput()[i]));
-            } else if (i == 1) {
-                vbOutput.getChildren().add(Custom.setTitle("Y = " + controller1.getOutput()[i]));
-            } else if (i == 2) {
-                vbOutput.getChildren().add(Custom.setTitle("Z = " + controller1.getOutput()[i]));
-            }
-        }*/
         this.vbPo.getChildren().add(vbOutput);
         this.vbPo.getChildren().add(showDaRight(controller2));
     }
@@ -663,11 +653,11 @@ public class View2 extends Pane implements iView {
         this.rb1 = rb1;
     }
 
-    public static CustomRadioButton getRb1() {
+    public CustomRadioButton getRb1() {
         return rb1;
     }
 
-    public static CustomRadioButton getRb2() {
+    public CustomRadioButton getRb2() {
         return rb2;
     }
 
@@ -707,7 +697,7 @@ public class View2 extends Pane implements iView {
         this.group = group;
     }
 
-    public static ComboBox getCb() {
+    public ComboBox getCb() {
         return cb;
     }
 
