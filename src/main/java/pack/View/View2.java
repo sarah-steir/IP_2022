@@ -68,9 +68,11 @@ private BufferedWriter bufferedWriter;
         this.btnSave = new CustomButton("Save Matrix");
         this.btnSave.setPrefSize(200, 20);
        JASONDERULO = new ModelForJSON();
+       cb.getItems().addAll(jsonObject);
        cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
-            doAction(cb.getValue().toString()); //Send the selected item to the method
+            ///doAction(cb.getValue().toString()); //Send the selected item to the method
+           setMatrix(YesImAGummyBear());
         });
         btnSave.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
@@ -94,22 +96,38 @@ private BufferedWriter bufferedWriter;
 
         setView2();
         setActions();
-        ArrayList<String> stuff = YesImAGummyBear();
-        for(int i =0; i<stuff.size(); i++) {
-            System.out.println(stuff.get(i).toString());
-            cb.getItems().add(stuff.get(i));
-        }
+//        ArrayList<String> stuff = YesImAGummyBear();
+//        for(int i =0; i<stuff.size(); i++) {
+//            System.out.println(stuff.get(i).toString());
+//            cb.getItems().add(stuff.get(i));
+//        }
         cb.setPromptText("Saved Matrices");
     }
-    private ArrayList<String> YesImAGummyBear(){ // cmbox moves
-        ArrayList<String> objs = new ArrayList<>();
+    private ArrayList<Integer> YesImAGummyBear(){ // cmbox moves
 
-        Iterator<String> keys = jsonObject.values().iterator();
-        while (keys.hasNext()) {
-            objs.add(String.valueOf(keys.next()));
+
+        ArrayList<String> objs = new ArrayList<>();
+        ArrayList<Integer> ints = new ArrayList<>();
+        JSONArray js = (JSONArray) jsonObject.get(cb.getValue().toString());
+        JSONArray list = js;
+        Iterator<JSONObject> iterator = js.iterator();
+        while (iterator.hasNext()) {
+            objs.add(String.valueOf(iterator.next()));
         }
-        System.out.println(objs.get(3));
-        return objs;
+
+        for(int i = 0; i< objs.size();i++){
+            ints.add(Integer.valueOf(objs.get(i)));
+        }
+
+
+//        ArrayList<String> objs = new ArrayList<>();
+//
+//        Iterator<String> keys = jsonObject.values().iterator();
+//        while (keys.hasNext()) {
+//            objs.add(String.valueOf(keys.next()));
+//        }
+//        System.out.println(objs.get(3));
+        return ints;
 //        while(keys.hasNext()) {
 //            String key = keys.next();
 //            System.out.println(key);
@@ -122,6 +140,37 @@ private BufferedWriter bufferedWriter;
 //                    System.out.println(innerKey);
 //                }
     }
+    private void setMatrix(ArrayList<Integer> ints){
+        a1 = ints.get(0);
+        a2 = ints.get(1);
+        a3 = ints.get(2);
+        b1 = ints.get(3);
+        b2 = ints.get(4);
+        b3 = ints.get(5);
+        c1 = ints.get(6);
+        c2 = ints.get(7);
+        c3 = ints.get(8);
+
+        if (rb1.isSelected()) {
+            fieldListRb1[0][0].setText(String.valueOf(a1));
+            fieldListRb1[0][1].setText(String.valueOf(a2));
+            fieldListRb1[1][0].setText(String.valueOf(b1));
+            fieldListRb1[1][1].setText(String.valueOf(b2));
+        }
+        if (rb2.isSelected()) {
+            fieldListRb2[0][0].setText(String.valueOf(a1));
+            fieldListRb2[0][1].setText(String.valueOf(a2));
+            fieldListRb2[0][2].setText(String.valueOf(a3));
+            fieldListRb2[1][0].setText(String.valueOf(b1));
+            fieldListRb2[1][1].setText(String.valueOf(b2));
+            fieldListRb2[1][2].setText(String.valueOf(b3));
+            fieldListRb2[2][0].setText(String.valueOf(c1));
+            fieldListRb2[2][1].setText(String.valueOf(c2));
+            fieldListRb2[2][2].setText(String.valueOf(c3));
+        }
+
+    }
+
     private void DaVoid(){
 
 
@@ -459,8 +508,6 @@ private BufferedWriter bufferedWriter;
         this.vbPo.getChildren().add(Custom.setTitle(title));
     }
 
-
-
     public void setView2() {
         this.setPrefSize(1050, 750);
         this.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
@@ -566,8 +613,6 @@ private BufferedWriter bufferedWriter;
         this.vbPo.getChildren().add(vbOutput);
         this.vbPo.getChildren().add(showDaRight(controller2));
     }
-
-
 
     public ArrayList<CustomTextField> getFieldListRb1() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();

@@ -122,40 +122,40 @@ public static void writeBasics() {
         }
     }
         }
-    public static void writeBasics1() {
-        JSONObject matrix = new JSONObject();
-
-
-
-        JSONArray Null = new JSONArray();
-        Null.add("0");
-        Null.add("0");
-        Null.add("0");
-        Null.add("0");
-        Null.add("0");
-        Null.add("0");
-        Null.add("0");
-        Null.add("0");
-        Null.add("0");
-        matrix.put("null", Null);
-//CREATE NEW JSON FILE
-        File newFile = new File("Resources/JsonFile.json");
-
-        try {
-            // Constructs a FileWriter given a file name, using the platform's default charset
-            file = new FileWriter("Resources/JsonFile.json");
-            file.write(matrix.toJSONString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                file.flush();
-                file.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    public static void writeBasics1() {
+//        JSONObject matrix = new JSONObject();
+//
+//
+//
+//        JSONArray Null = new JSONArray();
+//        Null.add("0");
+//        Null.add("0");
+//        Null.add("0");
+//        Null.add("0");
+//        Null.add("0");
+//        Null.add("0");
+//        Null.add("0");
+//        Null.add("0");
+//        Null.add("0");
+//        matrix.put("null", Null);
+////CREATE NEW JSON FILE
+//        File newFile = new File("Resources/JsonFile.json");
+//
+//        try {
+//            // Constructs a FileWriter given a file name, using the platform's default charset
+//            file = new FileWriter("Resources/JsonFile.json");
+//            file.write(matrix.toJSONString());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                file.flush();
+//                file.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
         public static void readBasics(){
 //Read
             JSONParser parser = new JSONParser();
