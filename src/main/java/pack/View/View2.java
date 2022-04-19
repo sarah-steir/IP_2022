@@ -56,6 +56,7 @@ public class View2 extends Pane implements iView {
     private static ArrayList<Integer> other = new ArrayList<>();
     private JSONObject jsonObject;
     private JSONObject names;
+    private Stage newWindow;
 
     public View2() {
         jsonObject = getThatObject();
@@ -170,6 +171,7 @@ public class View2 extends Pane implements iView {
         }
 
     }
+    //
     private void DaVoid(){
 
 
@@ -179,7 +181,7 @@ public class View2 extends Pane implements iView {
         Scene secondScene = new Scene(secondaryLayout, 300, 300);
 
         // New window (Stage)
-        Stage newWindow = new Stage();
+        newWindow = new Stage();
         newWindow.setTitle("Second Stage");
         newWindow.setScene(secondScene);
 
@@ -195,8 +197,7 @@ public class View2 extends Pane implements iView {
         this.ll = new Label("Choose a name for your matrix");
         ll.setTextFill(Color.BLUE);
         Text txt = new Text("YO SWITCH IT UP");
-        //ll.setFont(font);
-        //ll.setStyle("-fx-text-fill: E7EBEE;");
+
 
         TextField ctf = new CustomTextField();
         butt = new CustomButton("SEND IT");
@@ -204,26 +205,20 @@ public class View2 extends Pane implements iView {
         payne.getChildren().add(ctf);
         payne.getChildren().add(butt);
         butt.setOnAction(event -> {
-//            System.out.println("juhegfcufeefehf");
-//            System.out.println(ctf.getText());
-//             ArrayList<Integer> Nul = new ArrayList<>();
-//
-//            Nul = ModelForJSON.makeTheArrayList((JSONArray) jsonObject.get("null"));
-//            System.out.println(Nul.get(0));
-//            System.out.println(jsonObject.get("null"));
-            // boolean exist = false;
-            try {
+
+            try { // THE NAME OF THE MATRIX IS ALREADY USE
                 if (jsonObject.containsKey(ctf.getText()) == true) {
                     if (!payne.getChildren().contains(txt)) {
                         payne.getChildren().add(txt);
                         System.out.println("THICK BITCHES ONLY");
 
                     }
-                }else{
+                }else{ // CLOSE THE SCENE + MATRIX NAME NOT USED
                     System.out.println("BAD BITCHES ONLY");
 
                     humptyDumptyFellOffAWall(ctf.getText());
                     payne.getChildren().remove(txt);
+                    newWindow.close();
 
                 }
             }catch(NullPointerException e) {
@@ -249,13 +244,13 @@ public class View2 extends Pane implements iView {
             newMatrix.add("0");
         }
 
-            if (this.getRb2().isSelected()) {
-                for(int i=0; i<9; i++) {
-                    newMatrix.add(this.getFieldListRb2().get(i).getText());
-                }
+        if (this.getRb2().isSelected()) {
+            for (int i = 0; i < 9; i++) {
+                newMatrix.add(this.getFieldListRb2().get(i).getText());
             }
-        ModelForJSON.getMatrix().put(name, newMatrix);
-        File newFile = new File("Resources/JsonFile.json");
+        }
+        jsonObject.put(name, newMatrix);
+        names.put(names,name);
 
         try {
             // Constructs a FileWriter given a file name, using the platform's default charset
@@ -270,6 +265,22 @@ public class View2 extends Pane implements iView {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+            try {
+                // Constructs a FileWriter given a file name, using the platform's default charset
+                file = new FileWriter("Resources/JsonNames.json");
+                file.write(ModelForJSON.getNames().toJSONString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    file.flush();
+                    file.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
         }
     }
     private ArrayList<Integer> humptyDumptyCameBackToLife () {
