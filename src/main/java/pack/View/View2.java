@@ -53,6 +53,7 @@ public class View2 extends Pane implements iView {
     private static double a1,a2,a3,b1,b2,b3,c1,c2,c3;
     static FileWriter file;
     private static ArrayList<Integer> other = new ArrayList<>();
+    private JSONObject jsonObject;
 
     public View2() {
         this.rb1 = new CustomRadioButton("2 x 2");
@@ -68,6 +69,11 @@ public class View2 extends Pane implements iView {
         this.btnSave.setDisable(true);
         this.btnSave.setPrefSize(200, 20);
        JASONDERULO = new ModelForJSON();
+       jsonObject = getThatObject();
+
+        cb.getItems().addAll( "ufefe","fibehfe"
+        );
+
        cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             doAction(cb.getValue().toString()); //Send the selected item to the method
@@ -93,14 +99,7 @@ public class View2 extends Pane implements iView {
 
         setView2();
         setActions();
-        cb.getItems().addAll(
-                "Diagonal",
-                "identity",
-                "Null",
-                "Lower Triangle",
-                "Symmetric",
-                "Upper Triangle"
-        );
+
         cb.setPromptText("Saved Matrices");
     }
     private static void YesImAGummyBear(){
@@ -182,26 +181,31 @@ public class View2 extends Pane implements iView {
         }
     }
 
-    private static ArrayList<Integer> humptyDumptyCameBackToLife () {
+
+    private JSONObject getThatObject(){
         JSONParser parser = new JSONParser();
 
         Object obj = null;
         try {
             obj = parser.parse(new FileReader("Resources/JsonFile.json"));
-            JSONObject jsonObject = (JSONObject) obj;
-
-
-            try {
-                //other = makeTheArrayList((JSONArray) jsonObject.get(View2.getCb().getValue()));
-            }catch(Exception e){
-                e.printStackTrace();
-
-            }
+            this.jsonObject = (JSONObject) obj;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        return jsonObject;
+    }
+
+
+    private ArrayList<Integer> humptyDumptyCameBackToLife () {
+        try {
+            //other = makeTheArrayList((JSONArray) jsonObject.get(View2.getCb().getValue()));
+        }catch(Exception e){
+            e.printStackTrace();
+
+        }
+
         return other;
     }
     private HBox setHbComboBox() {

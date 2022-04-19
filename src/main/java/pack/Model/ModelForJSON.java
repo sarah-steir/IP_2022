@@ -21,10 +21,41 @@ public class ModelForJSON {
     private static ArrayList<Integer> Nul = new ArrayList<>();
 
     private static JSONObject matrix = new JSONObject();
+    private static JSONObject names = new JSONObject();
 
     public ModelForJSON() {
         //writeBasics();
+        //writeNames();
         readBasics();
+    }
+    public static void writeNames() {
+
+        JSONArray getNames = new JSONArray();
+        getNames.add("identity");
+        getNames.add("diagonal");
+        getNames.add("null");
+        getNames.add("symmetric");
+        getNames.add("upper triangle");
+        getNames.add("lower triangle");
+
+        names.put("names", getNames);
+//CREATE NEW JSON FILE
+        File newFile = new File("Resources/JsonNames.json");
+
+        try {
+            // Constructs a FileWriter given a file name, using the platform's default charset
+            file = new FileWriter("Resources/JsonNames.json");
+            file.write(names.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                file.flush();
+                file.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 public static void writeBasics() {
@@ -101,6 +132,7 @@ public static void writeBasics() {
     Null.add("0");
     Null.add("0");
     matrix.put("Null", Null);
+
 //CREATE NEW JSON FILE
     File newFile = new File("Resources/JsonFile.json");
 
@@ -108,6 +140,7 @@ public static void writeBasics() {
         // Constructs a FileWriter given a file name, using the platform's default charset
         file = new FileWriter("Resources/JsonFile.json");
         file.write(matrix.toJSONString());
+
     } catch (IOException e) {
         e.printStackTrace();
     } finally {
@@ -215,6 +248,14 @@ public static void writeBasics() {
 
     public static void setMatrix(JSONObject matrix) {
         ModelForJSON.matrix = matrix;
+    }
+
+    public static JSONObject getNames() {
+        return names;
+    }
+
+    public static void setNames(JSONObject names) {
+        ModelForJSON.names = names;
     }
 }
 
