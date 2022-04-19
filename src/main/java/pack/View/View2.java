@@ -86,9 +86,10 @@ public class View2 extends Pane implements iView {
 //    cb.getItems().add(names.get("names")
 //    );
 //}
-       cb.setOnAction(event -> {
+        cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
-            doAction(cb.getValue().toString()); //Send the selected item to the method
+            ///doAction(cb.getValue().toString()); //Send the selected item to the method
+            //setMatrix(YesImAGummyBear());
         });
         btnSave.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
@@ -114,8 +115,23 @@ public class View2 extends Pane implements iView {
 
         cb.setPromptText("Saved Matrices");
     }
-    private static void YesImAGummyBear(){
+    private ArrayList<Integer> YesImAGummyBear(){
 
+
+        ArrayList<String> objs = new ArrayList<>();
+        ArrayList<Integer> ints = new ArrayList<>();
+        JSONArray js = (JSONArray) jsonObject.get(cb.getValue().toString());
+        JSONArray list = js;
+        Iterator<JSONObject> iterator = js.iterator();
+        while (iterator.hasNext()) {
+            objs.add(String.valueOf(iterator.next()));
+        }
+
+        for(int i = 0; i< objs.size();i++){
+            ints.add(Integer.valueOf(objs.get(i)));
+        }
+
+        return ints;
     }
     private void DaVoid(){
 
@@ -192,6 +208,54 @@ public class View2 extends Pane implements iView {
             }
         }
     }
+    private ArrayList<Integer> humptyDumptyCameBackToLife () {
+        JSONParser parser = new JSONParser();
+
+        Object obj = null;
+        try {
+            obj = parser.parse(new FileReader("Resources/JsonFile.json"));
+            this.jsonObject = (JSONObject) obj;
+
+
+            try {
+                this.other = ModelForJSON.makeTheArrayList((JSONArray) jsonObject.get(this.getCb().getValue()));
+//                a1 = getOther().get(0);
+//                a2 = getOther().get(1);
+//                a3 = getOther().get(2);
+//                b1 = getOther().get(3);
+//                b2 = getOther().get(4);
+//                b3 = getOther().get(5);
+//                c1 = getOther().get(6);
+//                c2 = getOther().get(7);
+//                c3 = getOther().get(8);
+//                if (rb1.isSelected()) {
+//                    fieldListRb1[0][0].setText(String.valueOf(a1));
+//                    fieldListRb1[0][1].setText(String.valueOf(a2));
+//                    fieldListRb1[1][0].setText(String.valueOf(b1));
+//                    fieldListRb1[1][1].setText(String.valueOf(b2));
+//                }
+//                if (rb2.isSelected()) {
+//                    fieldListRb2[0][0].setText(String.valueOf(a1));
+//                    fieldListRb2[0][1].setText(String.valueOf(a2));
+//                    fieldListRb2[0][2].setText(String.valueOf(a3));
+//                    fieldListRb2[1][0].setText(String.valueOf(b1));
+//                    fieldListRb2[1][1].setText(String.valueOf(b2));
+//                    fieldListRb2[1][2].setText(String.valueOf(b3));
+//                    fieldListRb2[2][0].setText(String.valueOf(c1));
+//                    fieldListRb2[2][1].setText(String.valueOf(c2));
+//                    fieldListRb2[2][2].setText(String.valueOf(c3));
+               // }
+            }catch(Exception e){
+                e.printStackTrace();
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return other;
+    }
 
 
     private JSONObject getThemNames(){
@@ -224,17 +288,6 @@ public class View2 extends Pane implements iView {
         return jsonObject;
     }
 
-
-    private ArrayList<Integer> humptyDumptyCameBackToLife () {
-        try {
-            //other = makeTheArrayList((JSONArray) jsonObject.get(View2.getCb().getValue()));
-        }catch(Exception e){
-            e.printStackTrace();
-
-        }
-
-        return other;
-    }
     private HBox setHbComboBox() {
         HBox hbComboBox = new HBox(100);
         hbComboBox.setPadding(new Insets(15));
@@ -643,6 +696,7 @@ public class View2 extends Pane implements iView {
             fieldListRb2[2][2].setText(String.valueOf(c3));
         }
     } //DONE DONE DONE
+
 
     public void setFieldListRb1(CustomTextField[][] fieldListRb1) {
         this.fieldListRb1 = fieldListRb1;

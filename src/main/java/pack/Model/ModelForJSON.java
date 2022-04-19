@@ -178,7 +178,7 @@ public static void writeBasics() {
 
 
         }
-    private static ArrayList<Integer> makeTheArrayList(JSONArray js){
+    public static ArrayList<Integer> makeTheArrayList(JSONArray js){
         ArrayList<String> objs = new ArrayList<>();
         ArrayList<Integer> ints = new ArrayList<>();
         JSONArray list = js;
