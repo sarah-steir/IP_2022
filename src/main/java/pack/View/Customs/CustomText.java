@@ -10,6 +10,7 @@ public class CustomText extends Text {
     public CustomText(String message) {
         super (message);
         this.setFont(Custom.font);
+        this.setStyle("-fx-fill: #E7EBEE");
     }
 
     public void changeSize(int size) {

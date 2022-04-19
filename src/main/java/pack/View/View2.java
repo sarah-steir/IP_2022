@@ -29,21 +29,22 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static pack.View.Customs.Custom.p;
 
 public class View2 extends Pane implements iView {
 
+    // Don't delete this comment. TAYBA FIX THE BUTTON GETTING NOT DISABLED WHEN THERES SITLL A WRONG VALUE BUT THE NEXT ONE IS RIGHT
     private CustomTextField[][] fieldListRb1, fieldListRb2;
     private HBox fieldsPane;
-    private static CustomRadioButton rb1;
-    private static CustomRadioButton rb2;
+    private CustomRadioButton rb1;
+    private CustomRadioButton rb2;
     private CustomButton btnStart, btnReset, btnSave;
     private ToggleGroup group = new ToggleGroup();
-    private static ComboBox cb;
-    private static CustomButton butt;
-    //public static Font font = Font.loadFont(p + "Font.otf", 15);
-
+    private ComboBox cb;
+    private CustomButton butt;
+    private  Label ll;
     private VBox vbUi;
     private VBox vbPo;
     private ModelForJSON JASONDERULO;
@@ -53,8 +54,12 @@ public class View2 extends Pane implements iView {
     private static double a1,a2,a3,b1,b2,b3,c1,c2,c3;
     static FileWriter file;
     private static ArrayList<Integer> other = new ArrayList<>();
+    private JSONObject jsonObject;
+    private JSONObject names;
+    private Stage newWindow;
 
     public View2() {
+        jsonObject = getThatObject();
         this.rb1 = new CustomRadioButton("2 x 2");
         this.rb2 = new CustomRadioButton("3 x 3");
         this.rb1.setToggleGroup(group);
@@ -63,17 +68,31 @@ public class View2 extends Pane implements iView {
         this.btnStart.setDisable(true);
         this.btnReset = new CustomButton("RESET\nTHE\nMAGIK");
         this.cb = new ComboBox();
+        this.cb.setDisable(true);
         this.btnSave = new CustomButton("Save Matrix");
         this.btnSave.setDisable(true);
         this.btnSave.setPrefSize(200, 20);
        JASONDERULO = new ModelForJSON();
-       cb.setOnAction(event -> {
+
+       names = getThemNames();
+        JSONArray list = (JSONArray) names.get("names");
+        Iterator<JSONObject> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            cb.getItems().add(String.valueOf(iterator.next()));
+        }
+        cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
-            doAction(cb.getValue().toString()); //Send the selected item to the method
+            setMatrix(YesImAGummyBear((JSONArray) jsonObject.get(cb.getValue())));
+            JSONArray list1 = (JSONArray) names.get("names");
+            Iterator<JSONObject> iterator1 = list1.iterator();
+            while (iterator.hasNext()) {
+                cb.getItems().add(String.valueOf(iterator1.next()));
+            }
         });
         btnSave.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             DaVoid(); //Send the selected item to the method
+
         });
         fieldListRb1 = new CustomTextField[2][2];
         fieldListRb2 = new CustomTextField[3][3];
@@ -92,20 +111,68 @@ public class View2 extends Pane implements iView {
 
         setView2();
         setActions();
-        cb.getItems().addAll(
-                "Diagonal",
-                "identity",
-                "Null",
-                "Lower Triangle",
-                "Symmetric",
-                "Upper Triangle"
-        );
+//        ArrayList<String> stuff = YesImAGummyBear();
+////        for(int i =0; i<stuff.size(); i++) {
+////            System.out.println(stuff.get(i).toString());
+////            cb.getItems().add(stuff.get(i));
+////        }
+
         cb.setPromptText("Saved Matrices");
     }
-    private static void YesImAGummyBear(){
+    private ArrayList<Integer> YesImAGummyBear(JSONArray js){
+
+
+        ArrayList<String> objs = new ArrayList<>();
+        ArrayList<Integer> ints = new ArrayList<>();
+        //JSONArray js = (JSONArray) jsonObject.get("diagonal");
+        JSONArray list = js;
+        Iterator<JSONObject> iterator = js.iterator();
+        while (iterator.hasNext()) {
+            objs.add(String.valueOf(iterator.next()));
+        }
+
+        for(int i = 0; i< objs.size();i++){
+            ints.add(Integer.valueOf(objs.get(i)));
+        }
+        System.out.println("AHGDHEDWDMWDD");
+        for (Integer str : ints)
+        {
+            System.out.println(str);
+        }
+        return ints;
+    }
+    private void setMatrix(ArrayList<Integer> ints){
+        a1 = ints.get(0);
+        a2 = ints.get(1);
+        a3 = ints.get(2);
+        b1 = ints.get(3);
+        b2 = ints.get(4);
+        b3 = ints.get(5);
+        c1 = ints.get(6);
+        c2 = ints.get(7);
+        c3 = ints.get(8);
+
+        if (rb1.isSelected()) {
+            fieldListRb1[0][0].setText(String.valueOf(a1));
+            fieldListRb1[0][1].setText(String.valueOf(a2));
+            fieldListRb1[1][0].setText(String.valueOf(b1));
+            fieldListRb1[1][1].setText(String.valueOf(b2));
+        }
+        if (rb2.isSelected()) {
+            fieldListRb2[0][0].setText(String.valueOf(a1));
+            fieldListRb2[0][1].setText(String.valueOf(a2));
+            fieldListRb2[0][2].setText(String.valueOf(a3));
+            fieldListRb2[1][0].setText(String.valueOf(b1));
+            fieldListRb2[1][1].setText(String.valueOf(b2));
+            fieldListRb2[1][2].setText(String.valueOf(b3));
+            fieldListRb2[2][0].setText(String.valueOf(c1));
+            fieldListRb2[2][1].setText(String.valueOf(c2));
+            fieldListRb2[2][2].setText(String.valueOf(c3));
+        }
 
     }
-    private static void DaVoid(){
+    //
+    private void DaVoid(){
 
 
         StackPane secondaryLayout = new StackPane();
@@ -114,7 +181,7 @@ public class View2 extends Pane implements iView {
         Scene secondScene = new Scene(secondaryLayout, 300, 300);
 
         // New window (Stage)
-        Stage newWindow = new Stage();
+        newWindow = new Stage();
         newWindow.setTitle("Second Stage");
         newWindow.setScene(secondScene);
 
@@ -124,23 +191,48 @@ public class View2 extends Pane implements iView {
 
         newWindow.show();
     }
-    private static VBox PANCAKES(){
+    private VBox PANCAKES(){
         VBox payne = new VBox();
-        Label ll = new Label("Choose a name for your matrix");
-        ll.setTextFill(Color.web("#1985A1"));
-        //ll.setFont(font);
-        ll.setStyle("-fx-text-fill: E7EBEE;");
+        payne.setPadding(new Insets(10));
+        this.ll = new Label("Choose a name for your matrix");
+        ll.setTextFill(Color.BLUE);
+        Text txt = new Text("YO SWITCH IT UP");
+
 
         TextField ctf = new CustomTextField();
         butt = new CustomButton("SEND IT");
         payne.getChildren().add(ll);
         payne.getChildren().add(ctf);
         payne.getChildren().add(butt);
+        butt.setOnAction(event -> {
+
+            try { // THE NAME OF THE MATRIX IS ALREADY USE
+                if (jsonObject.containsKey(ctf.getText()) == true) {
+                    if (!payne.getChildren().contains(txt)) {
+                        payne.getChildren().add(txt);
+                        System.out.println("THICK BITCHES ONLY");
+
+                    }
+                }else{ // CLOSE THE SCENE + MATRIX NAME NOT USED
+                    System.out.println("BAD BITCHES ONLY");
+
+                    humptyDumptyFellOffAWall(ctf.getText());
+                    payne.getChildren().remove(txt);
+                    newWindow.close();
+
+                }
+            }catch(NullPointerException e) {
+                System.out.println("THIS AINT GOOD");
+
+            }
+            System.out.println("3jhuyruefhbwkmef");
+        });
+
         return payne;
-    }
-    private static void humptyDumptyFellOffAWall(String name) { //CONNECT TO BUTTON HANDL
+    } //vbox for scene
+    private void humptyDumptyFellOffAWall(String name) { //CONNECT TO BUTTON HANDL
         JSONArray newMatrix = new JSONArray();
-        if (View2.getRb1().isSelected()) {
+        if (rb1.isSelected()) {
             newMatrix.add(View2.getT1());//
             newMatrix.add(View2.getT2());//
             newMatrix.add("0");
@@ -151,19 +243,14 @@ public class View2 extends Pane implements iView {
             newMatrix.add("0");
             newMatrix.add("0");
         }
-        if (View2.getRb2().isSelected()) {
-            newMatrix.add(View2.getT1());
-            newMatrix.add(View2.getT2());
-            newMatrix.add(View2.getT3());
-            newMatrix.add(View2.getT4());
-            newMatrix.add(View2.getT5());
-            newMatrix.add(View2.getT6());
-            newMatrix.add(View2.getT7());
-            newMatrix.add(View2.getT8());
-            newMatrix.add(View2.getT9());
+
+        if (this.getRb2().isSelected()) {
+            for (int i = 0; i < 9; i++) {
+                newMatrix.add(this.getFieldListRb2().get(i).getText());
+            }
         }
-        ModelForJSON.getMatrix().put(name, newMatrix);
-        File newFile = new File("Resources/JsonFile.json");
+        jsonObject.put(name, newMatrix);
+        names.put(names,name);
 
         try {
             // Constructs a FileWriter given a file name, using the platform's default charset
@@ -179,19 +266,60 @@ public class View2 extends Pane implements iView {
                 e.printStackTrace();
             }
         }
-    }
 
-    private static ArrayList<Integer> humptyDumptyCameBackToLife () {
+            try {
+                // Constructs a FileWriter given a file name, using the platform's default charset
+                file = new FileWriter("Resources/JsonNames.json");
+                file.write(ModelForJSON.getNames().toJSONString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    file.flush();
+                    file.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+        }
+    }
+    private ArrayList<Integer> humptyDumptyCameBackToLife () {
         JSONParser parser = new JSONParser();
 
         Object obj = null;
         try {
             obj = parser.parse(new FileReader("Resources/JsonFile.json"));
-            JSONObject jsonObject = (JSONObject) obj;
+            this.jsonObject = (JSONObject) obj;
 
 
             try {
-                //other = makeTheArrayList((JSONArray) jsonObject.get(View2.getCb().getValue()));
+                this.other = ModelForJSON.makeTheArrayList((JSONArray) jsonObject.get(this.getCb().getValue()));
+                a1 = getOther().get(0);
+                a2 = getOther().get(1);
+                a3 = getOther().get(2);
+                b1 = getOther().get(3);
+                b2 = getOther().get(4);
+                b3 = getOther().get(5);
+                c1 = getOther().get(6);
+                c2 = getOther().get(7);
+                c3 = getOther().get(8);
+                if (rb1.isSelected()) {
+                    fieldListRb1[0][0].setText(String.valueOf(a1));
+                    fieldListRb1[0][1].setText(String.valueOf(a2));
+                    fieldListRb1[1][0].setText(String.valueOf(b1));
+                    fieldListRb1[1][1].setText(String.valueOf(b2));
+                }
+                if (rb2.isSelected()) {
+                    fieldListRb2[0][0].setText(String.valueOf(a1));
+                    fieldListRb2[0][1].setText(String.valueOf(a2));
+                    fieldListRb2[0][2].setText(String.valueOf(a3));
+                    fieldListRb2[1][0].setText(String.valueOf(b1));
+                    fieldListRb2[1][1].setText(String.valueOf(b2));
+                    fieldListRb2[1][2].setText(String.valueOf(b3));
+                    fieldListRb2[2][0].setText(String.valueOf(c1));
+                    fieldListRb2[2][1].setText(String.valueOf(c2));
+                    fieldListRb2[2][2].setText(String.valueOf(c3));
+                }
             }catch(Exception e){
                 e.printStackTrace();
 
@@ -203,6 +331,38 @@ public class View2 extends Pane implements iView {
         }
         return other;
     }
+
+
+    private JSONObject getThemNames(){
+        JSONParser parser = new JSONParser();
+
+        Object obj = null;
+        try {
+            obj = parser.parse(new FileReader("Resources/JsonNames.json"));
+            this.names = (JSONObject) obj;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return names;
+    }
+
+    private JSONObject getThatObject(){
+        JSONParser parser = new JSONParser();
+
+        Object obj = null;
+        try {
+            obj = parser.parse(new FileReader("Resources/JsonFile.json"));
+            this.jsonObject = (JSONObject) obj;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
     private HBox setHbComboBox() {
         HBox hbComboBox = new HBox(100);
         hbComboBox.setPadding(new Insets(15));
@@ -222,82 +382,75 @@ public class View2 extends Pane implements iView {
         return  vbLeft;
     }
 
-
     public GridPane showDaRight(Controller2 controller2) {
         GridPane gpt = new GridPane();
-        gpt.setPadding(new Insets(10, 10, 10, 10));
-        gpt.setPrefSize(500, 695);
-        //gpt.setLayoutX(520);
-        //gpt.setLayoutY(14);
+        gpt.setVgap(20);
+        gpt.setPrefSize(500, 595);
 
         if (rb2.isSelected()) {
-            String text ="FOR THE EIGENVALUE " + controller2.getEigenValues()[0] + " THE EIGEN VECTOR IS";
-            String text1 = "FOR THE EIGENVALUE " + controller2.getEigenValues()[1] + " THE EIGEN VECTOR IS";
-            String text2 = "FOR THE EIGENVALUE " + controller2.getEigenValues()[2] + " THE EIGEN VECTOR IS";
-            //String text3 = "FOR THE EIGENVALUE " + controller2.getEigenValues()[0] + " THE EIGEN VECTOR IS";
-            gpt.add(Custom.setTitle(text), 2, 10);
-            if (Model2for3x3.getS1().size() == 3) {
-                gpt.add(newVector(1,3, controller2,0), 2, 20);
-            } else if (Model2for3x3.getS1().size() == 6) {
-                gpt.add(newVector(1,3, controller2,0), 2, 20);
-                gpt.add(newVector(2,3, controller2,0), 3, 20);
+            CustomText text = new CustomText("FOR THE EIGENVALUE: " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
+            CustomText text1 = new CustomText("FOR THE EIGENVALUE: " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
+            CustomText text2 = new CustomText("FOR THE EIGENVALUE: " + controller2.getEigenValues()[2] + "\nTHE EIGEN VECTOR IS: ");
+            gpt.add(text, 0, 0);
+            if (controller2.getEigenVectors()[0].size() == 3) {
+                gpt.add(newVector(1, controller2,0), 0, 1);
+            } else if (controller2.getEigenVectors()[0].size() == 6) {
+                gpt.add(newVector(1, controller2,0), 0, 1);
+                gpt.add(newVector(2, controller2,0), 1, 1);
             } else {
-                gpt.add(newVector(1,3, controller2,0), 2, 20);
-                gpt.add(newVector(2,3, controller2,0), 3, 20);
-                gpt.add(newVector(3,3, controller2,0), 4, 20);
+                gpt.add(newVector(1, controller2,0), 0, 1);
+                gpt.add(newVector(2, controller2,0), 1, 1);
+                gpt.add(newVector(3, controller2,0), 2, 1);
             }
-            gpt.add(Custom.setTitle(text1), 2, 30);
-            if (Model2for3x3.getS2().size() == 3) {
-                gpt.add(newVector(1,3, controller2,1), 2, 40);
+            gpt.add(text1, 0, 2);
+            if (controller2.getEigenVectors()[1].size() == 3) {
+                gpt.add(newVector(1, controller2,1), 0, 3);
             } else if (Model2for3x3.getS2().size() == 6) {
-                gpt.add(newVector(1,3, controller2,1), 2, 40);
-                gpt.add(newVector(2,3, controller2,1), 4, 40);
+                gpt.add(newVector(1, controller2,1), 0, 3);
+                gpt.add(newVector(2, controller2,1), 1, 3);
             } else {
-                gpt.add(newVector(1,3, controller2,1), 2, 40);
-                gpt.add(newVector(2,3, controller2,1), 4, 40);
-                gpt.add(newVector(3,3,  controller2,1), 6, 40);
+                gpt.add(newVector(1, controller2,1), 0, 3);
+                gpt.add(newVector(2, controller2,1), 1, 3);
+                gpt.add(newVector(3,  controller2,1), 2, 3);
             }
-            gpt.add(Custom.setTitle(text2), 1, 23);
-            if (Model2for3x3.getS3().size() == 3) {
-                gpt.add(newVector(1,3, controller2,2), 2, 27);
+            gpt.add(text2, 0, 4);
+            if (controller2.getEigenVectors()[2].size() == 3) {
+                gpt.add(newVector(1, controller2,2), 0, 5);
             } else if (Model2for3x3.getS3().size() == 6) {
-                gpt.add(newVector(1,3,  controller2,2), 2, 27);
-                gpt.add(newVector(2,3,  controller2,2), 4, 27);
+                gpt.add(newVector(1,  controller2,2), 1, 5);
+                gpt.add(newVector(2,  controller2,2), 2, 5);
             } else {
-                gpt.add(newVector(1,3,  controller2,2), 2, 27);
-                gpt.add(newVector(2,3,  controller2,2), 4, 27);
-                gpt.add(newVector(3,3, controller2,2), 6, 27);
+                gpt.add(newVector(1,  controller2,2), 0, 5);
+                gpt.add(newVector(2,  controller2,2), 1, 5);
+                gpt.add(newVector(3, controller2,2), 2, 5);
             }
         }
         if (rb1.isSelected()) {
-            Text text = new Text("FOR THE EIGENVALUE " + controller2.getEigenValues()[0] + " THE EIGEN VECTOR IS");
-            Text text1 = new Text("FOR THE EIGENVALUE " + controller2.getEigenValues()[1] + " THE EIGEN VECTOR IS");
-            gpt.add(text, 1, 10);
-            if (Model2for2x2.getS1().size() == 2) {
-                gpt.add(newVector(1,2,  controller2,0), 2, 15);
+            CustomText text = new CustomText("FOR THE EIGENVALUE: " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
+            CustomText text1 = new CustomText("FOR THE EIGENVALUE: " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
+            gpt.add(text, 0, 0);
+            if (controller2.getEigenVectors()[0].size() == 2) {
+                gpt.add(newVector(1,  controller2,0), 0, 1);
             }
-            else{
-                gpt.add(newVector(1,2, controller2,0), 2, 15);
-                gpt.add(newVector(2,2,  controller2,0), 4, 15);
+            else {
+                gpt.add(newVector(1, controller2,0), 0, 1);
+                gpt.add(newVector(2,  controller2,0), 1, 1);
             }
-            gpt.add(text1, 1, 17);
-            if (Model2for2x2.getS2().size() == 2) {
-                gpt.add(newVector(1,2,  controller2,1), 2, 23);
+            gpt.add(text1, 0, 2);
+            if (controller2.getEigenVectors()[1].size() == 2) {
+                gpt.add(newVector(1,  controller2,1), 0, 3);
             }
-            else{
-                gpt.add(newVector(1,2,  controller2,1), 2, 23);
-                gpt.add(newVector(2,2,  controller2,1), 4, 23);
+            else {
+                gpt.add(newVector(1,  controller2,1), 0, 3);
+                gpt.add(newVector(2, controller2,1), 1, 3);
             }
-
         }
-        gpt.setStyle("-fx-border-width: 2px;\n" +
-                "    -fx-border-color: red;\n" +
-                "    -fx-border-insets: -2px;");
         return gpt;
     }
 
-    public HBox newVector(int counter, int whatSize, Controller2 controller2, int i ){ // counter is the vector if size=6 there is counter 1 and 2 possible
-        HBox hbx = new HBox();
+    // if i == 0, then it's s1 otherwise i == 1, then it's s2
+    public HBox newVector(int counter, Controller2 controller2, int i ) { // counter is the vector if size=6 there is counter 1 and 2 possible
+        HBox hbx = new HBox(10);
         VBox vbx1 = new VBox();
         ImageView imL = new ImageView(new Image(p + "Right.png"));
         imL.setFitWidth(10);
@@ -305,70 +458,65 @@ public class View2 extends Pane implements iView {
         ImageView imR = new ImageView(new Image(p + "Left.png"));
         imR.setFitWidth(10);
         imR.setFitHeight(75);
-        if(whatSize == 2){
-            vbx1 = putVertical2x2(counter,  controller2, i );
+        if (rb1.isSelected()){
+            vbx1 = putVertical2x2(counter,  controller2, i);
             vbx1.setPrefHeight(75);
         }
-        if(whatSize == 3){
+        if (rb2.isSelected()){
             vbx1 = putVertical3x3(counter,  controller2, i);
             vbx1.setPrefHeight(75);
         }
         hbx.getChildren().addAll(imL,vbx1,imR);
-        hbx.setStyle("-fx-border-width: 2px;\n" +
-                "    -fx-border-color: red;\n" +
-                "    -fx-border-insets: -2px;");
-
+        hbx.setAlignment(Pos.CENTER);
         return hbx;
     }
     public VBox putVertical3x3(int counter,  Controller2 controller2, int i){
         VBox vbx1 = new VBox();
-        Double numba1 = null;
-        Double numba2 = null;
-        Double numba3 = null;
+        vbx1.setAlignment(Pos.CENTER);
+        Double numba1, numba2, numba3;
 
-        if(counter==1){
+        if (counter == 1){
             numba1 = controller2.getEigenVectors()[i].get(0);
             numba2 = controller2.getEigenVectors()[i].get(1);
             numba3 = controller2.getEigenVectors()[i].get(2);
         }
-        else if(counter==2){
+        else if (counter == 2){
             numba1 = controller2.getEigenVectors()[i].get(3);
             numba2 = controller2.getEigenVectors()[i].get(4);
             numba3 = controller2.getEigenVectors()[i].get(5);
         }
-        else{
+        else {
             numba1 = controller2.getEigenVectors()[i].get(6);
             numba2 = controller2.getEigenVectors()[i].get(7);
             numba3 = controller2.getEigenVectors()[i].get(8);
         }
 
-        Text nb1 = new Text(Double.toString(numba1));
-        Text nb2 = new Text(Double.toString(numba2));
-        Text nb3 = new Text(Double.toString(numba3));
+        CustomText nb1 = new CustomText(Double.toString(numba1));
+        CustomText nb2 = new CustomText(Double.toString(numba2));
+        CustomText nb3 = new CustomText(Double.toString(numba3));
         vbx1.getChildren().add(nb1);
         vbx1.getChildren().add(nb2);
         vbx1.getChildren().add(nb3);
-
 
         return vbx1;
     }
 
     public VBox putVertical2x2(int counter, Controller2 controller2, int i){
-        VBox vbx1 = new VBox();
-        Double numba1 = null;
-        Double numba2= null;
-        if(counter==1){
+        VBox vbx1 = new VBox(15);
+        vbx1.setAlignment(Pos.CENTER);
+        Double numba1, numba2;
+
+        if (counter == 1) {
             numba1 = controller2.getEigenVectors()[i].get(0);
             numba2 = controller2.getEigenVectors()[i].get(1);
         }
-        if(counter==2){
-            numba1 = controller2.getEigenVectors()[1].get(2);
-            numba2 = controller2.getEigenVectors()[1].get(3);
+        else {  // if counter == 2
+            numba1 = controller2.getEigenVectors()[i].get(2);   // changed 1 to i
+            numba2 = controller2.getEigenVectors()[i].get(3);   // changed 1 to i
         }
-        Text nb1 = new Text(Double.toString(numba1));
-        Text nb2 = new Text(Double.toString(numba2));
-        vbx1.getChildren().add(nb1);
-        vbx1.getChildren().add(nb2);
+        CustomText nb1 = new CustomText(Double.toString(numba1));
+        CustomText nb2 = new CustomText(Double.toString(numba2));
+        vbx1.getChildren().addAll(nb1, nb2);
         return vbx1;
     }
 
@@ -381,13 +529,12 @@ public class View2 extends Pane implements iView {
 
     private void setVbPo(String title) {
         this.vbPo.setPrefSize(500, 595);
+        this.vbPo.setPadding(new Insets(15));
         this.vbPo.setSpacing(15);
         this.vbPo.setAlignment(Pos.TOP_CENTER);
         this.vbPo.setStyle("-fx-background-color: #333335");
         this.vbPo.getChildren().add(Custom.setTitle(title));
     }
-
-
 
     public void setView2() {
         this.setPrefSize(1050, 750);
@@ -399,6 +546,8 @@ public class View2 extends Pane implements iView {
         rb1.setOnAction(event -> {
             this.btnStart.setDisable(false);
             this.btnSave.setDisable(false);
+            this.cb.setDisable(false);
+
             fieldsPane = setFields(fieldListRb1);
             this.vbUi.getChildren().clear();
             this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), fieldsPane);
@@ -407,6 +556,7 @@ public class View2 extends Pane implements iView {
         rb2.setOnAction(event -> {
             this.btnStart.setDisable(false);
             this.btnSave.setDisable(false);
+            this.cb.setDisable(false);
             fieldsPane = setFields(fieldListRb2);
             this.vbUi.getChildren().clear();
             this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), fieldsPane);
@@ -417,11 +567,11 @@ public class View2 extends Pane implements iView {
 
     public HBox setFields (CustomTextField[][] textFields) {
         ImageView iv1 = new ImageView(new Image(p + "Right.png"));
-        iv1.setFitWidth(40);
-        iv1.setFitHeight(252.4);
+        iv1.setFitWidth(54);
+        iv1.setFitHeight(270);
         ImageView iv2 = new ImageView(new Image(p + "Left.png"));
-        iv2.setFitWidth(40);
-        iv2.setFitHeight(252.4);
+        iv2.setFitWidth(54);
+        iv2.setFitHeight(270);
 
         GridPane gridPane = new GridPane();
         gridPane.setVgap(20);
@@ -442,11 +592,13 @@ public class View2 extends Pane implements iView {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols;  j++) {
                 if (rows == 2) {
-                    iv1.setFitHeight(200.4);
-                    iv2.setFitHeight(200.4);
+                    iv1.setFitHeight(200);
+                    iv2.setFitHeight(200);
+                    iv1.setFitWidth(40);
+                    iv2.setFitWidth(40);
                 }
                 textFields[i][j] = new CustomTextField();
-                textFields[i][j].setPrefSize(75, 40);
+                textFields[i][j].setPrefSize(50, 40);
                 int finalI = i;
                 int finalJ = j;
 
@@ -491,37 +643,19 @@ public class View2 extends Pane implements iView {
         this.getChildren().clear();
         btnStart.setDisable(true);
         btnSave.setDisable(true);
+        cb.setDisable(true);
         rb1.setSelected(false);
         rb2.setSelected(false);
         this.vbUi.getChildren().remove(fieldsPane);
+        this.vbPo.getChildren().clear();
         this.getChildren().addAll(this.vbLeft, this.vbRight);
     }
 
     public void addOutput(Controller2 controller2) {
         this.vbPo.getChildren().clear();
         setVbPo("Eigenvalues and eigenvectors");
-
-        VBox vbOutput = new VBox();
-        vbOutput.setSpacing(15);
-        vbOutput.setPadding(new Insets(15));
-
-        // Print eigenvalues
-
-
-        /*for (int i = 0; i < controller1.getOutput().length; i++) {
-            if (i == 0) {
-                vbOutput.getChildren().add(Custom.setTitle("X = " + controller1.getOutput()[i]));
-            } else if (i == 1) {
-                vbOutput.getChildren().add(Custom.setTitle("Y = " + controller1.getOutput()[i]));
-            } else if (i == 2) {
-                vbOutput.getChildren().add(Custom.setTitle("Z = " + controller1.getOutput()[i]));
-            }
-        }*/
-        this.vbPo.getChildren().add(vbOutput);
         this.vbPo.getChildren().add(showDaRight(controller2));
     }
-
-
 
     public ArrayList<CustomTextField> getFieldListRb1() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
@@ -636,12 +770,6 @@ public class View2 extends Pane implements iView {
         }
     } //DONE DONE DONE
 
-    public VBox getEmptyVBox() {
-        VBox vbox = new VBox();
-        vbox.setPrefSize(500, 150);
-        return vbox;
-    }
-
 
     public void setFieldListRb1(CustomTextField[][] fieldListRb1) {
         this.fieldListRb1 = fieldListRb1;
@@ -651,23 +779,15 @@ public class View2 extends Pane implements iView {
         this.fieldListRb2 = fieldListRb2;
     }
 
-//    public GridPane getFieldsPane() {
-//        return fieldsPane;
-//    }
-//
-//    public void setFieldsPane(GridPane fieldsPane) {
-//        this.fieldsPane = fieldsPane;
-//    }
-
     public void setRb1(CustomRadioButton rb1) {
         this.rb1 = rb1;
     }
 
-    public static CustomRadioButton getRb1() {
+    public CustomRadioButton getRb1() {
         return rb1;
     }
 
-    public static CustomRadioButton getRb2() {
+    public CustomRadioButton getRb2() {
         return rb2;
     }
 
@@ -707,7 +827,7 @@ public class View2 extends Pane implements iView {
         this.group = group;
     }
 
-    public static ComboBox getCb() {
+    public ComboBox getCb() {
         return cb;
     }
 
@@ -817,5 +937,14 @@ public class View2 extends Pane implements iView {
     private void setVbLeft(VBox vbLeft) {
         this.vbLeft = vbLeft;
     }
+
+    public ArrayList<Integer> getOther() {
+        return other;
+    }
+
+    public void setOther(ArrayList<Integer> other) {
+        this.other = other;
+    }
+
 
 }
