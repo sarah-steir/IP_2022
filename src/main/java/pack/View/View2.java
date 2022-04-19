@@ -82,10 +82,16 @@ public class View2 extends Pane implements iView {
         cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             setMatrix(YesImAGummyBear((JSONArray) jsonObject.get(cb.getValue())));
+            JSONArray list1 = (JSONArray) names.get("names");
+            Iterator<JSONObject> iterator1 = list1.iterator();
+            while (iterator.hasNext()) {
+                cb.getItems().add(String.valueOf(iterator1.next()));
+            }
         });
         btnSave.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             DaVoid(); //Send the selected item to the method
+
         });
         fieldListRb1 = new CustomTextField[2][2];
         fieldListRb2 = new CustomTextField[3][3];
@@ -218,6 +224,7 @@ public class View2 extends Pane implements iView {
 
                     humptyDumptyFellOffAWall(ctf.getText());
                     payne.getChildren().remove(txt);
+
                 }
             }catch(NullPointerException e) {
                 System.out.println("THIS AINT GOOD");
