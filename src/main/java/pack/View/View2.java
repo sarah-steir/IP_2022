@@ -29,6 +29,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static pack.View.Customs.Custom.p;
 
@@ -43,7 +44,7 @@ public class View2 extends Pane implements iView {
     private ToggleGroup group = new ToggleGroup();
     private ComboBox cb;
     private CustomButton butt;
-
+    private  Label ll;
     private VBox vbUi;
     private VBox vbPo;
     private ModelForJSON JASONDERULO;
@@ -53,8 +54,12 @@ public class View2 extends Pane implements iView {
     private static double a1,a2,a3,b1,b2,b3,c1,c2,c3;
     static FileWriter file;
     private static ArrayList<Integer> other = new ArrayList<>();
+    private JSONObject jsonObject;
+    private JSONObject names;
+    private Stage newWindow;
 
     public View2() {
+        jsonObject = getThatObject();
         this.rb1 = new CustomRadioButton("2 x 2");
         this.rb2 = new CustomRadioButton("3 x 3");
         this.rb1.setToggleGroup(group);
@@ -68,13 +73,26 @@ public class View2 extends Pane implements iView {
         this.btnSave.setDisable(true);
         this.btnSave.setPrefSize(200, 20);
        JASONDERULO = new ModelForJSON();
-       cb.setOnAction(event -> {
+
+       names = getThemNames();
+        JSONArray list = (JSONArray) names.get("names");
+        Iterator<JSONObject> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            cb.getItems().add(String.valueOf(iterator.next()));
+        }
+        cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
-            doAction(cb.getValue().toString()); //Send the selected item to the method
+            setMatrix(YesImAGummyBear((JSONArray) jsonObject.get(cb.getValue())));
+            JSONArray list1 = (JSONArray) names.get("names");
+            Iterator<JSONObject> iterator1 = list1.iterator();
+            while (iterator.hasNext()) {
+                cb.getItems().add(String.valueOf(iterator1.next()));
+            }
         });
         btnSave.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             DaVoid(); //Send the selected item to the method
+
         });
         fieldListRb1 = new CustomTextField[2][2];
         fieldListRb2 = new CustomTextField[3][3];
@@ -93,19 +111,67 @@ public class View2 extends Pane implements iView {
 
         setView2();
         setActions();
-        cb.getItems().addAll(
-                "Diagonal",
-                "identity",
-                "Null",
-                "Lower Triangle",
-                "Symmetric",
-                "Upper Triangle"
-        );
+//        ArrayList<String> stuff = YesImAGummyBear();
+////        for(int i =0; i<stuff.size(); i++) {
+////            System.out.println(stuff.get(i).toString());
+////            cb.getItems().add(stuff.get(i));
+////        }
+
         cb.setPromptText("Saved Matrices");
     }
-    private static void YesImAGummyBear(){
+    private ArrayList<Integer> YesImAGummyBear(JSONArray js){
+
+
+        ArrayList<String> objs = new ArrayList<>();
+        ArrayList<Integer> ints = new ArrayList<>();
+        //JSONArray js = (JSONArray) jsonObject.get("diagonal");
+        JSONArray list = js;
+        Iterator<JSONObject> iterator = js.iterator();
+        while (iterator.hasNext()) {
+            objs.add(String.valueOf(iterator.next()));
+        }
+
+        for(int i = 0; i< objs.size();i++){
+            ints.add(Integer.valueOf(objs.get(i)));
+        }
+        System.out.println("AHGDHEDWDMWDD");
+        for (Integer str : ints)
+        {
+            System.out.println(str);
+        }
+        return ints;
+    }
+    private void setMatrix(ArrayList<Integer> ints){
+        a1 = ints.get(0);
+        a2 = ints.get(1);
+        a3 = ints.get(2);
+        b1 = ints.get(3);
+        b2 = ints.get(4);
+        b3 = ints.get(5);
+        c1 = ints.get(6);
+        c2 = ints.get(7);
+        c3 = ints.get(8);
+
+        if (rb1.isSelected()) {
+            fieldListRb1[0][0].setText(String.valueOf(a1));
+            fieldListRb1[0][1].setText(String.valueOf(a2));
+            fieldListRb1[1][0].setText(String.valueOf(b1));
+            fieldListRb1[1][1].setText(String.valueOf(b2));
+        }
+        if (rb2.isSelected()) {
+            fieldListRb2[0][0].setText(String.valueOf(a1));
+            fieldListRb2[0][1].setText(String.valueOf(a2));
+            fieldListRb2[0][2].setText(String.valueOf(a3));
+            fieldListRb2[1][0].setText(String.valueOf(b1));
+            fieldListRb2[1][1].setText(String.valueOf(b2));
+            fieldListRb2[1][2].setText(String.valueOf(b3));
+            fieldListRb2[2][0].setText(String.valueOf(c1));
+            fieldListRb2[2][1].setText(String.valueOf(c2));
+            fieldListRb2[2][2].setText(String.valueOf(c3));
+        }
 
     }
+    //
     private void DaVoid(){
 
 
@@ -115,7 +181,7 @@ public class View2 extends Pane implements iView {
         Scene secondScene = new Scene(secondaryLayout, 300, 300);
 
         // New window (Stage)
-        Stage newWindow = new Stage();
+        newWindow = new Stage();
         newWindow.setTitle("Second Stage");
         newWindow.setScene(secondScene);
 
@@ -127,18 +193,43 @@ public class View2 extends Pane implements iView {
     }
     private VBox PANCAKES(){
         VBox payne = new VBox();
-        Label ll = new Label("Choose a name for your matrix");
-        ll.setTextFill(Color.web("#1985A1"));
-        //ll.setFont(font);
-        ll.setStyle("-fx-text-fill: E7EBEE;");
+        payne.setPadding(new Insets(10));
+        this.ll = new Label("Choose a name for your matrix");
+        ll.setTextFill(Color.BLUE);
+        Text txt = new Text("YO SWITCH IT UP");
+
 
         TextField ctf = new CustomTextField();
         butt = new CustomButton("SEND IT");
         payne.getChildren().add(ll);
         payne.getChildren().add(ctf);
         payne.getChildren().add(butt);
+        butt.setOnAction(event -> {
+
+            try { // THE NAME OF THE MATRIX IS ALREADY USE
+                if (jsonObject.containsKey(ctf.getText()) == true) {
+                    if (!payne.getChildren().contains(txt)) {
+                        payne.getChildren().add(txt);
+                        System.out.println("THICK BITCHES ONLY");
+
+                    }
+                }else{ // CLOSE THE SCENE + MATRIX NAME NOT USED
+                    System.out.println("BAD BITCHES ONLY");
+
+                    humptyDumptyFellOffAWall(ctf.getText());
+                    payne.getChildren().remove(txt);
+                    newWindow.close();
+
+                }
+            }catch(NullPointerException e) {
+                System.out.println("THIS AINT GOOD");
+
+            }
+            System.out.println("3jhuyruefhbwkmef");
+        });
+
         return payne;
-    }
+    } //vbox for scene
     private void humptyDumptyFellOffAWall(String name) { //CONNECT TO BUTTON HANDL
         JSONArray newMatrix = new JSONArray();
         if (rb1.isSelected()) {
@@ -152,19 +243,14 @@ public class View2 extends Pane implements iView {
             newMatrix.add("0");
             newMatrix.add("0");
         }
-        if (rb2.isSelected()) {
-            newMatrix.add(View2.getT1());
-            newMatrix.add(View2.getT2());
-            newMatrix.add(View2.getT3());
-            newMatrix.add(View2.getT4());
-            newMatrix.add(View2.getT5());
-            newMatrix.add(View2.getT6());
-            newMatrix.add(View2.getT7());
-            newMatrix.add(View2.getT8());
-            newMatrix.add(View2.getT9());
+
+        if (this.getRb2().isSelected()) {
+            for (int i = 0; i < 9; i++) {
+                newMatrix.add(this.getFieldListRb2().get(i).getText());
+            }
         }
-        ModelForJSON.getMatrix().put(name, newMatrix);
-        File newFile = new File("Resources/JsonFile.json");
+        jsonObject.put(name, newMatrix);
+        names.put(names,name);
 
         try {
             // Constructs a FileWriter given a file name, using the platform's default charset
@@ -180,19 +266,60 @@ public class View2 extends Pane implements iView {
                 e.printStackTrace();
             }
         }
-    }
 
-    private static ArrayList<Integer> humptyDumptyCameBackToLife () {
+            try {
+                // Constructs a FileWriter given a file name, using the platform's default charset
+                file = new FileWriter("Resources/JsonNames.json");
+                file.write(ModelForJSON.getNames().toJSONString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    file.flush();
+                    file.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+        }
+    }
+    private ArrayList<Integer> humptyDumptyCameBackToLife () {
         JSONParser parser = new JSONParser();
 
         Object obj = null;
         try {
             obj = parser.parse(new FileReader("Resources/JsonFile.json"));
-            JSONObject jsonObject = (JSONObject) obj;
+            this.jsonObject = (JSONObject) obj;
 
 
             try {
-                //other = makeTheArrayList((JSONArray) jsonObject.get(View2.getCb().getValue()));
+                this.other = ModelForJSON.makeTheArrayList((JSONArray) jsonObject.get(this.getCb().getValue()));
+                a1 = getOther().get(0);
+                a2 = getOther().get(1);
+                a3 = getOther().get(2);
+                b1 = getOther().get(3);
+                b2 = getOther().get(4);
+                b3 = getOther().get(5);
+                c1 = getOther().get(6);
+                c2 = getOther().get(7);
+                c3 = getOther().get(8);
+                if (rb1.isSelected()) {
+                    fieldListRb1[0][0].setText(String.valueOf(a1));
+                    fieldListRb1[0][1].setText(String.valueOf(a2));
+                    fieldListRb1[1][0].setText(String.valueOf(b1));
+                    fieldListRb1[1][1].setText(String.valueOf(b2));
+                }
+                if (rb2.isSelected()) {
+                    fieldListRb2[0][0].setText(String.valueOf(a1));
+                    fieldListRb2[0][1].setText(String.valueOf(a2));
+                    fieldListRb2[0][2].setText(String.valueOf(a3));
+                    fieldListRb2[1][0].setText(String.valueOf(b1));
+                    fieldListRb2[1][1].setText(String.valueOf(b2));
+                    fieldListRb2[1][2].setText(String.valueOf(b3));
+                    fieldListRb2[2][0].setText(String.valueOf(c1));
+                    fieldListRb2[2][1].setText(String.valueOf(c2));
+                    fieldListRb2[2][2].setText(String.valueOf(c3));
+                }
             }catch(Exception e){
                 e.printStackTrace();
 
@@ -204,6 +331,38 @@ public class View2 extends Pane implements iView {
         }
         return other;
     }
+
+
+    private JSONObject getThemNames(){
+        JSONParser parser = new JSONParser();
+
+        Object obj = null;
+        try {
+            obj = parser.parse(new FileReader("Resources/JsonNames.json"));
+            this.names = (JSONObject) obj;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return names;
+    }
+
+    private JSONObject getThatObject(){
+        JSONParser parser = new JSONParser();
+
+        Object obj = null;
+        try {
+            obj = parser.parse(new FileReader("Resources/JsonFile.json"));
+            this.jsonObject = (JSONObject) obj;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
     private HBox setHbComboBox() {
         HBox hbComboBox = new HBox(100);
         hbComboBox.setPadding(new Insets(15));
@@ -498,8 +657,6 @@ public class View2 extends Pane implements iView {
         this.vbPo.getChildren().add(showDaRight(controller2));
     }
 
-
-
     public ArrayList<CustomTextField> getFieldListRb1() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray: this.fieldListRb1) {
@@ -612,6 +769,7 @@ public class View2 extends Pane implements iView {
             fieldListRb2[2][2].setText(String.valueOf(c3));
         }
     } //DONE DONE DONE
+
 
     public void setFieldListRb1(CustomTextField[][] fieldListRb1) {
         this.fieldListRb1 = fieldListRb1;
@@ -779,5 +937,14 @@ public class View2 extends Pane implements iView {
     private void setVbLeft(VBox vbLeft) {
         this.vbLeft = vbLeft;
     }
+
+    public ArrayList<Integer> getOther() {
+        return other;
+    }
+
+    public void setOther(ArrayList<Integer> other) {
+        this.other = other;
+    }
+
 
 }
