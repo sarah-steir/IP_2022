@@ -29,6 +29,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static pack.View.Customs.Custom.p;
 
@@ -54,6 +55,7 @@ public class View2 extends Pane implements iView {
     static FileWriter file;
     private static ArrayList<Integer> other = new ArrayList<>();
     private JSONObject jsonObject;
+    private JSONObject names;
 
     public View2() {
         this.rb1 = new CustomRadioButton("2 x 2");
@@ -71,9 +73,19 @@ public class View2 extends Pane implements iView {
        JASONDERULO = new ModelForJSON();
        jsonObject = getThatObject();
 
-        cb.getItems().addAll( "ufefe","fibehfe"
-        );
 
+       names = getThemNames();
+        //ArrayList<String> objs = new ArrayList<>();
+        JSONArray list = (JSONArray) names.get("names");
+        Iterator<JSONObject> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            //objs.add(String.valueOf(iterator.next()));
+            cb.getItems().add(String.valueOf(iterator.next()));
+        }
+//while() {
+//    cb.getItems().add(names.get("names")
+//    );
+//}
        cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             doAction(cb.getValue().toString()); //Send the selected item to the method
@@ -181,6 +193,21 @@ public class View2 extends Pane implements iView {
         }
     }
 
+
+    private JSONObject getThemNames(){
+        JSONParser parser = new JSONParser();
+
+        Object obj = null;
+        try {
+            obj = parser.parse(new FileReader("Resources/JsonNames.json"));
+            this.jsonObject = (JSONObject) obj;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
 
     private JSONObject getThatObject(){
         JSONParser parser = new JSONParser();

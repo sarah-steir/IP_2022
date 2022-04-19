@@ -138,6 +138,7 @@ public class Model2for3x3 {
         x1 = Double.parseDouble(formatting.format(x1)); // FORMAT TO 0.0000
         x2 = Double.parseDouble(formatting.format(x2));
         x3 = Double.parseDouble(formatting.format(x3));
+
         System.out.println("x1: " + x1 + "x2: " + x2 + "x3: " + x3);
     }
     //SEND THIS TO DE CONTROLLA
