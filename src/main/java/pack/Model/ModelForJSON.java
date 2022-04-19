@@ -24,9 +24,10 @@ public class ModelForJSON {
     private static ArrayList<Integer> Nul = new ArrayList<>();
 
     private static JSONObject matrix = new JSONObject();
+    private static JSONObject names = new JSONObject();
 
     public ModelForJSON() {
-        //writeBasics();
+        writeBasics();
         readBasics();
     }
 
@@ -104,12 +105,22 @@ public static void writeBasics() {
     Null.add("0");
     Null.add("0");
     matrix.put("null", Null);
+
+    JSONArray saveName = new JSONArray();
+    saveName.add("diagonal");
+    saveName.add("identity");
+    saveName.add("upper triangle");
+    saveName.add("lower triangle");
+    saveName.add("null");
+    saveName.add("symmetric");
+    names.put("names", saveName);
 //CREATE NEW JSON FILE
     File newFile = new File("Resources/JsonFile.json");
 
     try {
         // Constructs a FileWriter given a file name, using the platform's default charset
         file = new FileWriter("Resources/JsonFile.json");
+        file.write(names.toJSONString());
         file.write(matrix.toJSONString());
     } catch (IOException e) {
         e.printStackTrace();

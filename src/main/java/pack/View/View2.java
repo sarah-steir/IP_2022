@@ -28,8 +28,7 @@ import pack.View.Customs.CustomRadioButton;
 import pack.View.Customs.CustomTextField;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 public class View2 extends Pane implements iView {
 
@@ -68,7 +67,34 @@ private BufferedWriter bufferedWriter;
         this.btnSave = new CustomButton("Save Matrix");
         this.btnSave.setPrefSize(200, 20);
        JASONDERULO = new ModelForJSON();
-       cb.getItems().addAll(jsonObject);
+//Iterator keys = jsonObject.ke
+//        List<String> names = jsonObject.keySet().
+//        String[] r = new String[names.size()];
+//        int i = 0;
+//        for (String name : names) {
+//            r[i++] = name;
+//        }
+//        for(int k=0;k>r.length; k++){
+//            System.out.println(r[k]);
+//        }
+//
+//        Iterator<String> keys = jsonObject.keySet().iterator();
+//        while(keys.hasNext()) {
+//            String key = keys.next();
+//            System.out.println("hehehe");
+//            System.out.println(key);
+//            if(jsonObject.get(key) instanceof JSONArray) {
+//                JSONArray array = (JSONArray) jsonObject.get(key);
+//                JSONObject object = (JSONObject) array.get(0);
+//                Iterator<String> innerKeys = object.keySet().iterator();
+//                while(innerKeys.hasNext()) {
+//                    String innerKey = innerKeys.next();
+//                    System.out.println(innerKey);
+//                }
+//            }
+//        }
+
+       // cb.getItems().add(jsonObject.
        cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             ///doAction(cb.getValue().toString()); //Send the selected item to the method
@@ -78,6 +104,7 @@ private BufferedWriter bufferedWriter;
             //Call a method to determine which item in the list the user has selected
             DaVoid(); //Send the selected item to the method
         });
+        cb.getItems().addAll(jsonObject.get("names"));
 
         fieldListRb1 = new CustomTextField[2][2];
         fieldListRb2 = new CustomTextField[3][3];
