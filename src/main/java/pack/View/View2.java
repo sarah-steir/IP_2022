@@ -1,18 +1,17 @@
 package pack.View;
 
+import javafx.animation.FadeTransition;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import pack.View.Customs.*;
-import pack.View.iView;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -20,11 +19,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import pack.Controller.Controller2;
-import pack.Model.Model2for2x2;
 import pack.Model.Model2for3x3;
 import pack.Model.ModelForJSON;
-
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -35,7 +31,9 @@ import static pack.View.Customs.Custom.p;
 
 public class View2 extends Pane implements iView {
 
-    // Don't delete this comment. TAYBA FIX THE BUTTON GETTING NOT DISABLED WHEN THERES SITLL A WRONG VALUE BUT THE NEXT ONE IS RIGHT
+    //TODO fix when clicking "Save matrix" two times, stack overflow
+    // TODO FIX THE BUTTON GETTING NOT DISABLED WHEN THERES SITLL A WRONG VALUE BUT THE NEXT ONE IS RIGHT
+
     private CustomTextField[][] fieldListRb1, fieldListRb2;
     private HBox fieldsPane;
     private CustomRadioButton rb1;
@@ -57,6 +55,8 @@ public class View2 extends Pane implements iView {
     private JSONObject jsonObject;
     private JSONObject names;
     private Stage newWindow;
+    private HBox emptyBox;
+    private CustomButton invisibleButton;
 
     public View2() {
         jsonObject = getThatObject();
@@ -98,11 +98,15 @@ public class View2 extends Pane implements iView {
         fieldListRb2 = new CustomTextField[3][3];
         fieldsPane = new HBox();
 
+        this.invisibleButton = new CustomButton("test");
+        this.invisibleButton.setVisible(false);
+
         vbUi = new VBox();  // user input
         vbPo = new VBox();  // program output
         vbLeft = new VBox();
         vbRight = new VBox();
 
+        this.emptyBox = new HBox();
         setVbUi(setHbRadios(this.rb1, this.rb2), setHbComboBox());
         setVbPo("Eigenvalues and Eigenvectors");
 
@@ -169,12 +173,9 @@ public class View2 extends Pane implements iView {
             fieldListRb2[2][1].setText(String.valueOf(c2));
             fieldListRb2[2][2].setText(String.valueOf(c3));
         }
-
     }
     //
     private void DaVoid(){
-
-
         StackPane secondaryLayout = new StackPane();
 
         secondaryLayout.getChildren().add(PANCAKES());
@@ -213,15 +214,22 @@ public class View2 extends Pane implements iView {
                         System.out.println("THICK BITCHES ONLY");
 
                     }
-                }else{ // CLOSE THE SCENE + MATRIX NAME NOT USED
+                } else { // CLOSE THE SCENE + MATRIX NAME NOT USED
                     System.out.println("BAD BITCHES ONLY");
+                    invisibleButton.setText("Matrix " + ctf.getText() + " has been saved.");
+                    invisibleButton.setStyle("-fx-background-color: #1985A1; -fx-text-fill: E7EBEE");
+                    invisibleButton.setVisible(true);
+
+                    FadeTransition ft = new FadeTransition(Duration.millis(3000), invisibleButton);
+                    ft.setFromValue(1);
+                    ft.setToValue(0);
+                    ft.play();
 
                     humptyDumptyFellOffAWall(ctf.getText());
                     payne.getChildren().remove(txt);
                     newWindow.close();
-
                 }
-            }catch(NullPointerException e) {
+            } catch (NullPointerException e) {
                 System.out.println("THIS AINT GOOD");
 
             }
@@ -524,7 +532,9 @@ public class View2 extends Pane implements iView {
         this.vbUi.setSpacing(5);
         this.vbUi.setPrefSize(500, 695);
         this.vbUi.setStyle("-fx-background-color: #333335");
-        this.vbUi.getChildren().addAll(hbRadios, hbComboBox);
+        this.emptyBox.setAlignment(Pos.CENTER);
+        this.emptyBox.getChildren().add(invisibleButton);
+        this.vbUi.getChildren().addAll(hbRadios, hbComboBox, this.emptyBox);
     }
 
     private void setVbPo(String title) {
@@ -550,7 +560,7 @@ public class View2 extends Pane implements iView {
 
             fieldsPane = setFields(fieldListRb1);
             this.vbUi.getChildren().clear();
-            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), fieldsPane);
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), emptyBox, fieldsPane);
         });
 
         rb2.setOnAction(event -> {
@@ -559,7 +569,7 @@ public class View2 extends Pane implements iView {
             this.cb.setDisable(false);
             fieldsPane = setFields(fieldListRb2);
             this.vbUi.getChildren().clear();
-            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), fieldsPane);
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), emptyBox, fieldsPane);
         });
         this.btnStart.setOnAction(event -> { handleStart(rb1.isSelected()); });
         this.btnReset.setOnAction(event -> { handleReset(); });
@@ -609,7 +619,7 @@ public class View2 extends Pane implements iView {
             }
         }
         HBox hbFields = new HBox();
-        hbFields.setPadding(new Insets(50, 0, 0, 0));
+        hbFields.setPadding(new Insets(20, 0, 0, 0));
         hbFields.getChildren().addAll(iv1, gridPane, iv2, hbText);
         hbFields.setAlignment(Pos.CENTER);
         return hbFields;
@@ -646,7 +656,7 @@ public class View2 extends Pane implements iView {
         cb.setDisable(true);
         rb1.setSelected(false);
         rb2.setSelected(false);
-        this.vbUi.getChildren().remove(fieldsPane);
+        this.vbUi.getChildren().removeAll(fieldsPane, invisibleButton);
         this.vbPo.getChildren().clear();
         this.getChildren().addAll(this.vbLeft, this.vbRight);
     }
