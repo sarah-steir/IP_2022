@@ -24,8 +24,8 @@ public class ModelForJSON {
     private static JSONObject names = new JSONObject();
 
     public ModelForJSON() {
-        //writeBasics();
-        //writeNames();
+       // writeBasics();
+       // writeNames();
         readBasics();
     }
     public static void writeNames() {
@@ -59,7 +59,7 @@ public class ModelForJSON {
     }
 
 public static void writeBasics() {
-    JSONObject matrix = new JSONObject();
+    //JSONObject matrix = new JSONObject();
 
     JSONArray identity = new JSONArray();
     identity.add("1");
@@ -71,7 +71,7 @@ public static void writeBasics() {
     identity.add("0");
     identity.add("0");
     identity.add("1");
-    matrix.put("Identity", identity);
+    matrix.put("identity", identity);
 
     JSONArray upperTriangle = new JSONArray();
     upperTriangle.add("2");
@@ -83,7 +83,7 @@ public static void writeBasics() {
     upperTriangle.add("0");
     upperTriangle.add("0");
     upperTriangle.add("2");
-    matrix.put("UpperTriangle", upperTriangle);
+    matrix.put("upper triangle", upperTriangle);
 
     JSONArray lowerTriangle = new JSONArray();
     lowerTriangle.add("1");
@@ -95,7 +95,7 @@ public static void writeBasics() {
     lowerTriangle.add("6");
     lowerTriangle.add("-1");
     lowerTriangle.add("8");
-    matrix.put("LowerTriangle", lowerTriangle);
+    matrix.put("lower triangle", lowerTriangle);
 
     JSONArray diagonal = new JSONArray();
     diagonal.add("-9");
@@ -107,7 +107,7 @@ public static void writeBasics() {
     diagonal.add("0");
     diagonal.add("0");
     diagonal.add("3");
-    matrix.put("Diagonal", diagonal);
+    matrix.put("diagonal", diagonal);
 
     JSONArray symmetric = new JSONArray();
     symmetric.add("1");
@@ -119,7 +119,7 @@ public static void writeBasics() {
     symmetric.add("2");
     symmetric.add("-1");
     symmetric.add("1");
-    matrix.put("Symmetric", symmetric);
+    matrix.put("symmetric", symmetric);
 
     JSONArray Null = new JSONArray();
     Null.add("0");
@@ -131,7 +131,7 @@ public static void writeBasics() {
     Null.add("0");
     Null.add("0");
     Null.add("0");
-    matrix.put("Null", Null);
+    matrix.put("null", Null);
 
 //CREATE NEW JSON FILE
     File newFile = new File("Resources/JsonFile.json");
@@ -158,24 +158,23 @@ public static void writeBasics() {
             JSONParser parser = new JSONParser();
 
             Object obj = null;
+            JSONObject jsonObject;
             try {
                 obj = parser.parse(new FileReader("Resources/JsonFile.json"));
-                JSONObject jsonObject = (JSONObject) obj;
+                 jsonObject = (JSONObject) obj;
 
 
-                Identity = makeTheArrayList((JSONArray) jsonObject.get("Identity"));
-                UpperTriangle = makeTheArrayList((JSONArray) jsonObject.get("UpperTriangle"));
-                LowerTriangle = makeTheArrayList((JSONArray) jsonObject.get("LowerTriangle"));
-                Symmetric = makeTheArrayList((JSONArray) jsonObject.get("Symmetric"));
-                Diagonal = makeTheArrayList((JSONArray) jsonObject.get("Diagonal"));
-                Nul = makeTheArrayList((JSONArray) jsonObject.get("Null"));
-
+                Identity = makeTheArrayList((JSONArray) jsonObject.get("identity"));
+                UpperTriangle = makeTheArrayList((JSONArray) jsonObject.get("upper triangle"));
+                LowerTriangle = makeTheArrayList((JSONArray) jsonObject.get("lower triangle"));
+                Symmetric = makeTheArrayList((JSONArray) jsonObject.get("symmetric"));
+                Diagonal = makeTheArrayList((JSONArray) jsonObject.get("diagonal"));
+                Nul = makeTheArrayList((JSONArray) jsonObject.get("null"));
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
 
         }
     public static ArrayList<Integer> makeTheArrayList(JSONArray js){
