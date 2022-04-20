@@ -2,10 +2,8 @@ package pack.View.GraphView;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.*;
@@ -46,9 +44,6 @@ public class Graph extends Group {
         axisList = getAxis();
         this.update();
 
-      //  this.addPoint(new Point3D(-15.82, -19.82, 59.55));
-     //   this.addPoint(new Point3D(-95.82, -99.82, 299.55));
-
         Scale mirror = new Scale(1, -1, -1);
         scalable.getTransforms().add(mirror);
         root.getChildren().add(scalable);
@@ -72,39 +67,33 @@ public class Graph extends Group {
             scalable.setScale(scale);
         });
 
-        scene.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent me) {
-                mousePosX = me.getSceneX();
-                mousePosY = me.getSceneY();
-                mouseOldX = me.getSceneX();
-                mouseOldY = me.getSceneY();
-            }
+        scene.setOnMousePressed(me -> {
+            mousePosX = me.getSceneX();
+            mousePosY = me.getSceneY();
+            mouseOldX = me.getSceneX();
+            mouseOldY = me.getSceneY();
         });
 
-        scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent me) {
-                mouseOldX = mousePosX;
-                mouseOldY = mousePosY;
-                mousePosX = me.getSceneX();
-                mousePosY = me.getSceneY();
-                mouseDeltaX = (mousePosX - mouseOldX);
-                mouseDeltaY = (mousePosY - mouseOldY);
-                if (me.isPrimaryButtonDown() && me.isSecondaryButtonDown()) {
-                    camera.setTranslateX(camera.getTranslateX() + mouseDeltaX);
-                    camera.setTranslateY(camera.getTranslateY() + mouseDeltaY);
-                } else if (me.isPrimaryButtonDown()) {
-                    cameraXform.ry.setAngle(cameraXform.ry.getAngle() + mouseDeltaX);
-                    cameraXform.rx.setAngle(cameraXform.rx.getAngle() - mouseDeltaY);
-                } else if (me.isSecondaryButtonDown()) {
-                    double z = camera.getTranslateZ();
-                    double newZ = z + mouseDeltaX;
-                    camera.setTranslateZ(newZ);
-                } else if (me.isMiddleButtonDown()) {
-                    cameraXform2.t.setX(cameraXform2.t.getX() + mouseDeltaX);
-                    cameraXform2.t.setY(cameraXform2.t.getY() + mouseDeltaY);
-                }
+        scene.setOnMouseDragged(me -> {
+            mouseOldX = mousePosX;
+            mouseOldY = mousePosY;
+            mousePosX = me.getSceneX();
+            mousePosY = me.getSceneY();
+            mouseDeltaX = (mousePosX - mouseOldX);
+            mouseDeltaY = (mousePosY - mouseOldY);
+            if (me.isPrimaryButtonDown() && me.isSecondaryButtonDown()) {
+                camera.setTranslateX(camera.getTranslateX() + mouseDeltaX);
+                camera.setTranslateY(camera.getTranslateY() + mouseDeltaY);
+            } else if (me.isPrimaryButtonDown()) {
+                cameraXform.ry.setAngle(cameraXform.ry.getAngle() + mouseDeltaX);
+                cameraXform.rx.setAngle(cameraXform.rx.getAngle() - mouseDeltaY);
+            } else if (me.isSecondaryButtonDown()) {
+                double z = camera.getTranslateZ();
+                double newZ = z + mouseDeltaX;
+                camera.setTranslateZ(newZ);
+            } else if (me.isMiddleButtonDown()) {
+                cameraXform2.t.setX(cameraXform2.t.getX() + mouseDeltaX);
+                cameraXform2.t.setY(cameraXform2.t.getY() + mouseDeltaY);
             }
         });
     }
@@ -113,7 +102,7 @@ public class Graph extends Group {
      * This function is used so that the user doesn't have to click on a specific element to rotate/move the graph
      * @return a big, transparent box that will serve as a "grip" so the user can click anywhere on the graph and rotate it
      */
-    public Box bigCube() {
+    private Box bigCube() {
         map = new Box(400, 400, 400);
         map.setMaterial(new PhongMaterial(Color.TRANSPARENT));
         return map;
@@ -152,7 +141,7 @@ public class Graph extends Group {
         sphere.setTranslateX(point.getX());
         sphere.setTranslateY(point.getY());
         sphere.setTranslateZ(point.getZ());
-//        createPointLabel(point);
+        createPointLabel(point);
         addPointToList(sphere);
     }
 
@@ -178,11 +167,11 @@ public class Graph extends Group {
 
     /**
      * This function finds the first "half" of the line (so that it is veryyyyy long instead of being smol)
-     * @param point1
-     * @param point2
+     * @param point1 The first point the line has to go through
+     * @param point2 The second point the line has to go through
      * @return the "first half" of the line
      */
-    public Line FindOneLine(Point3D point1, Point3D point2) {
+    private Line FindOneLine(Point3D point1, Point3D point2) {
         double dist = point1.distance(point2);
 
         Line line = new Line(0, 0, 1000, 0);
@@ -203,7 +192,7 @@ public class Graph extends Group {
 
     /**
      *
-     * Boy oh boy was this function a pain in the ass to program... Anyways here we go
+     * Boy oh boy was this function a pain in the ass to program... N E ways here we go
      * It creates the plane (a circle because it is too hard to take a rectangle and transform it since the pivot point is in the corner, not in the center)
      * When the circle is added, it goes automatically through x and y, so we just to rotate along this vector (x -> y) to make it pass through z
      * It finds the midpoint m between the x and y
@@ -213,7 +202,7 @@ public class Graph extends Group {
      * @param x the x-intercept
      * @param y the y-intercept
      * @param z the z-intercept
-     * @param equation
+     * @param equation a String of the equation to display
      */
     public void addPlane(double x, double y, double z, String equation) {
 
@@ -226,94 +215,86 @@ public class Graph extends Group {
         Point3D vector = new Point3D(-x, y, 0); // "Axis" of rotation, aka vector from x to y
 
         if (x * y < 0) { // If the coordinates are a bit weird we need to do this
-            angle = 360 - angle;}
+            angle = 360 - angle;
+        }
 
         Rotate rotate = new Rotate(angle, m.getX(), m.getY(), 0, vector);
         plane.getTransforms().addAll(rotate);
 
         createPlaneLabel(equation);
-        addPlaneToList(plane);}
+        addPlaneToList(plane);
+    }
 
     /**
      * Chooses the right color depending on how many elements are already in the graph
      * and adds the Point/Sphere
-     * @param sphere
+     * @param sphere the Visual representation of a Point3D, a Sphere in this case
      */
-    public void addPointToList(Sphere sphere) {
+    private void addPointToList(Sphere sphere) {
         a++;
         thingsToGraphList.add(sphere);
         switch (a) {
-            case 1:
-                sphere.setMaterial(new PhongMaterial(red));
-                break;
-            case 2:
-                sphere.setMaterial(new PhongMaterial(yellow));
-                break;
-            case 3:
-                sphere.setMaterial(new PhongMaterial(blue));
-                break;
-            default:
-                sphere.setMaterial(new PhongMaterial(yellow));
-                break;}
-        this.update();}
+            case 1 -> sphere.setMaterial(new PhongMaterial(red));
+            case 2 -> sphere.setMaterial(new PhongMaterial(yellow));
+            case 3 -> sphere.setMaterial(new PhongMaterial(blue));
+            default -> sphere.setMaterial(new PhongMaterial(white));
+        }
+        this.update();
+    }
 
     /**
      * Chooses the right color depending on how many elements are already in the graph
-     * and adds the Line
+     * and adds the Line (Lines technically)
      *
-     * @param line1
-     * @param line2
+     * @param line1 The line that goes from point2 to point1, and past point1
+     * @param line2 The line that goes from point1 to point2, and past point2
      */
-    public void addLineToList(Line line1, Line line2) {
+    private void addLineToList(Line line1, Line line2) {
         a++;
         thingsToGraphList.add(line1);
         thingsToGraphList.add(line2);
         switch (a) {
-            case 1:
+            case 1 -> {
                 line1.setStroke(red);
                 line2.setStroke(red);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 line1.setStroke(yellow);
                 line2.setStroke(yellow);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 line1.setStroke(blue);
                 line2.setStroke(blue);
-                break;
-            default:
+            }
+            default -> {
                 line1.setStroke(white);
                 line2.setStroke(white);
-                break;}
-        this.update();}
+            }
+        }
+        this.update();
+    }
 
     /**
      * Chooses the right color depending on how many elements are already in the graph
      * and adds the Rectangle/Plane
-     * @param rectangle
+     * @param rectangle the plane quoi
      */
-    public void addPlaneToList(Rectangle rectangle) {
+    private void addPlaneToList(Rectangle rectangle) {
         a++;
         rectangle.setOpacity(0.5);
         thingsToGraphList.add(rectangle);
         switch (a) {
-            case 1:
-                rectangle.setFill(red);
-                break;
-            case 2:
-                rectangle.setFill(yellow);
-                break;
-            case 3:
-                rectangle.setFill(blue);
-                break;
-            default:
-                rectangle.setFill(white);
-                break;}
-        this.update();}
+            case 1 -> rectangle.setFill(red);
+            case 2 -> rectangle.setFill(yellow);
+            case 3 -> rectangle.setFill(blue);
+            default -> rectangle.setFill(white);
+        }
+        this.update();
+    }
 
     /**
      * Creates the label and places it next to the Point/Sphere
-     * @param point
+     * @param point the Point the label needs to indicate
      */
     private void createPointLabel(Point3D point) {
         Text label = new CustomText("(" + point.getX() + ", " + point.getY() + ", " + point.getZ() + ")");
@@ -321,47 +302,52 @@ public class Graph extends Group {
         label.setTranslateX(point.getX());
         label.setTranslateY(point.getY());
         label.setTranslateZ(point.getZ());
-        labelsList.add(label);}
+        labelsList.add(label);
+    }
 
     /**
      * Creates the label and places it next to the Line
-     * @param point1
-     * @param direction
+     * @param point1 The point p0
+     * @param direction The vector of the line
      */
-    private void createLineLabel(Point3D point1,  double[]direction) {
+    private void createLineLabel(Point3D point1,  double[] direction) {
         Text label = new CustomText("l(t) = (" + point1.getX() + ", " + point1.getY() + ", " + point1.getZ() + ") +\nt <" + direction[0] + ", " +direction[1] + ", " +direction[2] + ">");
         label.setScaleY(-1);
         label.setTranslateX(point1.getX());
         label.setTranslateY(point1.getY());
         label.setTranslateZ(point1.getZ());
-        labelsList.add(label);}
+        labelsList.add(label);
+    }
 
     /**
      * Creates the label and places it at the origin cause I don't know where else
-     * @param equation
+     * @param equation a String of the plane equation
      */
     private void createPlaneLabel(String equation) {
         Text label = new Text(equation);
         label.setScaleY(-1);
-        labelsList.add(label);}
+        labelsList.add(label);
+    }
 
-    private void setCameraFromViewPoint(double x, double y, double z) {
+    private void setCameraFromViewPoint() {
         double zTranslate
-                = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+                = Math.sqrt(Math.pow(100, 2) + Math.pow(100, 2) + Math.pow(300, 2));
 
         double ryAngle, rxAngle;
 
         if (zTranslate > 0) {
-            ryAngle = -Math.toDegrees(Math.atan2(x, z));
+            ryAngle = -Math.toDegrees(Math.atan2(100, 300));
             rxAngle
-                    = -Math.toDegrees(Math.asin(y / zTranslate));}
-        else {
+                    = -Math.toDegrees(Math.asin((double) 100 / zTranslate));
+        } else {
             ryAngle = 0;
-            rxAngle = 0;}
+            rxAngle = 0;
+        }
 
         camera.setTranslateZ(-zTranslate);
         cameraXform.ry.setAngle(ryAngle);
-        cameraXform.rx.setAngle(rxAngle);}
+        cameraXform.rx.setAngle(rxAngle);
+    }
 
     private void buildCamera() {
         root.getChildren().add(cameraXform);
@@ -373,25 +359,25 @@ public class Graph extends Group {
 
         camera.setNearClip(CAMERA_NEAR_CLIP);
         camera.setFarClip(CAMERA_FAR_CLIP);
-        setCameraFromViewPoint(100, 100, 300);}
+        setCameraFromViewPoint();
+    }
 
     /**
      * Needed to update everything when we add an element
      */
-    public void update() {
+    private void update() {
         scalable.getChildren().clear();
         scalable.getChildren().add(new AmbientLight());
         scalable.getChildren().addAll(axisList);
         scalable.getChildren().add(map);
         scalable.getChildren().addAll(thingsToGraphList);
-        scalable.getChildren().addAll(labelsList);}
+        scalable.getChildren().addAll(labelsList);
+    }
 
-    /**
-     * Erases the graph
-     */
     public void reset() {
         thingsToGraphList.clear();
         labelsList.clear();
         this.update();
-        a = 0;}
+        a = 0;
+    }
 }
