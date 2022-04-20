@@ -57,6 +57,7 @@ public class View2 extends Pane implements iView {
     private Stage newWindow;
     private HBox emptyBox;
     private CustomButton invisibleButton;
+    private VBox vbBackground;
 
     public View2() {
         jsonObject = getThatObject();
@@ -101,6 +102,7 @@ public class View2 extends Pane implements iView {
         this.invisibleButton = new CustomButton("test");
         this.invisibleButton.setVisible(false);
 
+        vbBackground = new VBox();
         vbUi = new VBox();  // user input
         vbPo = new VBox();  // program output
         vbLeft = new VBox();
@@ -538,12 +540,18 @@ public class View2 extends Pane implements iView {
     }
 
     private void setVbPo(String title) {
+        this.vbBackground.setPrefSize(500, 580);
+        BackgroundImage myBI= new BackgroundImage(new Image(p + "Clouds.png",520,580,false,true),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        this.vbBackground.setBackground(new Background(myBI));
+
         this.vbPo.setPrefSize(500, 595);
-        this.vbPo.setPadding(new Insets(15));
+        //this.vbPo.setPadding(new Insets(15));
         this.vbPo.setSpacing(15);
         this.vbPo.setAlignment(Pos.TOP_CENTER);
         this.vbPo.setStyle("-fx-background-color: #333335");
-        this.vbPo.getChildren().add(Custom.setTitle(title));
+        this.vbPo.getChildren().addAll(Custom.setTitle(title), this.vbBackground);
     }
 
     public void setView2() {
@@ -662,9 +670,9 @@ public class View2 extends Pane implements iView {
     }
 
     public void addOutput(Controller2 controller2) {
-        this.vbPo.getChildren().clear();
-        setVbPo("Eigenvalues and eigenvectors");
-        this.vbPo.getChildren().add(showDaRight(controller2));
+        this.vbBackground.getChildren().clear();
+        //setVbPo("Eigenvalues and eigenvectors");
+        this.vbBackground.getChildren().add(showDaRight(controller2));
     }
 
     public ArrayList<CustomTextField> getFieldListRb1() {
