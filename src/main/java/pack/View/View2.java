@@ -398,9 +398,9 @@ public class View2 extends Pane implements iView {
         gpt.setPrefSize(500, 595);
 
         if (rb2.isSelected()) {
-            CustomText text = new CustomText("FOR THE EIGENVALUE: " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
-            CustomText text1 = new CustomText("FOR THE EIGENVALUE: " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
-            CustomText text2 = new CustomText("FOR THE EIGENVALUE: " + controller2.getEigenValues()[2] + "\nTHE EIGEN VECTOR IS: ");
+            CustomText text = new CustomText("λ = " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
+            CustomText text1 = new CustomText("λ = " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
+            CustomText text2 = new CustomText("λ = " + controller2.getEigenValues()[2] + "\nTHE EIGEN VECTOR IS: ");
             gpt.add(text, 0, 0);
             if (controller2.getEigenVectors()[0].size() == 3) {
                 gpt.add(newVector(1, controller2,0), 0, 1);
@@ -436,8 +436,8 @@ public class View2 extends Pane implements iView {
             }
         }
         if (rb1.isSelected()) {
-            CustomText text = new CustomText("FOR THE EIGENVALUE: " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
-            CustomText text1 = new CustomText("FOR THE EIGENVALUE: " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
+            CustomText text = new CustomText("λ = " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
+            CustomText text1 = new CustomText("λ = " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
             gpt.add(text, 0, 0);
             if (controller2.getEigenVectors()[0].size() == 2) {
                 gpt.add(newVector(1,  controller2,0), 0, 1);
