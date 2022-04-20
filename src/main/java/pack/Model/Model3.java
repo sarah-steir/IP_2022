@@ -7,9 +7,10 @@ import java.util.ArrayList;
 
 public class Model3 {
     //Planes
-    public  ArrayList<Double> n1 = new ArrayList<Double>();
-    public  ArrayList<Double> n2 = new ArrayList<Double>();
+    public  ArrayList<Double> n1 = new ArrayList<>();
+    public  ArrayList<Double> n2 = new ArrayList<>();
      double crossProduct[] = new double[3];
+     private ArrayList<Double> numbers =new ArrayList<>();
 
     /**
      * Empty constructor for the planes
@@ -58,7 +59,6 @@ public class Model3 {
      * @return
      */
     public Point3D solutionPoints(int i) {
-
         double x = i;
         double z = ((n2.get(1) / n1.get(1)) * (n1.get(0) * x + n1.get(3)) - n2.get(0) * x - n2.get(3)) / (n2.get(2) - n1.get(2) * n2.get(1) / n1.get(1));
         double y = (-n1.get(2) * z - n1.get(0) * x - n1.get(3)) / n1.get(1);
@@ -67,8 +67,7 @@ public class Model3 {
         //double y=(-n1.get(3)-n1.get(2)*z)/n1.get(1);
         System.out.println("x: " + x + " y: " + y + " z: " + z);
         Point3D point1 = new Point3D(x, y, z);
-        return point1;
-    }
+        return point1;}
 
     /**
      * @param i  wether one or two
@@ -82,10 +81,8 @@ public class Model3 {
                 return st;
             case 2:
                 String st2 = n2.get(0).toString() + "x +" + n2.get(1).toString() + "y +" + n2.get(3).toString() + "z =" + n2.get(4).toString();
-                return st2;
-        }
-        return null;
-    }
+                return st2;}
+        return null;}
 
 
     //Lines
@@ -104,7 +101,6 @@ public class Model3 {
 
     public Model3(ArrayList<Double> input,ArrayList<Double>constant) {
             n = 2;
-            // A matrix for 2x2
             //Row 1
             this.a1 = input.get(0);
             matrixA_2x2[0][0] = this.a1;
@@ -121,31 +117,21 @@ public class Model3 {
             this.d1 = constant.get(0);
             matrixB_2x2[0] = this.d1;
             this.d2 = constant.get(1);
-            matrixB_2x2[1] = this.d2;
+            matrixB_2x2[1] = this.d2;}
 
-        }
+    public static double[][] getMatrixA_2x2() {return matrixA_2x2;}
 
-    public static double[][] getMatrixA_2x2() {
-        return matrixA_2x2;
-    }
-
-    public static double[] getMatrixB_2x2() {
-        return matrixB_2x2;
-    }
+    public static double[] getMatrixB_2x2() {return matrixB_2x2;}
 
     // Gaussian elimination with partial pivoting
     public double[] SLESolve(double[][] A, double[] b) {
         n = b.length;
-
         for (int p = 0; p < n; p++) {
-
             // find pivot row and swap
             int max = p;
             for (int i = p + 1; i < n; i++) {
                 if (Math.abs(A[i][p]) > Math.abs(A[max][p])) {
-                    max = i;
-                }
-            }
+                    max = i;} }
             double[] temp = A[p];
             A[p] = A[max];
             A[max] = temp;
@@ -155,17 +141,14 @@ public class Model3 {
 
             // singular or almost singular
             if (Math.abs(A[p][p]) <= EPSILON) {
-                System.out.println("Matrix is singular or super close to being singular, try again :) ");
-            }
+                System.out.println("Matrix is singular or super close to being singular, try again :) ");}
 
             // pivot within A and b
             for (int i = p + 1; i < n; i++) {
                 double alpha = A[i][p] / A[p][p];
                 b[i] -= alpha * b[p];
                 for (int j = p; j < n; j++) {
-                    A[i][j] -= alpha * A[p][j];
-                }
-            }
+                    A[i][j] -= alpha * A[p][j];}}
         }
 
         // back substitution
@@ -173,94 +156,88 @@ public class Model3 {
         for (int i = n - 1; i >= 0; i--) {
             double sum = 0.0;
             for (int j = i + 1; j < n; j++) {
-                sum += A[i][j] * x[j];
-            }
-            x[i] = (b[i] - sum) / A[i][i];
-        }
-        return x;
-    }
+                sum += A[i][j] * x[j];}
+            x[i] = (b[i] - sum) / A[i][i];}
+        return x;}
 
-
+    //TODO delete this because Constance figured it out
     /**
-     *
-     * @param tf the arraylist that contains the planes textfields
      * @return the point of intersection between the two lines (if they intersect)
      */
-    public Point3D intersectionLines(ArrayList<CustomTextField> tf){
+    public Point3D intersectionLines(){
         double [][]A = Model3.getMatrixA_2x2();
         double[] b = Model3.getMatrixB_2x2();
         double[] x = SLESolve(A, b);
         //S=x[0]
 
-        double xpoint=Double.parseDouble(tf.get(0).getText())*x[0]+Double.parseDouble(tf.get(1).getText());
-        double ypoint=Double.parseDouble(tf.get(2).getText())*x[0]+Double.parseDouble(tf.get(3).getText());
-        double zpoint=Double.parseDouble(tf.get(4).getText())*x[0]+Double.parseDouble(tf.get(5).getText());
+        double xpoint=numbers.get(0)*x[0]+numbers.get(1);
+        double ypoint=numbers.get(2)*x[0]+numbers.get(3);
+        double zpoint=numbers.get(4)*x[0]+numbers.get(5);
 
         Point3D solution= new Point3D(xpoint,ypoint,zpoint);
 
-        return solution;
-    }
-
-     //TODO make loop and simplify code for last two functions
+        return solution;}
 
     /**
-     *
      * @param i wether 1 or 2, for line 1 or line 2
      * @param t The value  that the direction vector will be multiplied by to find a point in the line i (x=1+3*t)
-     * @param tf ArrayList of textfields for lines
      * @return a point in the line i
      */
-    public Point3D linesPoints(int i, int t,ArrayList<CustomTextField> tf){
+    public Point3D linesPoints(int i, int t){
         double xpoint=0;
         double ypoint=0;
         double zpoint=0;
 
-
-
         switch (i) {
         case 1:
-             xpoint=Double.parseDouble(tf.get(0).getText())*t+Double.parseDouble(tf.get(1).getText());
-             ypoint=Double.parseDouble(tf.get(2).getText())*t+Double.parseDouble(tf.get(3).getText());
-             zpoint=Double.parseDouble(tf.get(4).getText())*t+Double.parseDouble(tf.get(5).getText());
-            System.out.println("First line" +xpoint+" "+ypoint+ " "+zpoint);
+            xpoint= numbers.get(0)*t+ numbers.get(1);
+            ypoint= numbers.get(2)*t+ numbers.get(3);
+            zpoint= numbers.get(4)*t+ numbers.get(5);
+            return new Point3D(xpoint,ypoint,zpoint);
 
             case 2:
-
-                 xpoint=Double.parseDouble(tf.get(6).getText())*t+Double.parseDouble(tf.get(7).getText());
-                 ypoint=Double.parseDouble(tf.get(8).getText())*t+Double.parseDouble(tf.get(9).getText());
-                 zpoint=Double.parseDouble(tf.get(10).getText())*t+Double.parseDouble(tf.get(11).getText());
-                System.out.println("Second line" +xpoint+" "+ypoint+ " "+zpoint);
-
-        }
+                xpoint= numbers.get(6)*t+ numbers.get(7);
+                ypoint= numbers.get(8)*t+ numbers.get(9);
+                zpoint= numbers.get(10)*t+ numbers.get(11);
+                return new Point3D(xpoint,ypoint,zpoint);}
 
         return new Point3D(xpoint,ypoint,zpoint);}
 
 
-    public double[] dirVector(int i,ArrayList<CustomTextField> tf){
-
-       double[] direction= new double[3];
-
+    public double[] dirVector(int i){
+        double[] direction= new double[3];
         switch (i) {
             case 1:
-                direction[0]=Double.parseDouble(tf.get(1).getText());
-                direction[1]=Double.parseDouble(tf.get(3).getText());
-                direction[2]=Double.parseDouble(tf.get(5).getText());
+                direction[0]= numbers.get(0);
+                direction[1]= numbers.get(2);
+                direction[2]= numbers.get(4);
+                return direction;
 
             case 2:
-                direction[0]=Double.parseDouble(tf.get(7).getText());
-                direction[1]=Double.parseDouble(tf.get(9).getText());
-                direction[2]=Double.parseDouble(tf.get(11).getText());
-
-
-    } return direction; }
-
-
+                direction[0]= numbers.get(6);
+                direction[1]= numbers.get(8);
+                direction[2]= numbers.get(10);
+                return direction;
+    } return null; }
 
 
 
+    public boolean det() {
+        double[][] d = { {numbers.get(7)- numbers.get(1), numbers.get(9) - numbers.get(3), numbers.get(11) - numbers.get(5)},
+                {numbers.get(0), numbers.get(2), numbers.get(4)},
+                {numbers.get(6), numbers.get(8), numbers.get(10)}};
+        double sum = d[0][0] * ((d[1][1] * d[2][2]) - (d[1][2] * d[2][1]))-
+                     d[0][1] * ((d[1][0] * d[2][2]) - (d[1][2] * d[2][0]))+
+                   d[0][2] * ((d[1][0] * d[2][1]) - (d[2][0] * d[1][1]));
+
+         if(sum==0) { return true;}
+           else{ return false;}}
 
 
-
+    public void bringT(ArrayList<CustomTextField>tf){
+        for(CustomTextField i:tf){
+            numbers.clear();
+            numbers.add(Double.parseDouble(i.getText()));}}
 
 
 }

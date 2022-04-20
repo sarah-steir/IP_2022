@@ -226,15 +226,13 @@ public class Graph extends Group {
         Point3D vector = new Point3D(-x, y, 0); // "Axis" of rotation, aka vector from x to y
 
         if (x * y < 0) { // If the coordinates are a bit weird we need to do this
-            angle = 360 - angle;
-        }
+            angle = 360 - angle;}
 
         Rotate rotate = new Rotate(angle, m.getX(), m.getY(), 0, vector);
         plane.getTransforms().addAll(rotate);
 
         createPlaneLabel(equation);
-        addPlaneToList(plane);
-    }
+        addPlaneToList(plane);}
 
     /**
      * Chooses the right color depending on how many elements are already in the graph
@@ -256,10 +254,8 @@ public class Graph extends Group {
                 break;
             default:
                 sphere.setMaterial(new PhongMaterial(yellow));
-                break;
-        }
-        this.update();
-    }
+                break;}
+        this.update();}
 
     /**
      * Chooses the right color depending on how many elements are already in the graph
@@ -288,10 +284,8 @@ public class Graph extends Group {
             default:
                 line1.setStroke(white);
                 line2.setStroke(white);
-                break;
-        }
-        this.update();
-    }
+                break;}
+        this.update();}
 
     /**
      * Chooses the right color depending on how many elements are already in the graph
@@ -314,10 +308,8 @@ public class Graph extends Group {
                 break;
             default:
                 rectangle.setFill(white);
-                break;
-        }
-        this.update();
-    }
+                break;}
+        this.update();}
 
     /**
      * Creates the label and places it next to the Point/Sphere
@@ -329,8 +321,7 @@ public class Graph extends Group {
         label.setTranslateX(point.getX());
         label.setTranslateY(point.getY());
         label.setTranslateZ(point.getZ());
-        labelsList.add(label);
-    }
+        labelsList.add(label);}
 
     /**
      * Creates the label and places it next to the Line
@@ -343,8 +334,7 @@ public class Graph extends Group {
         label.setTranslateX(point1.getX());
         label.setTranslateY(point1.getY());
         label.setTranslateZ(point1.getZ());
-        labelsList.add(label);
-    }
+        labelsList.add(label);}
 
     /**
      * Creates the label and places it at the origin cause I don't know where else
@@ -353,8 +343,7 @@ public class Graph extends Group {
     private void createPlaneLabel(String equation) {
         Text label = new Text(equation);
         label.setScaleY(-1);
-        labelsList.add(label);
-    }
+        labelsList.add(label);}
 
     private void setCameraFromViewPoint(double x, double y, double z) {
         double zTranslate
@@ -365,16 +354,14 @@ public class Graph extends Group {
         if (zTranslate > 0) {
             ryAngle = -Math.toDegrees(Math.atan2(x, z));
             rxAngle
-                    = -Math.toDegrees(Math.asin(y / zTranslate));
-        } else {
+                    = -Math.toDegrees(Math.asin(y / zTranslate));}
+        else {
             ryAngle = 0;
-            rxAngle = 0;
-        }
+            rxAngle = 0;}
 
         camera.setTranslateZ(-zTranslate);
         cameraXform.ry.setAngle(ryAngle);
-        cameraXform.rx.setAngle(rxAngle);
-    }
+        cameraXform.rx.setAngle(rxAngle);}
 
     private void buildCamera() {
         root.getChildren().add(cameraXform);
@@ -386,8 +373,7 @@ public class Graph extends Group {
 
         camera.setNearClip(CAMERA_NEAR_CLIP);
         camera.setFarClip(CAMERA_FAR_CLIP);
-        setCameraFromViewPoint(100, 100, 300);
-    }
+        setCameraFromViewPoint(100, 100, 300);}
 
     /**
      * Needed to update everything when we add an element
@@ -398,13 +384,14 @@ public class Graph extends Group {
         scalable.getChildren().addAll(axisList);
         scalable.getChildren().add(map);
         scalable.getChildren().addAll(thingsToGraphList);
-        scalable.getChildren().addAll(labelsList);
-    }
+        scalable.getChildren().addAll(labelsList);}
 
+    /**
+     * Erases the graph
+     */
     public void reset() {
         thingsToGraphList.clear();
         labelsList.clear();
         this.update();
-        a = 0;
-    }
+        a = 0;}
 }
