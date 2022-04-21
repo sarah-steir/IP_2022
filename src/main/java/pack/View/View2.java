@@ -76,17 +76,13 @@ public class View2 extends Pane implements iView {
        JASONDERULO = new ModelForJSON();
 
        names = getThemNames();
-        JSONArray list = (JSONArray) names.get("names");
-        Iterator<JSONObject> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            cb.getItems().add(String.valueOf(iterator.next()));
-        }
+        UpdateLeCombobox();
         cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             setMatrix(YesImAGummyBear((JSONArray) jsonObject.get(cb.getValue())));
             JSONArray list1 = (JSONArray) names.get("names");
             Iterator<JSONObject> iterator1 = list1.iterator();
-            while (iterator.hasNext()) {
+            while (iterator1.hasNext()) {
                 cb.getItems().add(String.valueOf(iterator1.next()));
             }
         });
@@ -124,6 +120,14 @@ public class View2 extends Pane implements iView {
 ////        }
 
         cb.setPromptText("Saved Matrices");
+    }
+    private void UpdateLeCombobox(){
+        cb.getItems().clear();
+        JSONArray list = (JSONArray) names.get("names");
+        Iterator<JSONObject> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            cb.getItems().add(String.valueOf(iterator.next()));
+        }
     }
     private ArrayList<Integer> YesImAGummyBear(JSONArray js){
 
@@ -260,12 +264,17 @@ public class View2 extends Pane implements iView {
             }
         }
         jsonObject.put(name, newMatrix);
-        names.put(names,name);
+        JSONArray getNames = (JSONArray) names.get("names");
+        getNames.add(name);
+        System.out.println(jsonObject.get("null"));
+        System.out.println(jsonObject.get(names));
+        System.out.println(names.get("name"));
+        names.put("names", getNames);
 
         try {
             // Constructs a FileWriter given a file name, using the platform's default charset
             file = new FileWriter("Resources/JsonFile.json");
-            file.write(ModelForJSON.getMatrix().toJSONString());
+            file.write(jsonObject.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -280,7 +289,7 @@ public class View2 extends Pane implements iView {
             try {
                 // Constructs a FileWriter given a file name, using the platform's default charset
                 file = new FileWriter("Resources/JsonNames.json");
-                file.write(ModelForJSON.getNames().toJSONString());
+                file.write(names.toJSONString());
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -292,6 +301,8 @@ public class View2 extends Pane implements iView {
                 }
 
         }
+            names=getThemNames();
+            UpdateLeCombobox();
     }
     private ArrayList<Integer> humptyDumptyCameBackToLife () {
         JSONParser parser = new JSONParser();
