@@ -24,8 +24,8 @@ public class ModelForJSON {
     private static JSONObject names = new JSONObject();
 
     public ModelForJSON() {
-        writeBasics();
-        writeNames();
+        //writeBasics();
+        //writeNames();
         readBasics();
     }
     public static void writeNames() {
