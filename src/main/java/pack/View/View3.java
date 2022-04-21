@@ -120,6 +120,8 @@ public class View3 extends Pane implements iView {
                 graph.addPoint(model3.intersectionLines());}
             if(model3.det()==false) { System.out.println("Skew lines hehe");}
 
+            if(model3.parallel()==true) {System.out.println("Parallel lines babe");}
+
 
            //First line
             graph.addLine(  model3.linesPoints(1,0), model3.linesPoints(1,2),model3.dirVector(1));

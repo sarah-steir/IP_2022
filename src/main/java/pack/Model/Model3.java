@@ -235,9 +235,21 @@ public class Model3 {
 
 
     public void bringT(ArrayList<CustomTextField>tf){
-        for(CustomTextField i:tf){
-            numbers.clear();
-            numbers.add(Double.parseDouble(i.getText()));}}
+        for(int i=0;i<12;i++){
+            Double d=Double.parseDouble(tf.get(i).getText());
+            numbers.add(d);}}
+
+
+
+    public boolean parallel(){
+        if(numbers.get(0)/numbers.get(6)==numbers.get(2)/numbers.get(8)) {
+
+            if(numbers.get(4)/numbers.get(10)==numbers.get(0)/numbers.get(6)){
+                return true;}}
+        return false;}
+
+
+    public void distanceSkew() {}
 
 
 }
