@@ -799,19 +799,6 @@ public class View2 extends Pane implements iView {
         }
     } //DONE DONE DONE
 
-
-    public void setFieldListRb1(CustomTextField[][] fieldListRb1) {
-        this.fieldListRb1 = fieldListRb1;
-    }
-
-    public void setFieldListRb2(CustomTextField[][] fieldListRb2) {
-        this.fieldListRb2 = fieldListRb2;
-    }
-
-    public void setRb1(CustomRadioButton rb1) {
-        this.rb1 = rb1;
-    }
-
     public CustomRadioButton getRb1() {
         return rb1;
     }
@@ -820,145 +807,26 @@ public class View2 extends Pane implements iView {
         return rb2;
     }
 
-    public void setRb2(CustomRadioButton rb2) {
-        this.rb2 = rb2;
-    }
-
-    public CustomButton getBtnStart() {
-        return btnStart;
-    }
-
-    public void setBtnStart(CustomButton btnStart) {
-        this.btnStart = btnStart;
-    }
-
-    public CustomButton getBtnReset() {
-        return btnReset;
-    }
-
-    public void setBtnReset(CustomButton btnReset) {
-        this.btnReset = btnReset;
-    }
-
-    public CustomButton getBtnSave() {
-        return btnSave;
-    }
-
-    public void setBtnSave(CustomButton btnSave) {
-        this.btnSave = btnSave;
-    }
-
-    public ToggleGroup getGroup() {
-        return group;
-    }
-
-    public void setGroup(ToggleGroup group) {
-        this.group = group;
-    }
-
     public ComboBox getCb() {
         return cb;
-    }
-
-    public void setCb(ComboBox cb) {
-        this.cb = cb;
-    }
-
-    public VBox getVbUi() {
-        return vbUi;
-    }
-
-    public void setVbUi(VBox vbUi) {
-        this.vbUi = vbUi;
-    }
-
-    public VBox getVbPo() {
-        return vbPo;
-    }
-
-    public void setVbPo(VBox vbPo) {
-        this.vbPo = vbPo;
-    }
-
-    public VBox getVbLeft() {
-        return vbLeft;
-    }
-
-    public VBox getVbRight() {
-        return vbRight;
     }
 
     public static CustomTextField getT1() {
         return t1;
     }
 
-    public static void setT1(CustomTextField t1) {
-        View2.t1 = t1;
-    }
-
     public static CustomTextField getT2() {
         return t2;
-    }
-
-    public static void setT2(CustomTextField t2) {
-        View2.t2 = t2;
-    }
-
-    public static CustomTextField getT3() {
-        return t3;
-    }
-
-    public static void setT3(CustomTextField t3) {
-        View2.t3 = t3;
     }
 
     public static CustomTextField getT4() {
         return t4;
     }
 
-    public static void setT4(CustomTextField t4) {
-        View2.t4 = t4;
-    }
-
     public static CustomTextField getT5() {
         return t5;
     }
 
-    public static void setT5(CustomTextField t5) {
-        View2.t5 = t5;
-    }
-
-    public static CustomTextField getT6() {
-        return t6;
-    }
-
-    public static void setT6(CustomTextField t6) {
-        View2.t6 = t6;
-    }
-
-    public static CustomTextField getT7() {
-        return t7;
-    }
-
-    public static void setT7(CustomTextField t7) {
-        View2.t7 = t7;
-    }
-
-    public static CustomTextField getT8() {
-        return t8;
-    }
-
-    public static void setT8(CustomTextField t8) {
-        View2.t8 = t8;
-    }
-
-    public static CustomTextField getT9() {
-        return t9;
-    }
-
-    public static void setT9(CustomTextField t9) {
-        View2.t9 = t9;
-    }
     private void setVbRight(VBox vbRight) {
         this.vbRight = vbRight;
     }
@@ -970,10 +838,5 @@ public class View2 extends Pane implements iView {
     public ArrayList<Integer> getOther() {
         return other;
     }
-
-    public void setOther(ArrayList<Integer> other) {
-        this.other = other;
-    }
-
 
 }
