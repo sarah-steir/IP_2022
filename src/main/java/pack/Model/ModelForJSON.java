@@ -26,7 +26,7 @@ public class ModelForJSON {
     public ModelForJSON() {
         writeBasics();
         writeNames();
-        //readBasics();
+        readBasics();
     }
     public static void writeNames() {
 
@@ -37,6 +37,12 @@ public class ModelForJSON {
         getNames.add("symmetric");
         getNames.add("upper triangle");
         getNames.add("lower triangle");
+//        names.put("identity","identity");
+//        names.put("diagonal", "diagonal");
+//        names.put("null", "null");
+//        names.put("symmetric", "symmetric");
+//        names.put("upper triangle", "upper triangle");
+//        names.put("lower triangle", "lower triangle");
 
         names.put("names", getNames);
 //CREATE NEW JSON FILE
@@ -56,6 +62,7 @@ public class ModelForJSON {
                 e.printStackTrace();
             }
         }
+
     }
 
 public static void writeBasics() {
