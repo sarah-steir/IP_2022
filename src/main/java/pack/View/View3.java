@@ -90,8 +90,10 @@ public class View3 extends Pane implements iView {
         this.vbPo.setAlignment(Pos.TOP_CENTER);
         this.vbPo.setStyle("-fx-background-color: #333335");
         this.vbPo.getChildren().add(Custom.setTitle(title));
+
     }
 
+    //TODO method for filling empty textfields
     public void handleStart(boolean isRb1Selected) {
         if (isRb1Selected) {
             for (int i = 0; i < fieldListRb1.length; i++) {
@@ -105,46 +107,46 @@ public class View3 extends Pane implements iView {
 
             Model3 model3 = new Model3(input(),constants());
 
-            double [][]A = Model3.getMatrixA_2x2();
-            double[] b = Model3.getMatrixB_2x2();
-            double[] x = model3.SLESolve(A, b);
 
-            System.out.println("S = "+ x[0]);
-            System.out.println("T = "+ x[1]);
-            graph.addPoint(model3.intersectionLines(getFieldListRb1()));
+            model3.bringT(getFieldListRb1());
+
+            if(model3.det()==true) {
+                double [][]A = Model3.getMatrixA_2x2();
+                double[] b = Model3.getMatrixB_2x2();
+                double[] x = model3.SLESolve(A, b);
+                System.out.println("S = "+ x[0]);
+                System.out.println("T = "+ x[1]);
+
+                graph.addPoint(model3.intersectionLines());}
+            if(model3.det()==false) { System.out.println("Skew lines hehe");}
+
+            if(model3.parallel()==true) {System.out.println("Parallel lines babe");}
+
 
            //First line
-            graph.addLine(  model3.linesPoints(1,1,getFieldListRb1()), model3.linesPoints(1,2,getFieldListRb1()),model3.dirVector(1,getFieldListRb1()));
-
+            graph.addLine(  model3.linesPoints(1,0), model3.linesPoints(1,2),model3.dirVector(1));
             //Second line
-            graph.addLine(model3.linesPoints(2,1,getFieldListRb1()),model3.linesPoints(2,2,getFieldListRb1()),model3.dirVector(2,getFieldListRb1()));
+            graph.addLine(model3.linesPoints(2,0),model3.linesPoints(2,2),model3.dirVector(2));
+        }
 
-
-
-        } else {
+        else {
             for (int i = 0; i < fieldListRb2.length; i++) {
                 for (int j = 0; j < fieldListRb2[0].length; j++) {
                     if (fieldListRb2[i][j].getText().equals("")) {
-                        fieldListRb2[i][j].setText("0");
+                        fieldListRb2[i][j].setText("0");}}}
 
-                    }
-
-                }
-            }
             Model3 c3=new Model3();
             c3.transform(getFieldListRb2());
             c3.crossProduct();
-            c3.solutionPoint();
             c3.solutionPoints(5);
             graph.addPlane(c3.n1.get(0)/-c3.n1.get(3),c3.n1.get(1)/-c3.n1.get(3),c3.n1.get(2)/-c3.n1.get(3),"Plane1");
             graph.addPlane(c3.n2.get(0)/-c3.n2.get(3),c3.n2.get(1)/-c3.n2.get(3),c3.n2.get(2)/-c3.n2.get(3),"Plane2");
-//            graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10),c3.crossProduct());
-            graph.addLine(c3.solutions[0], c3.solutions[1], c3.crossProduct());
-            Controller3 controller3 = new Controller3(this);
-            //addOutput(controller3);
-        }
+            graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10),c3.crossProduct());
 
-    }
+          /*  Label l= new Label("Direction vector: <"+c3.crossProduct()[0]+", "+c3.crossProduct()[1]+", "+c3.crossProduct()[2]+">");
+            this.vbPo.getChildren().clear();
+            this.vbPo.getChildren().add(l);*/
+            Controller3 controller3 = new Controller3(this);}}
 
     public void handleReset() {
         this.graph.reset();
@@ -153,29 +155,24 @@ public class View3 extends Pane implements iView {
         rb1.setSelected(false);
         rb2.setSelected(false);
         this.vbUi.getChildren().remove(fieldsPane);
-        this.getChildren().addAll(this.vbLeft, this.vbRight);
-    }
+        this.getChildren().addAll(this.vbLeft, this.vbRight);}
+
     public void setActions() {
         rb1.setOnAction(event -> {
             this.btnStart.setDisable(false);
             fieldsPane = setFields(fieldListRb1, signsRb1, this.btnStart);
             this.vbUi.getChildren().clear();
-            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
-        });
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);});
 
         rb2.setOnAction(event -> {
             this.btnStart.setDisable(false);
             fieldsPane = setFields(fieldListRb2, signsRb2, this.btnStart);
             this.vbUi.getChildren().clear();
-            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
-        });
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);});
+
         this.btnStart.setOnAction(event -> { handleStart(rb1.isSelected()); });
-        this.btnReset.setOnAction(event -> { handleReset(); });
-    }
+        this.btnReset.setOnAction(event -> { handleReset(); });}
 
-    public void addOutput() {
-
-    }
 
     @Override
     public GridPane setFields(CustomTextField[][] textFields, String[] signs, CustomButton btnStart) {
@@ -183,7 +180,6 @@ public class View3 extends Pane implements iView {
         gridPane.setVgap(10);
         gridPane.setHgap(10);
         gridPane.setAlignment(Pos.CENTER);
-
         int rows = textFields.length;
         int cols = textFields[0].length;
 
@@ -199,10 +195,10 @@ public class View3 extends Pane implements iView {
                 lblVariable.setText(signs[j]);
 
                 if (signs[j].equals("S + ") && i == 1) {
-                    lblVariable.setText("T + ");
-                } else {
-                    lblVariable.setText(signs[j]);
-                }
+                    lblVariable.setText("T + ");}
+
+                else {
+                    lblVariable.setText(signs[j]);}
 
                 int finalI = i;
                 int finalJ = j;
@@ -212,10 +208,11 @@ public class View3 extends Pane implements iView {
 
                 if (rb1.isSelected()) {
                     textFields[i][j].setPrefSize(40, 30);
-                    hbTextField.getChildren().addAll(lblVariable, textFields[i][j]);
-                } else {
-                    hbTextField.getChildren().addAll(textFields[i][j], lblVariable);
-                }
+                    hbTextField.getChildren().addAll(lblVariable, textFields[i][j]);}
+
+                else {
+                    hbTextField.getChildren().addAll(textFields[i][j], lblVariable);}
+
                 gridPane.add(hbTextField, j, i);
             }
         }
@@ -227,21 +224,16 @@ public class View3 extends Pane implements iView {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray: this.fieldListRb1) {
             for (CustomTextField tf: tfArray) {
-                fieldList.add(tf);
-            }
-        }
-        return fieldList;
-    }
+                fieldList.add(tf);}}
+        return fieldList;}
 
     public ArrayList<CustomTextField> getFieldListRb2() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray: this.fieldListRb2) {
             for (CustomTextField tf: tfArray) {
-                fieldList.add(tf);
-            }
-        }
-        return fieldList;
-    }
+                fieldList.add(tf);}}
+        return fieldList;}
+
 
     //TODO see if these two functions can be moved into Model3 or Controller3
     public  ArrayList<Double> constants() {
@@ -255,8 +247,7 @@ public class View3 extends Pane implements iView {
         constant.add( d1-d2);
         constant.add(d3-d4);
 
-        return constant;
-    }
+        return constant;}
 
     public   ArrayList<Double> input() {
         ArrayList<Double> arr = new ArrayList<>();
