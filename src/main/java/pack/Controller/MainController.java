@@ -43,6 +43,8 @@ public class MainController {
 
     public void handleEigenQuestions() {
         ImageView iv = new ImageView(new Image(p + "EigenQuestions.png"));
+        iv.setFitWidth(683);
+        iv.setFitHeight(595);
         Stage stage = new Stage();
         stage.setScene(new Scene(new Pane(iv)));
         stage.setTitle("EigenValues & EigenVectors 101");
