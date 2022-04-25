@@ -1,5 +1,6 @@
 package pack.View;
 
+
 import javafx.geometry.Insets;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
@@ -9,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pack.Controller.Controller1;
+import pack.Model.Model1;
 import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
 import java.util.ArrayList;
@@ -106,19 +108,22 @@ public class View1 extends Pane implements iView {
             this.vbUi.getChildren().clear();
             this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
         });
-        this.btnStart.setOnAction(event -> { handleStart(rb1.isSelected()); });
+        this.btnStart.setOnAction(event -> {
+            handleStart(rb1.isSelected());
+            System.out.println("IDFUGHDLFJKHGESIRUDFKGHLJDFLIUDFKJHBCGLVIUKDGFJHBCGLIUDFKHJCB"); });
         this.btnReset.setOnAction(event -> { handleReset(); });
     }
 
     // doesn't set text in text field to 0, also only works for rb1?
     public void handleStart(boolean isRb1Selected) {
         if (isRb1Selected) {
-            for (int i = 0; i < fieldListRb1.length; i++) {
+            for (int i = 0; i < Model1.getN(); i++) {
+                System.out.println(Model1.getN() + "what thwe fuck");
                 for (int j = 0; j < fieldListRb1[0].length; j++) {
                     if (fieldListRb1[i][j].getText().equals("")) {
                         fieldListRb1[i][j].setText("0");
                     }
-                    System.out.println("YO: " + fieldListRb1[i][j].getText());
+                    //   System.out.println("YO: " + fieldListRb1[i][j].getText());
                 }
             }
         } else {
@@ -127,13 +132,13 @@ public class View1 extends Pane implements iView {
                     if (fieldListRb2[i][j].getText().equals("")) {
                         fieldListRb2[i][j].setText("0");
                     }
-                    System.out.println("YO FROM 3x3: " + fieldListRb2[i][j].getText());
+                    //   System.out.println("YO FROM 3x3: " + fieldListRb2[i][j].getText());
                 }
             }
         }
         Controller1 controller = new Controller1(this);
         addOutput(controller);
-        controller.humptyDumptyRevival();
+//   controller.humptyDumptyRevival();
     }
 
     public void handleReset() {
@@ -152,15 +157,15 @@ public class View1 extends Pane implements iView {
         VBox vbOutput = new VBox();
         vbOutput.setSpacing(15);
         vbOutput.setPadding(new Insets(15));
-        for (int i = 0; i < controller1.getOutput().length; i++) {
-            if (i == 0) {
-                vbOutput.getChildren().add(Custom.setTitle("X = " + controller1.getOutput()[i]));
-            } else if (i == 1) {
-                vbOutput.getChildren().add(Custom.setTitle("Y = " + controller1.getOutput()[i]));
-            } else if (i == 2) {
-                vbOutput.getChildren().add(Custom.setTitle("Z = " + controller1.getOutput()[i]));
-            }
-        }
+        String[] sol = new String[controller1.getArraySize()];
+        sol = controller1.getOutput();
+        vbOutput.getChildren().add(Custom.setTitle("X = " + sol[0]));
+        vbOutput.getChildren().add(Custom.setTitle("Y = " + sol[1]));
+        if (sol.length>3)
+            vbOutput.getChildren().add(Custom.setTitle("Z = " + sol[2]));
+
+
+
         this.vbPo.getChildren().add(vbOutput);
     }
 
