@@ -434,15 +434,18 @@ public class Model1 {
         System.out.println();
     }
 
-    void printMat(double A[][], double b[], int n) {
+    public StringBuilder printMat(double A[][], double b[], int n) {
+        StringBuilder str = new StringBuilder();
         for (int q = 0; q < n; q++) {
-            System.out.print("[");
-            for (int s = 0; s < n; s++)
-                System.out.print(A[q][s] + " ");
-            System.out.print(" | ");
-            System.out.println(b[q] + " ]");
-            System.out.println("");
+            str.append("[");
+            for (int s = 0; s < n; s++) {
+                str.append(A[q][s] + " ");
+            }
+            str.append(" | ");
+            str.append(b[q] + " ]");
+            str.append("");
         }
+        return str;
     }
 
 

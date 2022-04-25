@@ -32,7 +32,7 @@ public class View1 extends Pane implements iView {
     private VBox vbLeft;
     private VBox vbRight;
 
-    private VBox vbBackground;
+    private Pane backgroundPane;
 
     public View1() {
         rb1 = new CustomRadioButton("2 x 2");
@@ -51,7 +51,7 @@ public class View1 extends Pane implements iView {
         vbPo = new VBox();
         vbLeft = new VBox();
         vbRight = new VBox();
-        vbBackground = new VBox();
+        backgroundPane = new Pane();
 
         setVbUi(setHbRadios(this.rb1, this.rb2));
         setVbPo("Systems of linear equations");
@@ -85,17 +85,17 @@ public class View1 extends Pane implements iView {
     }
 
     private void setVbPo(String title) {
-        this.vbBackground.setPrefSize(500, 580);
-        BackgroundImage myBI= new BackgroundImage(new Image(p + "View2.png",520,580,false,true),
+        this.backgroundPane.setPrefSize(500, 580);
+        BackgroundImage myBI= new BackgroundImage(new Image(p + "View1.png",520,580,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
-        this.vbBackground.setBackground(new Background(myBI));
+        this.backgroundPane.setBackground(new Background(myBI));
 
         this.vbPo.setPrefSize(500, 595);
         this.vbPo.setSpacing(15);
         this.vbPo.setAlignment(Pos.TOP_CENTER);
         this.vbPo.setStyle("-fx-background-color: #333335");
-        this.vbPo.getChildren().addAll(Custom.setTitle(title), this.vbBackground);
+        this.vbPo.getChildren().addAll(Custom.setTitle(title), this.backgroundPane);
     }
 
     public void setActions() {
@@ -141,7 +141,6 @@ public class View1 extends Pane implements iView {
         }
         Controller1 controller = new Controller1(this);
         addOutput(controller);
-//   controller.humptyDumptyRevival();
     }
 
     public void handleReset() {
@@ -153,26 +152,51 @@ public class View1 extends Pane implements iView {
         this.getChildren().addAll(this.vbLeft, this.vbRight);
     }
 
-    public void addOutput(Controller1 controller1) {
-        this.vbPo.getChildren().clear();
-        setVbPo("Systems of linear equations");
+    public void addOutput(Controller1 controller) {
+        this.backgroundPane.getChildren().clear();
+        //setVbPo("Systems of linear equations");
 
-        VBox vbOutput = new VBox();
-        vbOutput.setSpacing(15);
-        vbOutput.setPadding(new Insets(15));
-        String[] sol = new String[controller1.getArraySize()];
-        sol = controller1.getOutput();
-        vbOutput.getChildren().add(Custom.setTitle("X = " + sol[0]));
-        vbOutput.getChildren().add(Custom.setTitle("Y = " + sol[1]));
-        if (sol.length>3) {
-            vbOutput.getChildren().add(Custom.setTitle("Z = " + sol[2]));
+//        VBox vbOutput = new VBox();
+//        vbOutput.setSpacing(15);
+//        vbOutput.setPadding(new Insets(15));
+        String[] sol = new String[controller.getArraySize()];
+        sol = controller.getOutput();
+        VBox vbSolutions = new VBox();
+        CustomText textX = new CustomText("X = " + sol[0]);
+        textX.changeSize(20);
+        vbSolutions.getChildren().add(textX);
+        CustomText textY = new CustomText("Y = " + sol[1]);
+        textY.changeSize(20);
+        vbSolutions.getChildren().add(textY);
+        vbSolutions.setSpacing(15);
+        vbSolutions.setLayoutX(10);
+        vbSolutions.setLayoutY(410);
+        if (sol.length > 3) {
+            CustomText textZ = new CustomText("Z = " + sol[2]);
+            textZ.changeSize(20);
+            vbSolutions.getChildren().add(textZ);
+            vbSolutions.setSpacing(10);
+            vbSolutions.setLayoutX(10);
+            vbSolutions.setLayoutY(390);
         }
-        vbOutput.getChildren().add(Custom.setTitle("Rank = " + controller1.getRank()));
 
+        HBox hbReducedMatrix = new HBox();
+        hbReducedMatrix.getChildren().add(Custom.setTitle(sol[sol.length-1]));
+        hbReducedMatrix.setLayoutX(200);
+        hbReducedMatrix.setLayoutY(200);
+        hbReducedMatrix.setStyle("-fx-border-width: 2px;\n" +
+                "    -fx-border-color: red;\n" +
+                "    -fx-border-insets: -2px;");
 
+        HBox hbRank = new HBox();
+        CustomText rankText = new CustomText(controller.getRank());
+        rankText.changeSize(60);
+        rankText.setStyle("-fx-fill: E7EBEE");
+        hbRank.getChildren().add(rankText);
+        hbRank.setLayoutX(380);
+        hbRank.setLayoutY(315);
 
-
-        this.vbPo.getChildren().add(vbOutput);
+        this.backgroundPane.getChildren().addAll(hbRank, vbSolutions, hbReducedMatrix);
     }
 
     public CustomRadioButton getRb1() {
