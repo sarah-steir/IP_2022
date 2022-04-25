@@ -417,7 +417,7 @@ public class Model1 {
         System.out.println("\nRow Echelon form : ");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++)
-                str += A[i][j] + " ";
+                str += A[i][j] + "\t";
             str +=  "|" + B[i] + "\n";
         }
         str += "\n";

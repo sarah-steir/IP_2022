@@ -6,6 +6,7 @@ import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import pack.Controller.Controller1;
 import pack.Model.Model1;
@@ -170,18 +171,31 @@ public class View1 extends Pane implements iView {
         vbSolutions.getChildren().add(textY);
         vbSolutions.setSpacing(15);
         vbSolutions.setLayoutX(10);
-        vbSolutions.setLayoutY(410);
+        vbSolutions.setLayoutY(430);
         if (sol.length > 3) {
             CustomText textZ = new CustomText("Z = " + sol[2]);
             textZ.changeSize(20);
             vbSolutions.getChildren().add(textZ);
-            vbSolutions.setSpacing(10);
-            vbSolutions.setLayoutX(10);
-            vbSolutions.setLayoutY(390);
+            vbSolutions.setLayoutY(430);
         }
 
         HBox hbReducedMatrix = new HBox();
-        hbReducedMatrix.getChildren().add(Custom.setTitle(sol[sol.length-1]));
+        ImageView iv1 = new ImageView(new Image(p + "Right.png"));
+        iv1.setFitWidth(10);
+        iv1.setFitHeight(75);
+        ImageView iv2 = new ImageView(new Image(p + "Left.png"));
+        iv2.setFitWidth(10);
+        iv2.setFitHeight(75);
+        ImageView iv3 = new ImageView(new Image(p + "Bar.png"));
+        iv3.setFitWidth(10);
+        iv3.setFitHeight(75);
+        // get the bar image
+        HBox middleMatrix = new HBox();
+        CustomText reducedMatrix = new CustomText(sol[sol.length - 1]);
+        reducedMatrix.changeSize(20);
+        hbReducedMatrix.getChildren().addAll(iv1, reducedMatrix, iv2);
+        hbReducedMatrix.setLayoutX(20);
+        hbReducedMatrix.setLayoutY(150);
 
         HBox hbRank = new HBox();
         CustomText rankText = new CustomText(controller.getRank());
