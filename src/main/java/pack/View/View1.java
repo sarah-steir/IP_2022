@@ -182,6 +182,7 @@ public class View1 extends Pane implements iView {
             vbSolutions.setLayoutY(410);
         }
 
+        // Anything
         HBox hbReducedMatrix = new HBox();
         ImageView iv1 = new ImageView(new Image(p + "Right.png"));
         iv1.setFitWidth(10);
