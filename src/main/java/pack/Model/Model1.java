@@ -243,6 +243,8 @@ public class Model1 {
             for (int i = 0; i < n; i++)
                 //adding up number of free variables(check meth freeVar)
                 sum += freeVar[i];
+
+
             //if the size is 2 and there is 1 free variable
             if (n == 2) { //this is for 2x2
                 //the first element in the solution is just whatever was found for x

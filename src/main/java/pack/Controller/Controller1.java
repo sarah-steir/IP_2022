@@ -61,27 +61,32 @@ public class Controller1 {
         this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(11).getText()));
     }
 
+
+    String rank;
     public String[] getOutput() {
         model = new Model1(this.matrixCoefficients, is2by2);
         if (is2by2) {
-            System.out.println("poot");
             double[][] A = Model1.getMatrixA_2x2();
-            System.out.println("yoot");
             double[] b = Model1.getMatrixB_2x2();
             double[] x = model.SLEsolve(A, b);
-            System.out.println("yeet");
             String[] sol = new String[x.length];
-            if (x[2] == 0)
-                for (int i = 0; i < x.length - 1; i++)
+            if (x[2] == 0) {
+                for (int i = 0; i < x.length - 1; i++) {
                     sol[i] = " No solution";
-            else if (x[2] == 1)
+                }
+                rank = "0";
+            }
+            else if (x[2] == 1) {
                 for (int i = 0; i < x.length - 1; i++)
                     sol[i] = " " + x[i];
+
+                rank = "" + b.length;
+            }
                 else if (x[2] == 2){
                     sol[0] = " " + x[0] + " + (" + x[1] + ")t";
                     sol[1] = " t";
+                rank = "1";
             }
-
 
             return sol;
         } else {
@@ -89,25 +94,38 @@ public class Controller1 {
             double[] b = Model1.getMatrixB_3x3();
             double[] x = model.SLEsolve(A, b);
             String[] sol = new String[x.length];
-            if (x[4] == 0)
+            if (x[4] == 0) {
                 for (int i = 0; i < x.length - 1; i++)
                     sol[i] = " No solution";
-            else if (x[4] == 1)
+                rank = "0";
+            }
+            else if (x[4] == 1){
                 for (int i = 0; i < x.length - 1; i++) {
                     sol[i] = " " + x[i];
+                }
+                rank = ""+b.length;
                 }
             else if (x[4] == 2) {
                 sol[0] = " " + x[0] + " + (" + x[1] + ")t";
                 sol[1] = " " + x[2] + " + (" + x[3] + ")t";
                 sol[2] = "t";
+
+                rank = "2";
             } else {
                 sol[0] = " " + x[0] + " + (" + x[1] + ")s" + " + (" + x[2] + ")t";
                 sol[1] = "s";
                 sol[2] = "t";
+
+                rank = "1";
             }
             return sol;
         }
     }
+
+    public String getRank() {
+        return rank;
+    }
+
     public int getArraySize() {
         model = new Model1(this.matrixCoefficients, is2by2);
         if (is2by2) {

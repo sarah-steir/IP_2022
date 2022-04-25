@@ -109,8 +109,7 @@ public class View1 extends Pane implements iView {
             this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
         });
         this.btnStart.setOnAction(event -> {
-            handleStart(rb1.isSelected());
-            System.out.println("IDFUGHDLFJKHGESIRUDFKGHLJDFLIUDFKJHBCGLVIUKDGFJHBCGLIUDFKHJCB"); });
+            handleStart(rb1.isSelected());});
         this.btnReset.setOnAction(event -> { handleReset(); });
     }
 
@@ -161,8 +160,11 @@ public class View1 extends Pane implements iView {
         sol = controller1.getOutput();
         vbOutput.getChildren().add(Custom.setTitle("X = " + sol[0]));
         vbOutput.getChildren().add(Custom.setTitle("Y = " + sol[1]));
-        if (sol.length>3)
+        if (sol.length>3) {
             vbOutput.getChildren().add(Custom.setTitle("Z = " + sol[2]));
+        }
+        vbOutput.getChildren().add(Custom.setTitle("Rank = " + controller1.getRank()));
+
 
 
 
