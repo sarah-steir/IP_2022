@@ -73,65 +73,61 @@ public class Controller1 {
             double[] b = Model1.getMatrixB_2x2();
             double[] x = model.SLEsolve(A, b);
             boop = model.printRowEchelonForm(A,b);
+            String[] roundedX = this.round(x);
             String[] sol = new String[x.length];
             //no solutions
             if (x[2] == 0) {
                 for (int i = 0; i < x.length - 1; i++) {
-                    sol[i] = "No solution";
+                    sol[i] = " No solution";
                 }
                 rank = "0";
-                return sol;
             }
             //unique solution
             else if (x[2] == 1) {
                 for (int i = 0; i < x.length - 1; i++)
-                    sol[i] = " " + x[i];
+                    sol[i] = " " + roundedX[i];
 
                 rank = "" + b.length;
             }
             //if there is 1 free variable
                 else if (x[2] == 2){
-                    sol[0] = " " + x[0] + " + (" + x[1] + ")t";
+                    sol[0] = " " + roundedX[0] + " + (" + roundedX[1] + ")t";
                     sol[1] = " t";
                 rank = "1";
             }
-//            sol = this.round(x);
-            sol[sol.length - 1] = boop;
+            sol[sol.length-1] = boop;
             return sol;
         } else {
             double[][] A = Model1.getMatrixA_3x3();
             double[] b = Model1.getMatrixB_3x3();
             double[] x = model.SLEsolve(A, b);
-            boop = model.printRowEchelonForm(A,b);
+            String[] roundedX = this.round(x);
             String[] sol = new String[x.length];
 
             if (x[4] == 0) { // No Solution
                 for (int i = 0; i < x.length - 1; i++)
                     sol[i] = " No solution";
                 rank = "0";
-
-                return sol;
             } // 1 Solution
             else if (x[4] == 1){
                 for (int i = 0; i < x.length - 1; i++) {
-                    sol[i] = " " + x[i];
+                    sol[i] = " " + roundedX[i];
                 }
                 rank = ""+b.length;
                 } // 1 Free Variable
             else if (x[4] == 2) {
-                sol[0] = " " + x[0] + " + (" + x[1] + ")t";
-                sol[1] = " " + x[2] + " + (" + x[3] + ")t";
+                sol[0] = " " + roundedX[0] + " + (" + roundedX[1] + ")t";
+                sol[1] = " " + roundedX[2] + " + (" + roundedX[3] + ")t";
                 sol[2] = "t";
 
                 rank = "2";
             } else { // 2 Free Variables
-                sol[0] = " " + x[0] + " + (" + x[1] + ")s" + " + (" + x[2] + ")t";
+                sol[0] = " " + roundedX[0] + " + (" + roundedX[1] + ")s" + " + (" + roundedX[2] + ")t";
                 sol[1] = "s";
                 sol[2] = "t";
 
                 rank = "1";
             }
-//            sol = this.round(x);
             sol[sol.length - 1] = boop;
             return sol;
         }
