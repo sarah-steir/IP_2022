@@ -77,9 +77,10 @@ public class Controller1 {
             //no solutions
             if (x[2] == 0) {
                 for (int i = 0; i < x.length - 1; i++) {
-                    sol[i] = " No solution";
+                    sol[i] = "No solution";
                 }
                 rank = "0";
+                return sol;
             }
             //unique solution
             else if (x[2] == 1) {
@@ -94,7 +95,7 @@ public class Controller1 {
                     sol[1] = " t";
                 rank = "1";
             }
-            sol = this.round(x);
+//            sol = this.round(x);
             return sol;
         } else {
             double[][] A = Model1.getMatrixA_3x3();
@@ -106,6 +107,8 @@ public class Controller1 {
                 for (int i = 0; i < x.length - 1; i++)
                     sol[i] = " No solution";
                 rank = "0";
+
+                return sol;
             } // 1 Solution
             else if (x[4] == 1){
                 for (int i = 0; i < x.length - 1; i++) {
@@ -126,7 +129,7 @@ public class Controller1 {
 
                 rank = "1";
             }
-            sol = this.round(x);
+//            sol = this.round(x);
             sol[sol.length - 1] = boop;
             return sol;
         }
