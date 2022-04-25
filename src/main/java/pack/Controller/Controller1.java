@@ -8,6 +8,7 @@ import pack.View.Customs.CustomTextField;
 import pack.View.View1;
 
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -18,7 +19,6 @@ public class Controller1 {
     private ArrayList<Double> matrixCoefficients;
     private boolean is2by2;
     private Model1 model;
-    static final DecimalFormat formatting = new DecimalFormat("0.000");
 
     public Controller1(View1 view) {
         this.view = view;
@@ -26,6 +26,8 @@ public class Controller1 {
         fieldList = new ArrayList<>();
         matrixCoefficients = new ArrayList<>();
         transform();
+        DecimalFormat formatting = new DecimalFormat("0.000");
+        formatting.setRoundingMode(RoundingMode.CEILING);
     }
 
     // Include 2x2 as well later
