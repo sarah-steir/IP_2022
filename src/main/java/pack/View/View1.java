@@ -5,15 +5,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import pack.Controller.Controller1;
 import pack.Model.Model1;
 import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
 import java.util.ArrayList;
+
+import static pack.View.Customs.Custom.p;
 
 public class View1 extends Pane implements iView {
 
@@ -32,6 +32,8 @@ public class View1 extends Pane implements iView {
     private VBox vbLeft;
     private VBox vbRight;
 
+    private VBox vbBackground;
+
     public View1() {
         rb1 = new CustomRadioButton("2 x 2");
         rb2 = new CustomRadioButton("3 x 3");
@@ -49,6 +51,7 @@ public class View1 extends Pane implements iView {
         vbPo = new VBox();
         vbLeft = new VBox();
         vbRight = new VBox();
+        vbBackground = new VBox();
 
         setVbUi(setHbRadios(this.rb1, this.rb2));
         setVbPo("Systems of linear equations");
@@ -59,11 +62,6 @@ public class View1 extends Pane implements iView {
         setView1();
         setActions();
     }
-
-    public Graph getGraph() {
-        return this.graph;
-    }
-
 
     public void setView1() {
         this.setPrefSize(1050, 750);
@@ -87,11 +85,17 @@ public class View1 extends Pane implements iView {
     }
 
     private void setVbPo(String title) {
+        this.vbBackground.setPrefSize(500, 580);
+        BackgroundImage myBI= new BackgroundImage(new Image(p + "View2.png",520,580,false,true),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        this.vbBackground.setBackground(new Background(myBI));
+
         this.vbPo.setPrefSize(500, 595);
         this.vbPo.setSpacing(15);
         this.vbPo.setAlignment(Pos.TOP_CENTER);
         this.vbPo.setStyle("-fx-background-color: #333335");
-        this.vbPo.getChildren().add(Custom.setTitle(title));
+        this.vbPo.getChildren().addAll(Custom.setTitle(title), this.vbBackground);
     }
 
     public void setActions() {

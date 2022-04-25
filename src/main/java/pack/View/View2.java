@@ -558,7 +558,7 @@ public class View2 extends Pane implements iView {
 
     private void setVbPo(String title) {
         this.vbBackground.setPrefSize(500, 580);
-        BackgroundImage myBI= new BackgroundImage(new Image(p + "Clouds.png",520,580,false,true),
+        BackgroundImage myBI= new BackgroundImage(new Image(p + "View2.png",520,580,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         this.vbBackground.setBackground(new Background(myBI));
@@ -637,9 +637,9 @@ public class View2 extends Pane implements iView {
                 int finalI = i;
                 int finalJ = j;
 
-                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) ->
-                        btnStart.setDisable(textFields[finalI][finalJ].checkField()));
-
+                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) -> {
+                    btnStart.setDisable(textFields[finalI][finalJ].checkField());
+                });
                 gridPane.add(textFields[i][j], j, i);
             }
         }
@@ -688,7 +688,6 @@ public class View2 extends Pane implements iView {
 
     public void addOutput(Controller2 controller2) {
         this.vbBackground.getChildren().clear();
-        //setVbPo("Eigenvalues and eigenvectors");
         this.vbBackground.getChildren().add(showDaRight(controller2));
     }
 
