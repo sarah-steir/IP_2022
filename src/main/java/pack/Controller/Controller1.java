@@ -72,6 +72,8 @@ public class Controller1 {
             double[] x = model.SLEsolve(A, b);
             boop = model.printRowEchelonForm(A,b);
             String[] sol = new String[x.length];
+
+            //
             if (x[2] == 0) {
                 for (int i = 0; i < x.length - 1; i++) {
                     sol[i] = " No solution";
@@ -89,7 +91,7 @@ public class Controller1 {
                     sol[1] = " t";
                 rank = "1";
             }
-
+            sol[sol.length - 1] = boop;
             return sol;
         } else {
             double[][] A = Model1.getMatrixA_3x3();

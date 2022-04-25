@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import pack.Controller.Controller1;
 import pack.Controller.Controller3;
 import pack.Model.Model3;
 import pack.View.Customs.Custom;
@@ -135,15 +136,18 @@ public class View3 extends Pane implements iView {
             graph.addLine(  model3.linesPoints(1,0), model3.linesPoints(1,2),model3.dirVector(1));
             //Second line
             graph.addLine(model3.linesPoints(2,0),model3.linesPoints(2,2),model3.dirVector(2));
+            Controller3 controller = new Controller3(this);
+            addOutput(controller);
         }
 
+        // for rb2
         else {
             for (int i = 0; i < fieldListRb2.length; i++) {
                 for (int j = 0; j < fieldListRb2[0].length; j++) {
                     if (fieldListRb2[i][j].getText().equals("")) {
                         fieldListRb2[i][j].setText("0");}}}
 
-            Model3 c3=new Model3();
+            Model3 c3 = new Model3();
             c3.transform(getFieldListRb2());
             c3.crossProduct(c3.n1,c3.n2);
             c3.solutionPoints(5);
@@ -154,7 +158,17 @@ public class View3 extends Pane implements iView {
           /*  Label l= new Label("Direction vector: <"+c3.crossProduct()[0]+", "+c3.crossProduct()[1]+", "+c3.crossProduct()[2]+">");
             this.vbPo.getChildren().clear();
             this.vbPo.getChildren().add(l);*/
-            Controller3 controller3 = new Controller3(this);}}
+            Controller3 controller3 = new Controller3(this);
+            addOutput(controller3);
+        }}
+
+    public void addOutput(Controller3 controller) {
+        this.backgroundPane.getChildren().clear();
+
+
+        // Hbox bla bla
+        this.backgroundPane.getChildren().addAll();
+    }
 
     public void handleReset() {
         this.graph.reset();
