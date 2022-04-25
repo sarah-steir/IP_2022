@@ -96,6 +96,7 @@ public class Controller1 {
                 rank = "1";
             }
 //            sol = this.round(x);
+            sol[sol.length - 1] = boop;
             return sol;
         } else {
             double[][] A = Model1.getMatrixA_3x3();

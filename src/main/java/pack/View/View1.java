@@ -120,26 +120,29 @@ public class View1 extends Pane implements iView {
 
     // doesn't set text in text field to 0, also only works for rb1?
     public void handleStart(boolean isRb1Selected) {
-        if (isRb1Selected) {
-            for (int i = 0; i < Model1.getN(); i++) {
-                System.out.println(Model1.getN() + "what thwe fuck");
-                for (int j = 0; j < fieldListRb1[0].length; j++) {
-                    if (fieldListRb1[i][j].getText().equals("")) {
-                        fieldListRb1[i][j].setText("0");
-                    }
-                    //   System.out.println("YO: " + fieldListRb1[i][j].getText());
-                }
-            }
-        } else {
-            for (int i = 0; i < fieldListRb2.length; i++) {
-                for (int j = 0; j < fieldListRb2[0].length; j++) {
-                    if (fieldListRb2[i][j].getText().equals("")) {
-                        fieldListRb2[i][j].setText("0");
-                    }
-                    //   System.out.println("YO FROM 3x3: " + fieldListRb2[i][j].getText());
-                }
-            }
-        }
+
+        // Tayba is commenting this out because it makes the program crash sometimes so yea:// i'll fix it
+        // TODO fix pls
+//        if (isRb1Selected) {
+//            for (int i = 0; i < Model1.getN(); i++) {
+//                System.out.println(Model1.getN() + "what thwe fuck");
+//                for (int j = 0; j < fieldListRb1[0].length; j++) {
+//                    if (fieldListRb1[i][j].getText().equals("")) {
+//                        fieldListRb1[i][j].setText("0");
+//                    }
+//                    //   System.out.println("YO: " + fieldListRb1[i][j].getText());
+//                }
+//            }
+//        } else {
+//            for (int i = 0; i < fieldListRb2.length; i++) {
+//                for (int j = 0; j < fieldListRb2[0].length; j++) {
+//                    if (fieldListRb2[i][j].getText().equals("")) {
+//                        fieldListRb2[i][j].setText("0");
+//                    }
+//                    //   System.out.println("YO FROM 3x3: " + fieldListRb2[i][j].getText());
+//                }
+//            }
+//        }
         Controller1 controller = new Controller1(this);
         addOutput(controller);
     }
@@ -176,7 +179,7 @@ public class View1 extends Pane implements iView {
             CustomText textZ = new CustomText("Z = " + sol[2]);
             textZ.changeSize(20);
             vbSolutions.getChildren().add(textZ);
-            vbSolutions.setLayoutY(430);
+            vbSolutions.setLayoutY(410);
         }
 
         HBox hbReducedMatrix = new HBox();
