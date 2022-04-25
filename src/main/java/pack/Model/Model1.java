@@ -1,6 +1,8 @@
 package pack.Model;
 
 import javafx.geometry.Point3D;
+
+import javax.print.DocFlavor;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -12,7 +14,7 @@ public class Model1 {
     double b1, b2, b3; // Row 2
     double c1, c2, c3; // Row 3
     double d1, d2, d3; // Last Column
-    int n;
+    public static int n;
 
 //Ax=B
 
@@ -28,9 +30,14 @@ public class Model1 {
     //B matrix storage
     public static double[] matrixB_3x3 = {1, 1, 1};
 
+    public static int getN() {
+        return n;
+    }
+
     //Storing A matrix variables
     public Model1(ArrayList<Double> matrixOfCoefficients, boolean is2by2) {
         if (is2by2) {
+            System.out.println("what the fuck is goin on ");
             n =2;
             // A matrix for 2x2
             //Row 1
@@ -140,51 +147,304 @@ public class Model1 {
 // SLE SOLVER
 
     // Gaussian elimination with partial pivoting
-    public double[] SLESolve(double[][] A, double[] b) {
-        n = b.length;
+    public double[] SLEsolve(double[][] A, double[] b) {
+        int n = b.length; // Matrix dimension
 
+        // Eliminate non-zero elements below the diagonal
         for (int p = 0; p < n; p++) {
+            int i;
 
-            // find pivot row and swap
-            int max = p;
-            for (int i = p + 1; i < n; i++) {
-                if (Math.abs(A[i][p]) > Math.abs(A[max][p])) {
-                    max = i;
-                }
-            }
-            double[] temp = A[p];
-            A[p] = A[max];
-            A[max] = temp;
-            double t = b[p];
-            b[p] = b[max];
-            b[max] = t;
+            // find pivot row
+            i = FindPivot(A,p,n);
 
-            // singular or almost singular
-            if (Math.abs(A[p][p]) <= EPSILON) {
-                System.out.println("Matrix is singular or super close to being singular, try again :) ");
-            }
+            // If pivot row is not current row, swap
+            if (i != p)
+                SwapRow(A,b,p,i,n);
 
-            // pivot within A and b
-            for (int i = p + 1; i < n; i++) {
-                double alpha = A[i][p] / A[p][p];
-                b[i] -= alpha * b[p];
-                for (int j = p; j < n; j++) {
-                    A[i][j] -= alpha * A[p][j];
-                }
+            // Now normalize if needed
+            //param p, A, B
+            NormRow(A,b,p,n);
+
+
+            // Now zero out rows below
+            LowerTri(A,b,p,n);
+
+        }
+        // Normalize last row
+        // Avoid divide by zero
+        NormRow(A,b,n-1,n);
+
+
+        // printMat(A,b,n);
+
+        // Now eliminate off-diagonal elements above the diagonal
+        // Start at bottom row and work way up
+        UpperTri(A,b,n);
+
+
+        /** Print row echelon form **/
+        printRowEchelonForm(A, b);
+
+
+        //here should be the place we check for da free variablesssss getting the rank is the step numero uno, toda raba the internettttt
+        int checkSol = 0;
+        int freeVar[] = new int[n];
+        for (int i = 0; i < n; i++) {
+
+            int j = checkRow(A, b, i);
+            System.out.println(j + "checkRow (what kind of sol)");
+
+            if (j == 1) {
+                freeVar[i] = 1;
+            } else {
+                freeVar[i] = 0;
             }
+            checkSol += j;
         }
 
-        // back substitution
-        double[] x = new double[n];
-        for (int i = n - 1; i >= 0; i--) {
-            double sum = 0.0;
-            for (int j = i + 1; j < n; j++) {
-                sum += A[i][j] * x[j];
-            }
-            x[i] = (b[i] - sum) / A[i][i];
+        //check for solutions + free variables
+        int ns = n;
+        if (n==2)
+            ns = n + 1;
+        else
+            ns = n+ 2;
+        double[] solution = new double[ns];
+
+        if (checkSol < 0) {
+            //System.out.println("No, no solutions...");
+            for (int i = ns - 1; i >= 0; i--)
+                solution[i] = 0.0;
+           // return solution;
         }
-        return x;
+        if (checkSol == 0) {
+            /** back substitution **/
+
+            for (int i = n - 1; i >= 0; i--) {
+                double sum = 0.0;
+                for (int j = i + 1; j < n; j++)
+                    sum += A[i][j] * solution[j];
+                solution[i] = (b[i] - sum) / A[i][i];
+            }
+            if (n==2)
+                solution[n]=1;
+            else {
+                solution[n] = 1;
+                solution[n + 1] = 1;
+            }
+            /** Print solution **/
+            printSolution(solution);
+
+           // return solution;
+
+        }
+        if (checkSol > 0) {
+            int sum = 0;
+            // for index less than size of the size of matrix
+            for (int i = 0; i < n; i++)
+                //adding up number of free variables(check meth freeVar)
+                sum += freeVar[i];
+
+
+            //if the size is 2 and there is 1 free variable
+            if (n == 2) { //this is for 2x2
+                //the first element in the solution is just whatever was found for x
+                solution[0] = b[0];
+                //second element is the coefficient of the free variable and is brought to the other side of the equation hence the negative
+                solution[1] = -A[0][1];
+                //third element is just a placeholder to show that there is in fact a free variable in the solution, other than that it doesnt do much
+                solution[2] = sum + 1;
+            } else { //this is just for 3x3
+                //showing that the first element in the the solution is just the first element of the b-matrix
+                solution[0] = b[0];
+                //if there is one free varaible
+                if (sum == 1) {
+                    //second element in the solution is the coefficient for the free varaible for the 1st row(x1)
+                    solution[1] = -A[0][2];
+                    //the second element in the b-matrix is the first part of the y-comp because there 1 free variable
+                    solution[2] = b[1];
+                    //second coefficient for free variable(for the y-comp)
+                    solution[3] = -A[1][2];
+                } else {//if tehre are 2 free variables
+                    //both sol1 and sol2 are coefficients for
+                    solution[1] = -A[0][1];
+                    solution[2] = -A[0][2];
+                }
+                //just to add a space so that there will be the proper length to store all teh variables
+                solution[4] = sum + 1;
+            }
+            //just a little PSA if you felt like reading through all of this and
+            // still dont really get it and you really want to understand for some reason. you can ask me but the
+            // chances i remember are low. this should be pretty self explanatory tho
+        }
+        return solution;
+
+
     }
+
+
+
+// FUNCTIONS USED FOR SOLVE
+
+    //CHECKROW
+    public static int checkRow(double A[][], double B[], int row) {
+        int N = A.length;
+        int testA = 0;
+        int testB = 0;
+
+        //checking A and b are or arent 0
+        for (int i = 0; i < N; i++) {
+            if (A[row][i] != 0) {
+                testA += 1;
+            }
+            if (B[row] != 0) {
+                testB += 1;
+            }
+        }
+        int plsWork;
+        if (testA == 0) {
+            if (testB != 0) {
+                plsWork = -20;
+                //no solutions
+            } else {
+                //FREE VARIABLE(s) EXISTS
+                plsWork = 1; // number of free variables?
+            }
+        } else {
+            //unique solution exits
+            plsWork = 0;
+        }
+        return plsWork;
+    }
+
+    // PIVOT rows
+    //@param a
+    public int FindPivot(double A[][], int col, int n) {
+        int max = col;
+        for (int i = col + 1; i < n; i++) {
+            if (Math.abs(A[i][col]) > Math.abs(A[max][col])) {
+                max = i; // row index with max value
+            }
+        }
+        return max;
+    }
+
+    //S-WAP
+    public static void SwapRow(double A[][],double b[], int row1, int row2, int n) {
+        double temp = 0;
+        for (int i = 0; i < n; i++) {
+            temp = A[row1][i];
+            A[row1][i] = A[row2][i];
+            A[row2][i] = temp;
+        }
+        temp = b[row1];
+        b[row1] = b[row2];
+        b[row2] = temp;
+    }
+
+
+
+    //NORMALIZE
+    public static void NormRow(double A[][], double b[], int row, int n){
+        double maxv = A[row][row];
+        if (maxv != 0) {
+            for (int i = 0; i < n; i++)
+                A[row][i] = A[row][i] / maxv;
+            b[row] = b[row] / maxv;
+        }
+
+    }
+
+    // lower triangular stoof
+    public static void LowerTri(double A[][], double b[], int col, int n){
+        int row = col;
+        double factor = A[col][col];
+        double alpha = 0.0;
+        if (factor != 0)
+            for (int i = row + 1; i < n; i++) {
+                alpha = A[i][col] / factor;
+                // Recalculate augmented portion;
+                b[i] -= alpha * b[col];
+                // Reduce coefficients
+                for (int j = 0; j < n; j++)
+                    A[i][j] -= alpha * A[row][j];
+            }
+
+    }
+
+
+
+    //Normalize last row + Avoid dividing by 0
+    public static void NormLastR(double A[][], double b[], int n){
+        if (A[n-1][n-1] != 0){
+            for(int j=0;j<n;j++)
+                A[n-1][j] = A[n-1][j] / A[n-1][n-1];
+            b[n-1] = b[n-1] / A[n-1][n-1];
+
+        }
+    }
+
+    //upper trangular elim stoof
+    public static void UpperTri(double A[][], double b[], int n){
+        for (int p = n-1; p >= 0; p--) {
+            // Now zero out rows below
+            for (int i = p-1; i >=0; i--) {
+                // Avoid divide by zero and multiplying by zero
+                if(A[i][p] != 0 && A[p][p] != 0) {
+                    double alpha = A[i][p] / A[p][p];
+                    // Recalculate augmented portion;
+                    b[i] -= alpha * b[p];
+
+                    // Reduce coefficients
+                    for (int j = 0; j < n; j++) {
+                        A[i][j] -= alpha * A[p][j];
+                    }
+
+                }
+            }
+        }
+    }
+
+
+
+    //  THIS WILL BE USED IN THE UI INSTEAD OF PRINTING IT IT WILL RETURN IT AS A STRING ON A LOOP AND BE ADDED EITHER IN THE VIEW OR CALLED IN VIEW FROM MODEL
+
+    /**
+     * function to print in row echleon form
+     **/
+    public void printRowEchelonForm(double[][] A, double[] B) {
+        int N = B.length;
+        System.out.println("\nRow Echelon form : ");
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++)
+                System.out.printf("%.3f ", A[i][j]);
+            System.out.printf("| %.3f\n", B[i]);
+        }
+        System.out.println();
+    }
+
+
+    /**
+     * function to print solution
+     **/
+    public void printSolution(double[] sol) {
+        int N = sol.length;
+        System.out.println("\nSolution : ");
+        for (int i = 0; i < N; i++)
+            System.out.printf("%.3f ", sol[i]);
+        System.out.println();
+    }
+
+    void printMat(double A[][], double b[], int n) {
+        for (int q = 0; q < n; q++) {
+            System.out.print("[");
+            for (int s = 0; s < n; s++)
+                System.out.print(A[q][s] + " ");
+            System.out.print(" | ");
+            System.out.println(b[q] + " ]");
+            System.out.println("");
+        }
+    }
+
 
 //
 //    public Point3D solutionPoints(int i) {
