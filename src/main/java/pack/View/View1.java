@@ -182,11 +182,6 @@ public class View1 extends Pane implements iView {
 
         HBox hbReducedMatrix = new HBox();
         hbReducedMatrix.getChildren().add(Custom.setTitle(sol[sol.length-1]));
-        hbReducedMatrix.setLayoutX(200);
-        hbReducedMatrix.setLayoutY(200);
-        hbReducedMatrix.setStyle("-fx-border-width: 2px;\n" +
-                "    -fx-border-color: red;\n" +
-                "    -fx-border-insets: -2px;");
 
         HBox hbRank = new HBox();
         CustomText rankText = new CustomText(controller.getRank());

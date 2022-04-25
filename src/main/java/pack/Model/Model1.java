@@ -411,15 +411,18 @@ public class Model1 {
     /**
      * function to print in row echleon form
      **/
-    public void printRowEchelonForm(double[][] A, double[] B) {
+    public String printRowEchelonForm(double[][] A, double[] B) {
+        String str = new String();
         int N = B.length;
         System.out.println("\nRow Echelon form : ");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++)
-                System.out.printf("%.3f ", A[i][j]);
-            System.out.printf("| %.3f\n", B[i]);
+                str += A[i][j] + " ";
+            str +=  "|" + B[i] + "\n";
         }
-        System.out.println();
+        str += "\n";
+        System.out.println(str);
+        return str;
     }
 
 
@@ -434,19 +437,19 @@ public class Model1 {
         System.out.println();
     }
 
-    public StringBuilder printMat(double A[][], double b[], int n) {
-        StringBuilder str = new StringBuilder();
-        for (int q = 0; q < n; q++) {
-            str.append("[");
-            for (int s = 0; s < n; s++) {
-                str.append(A[q][s] + " ");
-            }
-            str.append(" | ");
-            str.append(b[q] + " ]");
-            str.append("");
-        }
-        return str;
-    }
+//    public StringBuilder printMat(double A[][], double b[], int n) {
+//        StringBuilder str = new StringBuilder();
+//        for (int q = 0; q < n; q++) {
+//            str.append("[");
+//            for (int s = 0; s < n; s++) {
+//                str.append(A[q][s] + " ");
+//            }
+//            str.append(" | ");
+//            str.append(b[q] + " ]");
+//            str.append("");
+//        }
+//        return str;
+//    }
 
 
 //

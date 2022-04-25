@@ -63,14 +63,14 @@ public class Controller1 {
 
 
     String rank;
-    StringBuilder boop;
+    String boop;
     public String[] getOutput() {
         model = new Model1(this.matrixCoefficients, is2by2);
         if (is2by2) {
             double[][] A = Model1.getMatrixA_2x2();
             double[] b = Model1.getMatrixB_2x2();
             double[] x = model.SLEsolve(A, b);
-            boop = model.printMat(A,b,b.length);
+            boop = model.printRowEchelonForm(A,b);
             String[] sol = new String[x.length];
             if (x[2] == 0) {
                 for (int i = 0; i < x.length - 1; i++) {
@@ -120,7 +120,7 @@ public class Controller1 {
 
                 rank = "1";
             }
-            sol[sol.length - 1] = boop + "";
+            sol[sol.length - 1] = boop;
             return sol;
         }
     }

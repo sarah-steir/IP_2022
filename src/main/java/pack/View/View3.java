@@ -3,10 +3,8 @@ package pack.View;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import pack.Controller.Controller3;
 import pack.Model.Model3;
 import pack.View.Customs.Custom;
@@ -16,6 +14,8 @@ import pack.View.Customs.CustomTextField;
 import pack.View.GraphView.Graph;
 
 import java.util.ArrayList;
+
+import static pack.View.Customs.Custom.p;
 
 public class View3 extends Pane implements iView {
 
@@ -33,6 +33,8 @@ public class View3 extends Pane implements iView {
 
     private VBox vbLeft;
     private VBox vbRight;
+
+    private Pane backgroundPane;
 
     public View3() {
 
@@ -53,8 +55,10 @@ public class View3 extends Pane implements iView {
         vbLeft = new VBox();
         vbRight = new VBox();
 
+        this.backgroundPane = new Pane();
+
         setVbUi(setHbRadios(this.rb1, this.rb2));
-        setVbPo("Planes and lines ");
+        setVbPo("Planes and lines");
 
         setVbLeft(setLeft(this.vbUi, setGraphPane(graph)));
         setVbRight(setRight(this.vbPo, setHbBottom(this.btnStart, this.btnReset)));
@@ -85,11 +89,16 @@ public class View3 extends Pane implements iView {
     }
 
     private void setVbPo(String title) {
+        this.backgroundPane.setPrefSize(500, 580);
+        BackgroundImage myBI= new BackgroundImage(new Image(p + "View3.png",520,580,false,true),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        this.backgroundPane.setBackground(new Background(myBI));
         this.vbPo.setPrefSize(500, 595);
         this.vbPo.setSpacing(15);
         this.vbPo.setAlignment(Pos.TOP_CENTER);
         this.vbPo.setStyle("-fx-background-color: #333335");
-        this.vbPo.getChildren().add(Custom.setTitle(title));
+        this.vbPo.getChildren().addAll(Custom.setTitle(title), this.backgroundPane);
 
     }
 
