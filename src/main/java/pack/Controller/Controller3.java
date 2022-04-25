@@ -1,6 +1,5 @@
 package pack.Controller;
 
-import pack.Model.Model3;
 import pack.View.Customs.CustomTextField;
 import pack.View.View3;
 
@@ -13,6 +12,7 @@ public class Controller3 {
     public Controller3(View3 view) {
         this.view = view;
     }
+
 
     private ArrayList<CustomTextField> fieldList;
     private ArrayList<Double> matrixCoefficients;
@@ -52,15 +52,4 @@ public class Controller3 {
 
     }
 
-    public void printOutput() {
-
-        //Model3 model3 = new Model3(this.matrixCoefficients);
-
-            double [][]A = Model3.getMatrixA_2x2();
-            double[] b = Model3.getMatrixB_2x2();
-           // double[] x = model3.SLESolve(A, b);
-
-            //System.out.println("X = "+ x[0]);
-           // System.out.println("Y = "+ x[1]);
-    }
 }

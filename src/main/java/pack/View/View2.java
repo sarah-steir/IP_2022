@@ -76,25 +76,22 @@ public class View2 extends Pane implements iView {
        JASONDERULO = new ModelForJSON();
 
        names = getThemNames();
-        JSONArray list = (JSONArray) names.get("names");
-        Iterator<JSONObject> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            cb.getItems().add(String.valueOf(iterator.next()));
-        }
+        UpdateLeCombobox();
         cb.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
+            jsonObject = getThatObject();
+            if(cb.getValue()!= "Saved Matrices"){
             setMatrix(YesImAGummyBear((JSONArray) jsonObject.get(cb.getValue())));
-            JSONArray list1 = (JSONArray) names.get("names");
-            Iterator<JSONObject> iterator1 = list1.iterator();
-            while (iterator.hasNext()) {
-                cb.getItems().add(String.valueOf(iterator1.next()));
             }
         });
+
         btnSave.setOnAction(event -> {
             //Call a method to determine which item in the list the user has selected
             DaVoid(); //Send the selected item to the method
+            cb.getSelectionModel().selectFirst();
 
         });
+
         fieldListRb1 = new CustomTextField[2][2];
         fieldListRb2 = new CustomTextField[3][3];
         fieldsPane = new HBox();
@@ -123,13 +120,25 @@ public class View2 extends Pane implements iView {
 ////            cb.getItems().add(stuff.get(i));
 ////        }
 
-        cb.setPromptText("Saved Matrices");
+
     }
-    private ArrayList<Integer> YesImAGummyBear(JSONArray js){
+    private void UpdateLeCombobox(){
+
+        cb.setValue(null);
+        cb.getItems().clear();
+        cb.getItems().add("Saved Matrices");
+        JSONArray list = (JSONArray) names.get("names");
+        Iterator<JSONObject> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            cb.getItems().add(String.valueOf(iterator.next()));
+        }
+        cb.getSelectionModel().selectFirst();
+    }
+    private ArrayList<Double> YesImAGummyBear(JSONArray js){
 
 
         ArrayList<String> objs = new ArrayList<>();
-        ArrayList<Integer> ints = new ArrayList<>();
+        ArrayList<Double> ints = new ArrayList<>();
         //JSONArray js = (JSONArray) jsonObject.get("diagonal");
         JSONArray list = js;
         Iterator<JSONObject> iterator = js.iterator();
@@ -138,16 +147,16 @@ public class View2 extends Pane implements iView {
         }
 
         for(int i = 0; i< objs.size();i++){
-            ints.add(Integer.valueOf(objs.get(i)));
+            ints.add(Double.valueOf(objs.get(i)));
         }
         System.out.println("AHGDHEDWDMWDD");
-        for (Integer str : ints)
+        for (Double str : ints)
         {
             System.out.println(str);
         }
         return ints;
     }
-    private void setMatrix(ArrayList<Integer> ints){
+    private void setMatrix(ArrayList<Double> ints){
         a1 = ints.get(0);
         a2 = ints.get(1);
         a3 = ints.get(2);
@@ -230,12 +239,14 @@ public class View2 extends Pane implements iView {
                     humptyDumptyFellOffAWall(ctf.getText());
                     payne.getChildren().remove(txt);
                     newWindow.close();
+
                 }
             } catch (NullPointerException e) {
                 System.out.println("THIS AINT GOOD");
 
             }
-            System.out.println("3jhuyruefhbwkmef");
+
+
         });
 
         return payne;
@@ -260,12 +271,17 @@ public class View2 extends Pane implements iView {
             }
         }
         jsonObject.put(name, newMatrix);
-        names.put(names,name);
+        JSONArray getNames = (JSONArray) names.get("names");
+        getNames.add(name);
+        System.out.println(jsonObject.get("null"));
+        System.out.println(jsonObject.get(names));
+        System.out.println(names.get("name"));
+        names.put("names", getNames);
 
         try {
             // Constructs a FileWriter given a file name, using the platform's default charset
             file = new FileWriter("Resources/JsonFile.json");
-            file.write(ModelForJSON.getMatrix().toJSONString());
+            file.write(jsonObject.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -280,7 +296,7 @@ public class View2 extends Pane implements iView {
             try {
                 // Constructs a FileWriter given a file name, using the platform's default charset
                 file = new FileWriter("Resources/JsonNames.json");
-                file.write(ModelForJSON.getNames().toJSONString());
+                file.write(names.toJSONString());
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -292,57 +308,58 @@ public class View2 extends Pane implements iView {
                 }
 
         }
+            names=getThemNames();
+            UpdateLeCombobox();
+       // cb.setPromptText("PEP");
     }
-    private ArrayList<Integer> humptyDumptyCameBackToLife () {
-        JSONParser parser = new JSONParser();
-
-        Object obj = null;
-        try {
-            obj = parser.parse(new FileReader("Resources/JsonFile.json"));
-            this.jsonObject = (JSONObject) obj;
-
-
-            try {
-                this.other = ModelForJSON.makeTheArrayList((JSONArray) jsonObject.get(this.getCb().getValue()));
-                a1 = getOther().get(0);
-                a2 = getOther().get(1);
-                a3 = getOther().get(2);
-                b1 = getOther().get(3);
-                b2 = getOther().get(4);
-                b3 = getOther().get(5);
-                c1 = getOther().get(6);
-                c2 = getOther().get(7);
-                c3 = getOther().get(8);
-                if (rb1.isSelected()) {
-                    fieldListRb1[0][0].setText(String.valueOf(a1));
-                    fieldListRb1[0][1].setText(String.valueOf(a2));
-                    fieldListRb1[1][0].setText(String.valueOf(b1));
-                    fieldListRb1[1][1].setText(String.valueOf(b2));
-                }
-                if (rb2.isSelected()) {
-                    fieldListRb2[0][0].setText(String.valueOf(a1));
-                    fieldListRb2[0][1].setText(String.valueOf(a2));
-                    fieldListRb2[0][2].setText(String.valueOf(a3));
-                    fieldListRb2[1][0].setText(String.valueOf(b1));
-                    fieldListRb2[1][1].setText(String.valueOf(b2));
-                    fieldListRb2[1][2].setText(String.valueOf(b3));
-                    fieldListRb2[2][0].setText(String.valueOf(c1));
-                    fieldListRb2[2][1].setText(String.valueOf(c2));
-                    fieldListRb2[2][2].setText(String.valueOf(c3));
-                }
-            }catch(Exception e){
-                e.printStackTrace();
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return other;
-    }
-
-
+//    private ArrayList<Integer> humptyDumptyCameBackToLife () {
+//        JSONParser parser = new JSONParser();
+//
+//        Object obj = null;
+//        try {
+//            obj = parser.parse(new FileReader("Resources/JsonFile.json"));
+//            this.jsonObject = (JSONObject) obj;
+//
+//
+//            try {
+//                this.other = ModelForJSON.makeTheArrayList((JSONArray) jsonObject.get(this.getCb().getValue()));
+//                a1 = getOther().get(0);
+//                a2 = getOther().get(1);
+//                a3 = getOther().get(2);
+//                b1 = getOther().get(3);
+//                b2 = getOther().get(4);
+//                b3 = getOther().get(5);
+//                c1 = getOther().get(6);
+//                c2 = getOther().get(7);
+//                c3 = getOther().get(8);
+//                if (rb1.isSelected()) {
+//                    fieldListRb1[0][0].setText(String.valueOf(a1));
+//                    fieldListRb1[0][1].setText(String.valueOf(a2));
+//                    fieldListRb1[1][0].setText(String.valueOf(b1));
+//                    fieldListRb1[1][1].setText(String.valueOf(b2));
+//                }
+//                if (rb2.isSelected()) {
+//                    fieldListRb2[0][0].setText(String.valueOf(a1));
+//                    fieldListRb2[0][1].setText(String.valueOf(a2));
+//                    fieldListRb2[0][2].setText(String.valueOf(a3));
+//                    fieldListRb2[1][0].setText(String.valueOf(b1));
+//                    fieldListRb2[1][1].setText(String.valueOf(b2));
+//                    fieldListRb2[1][2].setText(String.valueOf(b3));
+//                    fieldListRb2[2][0].setText(String.valueOf(c1));
+//                    fieldListRb2[2][1].setText(String.valueOf(c2));
+//                    fieldListRb2[2][2].setText(String.valueOf(c3));
+//                }
+//            }catch(Exception e){
+//                e.printStackTrace();
+//
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return other;
+//    }
     private JSONObject getThemNames(){
         JSONParser parser = new JSONParser();
 
@@ -695,111 +712,98 @@ public class View2 extends Pane implements iView {
         return fieldList;
     }
 
-    private void doAction(String listItem) {
-        System.out.println("pepepepe");
-        switch (listItem) {
-            case "Lower Triangle":
-                a1 = ModelForJSON.getLowerTriangle().get(0);
-                a2 = ModelForJSON.getLowerTriangle().get(1);
-                a3 = ModelForJSON.getLowerTriangle().get(2);
-                b1 = ModelForJSON.getLowerTriangle().get(3);
-                b2 = ModelForJSON.getLowerTriangle().get(4);
-                b3 = ModelForJSON.getLowerTriangle().get(5);
-                c1 = ModelForJSON.getLowerTriangle().get(6);
-                c2 = ModelForJSON.getLowerTriangle().get(7);
-                c3 = ModelForJSON.getLowerTriangle().get(8);
-
-                //Action for this item
-                break;
-            case "Upper Triangle":
-                a1 = ModelForJSON.getUpperTriangle().get(0);
-                a2 = ModelForJSON.getUpperTriangle().get(1);
-                a3 = ModelForJSON.getUpperTriangle().get(2);
-                b1 = ModelForJSON.getUpperTriangle().get(3);
-                b2 = ModelForJSON.getUpperTriangle().get(4);
-                b3 = ModelForJSON.getUpperTriangle().get(5);
-                c1 = ModelForJSON.getUpperTriangle().get(6);
-                c2 = ModelForJSON.getUpperTriangle().get(7);
-                c3 = ModelForJSON.getUpperTriangle().get(8);
-                break;
-            case "Diagonal":
-                a1 = ModelForJSON.getDiagonal().get(0);
-                a2 = ModelForJSON.getDiagonal().get(1);
-                a3 = ModelForJSON.getDiagonal().get(2);
-                b1 = ModelForJSON.getDiagonal().get(3);
-                b2 = ModelForJSON.getDiagonal().get(4);
-                b3 = ModelForJSON.getDiagonal().get(5);
-                c1 = ModelForJSON.getDiagonal().get(6);
-                c2 = ModelForJSON.getDiagonal().get(7);
-                c3 = ModelForJSON.getDiagonal().get(8);
-                break;
-            case "identity":
-                a1 = ModelForJSON.getIdentity().get(0);
-                a2 = ModelForJSON.getIdentity().get(1);
-                a3 = ModelForJSON.getIdentity().get(2);
-                b1 = ModelForJSON.getIdentity().get(3);
-                b2 = ModelForJSON.getIdentity().get(4);
-                b3 = ModelForJSON.getIdentity().get(5);
-                c1 = ModelForJSON.getIdentity().get(6);
-                c2 = ModelForJSON.getIdentity().get(7);
-                c3 = ModelForJSON.getIdentity().get(8);
-                break;
-            case "Null":
-                a1 = ModelForJSON.getNul().get(0);
-                a2 = ModelForJSON.getNul().get(1);
-                a3 = ModelForJSON.getNul().get(2);
-                b1 = ModelForJSON.getNul().get(3);
-                b2 = ModelForJSON.getNul().get(4);
-                b3 = ModelForJSON.getNul().get(5);
-                c1 = ModelForJSON.getNul().get(6);
-                c2 = ModelForJSON.getNul().get(7);
-                c3 = ModelForJSON.getNul().get(8);
-                break;
-            case "Symmetric":
-                a1 = ModelForJSON.getSymmetric().get(0);
-                a2 = ModelForJSON.getSymmetric().get(1);
-                a3 = ModelForJSON.getSymmetric().get(2);
-                b1 = ModelForJSON.getSymmetric().get(3);
-                b2 = ModelForJSON.getSymmetric().get(4);
-                b3 = ModelForJSON.getSymmetric().get(5);
-                c1 = ModelForJSON.getSymmetric().get(6);
-                c2 = ModelForJSON.getSymmetric().get(7);
-                c3 = ModelForJSON.getSymmetric().get(8);
-                break;
-            default: //Default action
-                break;
-        }
-        if (rb1.isSelected()) {
-            fieldListRb1[0][0].setText(String.valueOf(a1));
-            fieldListRb1[0][1].setText(String.valueOf(a2));
-            fieldListRb1[1][0].setText(String.valueOf(b1));
-            fieldListRb1[1][1].setText(String.valueOf(b2));
-        }
-        if (rb2.isSelected()) {
-            fieldListRb2[0][0].setText(String.valueOf(a1));
-            fieldListRb2[0][1].setText(String.valueOf(a2));
-            fieldListRb2[0][2].setText(String.valueOf(a3));
-            fieldListRb2[1][0].setText(String.valueOf(b1));
-            fieldListRb2[1][1].setText(String.valueOf(b2));
-            fieldListRb2[1][2].setText(String.valueOf(b3));
-            fieldListRb2[2][0].setText(String.valueOf(c1));
-            fieldListRb2[2][1].setText(String.valueOf(c2));
-            fieldListRb2[2][2].setText(String.valueOf(c3));
-        }
-    } //DONE DONE DONE
-
-
-    public void setFieldListRb1(CustomTextField[][] fieldListRb1) {
-        this.fieldListRb1 = fieldListRb1;
-    }
-
-    public void setFieldListRb2(CustomTextField[][] fieldListRb2) {
-        this.fieldListRb2 = fieldListRb2;
-    }
-
-    public void setRb1(CustomRadioButton rb1) {
-        this.rb1 = rb1;
-    }
+//    private void doAction(String listItem) {
+//        System.out.println("pepepepe");
+//        switch (listItem) {
+//            case "Lower Triangle":
+//                a1 = ModelForJSON.getLowerTriangle().get(0);
+//                a2 = ModelForJSON.getLowerTriangle().get(1);
+//                a3 = ModelForJSON.getLowerTriangle().get(2);
+//                b1 = ModelForJSON.getLowerTriangle().get(3);
+//                b2 = ModelForJSON.getLowerTriangle().get(4);
+//                b3 = ModelForJSON.getLowerTriangle().get(5);
+//                c1 = ModelForJSON.getLowerTriangle().get(6);
+//                c2 = ModelForJSON.getLowerTriangle().get(7);
+//                c3 = ModelForJSON.getLowerTriangle().get(8);
+//
+//                //Action for this item
+//                break;
+//            case "Upper Triangle":
+//                a1 = ModelForJSON.getUpperTriangle().get(0);
+//                a2 = ModelForJSON.getUpperTriangle().get(1);
+//                a3 = ModelForJSON.getUpperTriangle().get(2);
+//                b1 = ModelForJSON.getUpperTriangle().get(3);
+//                b2 = ModelForJSON.getUpperTriangle().get(4);
+//                b3 = ModelForJSON.getUpperTriangle().get(5);
+//                c1 = ModelForJSON.getUpperTriangle().get(6);
+//                c2 = ModelForJSON.getUpperTriangle().get(7);
+//                c3 = ModelForJSON.getUpperTriangle().get(8);
+//                break;
+//            case "Diagonal":
+//                a1 = ModelForJSON.getDiagonal().get(0);
+//                a2 = ModelForJSON.getDiagonal().get(1);
+//                a3 = ModelForJSON.getDiagonal().get(2);
+//                b1 = ModelForJSON.getDiagonal().get(3);
+//                b2 = ModelForJSON.getDiagonal().get(4);
+//                b3 = ModelForJSON.getDiagonal().get(5);
+//                c1 = ModelForJSON.getDiagonal().get(6);
+//                c2 = ModelForJSON.getDiagonal().get(7);
+//                c3 = ModelForJSON.getDiagonal().get(8);
+//                break;
+//            case "identity":
+//                a1 = ModelForJSON.getIdentity().get(0);
+//                a2 = ModelForJSON.getIdentity().get(1);
+//                a3 = ModelForJSON.getIdentity().get(2);
+//                b1 = ModelForJSON.getIdentity().get(3);
+//                b2 = ModelForJSON.getIdentity().get(4);
+//                b3 = ModelForJSON.getIdentity().get(5);
+//                c1 = ModelForJSON.getIdentity().get(6);
+//                c2 = ModelForJSON.getIdentity().get(7);
+//                c3 = ModelForJSON.getIdentity().get(8);
+//                break;
+//            case "Null":
+//                a1 = ModelForJSON.getNul().get(0);
+//                a2 = ModelForJSON.getNul().get(1);
+//                a3 = ModelForJSON.getNul().get(2);
+//                b1 = ModelForJSON.getNul().get(3);
+//                b2 = ModelForJSON.getNul().get(4);
+//                b3 = ModelForJSON.getNul().get(5);
+//                c1 = ModelForJSON.getNul().get(6);
+//                c2 = ModelForJSON.getNul().get(7);
+//                c3 = ModelForJSON.getNul().get(8);
+//                break;
+//            case "Symmetric":
+//                a1 = ModelForJSON.getSymmetric().get(0);
+//                a2 = ModelForJSON.getSymmetric().get(1);
+//                a3 = ModelForJSON.getSymmetric().get(2);
+//                b1 = ModelForJSON.getSymmetric().get(3);
+//                b2 = ModelForJSON.getSymmetric().get(4);
+//                b3 = ModelForJSON.getSymmetric().get(5);
+//                c1 = ModelForJSON.getSymmetric().get(6);
+//                c2 = ModelForJSON.getSymmetric().get(7);
+//                c3 = ModelForJSON.getSymmetric().get(8);
+//                break;
+//            default: //Default action
+//                break;
+//        }
+//        if (rb1.isSelected()) {
+//            fieldListRb1[0][0].setText(String.valueOf(a1));
+//            fieldListRb1[0][1].setText(String.valueOf(a2));
+//            fieldListRb1[1][0].setText(String.valueOf(b1));
+//            fieldListRb1[1][1].setText(String.valueOf(b2));
+//        }
+//        if (rb2.isSelected()) {
+//            fieldListRb2[0][0].setText(String.valueOf(a1));
+//            fieldListRb2[0][1].setText(String.valueOf(a2));
+//            fieldListRb2[0][2].setText(String.valueOf(a3));
+//            fieldListRb2[1][0].setText(String.valueOf(b1));
+//            fieldListRb2[1][1].setText(String.valueOf(b2));
+//            fieldListRb2[1][2].setText(String.valueOf(b3));
+//            fieldListRb2[2][0].setText(String.valueOf(c1));
+//            fieldListRb2[2][1].setText(String.valueOf(c2));
+//            fieldListRb2[2][2].setText(String.valueOf(c3));
+//        }
+//    } //DONE DONE DONE
 
     public CustomRadioButton getRb1() {
         return rb1;
@@ -809,145 +813,26 @@ public class View2 extends Pane implements iView {
         return rb2;
     }
 
-    public void setRb2(CustomRadioButton rb2) {
-        this.rb2 = rb2;
-    }
-
-    public CustomButton getBtnStart() {
-        return btnStart;
-    }
-
-    public void setBtnStart(CustomButton btnStart) {
-        this.btnStart = btnStart;
-    }
-
-    public CustomButton getBtnReset() {
-        return btnReset;
-    }
-
-    public void setBtnReset(CustomButton btnReset) {
-        this.btnReset = btnReset;
-    }
-
-    public CustomButton getBtnSave() {
-        return btnSave;
-    }
-
-    public void setBtnSave(CustomButton btnSave) {
-        this.btnSave = btnSave;
-    }
-
-    public ToggleGroup getGroup() {
-        return group;
-    }
-
-    public void setGroup(ToggleGroup group) {
-        this.group = group;
-    }
-
     public ComboBox getCb() {
         return cb;
-    }
-
-    public void setCb(ComboBox cb) {
-        this.cb = cb;
-    }
-
-    public VBox getVbUi() {
-        return vbUi;
-    }
-
-    public void setVbUi(VBox vbUi) {
-        this.vbUi = vbUi;
-    }
-
-    public VBox getVbPo() {
-        return vbPo;
-    }
-
-    public void setVbPo(VBox vbPo) {
-        this.vbPo = vbPo;
-    }
-
-    public VBox getVbLeft() {
-        return vbLeft;
-    }
-
-    public VBox getVbRight() {
-        return vbRight;
     }
 
     public static CustomTextField getT1() {
         return t1;
     }
 
-    public static void setT1(CustomTextField t1) {
-        View2.t1 = t1;
-    }
-
     public static CustomTextField getT2() {
         return t2;
-    }
-
-    public static void setT2(CustomTextField t2) {
-        View2.t2 = t2;
-    }
-
-    public static CustomTextField getT3() {
-        return t3;
-    }
-
-    public static void setT3(CustomTextField t3) {
-        View2.t3 = t3;
     }
 
     public static CustomTextField getT4() {
         return t4;
     }
 
-    public static void setT4(CustomTextField t4) {
-        View2.t4 = t4;
-    }
-
     public static CustomTextField getT5() {
         return t5;
     }
 
-    public static void setT5(CustomTextField t5) {
-        View2.t5 = t5;
-    }
-
-    public static CustomTextField getT6() {
-        return t6;
-    }
-
-    public static void setT6(CustomTextField t6) {
-        View2.t6 = t6;
-    }
-
-    public static CustomTextField getT7() {
-        return t7;
-    }
-
-    public static void setT7(CustomTextField t7) {
-        View2.t7 = t7;
-    }
-
-    public static CustomTextField getT8() {
-        return t8;
-    }
-
-    public static void setT8(CustomTextField t8) {
-        View2.t8 = t8;
-    }
-
-    public static CustomTextField getT9() {
-        return t9;
-    }
-
-    public static void setT9(CustomTextField t9) {
-        View2.t9 = t9;
-    }
     private void setVbRight(VBox vbRight) {
         this.vbRight = vbRight;
     }
@@ -959,10 +844,5 @@ public class View2 extends Pane implements iView {
     public ArrayList<Integer> getOther() {
         return other;
     }
-
-    public void setOther(ArrayList<Integer> other) {
-        this.other = other;
-    }
-
 
 }
