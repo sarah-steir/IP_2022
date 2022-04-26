@@ -3,10 +3,9 @@ package pack.View;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import pack.Controller.Controller1;
 import pack.Controller.Controller3;
 import pack.Model.Model3;
 import pack.View.Customs.Custom;
@@ -16,6 +15,8 @@ import pack.View.Customs.CustomTextField;
 import pack.View.GraphView.Graph;
 
 import java.util.ArrayList;
+
+import static pack.View.Customs.Custom.p;
 
 public class View3 extends Pane implements iView {
 
@@ -33,6 +34,8 @@ public class View3 extends Pane implements iView {
 
     private VBox vbLeft;
     private VBox vbRight;
+
+    private Pane backgroundPane;
 
     public View3() {
 
@@ -53,8 +56,10 @@ public class View3 extends Pane implements iView {
         vbLeft = new VBox();
         vbRight = new VBox();
 
+        this.backgroundPane = new Pane();
+
         setVbUi(setHbRadios(this.rb1, this.rb2));
-        setVbPo("Planes and lines ");
+        setVbPo("Planes and lines");
 
         setVbLeft(setLeft(this.vbUi, setGraphPane(graph)));
         setVbRight(setRight(this.vbPo, setHbBottom(this.btnStart, this.btnReset)));
@@ -85,11 +90,16 @@ public class View3 extends Pane implements iView {
     }
 
     private void setVbPo(String title) {
+        this.backgroundPane.setPrefSize(500, 580);
+        BackgroundImage myBI= new BackgroundImage(new Image(p + "View3.png",520,580,false,true),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        this.backgroundPane.setBackground(new Background(myBI));
         this.vbPo.setPrefSize(500, 595);
         this.vbPo.setSpacing(15);
         this.vbPo.setAlignment(Pos.TOP_CENTER);
         this.vbPo.setStyle("-fx-background-color: #333335");
-        this.vbPo.getChildren().add(Custom.setTitle(title));
+        this.vbPo.getChildren().addAll(Custom.setTitle(title), this.backgroundPane);
 
     }
 
@@ -105,10 +115,9 @@ public class View3 extends Pane implements iView {
                 }
             }
 
-            Model3 model3 = new Model3(input(),constants());
-
-
+            Model3 model3 = new Model3();
             model3.bringT(getFieldListRb1());
+            model3.setThingies();
 
             if(model3.det()==true) {
                 double [][]A = Model3.getMatrixA_2x2();
@@ -118,7 +127,7 @@ public class View3 extends Pane implements iView {
                 System.out.println("T = "+ x[1]);
 
                 graph.addPoint(model3.intersectionLines());}
-            if(model3.det()==false) { System.out.println("Skew lines hehe");}
+            if(model3.det()==false) {  model3.distanceSkew(); System.out.println("Skew lines hehe");}
 
             if(model3.parallel()==true) {System.out.println("Parallel lines babe");}
 
@@ -127,26 +136,39 @@ public class View3 extends Pane implements iView {
             graph.addLine(  model3.linesPoints(1,0), model3.linesPoints(1,2),model3.dirVector(1));
             //Second line
             graph.addLine(model3.linesPoints(2,0),model3.linesPoints(2,2),model3.dirVector(2));
+            Controller3 controller = new Controller3(this);
+            addOutput(controller);
         }
 
+        // for rb2
         else {
             for (int i = 0; i < fieldListRb2.length; i++) {
                 for (int j = 0; j < fieldListRb2[0].length; j++) {
                     if (fieldListRb2[i][j].getText().equals("")) {
                         fieldListRb2[i][j].setText("0");}}}
 
-            Model3 c3=new Model3();
+            Model3 c3 = new Model3();
             c3.transform(getFieldListRb2());
-            c3.crossProduct();
+            c3.crossProduct(c3.n1,c3.n2);
             c3.solutionPoints(5);
-            graph.addPlane(c3.n1.get(0)/-c3.n1.get(3),c3.n1.get(1)/-c3.n1.get(3),c3.n1.get(2)/-c3.n1.get(3),"Plane1");
-            graph.addPlane(c3.n2.get(0)/-c3.n2.get(3),c3.n2.get(1)/-c3.n2.get(3),c3.n2.get(2)/-c3.n2.get(3),"Plane2");
-            graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10),c3.crossProduct());
+            graph.addPlane(c3.n1[0]/-c3.n1[3],c3.n1[1]/-c3.n1[3],c3.n1[2]/-c3.n1[3],"Plane1");
+            graph.addPlane(c3.n2[0]/-c3.n2[3],c3.n2[1]/-c3.n2[3],c3.n2[2]/-c3.n2[3],"Plane1");
+            graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10),c3.crossProduct(c3.n1,c3.n2));
 
           /*  Label l= new Label("Direction vector: <"+c3.crossProduct()[0]+", "+c3.crossProduct()[1]+", "+c3.crossProduct()[2]+">");
             this.vbPo.getChildren().clear();
             this.vbPo.getChildren().add(l);*/
-            Controller3 controller3 = new Controller3(this);}}
+            Controller3 controller3 = new Controller3(this);
+            addOutput(controller3);
+        }}
+
+    public void addOutput(Controller3 controller) {
+        this.backgroundPane.getChildren().clear();
+
+
+        // Hbox bla bla
+        this.backgroundPane.getChildren().addAll();
+    }
 
     public void handleReset() {
         this.graph.reset();
@@ -234,33 +256,6 @@ public class View3 extends Pane implements iView {
                 fieldList.add(tf);}}
         return fieldList;}
 
-
-    //TODO see if these two functions can be moved into Model3 or Controller3
-    public  ArrayList<Double> constants() {
-        int n = 1;
-      ArrayList<Double> constant = new ArrayList<>();
-
-        double d1 = Double.parseDouble(getFieldListRb1().get(1).getText());
-        double d2 = Double.parseDouble(getFieldListRb1().get(7).getText());
-        double d3 = Double.parseDouble(getFieldListRb1().get(3).getText());
-        double d4 = Double.parseDouble(getFieldListRb1().get(9).getText());
-        constant.add( d1-d2);
-        constant.add(d3-d4);
-
-        return constant;}
-
-    public   ArrayList<Double> input() {
-        ArrayList<Double> arr = new ArrayList<>();
-        double d1 = Double.parseDouble(getFieldListRb1().get(0).getText());
-        double d2 = Double.parseDouble(getFieldListRb1().get(2).getText());
-        double d3 = Double.parseDouble(getFieldListRb1().get(6).getText());
-        double d4 = Double.parseDouble(getFieldListRb1().get(8).getText());
-
-        arr.add(-d1);
-        arr.add(d3);
-        arr.add(-d2);
-        arr.add(d4);
-        return arr;}
 
 }
 

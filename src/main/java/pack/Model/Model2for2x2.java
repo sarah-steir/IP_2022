@@ -78,12 +78,12 @@ public class Model2for2x2 {
     private double[] reduceMatrix2x2(double a1, double a2, double b1, double b2) {
         if (a1 == 0) { // if a equal to zero (switch rows) unless all is zero (a,b,c)
             if (b1 != 0) { //switch a with b if b not zero
-                e1 = Double.parseDouble(formatting.format(a1));// E holds the number
-                e2 = Double.parseDouble(formatting.format(a2));
-                a1 = Double.parseDouble(formatting.format(b1));
-                a2 = Double.parseDouble(formatting.format(b2));
-                b1 = Double.parseDouble(formatting.format(e1));
-                b2 = Double.parseDouble(formatting.format(e2));
+                e1 = Double.parseDouble(String.valueOf(a1));// E holds the number
+                e2 = Double.parseDouble(String.valueOf(a2));
+                a1 = Double.parseDouble(String.valueOf(b1));
+                a2 = Double.parseDouble(String.valueOf(b2));
+                b1 = Double.parseDouble(String.valueOf(e1));
+                b2 = Double.parseDouble(String.valueOf(e2));
             }
         }
 

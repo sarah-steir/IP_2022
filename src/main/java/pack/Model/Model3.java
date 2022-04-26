@@ -7,17 +7,15 @@ import java.util.ArrayList;
 
 public class Model3 {
     //Planes
-    public  ArrayList<Double> n1 = new ArrayList<>();
-    public  ArrayList<Double> n2 = new ArrayList<>();
+    public  double[] n1 = new double[4];
+    public  double[] n2 =  new double[4];
      double crossProduct[] = new double[3];
      private ArrayList<Double> numbers =new ArrayList<>();
 
     /**
      * Empty constructor for the planes
      */
-    public Model3(){
-
-     }
+    public Model3(){}
 
     /**
      * The function divides the textfields into 2 groups (for plane 1 and for plane 2) and stores the double value of the text on
@@ -28,12 +26,10 @@ public class Model3 {
 
         for (int i = 0; i < 4; i++) {
             Double d = Double.parseDouble(f.get(i).getText());
-            n1.add(d);
-        }
+            n1[i]=d;}
         for (int j = 4; j < f.size(); j++) {
             Double d2 = Double.parseDouble(f.get(j).getText());
-            n2.add(d2);
-        }
+            n2[j-4]=d2;}
     }
 
     //TODO GCD of the elements of the cross product
@@ -42,14 +38,13 @@ public class Model3 {
      * @return an array with the direction vector (not simplified)
      */
 
-    public  double[] crossProduct() {
-        crossProduct[0] = n1.get(1) * n2.get(2) - n1.get(2) * n2.get(1);
-        crossProduct[1] = n1.get(2) * n2.get(0) - n1.get(0) * n2.get(2);
-        crossProduct[2] = n1.get(0) * n2.get(1) - n1.get(1) * n2.get(0);
+    public  double[] crossProduct(double []n1,double[]n2) {
+        crossProduct[0] = n1[1] * n2[2] - n1[2] * n2[1];
+        crossProduct[1] = n1[2] * n2[0] - n1[0] * n2[2];
+        crossProduct[2] = n1[0] * n2[1] - n1[1] * n2[0];
 
         for (int i = 0; i < 3; i++) {
-            System.out.print(crossProduct[i] + " ");
-        }
+            System.out.print(crossProduct[i] + " ");}
         return  crossProduct;
     }
 
@@ -60,8 +55,8 @@ public class Model3 {
      */
     public Point3D solutionPoints(int i) {
         double x = i;
-        double z = ((n2.get(1) / n1.get(1)) * (n1.get(0) * x + n1.get(3)) - n2.get(0) * x - n2.get(3)) / (n2.get(2) - n1.get(2) * n2.get(1) / n1.get(1));
-        double y = (-n1.get(2) * z - n1.get(0) * x - n1.get(3)) / n1.get(1);
+        double z = ((n2[1] / n1[1]) * (n1[0] * x + n1[3]) - n2[0] * x - n2[3]) / (n2[2] - n1[2] * n2[1] / n1[1]);
+        double y = (-n1[2] * z - n1[0] * x - n1[3]) / n1[1];
         //double z= ((-n2.get(1)/n1.get(1))*(n1.get(0)*x+n1.get(3))-n2.get(0)*x- -n2.get(3)) /(n2.get(2)-n1.get(2)*n2.get(1)/n1.get(1));
         //double z=((-n2.get(1/n1.get(1)))*n1.get(3)-n2.get(3))/((n2.get(2)*n2.get(1)/n1.get(1))*n1.get(2));
         //double y=(-n1.get(3)-n1.get(2)*z)/n1.get(1);
@@ -74,16 +69,16 @@ public class Model3 {
      * @return the equation of the plane given by i (1 or 2)
      */
 
-    public  String planeEq(int i) {
+  /*  public  String planeEq(int i) {
         switch (i) {
             case 1:
-                String st = n1.get(0).toString() + "x +" + n1.get(1).toString() + "y +" + n1.get(3).toString() + "z =" + n1.get(4).toString();
+           //     String st = n1[0].toString() + "x +" + n1[1].toString() + "y +" + n1[2].toString() + "z =" + n1[3].toString();
                 return st;
             case 2:
-                String st2 = n2.get(0).toString() + "x +" + n2.get(1).toString() + "y +" + n2.get(3).toString() + "z =" + n2.get(4).toString();
+              //  String st2 = n2[0].toString() + "x +" + n2[1].toString() + "y +" + n2[2].toString() + "z =" + n2[3].toString();
                 return st2;}
         return null;}
-
+*/
 
     //Lines
 
@@ -99,25 +94,26 @@ public class Model3 {
     //B matrix storage
     public static double[] matrixB_2x2 = {1, 1};
 
-    public Model3(ArrayList<Double> input,ArrayList<Double>constant) {
-            n = 2;
-            //Row 1
-            this.a1 = input.get(0);
-            matrixA_2x2[0][0] = this.a1;
-            this.a2 = input.get(1);
-            matrixA_2x2[0][1] = this.a2;
 
-            //Row2
-            this.b1 = input.get(2);
-            matrixA_2x2[1][0] = this.b1;
-            this.b2 = input.get(3);
-            matrixA_2x2[1][1] = this.b2;
+    public void setThingies() {
+        n = 2;
+        //Row 1
+        this.a1 = inputs().get(0);
+        matrixA_2x2[0][0] = this.a1;
+        this.a2 = inputs().get(1);
+        matrixA_2x2[0][1] = this.a2;
 
-            //B Matrix (Constants)
-            this.d1 = constant.get(0);
-            matrixB_2x2[0] = this.d1;
-            this.d2 = constant.get(1);
-            matrixB_2x2[1] = this.d2;}
+        //Row2
+        this.b1 = inputs().get(2);
+        matrixA_2x2[1][0] = this.b1;
+        this.b2 = inputs().get(3);
+        matrixA_2x2[1][1] = this.b2;
+
+        //B Matrix (Constants)
+        this.d1 = constants().get(0);
+        matrixB_2x2[0] = this.d1;
+        this.d2 = constants().get(1);
+        matrixB_2x2[1] = this.d2;}
 
     public static double[][] getMatrixA_2x2() {return matrixA_2x2;}
 
@@ -160,7 +156,7 @@ public class Model3 {
             x[i] = (b[i] - sum) / A[i][i];}
         return x;}
 
-    //TODO delete this because Constance figured it out
+
     /**
      * @return the point of intersection between the two lines (if they intersect)
      */
@@ -243,13 +239,61 @@ public class Model3 {
 
     public boolean parallel(){
         if(numbers.get(0)/numbers.get(6)==numbers.get(2)/numbers.get(8)) {
-
             if(numbers.get(4)/numbers.get(10)==numbers.get(0)/numbers.get(6)){
                 return true;}}
         return false;}
 
 
-    public void distanceSkew() {}
+    public  ArrayList<Double> constants() {
+        int n = 1;
+        ArrayList<Double> constant = new ArrayList<>();
+
+        double d1 = numbers.get(1);
+        double d2 =numbers.get(7);
+        double d3 =numbers.get(3);
+        double d4 = numbers.get(9);
+        constant.add( d1-d2);
+        constant.add(d3-d4);
+
+        return constant;}
+
+    public   ArrayList<Double> inputs() {
+        ArrayList<Double> arr = new ArrayList<>();
+        double d1 = numbers.get(0);
+        double d2 = numbers.get(2);
+        double d3 = numbers.get(6);
+        double d4 = numbers.get(8);
+
+        arr.add(-d1);
+        arr.add(d3);
+        arr.add(-d2);
+        arr.add(d4);
+        return arr;}
+
+
+    public double distanceSkew() {
+        double[] v=new double[3];
+        v[0]=numbers.get(7)-numbers.get(1);
+        v[1]=numbers.get(9)-numbers.get(3);
+        v[2]=numbers.get(11)-numbers.get(5);
+        double [] n1=new double[3];
+        n1[0]=numbers.get(0);
+        n1[1]=numbers.get(2);
+        n1[2]=numbers.get(4);
+
+        double [] n2=new double[3];
+        n2[0]=numbers.get(6);
+        n2[1]=numbers.get(8);
+        n2[2]=numbers.get(10);
+
+       double[]d=crossProduct(n1,n2);
+        double upper= Math.abs(v[0]*d[0]+v[1]*d[1]+v[2]*d[2]);;
+       double lower=Math.sqrt(d[0]*d[0]+d[1]*d[1]+d[2]*d[2]);
+
+       double distance=upper/lower;
+     return distance;
+
+    }
 
 
 }

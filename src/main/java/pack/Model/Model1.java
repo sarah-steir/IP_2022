@@ -239,24 +239,42 @@ public class Model1 {
         }
         if (checkSol > 0) {
             int sum = 0;
+            // for index less than size of the size of matrix
             for (int i = 0; i < n; i++)
+                //adding up number of free variables(check meth freeVar)
                 sum += freeVar[i];
-            if (n == 2) {
+
+
+            //if the size is 2 and there is 1 free variable
+            if (n == 2) { //this is for 2x2
+                //the first element in the solution is just whatever was found for x
                 solution[0] = b[0];
+                //second element is the coefficient of the free variable and is brought to the other side of the equation hence the negative
                 solution[1] = -A[0][1];
+                //third element is just a placeholder to show that there is in fact a free variable in the solution, other than that it doesnt do much
                 solution[2] = sum + 1;
-            } else {
+            } else { //this is just for 3x3
+                //showing that the first element in the the solution is just the first element of the b-matrix
                 solution[0] = b[0];
+                //if there is one free varaible
                 if (sum == 1) {
+                    //second element in the solution is the coefficient for the free varaible for the 1st row(x1)
                     solution[1] = -A[0][2];
+                    //the second element in the b-matrix is the first part of the y-comp because there 1 free variable
                     solution[2] = b[1];
+                    //second coefficient for free variable(for the y-comp)
                     solution[3] = -A[1][2];
-                } else {
+                } else {//if tehre are 2 free variables
+                    //both sol1 and sol2 are coefficients for
                     solution[1] = -A[0][1];
                     solution[2] = -A[0][2];
                 }
+                //just to add a space so that there will be the proper length to store all teh variables
                 solution[4] = sum + 1;
             }
+            //just a little PSA if you felt like reading through all of this and
+            // still dont really get it and you really want to understand for some reason. you can ask me but the
+            // chances i remember are low. this should be pretty self explanatory tho
         }
         return solution;
 
@@ -393,15 +411,18 @@ public class Model1 {
     /**
      * function to print in row echleon form
      **/
-    public void printRowEchelonForm(double[][] A, double[] B) {
+    public String printRowEchelonForm(double[][] A, double[] B) {
+        String str = new String();
         int N = B.length;
         System.out.println("\nRow Echelon form : ");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++)
-                System.out.printf("%.3f ", A[i][j]);
-            System.out.printf("| %.3f\n", B[i]);
+                str += A[i][j] + "\t";
+            str +=  "|" + B[i] + "\n";
         }
-        System.out.println();
+        str += "\n";
+        System.out.println(str);
+        return str;
     }
 
 
@@ -416,16 +437,19 @@ public class Model1 {
         System.out.println();
     }
 
-    void printMat(double A[][], double b[], int n) {
-        for (int q = 0; q < n; q++) {
-            System.out.print("[");
-            for (int s = 0; s < n; s++)
-                System.out.print(A[q][s] + " ");
-            System.out.print(" | ");
-            System.out.println(b[q] + " ]");
-            System.out.println("");
-        }
-    }
+//    public StringBuilder printMat(double A[][], double b[], int n) {
+//        StringBuilder str = new StringBuilder();
+//        for (int q = 0; q < n; q++) {
+//            str.append("[");
+//            for (int s = 0; s < n; s++) {
+//                str.append(A[q][s] + " ");
+//            }
+//            str.append(" | ");
+//            str.append(b[q] + " ]");
+//            str.append("");
+//        }
+//        return str;
+//    }
 
 
 //

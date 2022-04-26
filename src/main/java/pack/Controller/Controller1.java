@@ -8,6 +8,8 @@ import pack.View.Customs.CustomTextField;
 import pack.View.View1;
 
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Controller1 {
@@ -24,6 +26,8 @@ public class Controller1 {
         fieldList = new ArrayList<>();
         matrixCoefficients = new ArrayList<>();
         transform();
+        DecimalFormat formatting = new DecimalFormat("0.000");
+        formatting.setRoundingMode(RoundingMode.CEILING);
     }
 
     // Include 2x2 as well later
@@ -61,53 +65,88 @@ public class Controller1 {
         this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(11).getText()));
     }
 
+
+    String rank;
+    String boop;
     public String[] getOutput() {
         model = new Model1(this.matrixCoefficients, is2by2);
         if (is2by2) {
-            System.out.println("poot");
             double[][] A = Model1.getMatrixA_2x2();
-            System.out.println("yoot");
             double[] b = Model1.getMatrixB_2x2();
             double[] x = model.SLEsolve(A, b);
-            System.out.println("yeet");
+            boop = model.printRowEchelonForm(A,b);
+            String[] roundedX = this.round(x);
             String[] sol = new String[x.length];
-            if (x[2] == 0)
-                for (int i = 0; i < x.length - 1; i++)
+            //no solutions
+            if (x[2] == 0) {
+                for (int i = 0; i < x.length - 1; i++) {
                     sol[i] = " No solution";
-            else if (x[2] == 1)
-                for (int i = 0; i < x.length - 1; i++)
-                    sol[i] = " " + x[i];
-                else if (x[2] == 2){
-                    sol[0] = " " + x[0] + " + (" + x[1] + ")t";
-                    sol[1] = " t";
+                }
+                rank = "0";
             }
+            //unique solution
+            else if (x[2] == 1) {
+                for (int i = 0; i < x.length - 1; i++)
+                    sol[i] = " " + roundedX[i];
 
-
+                rank = "" + b.length;
+            }
+            //if there is 1 free variable
+                else if (x[2] == 2){
+                    sol[0] = " " + roundedX[0] + " + (" + roundedX[1] + ")t";
+                    sol[1] = " t";
+                rank = "1";
+            }
+            sol[sol.length-1] = boop;
             return sol;
         } else {
             double[][] A = Model1.getMatrixA_3x3();
             double[] b = Model1.getMatrixB_3x3();
             double[] x = model.SLEsolve(A, b);
+            String[] roundedX = this.round(x);
             String[] sol = new String[x.length];
-            if (x[4] == 0)
+
+            if (x[4] == 0) { // No Solution
                 for (int i = 0; i < x.length - 1; i++)
                     sol[i] = " No solution";
-            else if (x[4] == 1)
+                rank = "0";
+            } // 1 Solution
+            else if (x[4] == 1){
                 for (int i = 0; i < x.length - 1; i++) {
-                    sol[i] = " " + x[i];
+                    sol[i] = " " + roundedX[i];
                 }
+                rank = ""+b.length;
+                } // 1 Free Variable
             else if (x[4] == 2) {
-                sol[0] = " " + x[0] + " + (" + x[1] + ")t";
-                sol[1] = " " + x[2] + " + (" + x[3] + ")t";
+                sol[0] = " " + roundedX[0] + " + (" + roundedX[1] + ")t";
+                sol[1] = " " + roundedX[2] + " + (" + roundedX[3] + ")t";
                 sol[2] = "t";
-            } else {
-                sol[0] = " " + x[0] + " + (" + x[1] + ")s" + " + (" + x[2] + ")t";
+
+                rank = "2";
+            } else { // 2 Free Variables
+                sol[0] = " " + roundedX[0] + " + (" + roundedX[1] + ")s" + " + (" + roundedX[2] + ")t";
                 sol[1] = "s";
                 sol[2] = "t";
+
+                rank = "1";
             }
+            sol[sol.length - 1] = boop;
             return sol;
         }
     }
+
+    public String[] round(double[] x) {
+        String[] lol = new String[x.length];
+        for (int i=0; i<x.length; i++) {
+            lol[i] = formatting.format(x[i]);
+        }
+        return lol;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
     public int getArraySize() {
         model = new Model1(this.matrixCoefficients, is2by2);
         if (is2by2) {
@@ -115,17 +154,5 @@ public class Controller1 {
         } else {
            return 3;
         }
-    }
-
-
-
-
-
-    public void humptyDumptyRevival() {
-        Point3D point1 = model.solutionPoints(5);
-        Point3D point2 = model.solutionPoints(69);
-        System.out.println(point1);
-        System.out.println(point2);
-        //this.view.getGraph().addLine(point1, point2);
     }
 }
