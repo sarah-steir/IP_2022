@@ -19,6 +19,7 @@ public class Controller1 {
     private ArrayList<Double> matrixCoefficients;
     private boolean is2by2;
     private Model1 model;
+    private static  DecimalFormat formatting = new DecimalFormat("0.000");
 
     public Controller1(View1 view) {
         this.view = view;
@@ -26,8 +27,6 @@ public class Controller1 {
         fieldList = new ArrayList<>();
         matrixCoefficients = new ArrayList<>();
         transform();
-        DecimalFormat formatting = new DecimalFormat("0.000");
-        formatting.setRoundingMode(RoundingMode.CEILING);
     }
 
     // Include 2x2 as well later
@@ -138,7 +137,11 @@ public class Controller1 {
     public String[] round(double[] x) {
         String[] lol = new String[x.length];
         for (int i=0; i<x.length; i++) {
-            lol[i] = formatting.format(x[i]);
+            if (x[i] % 1.0 != 0) {
+                lol[i] = formatting.format(x[i]);
+            } else {
+                lol[i] = String.format("%.0f", x[i]);
+            }
         }
         return lol;
     }
