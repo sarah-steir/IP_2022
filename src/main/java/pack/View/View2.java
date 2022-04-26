@@ -141,19 +141,19 @@ public class View2 extends Pane implements iView {
         ArrayList<Double> ints = new ArrayList<>();
         //JSONArray js = (JSONArray) jsonObject.get("diagonal");
         JSONArray list = js;
-        Iterator<JSONObject> iterator = js.iterator();
+        Iterator<JSONObject> iterator;
+            try {
+                 iterator = js.iterator();
+
         while (iterator.hasNext()) {
             objs.add(String.valueOf(iterator.next()));
         }
-
         for(int i = 0; i< objs.size();i++){
             ints.add(Double.valueOf(objs.get(i)));
         }
-        System.out.println("AHGDHEDWDMWDD");
-        for (Double str : ints)
-        {
-            System.out.println(str);
-        }
+            }catch(Exception e){
+                System.out.println("IDK EITHER MAN");
+            }
         return ints;
     }
     private void setMatrix(ArrayList<Double> ints){
