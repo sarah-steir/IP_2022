@@ -32,13 +32,14 @@ public class Graph extends Group {
     final Xform cameraXform2 = new Xform();
     final Xform cameraXform3 = new Xform();
 
+
     Box map = bigCube();
 
     private int a = 0; // Serves as a counter to know which color should the added element be
 
     ObservableList<Node> axisList;
     ObservableList<Node> thingsToGraphList = FXCollections.observableArrayList();
-    ObservableList<Node> labelsList = FXCollections.observableArrayList();
+    public ObservableList<Node> labelsList = FXCollections.observableArrayList();
 
     public Graph() {
         axisList = getAxis();
@@ -206,7 +207,7 @@ public class Graph extends Group {
      */
     public void addPlane(double x, double y, double z, String equation) {
 
-        System.out.println("x = " + x + ", y = " + y + ", z = " + z);
+     //   System.out.println("x = " + x + ", y = " + y + ", z = " + z);
         Rectangle plane = new Rectangle(-500, -500, 1000, 1000);
 
         Point3D m = new Point3D(x/2, y/2, 0); // Midpoint between x and y
@@ -310,7 +311,7 @@ public class Graph extends Group {
      * @param point1 The point p0
      * @param direction The vector of the line
      */
-    private void createLineLabel(Point3D point1,  double[] direction) {
+    public void createLineLabel(Point3D point1,  double[] direction) {
         Text label = new CustomText("l(t) = (" + point1.getX() + ", " + point1.getY() + ", " + point1.getZ() + ") +\nt <" + direction[0] + ", " +direction[1] + ", " +direction[2] + ">");
         label.setScaleY(-1);
         label.setTranslateX(point1.getX());
