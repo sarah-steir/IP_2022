@@ -1,17 +1,15 @@
 package pack.View;
 
 
-import javafx.geometry.Insets;
-import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import pack.Controller.Controller1;
-import pack.Model.Model1;
 import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
+
 import java.util.ArrayList;
 
 import static pack.View.Customs.Custom.p;
@@ -153,6 +151,7 @@ public class View1 extends Pane implements iView {
         rb1.setSelected(false);
         rb2.setSelected(false);
         this.vbUi.getChildren().remove(fieldsPane);
+        this.backgroundPane.getChildren().clear();
         this.getChildren().addAll(this.vbLeft, this.vbRight);
     }
 

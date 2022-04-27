@@ -112,28 +112,28 @@ public class View3 extends Pane implements iView {
     }
 
     //TODO method for filling empty textfields
+    //TODO find a method to empty arrays cuz its not working yet (wtf)
+    //TODO implement Constance methods
     public void handleStart(boolean isRb1Selected) {
-        controller.getValues();
-        controller.addElementsGraph();
-        addOutput(controller);
+
         if (isRb1Selected) {
             for (int i = 0; i < fieldListRb1.length; i++) {
                 for (int j = 0; j < fieldListRb1[0].length; j++) {
-                    if (fieldListRb1[i][j].getText().equals("")) {
-                        fieldListRb1[i][j].setText("0");}}}
-
-            addOutput(controller);}
+                    if (fieldListRb1[i][j].getText().isBlank()) {
+                        fieldListRb1[i][j].setText("0");}}}}
         // for rb2
         else {
             for (int i = 0; i < fieldListRb2.length; i++) {
                 for (int j = 0; j < fieldListRb2[0].length; j++) {
-                    if (fieldListRb2[i][j].getText().equals("")) {
-                        fieldListRb2[i][j].setText("0");}}}
+                    if (fieldListRb2[i][j].getText().isBlank()) {
+                        fieldListRb2[i][j].setText("0");}}}}
+
+        controller.getValues();
+        controller.addElementsGraph();
+        addOutput(controller);
 
 
-
-            addOutput(controller);
-        }}
+    }
 
     public void addOutput(Controller3 controller) {
 

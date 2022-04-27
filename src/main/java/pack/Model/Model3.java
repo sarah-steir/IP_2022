@@ -7,15 +7,12 @@ import java.util.ArrayList;
 
 public class Model3 {
 
-    public double[] getCrossProduct() {
-        return crossProduct;
-    }
-
     //Planes
     public  double[] n1 = new double[4];
     public  double[] n2 =  new double[4];
-     double crossProduct[] = new double[3];
+    double crossProduct[] = new double[3];
     public double[] x=new double[2];
+     public Point3D[] solutions = new Point3D[2];
     private ArrayList<Double> numbers =new ArrayList<>();
 
     /**
@@ -29,7 +26,8 @@ public class Model3 {
      * @param f The ArrayList that contains the Textfields on the plane section
      */
     public  void transform(ArrayList<CustomTextField> f) {
-
+         n1= new double[]{0, 0, 0, 0};
+         n2=new double[] {0,0,0,0};
         for (int i = 0; i < 4; i++) {
             Double d = Double.parseDouble(f.get(i).getText());
             n1[i]=d;}
@@ -48,26 +46,29 @@ public class Model3 {
         crossProduct[0] = n1[1] * n2[2] - n1[2] * n2[1];
         crossProduct[1] = n1[2] * n2[0] - n1[0] * n2[2];
         crossProduct[2] = n1[0] * n2[1] - n1[1] * n2[0];
-
-
         return  crossProduct;
     }
 
-    /**
-     * Nat's version do not erase yet, there is something I want to try
-     * @param i
-     * @return
-     */
-    public Point3D solutionPoints(int i) {
-        double x = i;
-        double z = ((n2[1] / n1[1]) * (n1[0] * x + n1[3]) - n2[0] * x - n2[3]) / (n2[2] - n1[2] * n2[1] / n1[1]);
-        double y = (-n1[2] * z - n1[0] * x - n1[3]) / n1[1];
-        //double z= ((-n2.get(1)/n1.get(1))*(n1.get(0)*x+n1.get(3))-n2.get(0)*x- -n2.get(3)) /(n2.get(2)-n1.get(2)*n2.get(1)/n1.get(1));
-        //double z=((-n2.get(1/n1.get(1)))*n1.get(3)-n2.get(3))/((n2.get(2)*n2.get(1)/n1.get(1))*n1.get(2));
-        //double y=(-n1.get(3)-n1.get(2)*z)/n1.get(1);
-      //  System.out.println("x: " + x + " y: " + y + " z: " + z);
-        Point3D point1 = new Point3D(x, y, z);
-        return point1;}
+
+
+
+
+    public void solutionPoint() {
+        double determinantWithZis0 = n1[0]* n2[1] - n2[0] * n1[1];
+        double determinantXwithZis0 = -n1[3] * n2[1] - -n2[3] * n1[1];
+        double determinantYwithZis0 = n1[0] * -n2[3] - n2[0] * -n1[3];
+        double x1 = determinantXwithZis0 / determinantWithZis0;
+        double y1 = determinantYwithZis0 / determinantWithZis0;
+        double z1 = 0;
+        solutions[0] = new Point3D(x1, y1, z1);
+        double determinantWithYis0 = n1[0] * n2[2] - n2[0] * n1[2];
+        double determinantXwithYis0 = -n1[3] * n2[2] - -n2[3] * n1[2];
+        double determinantZwithYis0 = n1[0] * -n2[3] - n2[0] * -n1[3];
+        double x2 = determinantXwithYis0 / determinantWithYis0;
+        double y2 = 0;
+        double z2 = determinantZwithYis0 / determinantWithYis0;
+        solutions[1] = new Point3D(x2, y2, z2);
+    }
 
     /**
      * @param i  wether one or two
@@ -234,6 +235,7 @@ public class Model3 {
 
 
     public void bringT(ArrayList<CustomTextField>tf){
+        numbers.clear();
         for(int i=0;i<12;i++){
             Double d=Double.parseDouble(tf.get(i).getText());
             numbers.add(d);}}
@@ -298,5 +300,7 @@ public class Model3 {
 
     }
 
-
+    public double[] getCrossProduct() {
+        return crossProduct;
+    }
 }
