@@ -10,6 +10,7 @@ public class Model3 {
     public  double[] n1 = new double[4];
     public  double[] n2 =  new double[4];
      double crossProduct[] = new double[3];
+     Point3D[] solutions = new Point3D[2];
      private ArrayList<Double> numbers =new ArrayList<>();
 
     /**
@@ -46,6 +47,36 @@ public class Model3 {
         for (int i = 0; i < 3; i++) {
             System.out.print(crossProduct[i] + " ");}
         return  crossProduct;
+    }
+
+    /**
+     * This function finds 2 points on the line of intersection of th two planes given (so just two points on the line)
+     * It uses Cramer's Rule,
+     * The first part sets Z to 0, se we find det(A), det(Ax), det(Ay).
+     *      Then x = det(Ax) / det(A)
+     *          y = det(Ay) / det(A)
+     *
+     * The second parts sets Y to 0, se we find det(A), det(Ax), det(Az).
+     *      Then x = det(Ax) / det(A)
+     *          z = det(Az) / det(A)
+     *
+     *  The solutions are stored in an array of Point3D solutions[], to pass to the Graph to graph the line
+     */
+    public void solutionPoint() {
+        double determinantWithZis0 = n1[0] * n2[1] - n2[0] * n1[1];
+        double determinantXwithZis0 = -n1[3] * n2[1] - -n2[3] * n1[1];
+        double determinantYwithZis0 = n1[0] * -n2[3] - n2[0] * -n1[3];
+        double x1 = determinantXwithZis0 / determinantWithZis0;
+        double y1 = determinantYwithZis0 / determinantWithZis0;
+        double z1 = 0;
+        solutions[0] = new Point3D(x1, y1, z1);
+        double determinantWithYis0 = n1[0] * n2[2] - n2[0] * n1[2];
+        double determinantXwithYis0 = -n1[3] * n2[2] - -n2[3] * n1[2];
+        double determinantZwithYis0 = n1[0] * -n2[3] - n2[0] * -n1[3];
+        double x2 = determinantXwithYis0 / determinantWithYis0;
+        double y2 = 0;
+        double z2 = determinantZwithYis0 / determinantWithYis0;
+        solutions[1] = new Point3D(x2, y2, z2);
     }
 
     /**
