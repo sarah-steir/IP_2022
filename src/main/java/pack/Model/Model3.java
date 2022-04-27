@@ -6,12 +6,17 @@ import pack.View.Customs.CustomTextField;
 import java.util.ArrayList;
 
 public class Model3 {
+
+    public double[] getCrossProduct() {
+        return crossProduct;
+    }
+
     //Planes
     public  double[] n1 = new double[4];
     public  double[] n2 =  new double[4];
      double crossProduct[] = new double[3];
-     Point3D[] solutions = new Point3D[2];
-     private ArrayList<Double> numbers =new ArrayList<>();
+    public double[] x=new double[2];
+    private ArrayList<Double> numbers =new ArrayList<>();
 
     /**
      * Empty constructor for the planes
@@ -44,39 +49,8 @@ public class Model3 {
         crossProduct[1] = n1[2] * n2[0] - n1[0] * n2[2];
         crossProduct[2] = n1[0] * n2[1] - n1[1] * n2[0];
 
-        for (int i = 0; i < 3; i++) {
-            System.out.print(crossProduct[i] + " ");}
-        return  crossProduct;
-    }
 
-    /**
-     * This function finds 2 points on the line of intersection of th two planes given (so just two points on the line)
-     * It uses Cramer's Rule,
-     * The first part sets Z to 0, se we find det(A), det(Ax), det(Ay).
-     *      Then x = det(Ax) / det(A)
-     *          y = det(Ay) / det(A)
-     *
-     * The second parts sets Y to 0, se we find det(A), det(Ax), det(Az).
-     *      Then x = det(Ax) / det(A)
-     *          z = det(Az) / det(A)
-     *
-     *  The solutions are stored in an array of Point3D solutions[], to pass to the Graph to graph the line
-     */
-    public void solutionPoint() {
-        double determinantWithZis0 = n1[0] * n2[1] - n2[0] * n1[1];
-        double determinantXwithZis0 = -n1[3] * n2[1] - -n2[3] * n1[1];
-        double determinantYwithZis0 = n1[0] * -n2[3] - n2[0] * -n1[3];
-        double x1 = determinantXwithZis0 / determinantWithZis0;
-        double y1 = determinantYwithZis0 / determinantWithZis0;
-        double z1 = 0;
-        solutions[0] = new Point3D(x1, y1, z1);
-        double determinantWithYis0 = n1[0] * n2[2] - n2[0] * n1[2];
-        double determinantXwithYis0 = -n1[3] * n2[2] - -n2[3] * n1[2];
-        double determinantZwithYis0 = n1[0] * -n2[3] - n2[0] * -n1[3];
-        double x2 = determinantXwithYis0 / determinantWithYis0;
-        double y2 = 0;
-        double z2 = determinantZwithYis0 / determinantWithYis0;
-        solutions[1] = new Point3D(x2, y2, z2);
+        return  crossProduct;
     }
 
     /**
@@ -91,7 +65,7 @@ public class Model3 {
         //double z= ((-n2.get(1)/n1.get(1))*(n1.get(0)*x+n1.get(3))-n2.get(0)*x- -n2.get(3)) /(n2.get(2)-n1.get(2)*n2.get(1)/n1.get(1));
         //double z=((-n2.get(1/n1.get(1)))*n1.get(3)-n2.get(3))/((n2.get(2)*n2.get(1)/n1.get(1))*n1.get(2));
         //double y=(-n1.get(3)-n1.get(2)*z)/n1.get(1);
-        System.out.println("x: " + x + " y: " + y + " z: " + z);
+      //  System.out.println("x: " + x + " y: " + y + " z: " + z);
         Point3D point1 = new Point3D(x, y, z);
         return point1;}
 
@@ -100,16 +74,16 @@ public class Model3 {
      * @return the equation of the plane given by i (1 or 2)
      */
 
-  /*  public  String planeEq(int i) {
+    public  String planeEq(int i) {
         switch (i) {
             case 1:
-           //     String st = n1[0].toString() + "x +" + n1[1].toString() + "y +" + n1[2].toString() + "z =" + n1[3].toString();
+            String st = n1[0] + "x +" + n1[1] + "y +" + n1[2] + "z = -" + n1[3];
                 return st;
             case 2:
-              //  String st2 = n2[0].toString() + "x +" + n2[1].toString() + "y +" + n2[2].toString() + "z =" + n2[3].toString();
+                String st2 = n2[0] + "x +" + n2[1] + "y +" + n2[2] + "z = -" + n2[3];
                 return st2;}
         return null;}
-*/
+
 
     //Lines
 
@@ -194,9 +168,7 @@ public class Model3 {
     public Point3D intersectionLines(){
         double [][]A = Model3.getMatrixA_2x2();
         double[] b = Model3.getMatrixB_2x2();
-        double[] x = SLESolve(A, b);
-        //S=x[0]
-
+        x = SLESolve(A, b);
         double xpoint=numbers.get(0)*x[0]+numbers.get(1);
         double ypoint=numbers.get(2)*x[0]+numbers.get(3);
         double zpoint=numbers.get(4)*x[0]+numbers.get(5);
@@ -302,7 +274,7 @@ public class Model3 {
         return arr;}
 
 
-    public double distanceSkew() {
+    public String distanceSkew() {
         double[] v=new double[3];
         v[0]=numbers.get(7)-numbers.get(1);
         v[1]=numbers.get(9)-numbers.get(3);
@@ -322,7 +294,7 @@ public class Model3 {
        double lower=Math.sqrt(d[0]*d[0]+d[1]*d[1]+d[2]*d[2]);
 
        double distance=upper/lower;
-     return distance;
+     return String.valueOf(distance);
 
     }
 

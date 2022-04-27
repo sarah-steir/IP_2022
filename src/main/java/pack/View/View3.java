@@ -5,13 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import pack.Controller.Controller1;
 import pack.Controller.Controller3;
-import pack.Model.Model3;
-import pack.View.Customs.Custom;
-import pack.View.Customs.CustomButton;
-import pack.View.Customs.CustomRadioButton;
-import pack.View.Customs.CustomTextField;
+import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
 
 import java.util.ArrayList;
@@ -21,6 +16,11 @@ import static pack.View.Customs.Custom.p;
 public class View3 extends Pane implements iView {
 
     private CustomTextField[][] fieldListRb1, fieldListRb2;
+
+    public CustomRadioButton getRb1() {
+        return rb1;
+    }
+
     private GridPane fieldsPane;
     private CustomRadioButton rb1, rb2;
     private CustomButton btnStart, btnReset;
@@ -36,6 +36,7 @@ public class View3 extends Pane implements iView {
     private VBox vbRight;
 
     private Pane backgroundPane;
+    Controller3 controller = new Controller3(this);
 
     public View3() {
 
@@ -56,7 +57,10 @@ public class View3 extends Pane implements iView {
         vbLeft = new VBox();
         vbRight = new VBox();
 
+
         this.backgroundPane = new Pane();
+
+
 
         setVbUi(setHbRadios(this.rb1, this.rb2));
         setVbPo("Planes and lines");
@@ -103,43 +107,22 @@ public class View3 extends Pane implements iView {
 
     }
 
+    public Graph getGraph() {
+        return graph;
+    }
+
     //TODO method for filling empty textfields
     public void handleStart(boolean isRb1Selected) {
+        controller.getValues();
+        controller.addElementsGraph();
+        addOutput(controller);
         if (isRb1Selected) {
             for (int i = 0; i < fieldListRb1.length; i++) {
                 for (int j = 0; j < fieldListRb1[0].length; j++) {
                     if (fieldListRb1[i][j].getText().equals("")) {
-                        fieldListRb1[i][j].setText("0");
-                    }
+                        fieldListRb1[i][j].setText("0");}}}
 
-                }
-            }
-
-            Model3 model3 = new Model3();
-            model3.bringT(getFieldListRb1());
-            model3.setThingies();
-
-            if(model3.det()==true) {
-                double [][]A = Model3.getMatrixA_2x2();
-                double[] b = Model3.getMatrixB_2x2();
-                double[] x = model3.SLESolve(A, b);
-                System.out.println("S = "+ x[0]);
-                System.out.println("T = "+ x[1]);
-
-                graph.addPoint(model3.intersectionLines());}
-            if(model3.det()==false) {  model3.distanceSkew(); System.out.println("Skew lines hehe");}
-
-            if(model3.parallel()==true) {System.out.println("Parallel lines babe");}
-
-
-           //First line
-            graph.addLine(  model3.linesPoints(1,0), model3.linesPoints(1,2),model3.dirVector(1));
-            //Second line
-            graph.addLine(model3.linesPoints(2,0),model3.linesPoints(2,2),model3.dirVector(2));
-            Controller3 controller = new Controller3(this);
-            addOutput(controller);
-        }
-
+            addOutput(controller);}
         // for rb2
         else {
             for (int i = 0; i < fieldListRb2.length; i++) {
@@ -147,27 +130,42 @@ public class View3 extends Pane implements iView {
                     if (fieldListRb2[i][j].getText().equals("")) {
                         fieldListRb2[i][j].setText("0");}}}
 
-            Model3 c3 = new Model3();
-            c3.transform(getFieldListRb2());
-            c3.crossProduct(c3.n1,c3.n2);
-            c3.solutionPoints(5);
-            graph.addPlane(c3.n1[0]/-c3.n1[3],c3.n1[1]/-c3.n1[3],c3.n1[2]/-c3.n1[3],"Plane1");
-            graph.addPlane(c3.n2[0]/-c3.n2[3],c3.n2[1]/-c3.n2[3],c3.n2[2]/-c3.n2[3],"Plane1");
-            graph.addLine(c3.solutionPoints(95), c3.solutionPoints(-10),c3.crossProduct(c3.n1,c3.n2));
 
-          /*  Label l= new Label("Direction vector: <"+c3.crossProduct()[0]+", "+c3.crossProduct()[1]+", "+c3.crossProduct()[2]+">");
-            this.vbPo.getChildren().clear();
-            this.vbPo.getChildren().add(l);*/
-            Controller3 controller3 = new Controller3(this);
-            addOutput(controller3);
+
+            addOutput(controller);
         }}
 
     public void addOutput(Controller3 controller) {
+
+
         this.backgroundPane.getChildren().clear();
+        VBox vbSolutions = new VBox();
+        VBox vbGeneric= new VBox();
+
+        for(int i = 0; i<controller.GenericTexts().length; i++) {
+            CustomText textX = new CustomText(controller.GenericTexts()[i].getText());
+            textX.changeSize(20);
+            vbGeneric.getChildren().add(textX);
+
+        }
 
 
-        // Hbox bla bla
-        this.backgroundPane.getChildren().addAll();
+        for(int i = 0; i<controller.SolutionTexts().length; i++) {
+            CustomText textX = new CustomText(controller.SolutionTexts()[i].getText());
+            textX.changeSize(20);
+            vbSolutions.getChildren().add(textX);
+
+        }
+
+        vbGeneric.setSpacing(15);
+        vbGeneric.setLayoutX(10);
+        vbGeneric.setLayoutY(130);
+
+        vbSolutions.setSpacing(15);
+        vbSolutions.setLayoutX(10);
+        vbSolutions.setLayoutY(375);
+
+        this.backgroundPane.getChildren().addAll(vbGeneric,vbSolutions);
     }
 
     public void handleReset() {
@@ -177,7 +175,12 @@ public class View3 extends Pane implements iView {
         rb1.setSelected(false);
         rb2.setSelected(false);
         this.vbUi.getChildren().remove(fieldsPane);
+        this.backgroundPane.getChildren().clear();
         this.getChildren().addAll(this.vbLeft, this.vbRight);}
+
+    public CustomRadioButton getRb2() {
+        return rb2;
+    }
 
     public void setActions() {
         rb1.setOnAction(event -> {
