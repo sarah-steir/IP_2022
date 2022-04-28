@@ -555,7 +555,10 @@ public class View2 extends Pane implements iView {
         this.vbUi.setPrefSize(500, 395);
         this.vbUi.setStyle("-fx-background-color: #333335");
         this.emptyBox.setAlignment(Pos.CENTER);
-        this.emptyBox.setPrefSize(500, 50);
+        this.emptyBox.setMaxHeight(20);
+        this.emptyBox.setStyle("-fx-border-width: 2px;\n" +
+                "    -fx-border-color: red;\n" +
+                "    -fx-border-insets: -2px;");
         this.emptyBox.getChildren().add(invisibleButton);
         this.vbUi.getChildren().addAll(hbRadios, hbComboBox, this.emptyBox);
     }
