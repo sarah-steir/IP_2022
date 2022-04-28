@@ -73,7 +73,7 @@ public class View2 extends Pane implements iView {
         this.btnSave = new CustomButton("Save Matrix");
         this.btnSave.setDisable(true);
         this.btnSave.setPrefSize(200, 20);
-       JASONDERULO = new ModelForJSON();
+        this.JASONDERULO = new ModelForJSON();
 
        names = getThemNames();
         UpdateLeCombobox();
@@ -119,8 +119,6 @@ public class View2 extends Pane implements iView {
 ////            System.out.println(stuff.get(i).toString());
 ////            cb.getItems().add(stuff.get(i));
 ////        }
-
-
     }
     private void UpdateLeCombobox(){
 
@@ -404,7 +402,12 @@ public class View2 extends Pane implements iView {
         vbLeft.setPrefSize(500, 695);
         vbLeft.setLayoutX(10);
         vbLeft.setLayoutY(14);
-        vbLeft.getChildren().addAll(vbUi);
+
+        ImageView iv = new ImageView(new Image(p + "EigenReminder.png"));
+        iv.setFitWidth(500);
+        iv.setFitHeight(300);
+
+        vbLeft.getChildren().addAll(vbUi, iv);
 
         return  vbLeft;
     }
@@ -549,9 +552,10 @@ public class View2 extends Pane implements iView {
 
     private void setVbUi(HBox hbRadios, HBox hbComboBox) {
         this.vbUi.setSpacing(5);
-        this.vbUi.setPrefSize(500, 695);
+        this.vbUi.setPrefSize(500, 395);
         this.vbUi.setStyle("-fx-background-color: #333335");
         this.emptyBox.setAlignment(Pos.CENTER);
+        this.emptyBox.setPrefSize(500, 50);
         this.emptyBox.getChildren().add(invisibleButton);
         this.vbUi.getChildren().addAll(hbRadios, hbComboBox, this.emptyBox);
     }
@@ -602,15 +606,15 @@ public class View2 extends Pane implements iView {
 
     public HBox setFields (CustomTextField[][] textFields) {
         ImageView iv1 = new ImageView(new Image(p + "Right.png"));
-        iv1.setFitWidth(54);
-        iv1.setFitHeight(270);
+        iv1.setFitWidth(44);
+        iv1.setFitHeight(220);
         ImageView iv2 = new ImageView(new Image(p + "Left.png"));
-        iv2.setFitWidth(54);
-        iv2.setFitHeight(270);
+        iv2.setFitWidth(44);
+        iv2.setFitHeight(220);
 
         GridPane gridPane = new GridPane();
-        gridPane.setVgap(20);
-        gridPane.setHgap(20);
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
         gridPane.setAlignment(Pos.CENTER);
 
         HBox hbText = new HBox();
@@ -644,7 +648,7 @@ public class View2 extends Pane implements iView {
             }
         }
         HBox hbFields = new HBox();
-        hbFields.setPadding(new Insets(20, 0, 0, 0));
+        //hbFields.setPadding(new Insets(20, 0, 0, 0));
         hbFields.getChildren().addAll(iv1, gridPane, iv2, hbText);
         hbFields.setAlignment(Pos.CENTER);
         return hbFields;

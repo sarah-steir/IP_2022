@@ -135,4 +135,13 @@ public interface iView {
         iv.setFitHeight(105);
         return iv;
     }
+
+    default VBox setReminder() {
+        VBox vbReminder = new VBox();
+        vbReminder.setPrefSize(500, 200);
+        ImageView iv = new ImageView(new Image(p + "EigenRemainder.png"));
+        iv.setFitHeight(200);
+        iv.setFitWidth(500);
+        return vbReminder;
+    }
 }
