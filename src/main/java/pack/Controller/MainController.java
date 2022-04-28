@@ -53,6 +53,8 @@ public class MainController {
 
     public void handleLinesQuestions() {
         ImageView iv = new ImageView(new Image(p + "LinesQuestions.png"));
+        iv.setFitWidth(683);
+        iv.setFitHeight(712);
         Stage stage = new Stage();
         stage.setScene(new Scene(new Pane(iv)));
         stage.setTitle("Lines & Planes 101");

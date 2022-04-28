@@ -48,7 +48,7 @@ public class MainView extends Pane {
         AnchorPane menuPane = new AnchorPane();
         AnchorPane.setTopAnchor(menuBar, 0.0);
 
-        Menu about = new Menu("About");
+        Menu about = new Menu("About ");
         MenuItem ourTeam = new MenuItem("Our team :)");
         MenuItem credits = new MenuItem("Credits");
         about.getItems().addAll(ourTeam, credits);
