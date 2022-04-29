@@ -37,13 +37,14 @@ public class Controller3 {
         if(view.getRb1().isSelected()) {
         view.getGraph().addLine( model.linesPoints(1,0), model.linesPoints(1,2),model.dirVector(1));
         view.getGraph().addLine(model.linesPoints(2,0),model.linesPoints(2,2),model.dirVector(2));
-     if(identifyLines()=="intersecting"){view.getGraph().addPoint(model.intersectionLines());}}
+     if(identifyLines()=="intersecting"){view.getGraph().addPoint(model.intersectionLines());
+     }}
 
       if(view.getRb2().isSelected()) {
             model.crossProduct(model.n1,model.n2);
             model.solutionPoint();
-            view.getGraph().addPlane(model.n1[3]/-model.n1[0],model.n1[3]/-model.n1[1],model.n1[3]/-model.n1[2],"Plane 1");
-            view.getGraph().addPlane(model.n2[3]/-model.n2[0],model.n2[3]/-model.n2[1],model.n2[3]/-model.n2[2],"Plane 2");
+            view.getGraph().addPlane(model.n1[3]/-model.n1[0],model.n1[3]/-model.n1[1],model.n1[3]/-model.n1[2]);
+            view.getGraph().addPlane(model.n2[3]/-model.n2[0],model.n2[3]/-model.n2[1],model.n2[3]/-model.n2[2]);
             view.getGraph().addLine(model.solutions[0], model.solutions[1],model.crossProduct(model.n1,model.n2));}
     }
 
@@ -51,13 +52,13 @@ public class Controller3 {
     public CustomText[] GenericTexts() {
         if(view.getRb1().isSelected()) {
             CustomText top= new CustomText("Vector equations of the lines: ");
-            Text l = (Text) view.getGraph().labelsList.get(2);
+            Text l = (Text) view.getGraph().labelsList.get(0);
             CustomText c = new CustomText(l.getText());
-            Text l2 = (Text) view.getGraph().labelsList.get(5);
+            Text l2 = (Text) view.getGraph().labelsList.get(1);
             CustomText c2 = new CustomText(l2.getText());
             CustomText[] custom = {top,c, c2};
-            return custom;}
-
+            return custom;
+        }
         else {
             CustomText top= new CustomText(" Equations of the planes: ");
             CustomText c= new CustomText(model.planeEq(1));

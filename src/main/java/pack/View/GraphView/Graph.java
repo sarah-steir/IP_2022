@@ -135,6 +135,8 @@ public class Graph extends Group {
 
     /**
      * This function takes three coordinates (a Point3D), and then translates a sphere to these coordinates in order to "create a point"
+     * It also adds a Label and makes it white because all Sphere3D that we use are white and needs a Label
+     *
      * @param point with the three coordinates to be added
      */
     public void addPoint(Point3D point) {
@@ -143,7 +145,9 @@ public class Graph extends Group {
         sphere.setTranslateY(point.getY());
         sphere.setTranslateZ(point.getZ());
         createPointLabel(point);
-        addPointToList(sphere);
+        thingsToGraphList.add(sphere);
+        sphere.setMaterial(new PhongMaterial(white));
+        this.update();
     }
 
     /**
@@ -151,19 +155,14 @@ public class Graph extends Group {
      * The first one, Line line1, goes from point1, passes through point2 and extends to 1000 pixels
      * The second one, Line line2, goes from point2, passes through point1 and extends to 1000 pixels
      * line1 is like line2 but in the opposite direction, so that it goes beyond each point
+     *
      * @param point1 the first point the line passes through
      * @param point2 the second point the line passes through
      */
     public void addLine(Point3D point1, Point3D point2, double[]direction) {
-
-        this.addPoint(point1);
-        this.addPoint(point2);
-
         Line line1 = this.FindOneLine(point1, point2);
         Line line2 = this.FindOneLine(point2, point1);
-
-        createLineLabel(point1, direction);
-        addLineToList(line1, line2);
+        addLineToList(line1, line2, point1, direction);
     }
 
     /**
@@ -203,9 +202,8 @@ public class Graph extends Group {
      * @param x the x-intercept
      * @param y the y-intercept
      * @param z the z-intercept
-     * @param equation a String of the equation to display
      */
-    public void addPlane(double x, double y, double z, String equation) {
+    public void addPlane(double x, double y, double z) {
 
      //   System.out.println("x = " + x + ", y = " + y + ", z = " + z);
         Rectangle plane = new Rectangle(-500, -500, 1000, 1000);
@@ -222,54 +220,33 @@ public class Graph extends Group {
         Rotate rotate = new Rotate(angle, m.getX(), m.getY(), 0, vector);
         plane.getTransforms().addAll(rotate);
 
-        createPlaneLabel(equation);
         addPlaneToList(plane);
     }
 
     /**
      * Chooses the right color depending on how many elements are already in the graph
-     * and adds the Point/Sphere
-     * @param sphere the Visual representation of a Point3D, a Sphere in this case
-     */
-    private void addPointToList(Sphere sphere) {
-        a++;
-        thingsToGraphList.add(sphere);
-        switch (a) {
-            case 1 -> sphere.setMaterial(new PhongMaterial(red));
-            case 2 -> sphere.setMaterial(new PhongMaterial(yellow));
-            case 3 -> sphere.setMaterial(new PhongMaterial(blue));
-            default -> sphere.setMaterial(new PhongMaterial(white));
-        }
-        this.update();
-    }
-
-    /**
-     * Chooses the right color depending on how many elements are already in the graph
-     * and adds the Line (Lines technically)
+     * and adds the Line (LineS technically)
      *
      * @param line1 The line that goes from point2 to point1, and past point1
      * @param line2 The line that goes from point1 to point2, and past point2
      */
-    private void addLineToList(Line line1, Line line2) {
+    private void addLineToList(Line line1, Line line2, Point3D point, double[] direction) {
         a++;
         thingsToGraphList.add(line1);
         thingsToGraphList.add(line2);
         switch (a) {
             case 1 -> {
-                line1.setStroke(red);
-                line2.setStroke(red);
+                line1.setStroke(blue);
+                line2.setStroke(blue);
             }
             case 2 -> {
                 line1.setStroke(yellow);
                 line2.setStroke(yellow);
             }
             case 3 -> {
-                line1.setStroke(blue);
-                line2.setStroke(blue);
-            }
-            default -> {
                 line1.setStroke(white);
                 line2.setStroke(white);
+                this.createLineLabel(point, direction);
             }
         }
         this.update();
@@ -278,6 +255,7 @@ public class Graph extends Group {
     /**
      * Chooses the right color depending on how many elements are already in the graph
      * and adds the Rectangle/Plane
+     *
      * @param rectangle the plane quoi
      */
     private void addPlaneToList(Rectangle rectangle) {
@@ -285,10 +263,9 @@ public class Graph extends Group {
         rectangle.setOpacity(0.5);
         thingsToGraphList.add(rectangle);
         switch (a) {
-            case 1 -> rectangle.setFill(red);
+            case 1 -> rectangle.setFill(blue);
             case 2 -> rectangle.setFill(yellow);
-            case 3 -> rectangle.setFill(blue);
-            default -> rectangle.setFill(white);
+            case 3 -> rectangle.setFill(red);
         }
         this.update();
     }
@@ -317,16 +294,6 @@ public class Graph extends Group {
         label.setTranslateX(point1.getX());
         label.setTranslateY(point1.getY());
         label.setTranslateZ(point1.getZ());
-        labelsList.add(label);
-    }
-
-    /**
-     * Creates the label and places it at the origin cause I don't know where else
-     * @param equation a String of the plane equation
-     */
-    private void createPlaneLabel(String equation) {
-        Text label = new Text(equation);
-        label.setScaleY(-1);
         labelsList.add(label);
     }
 
@@ -375,6 +342,9 @@ public class Graph extends Group {
         scalable.getChildren().addAll(labelsList);
     }
 
+    /***
+     * Cleans everything in the graph except the axis
+     */
     public void reset() {
         thingsToGraphList.clear();
         labelsList.clear();
