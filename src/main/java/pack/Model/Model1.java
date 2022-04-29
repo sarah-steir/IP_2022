@@ -425,6 +425,34 @@ public class Model1 {
         return str;
     }
 
+    public String[] getConstants(double[] B) {
+        return this.round(B);
+    }
+
+    public String[][] getCoefficients(double[][] A) {
+        return this.round(A);
+    }
+
+    public String[] round (double[] x) {
+        String[] lol = new String[x.length];
+        for (int i=0; i<x.length; i++) {
+            lol[i] = String.format("%.2f", x[i]);
+        }
+        return lol;
+    }
+
+    public String[][] round(double[][] x) {
+        String[][] lol = new String[x.length][x[0].length];
+        for (int i = 0; i < x.length; i++) {
+            for (int j = 0; j < x[0].length; j++) {
+                lol[i][j] = String.format("%.2f", x[i][j]);
+                if (lol[i][j].equals("-0.00")) {
+                    lol[i][j] = "0.00";
+                }
+            }
+        }
+        return lol;
+    }
 
     /**
      * function to print solution

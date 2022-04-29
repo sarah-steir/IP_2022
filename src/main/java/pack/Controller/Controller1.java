@@ -8,6 +8,7 @@ import pack.View.Customs.CustomTextField;
 import pack.View.View1;
 
 
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -64,16 +65,18 @@ public class Controller1 {
     }
 
 
-    String rank;
-    String boop;
-    public String[] getOutput() {
+    private String rank;
+    public ArrayList<String[]> getOutput() {
         model = new Model1(this.matrixCoefficients, is2by2);
         if (is2by2) {
             double[][] A = Model1.getMatrixA_2x2();
             double[] b = Model1.getMatrixB_2x2();
             double[] x = model.SLEsolve(A, b);
-            boop = model.printRowEchelonForm(A,b);
+
             String[] sol = new String[x.length];
+
+            ArrayList<String[]> output = new ArrayList<>();
+            output.add(model.getConstants(b));
 
             //no solutions
             if (x[2] == 0) {
@@ -81,7 +84,8 @@ public class Controller1 {
                     sol[i] = "No solution";
                 }
                 rank = "0";
-                return sol;
+                output.add(sol);
+                return output;
             }
             //unique solution
             else if (x[2] == 1) {
@@ -96,8 +100,9 @@ public class Controller1 {
                     sol[1] = " t";
                 rank = "1";
             }
-            sol = this.round(x);
-            return sol;
+            sol = model.round(x);
+            output.add(sol);
+            return output;
         } else {
             double[][] A = Model1.getMatrixA_3x3();
             double[] b = Model1.getMatrixB_3x3();
@@ -105,18 +110,22 @@ public class Controller1 {
 
             String[] sol = new String[x.length];
 
+            ArrayList<String[]> output = new ArrayList<>();
+            output.add(model.getConstants(b));
+
             if (x[4] == 0) { // No Solution
                 for (int i = 0; i < x.length - 1; i++)
                     sol[i] = " No solution";
                 rank = "0";
 
-                return sol;
+                output.add(sol);
+                return output;
             } // 1 Solution
             else if (x[4] == 1){
                 for (int i = 0; i < x.length - 1; i++) {
                     sol[i] = " " + x[i];
                 }
-                rank = ""+b.length;
+                rank = "" + b.length;
                 } // 1 Free Variable
             else if (x[4] == 2) {
                 sol[0] = " " + x[0] + " + (" + x[1] + ")t";
@@ -131,18 +140,20 @@ public class Controller1 {
 
                 rank = "1";
             }
-//            sol = this.round(x);
-            sol[sol.length - 1] = boop;
-            return sol;
+            sol = model.round(x);
+            output.add(sol);
+            return output;
         }
     }
 
-    public String[] round(double[] x) {
-        String[] lol = new String[x.length];
-        for (int i=0; i<x.length; i++) {
-                lol[i] = String.format("%.2f", x[i]);
+    public String[][] getCoefficients() {
+        double[][] A;
+        if (is2by2) {
+            A = Model1.getMatrixA_2x2();
+        } else {
+            A = Model1.getMatrixA_3x3();
         }
-        return lol;
+        return model.getCoefficients(A);
     }
 
     public String getRank() {

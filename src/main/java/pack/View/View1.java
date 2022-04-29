@@ -10,6 +10,7 @@ import pack.Controller.Controller1;
 import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static pack.View.Customs.Custom.p;
@@ -162,27 +163,28 @@ public class View1 extends Pane implements iView {
 //        VBox vbOutput = new VBox();
 //        vbOutput.setSpacing(15);
 //        vbOutput.setPadding(new Insets(15));
-        String[] sol = new String[controller.getArraySize()];
-        sol = controller.getOutput();
+        ArrayList<String[]> output = controller.getOutput();
+
+        int solIndex = 1;
         VBox vbSolutions = new VBox();
-        CustomText textX = new CustomText("X = " + sol[0]);
+        CustomText textX = new CustomText("X = " + output.get(solIndex)[0]);
         textX.changeSize(20);
         vbSolutions.getChildren().add(textX);
-        CustomText textY = new CustomText("Y = " + sol[1]);
+        CustomText textY = new CustomText("Y = " + output.get(solIndex)[1]);
         textY.changeSize(20);
         vbSolutions.getChildren().add(textY);
         vbSolutions.setSpacing(15);
         vbSolutions.setLayoutX(10);
         vbSolutions.setLayoutY(430);
-        if (sol.length > 3) {
-            CustomText textZ = new CustomText("Z = " + sol[2]);
+        if (output.get(solIndex).length > 3) {
+            CustomText textZ = new CustomText("Z = " + output.get(solIndex)[2]);
             textZ.changeSize(20);
             vbSolutions.getChildren().add(textZ);
             vbSolutions.setLayoutY(410);
         }
 
         // Anything
-        HBox hbReducedMatrix = new HBox();
+        HBox hbReducedMatrix = new HBox(10);
         ImageView iv1 = new ImageView(new Image(p + "Right.png"));
         iv1.setFitWidth(10);
         iv1.setFitHeight(75);
@@ -192,13 +194,38 @@ public class View1 extends Pane implements iView {
         ImageView iv3 = new ImageView(new Image(p + "Bar.png"));
         iv3.setFitWidth(10);
         iv3.setFitHeight(75);
-        // get the bar image
-        HBox middleMatrix = new HBox();
-        CustomText reducedMatrix = new CustomText(sol[sol.length - 1]);
-        reducedMatrix.changeSize(20);
-        hbReducedMatrix.getChildren().addAll(iv1, reducedMatrix, iv2);
+
+        GridPane gp = new GridPane();
+        gp.setVgap(10);
+        gp.setHgap(10);
+        for (int i = 0; i < controller.getCoefficients().length; i++) {
+            for (int j = 0; j < controller.getCoefficients()[0].length; j++) {
+                CustomText coefficientMatrix = new CustomText(controller.getCoefficients()[i][j]);
+                coefficientMatrix.changeSize(20);
+                gp.add(coefficientMatrix, j, i);
+            }
+        }
+        VBox vbConstants = new VBox(10);
+
+        for (int i = 0; i < output.get(0).length; i++) {
+            CustomText constantMatrix = new CustomText(output.get(0)[i]);
+            constantMatrix.changeSize(20);
+            vbConstants.getChildren().add(constantMatrix);
+        }
+
+        hbReducedMatrix.getChildren().addAll(iv1, gp, iv3, vbConstants, iv2);
         hbReducedMatrix.setLayoutX(20);
         hbReducedMatrix.setLayoutY(150);
+
+        if (rb2.isSelected()) {
+            iv1.setFitHeight(105);
+            iv1.setFitWidth(15);
+            iv2.setFitHeight(105);
+            iv2.setFitWidth(15);
+            iv3.setFitHeight(105);
+
+            hbReducedMatrix.setLayoutY(130);
+        }
 
         HBox hbRank = new HBox();
         CustomText rankText = new CustomText(controller.getRank());
