@@ -16,7 +16,7 @@ import static pack.View.Customs.Custom.p;
 public interface iView {
 
     // Tayba is testing shiz rn so pls dont delete these extra functions down here
-    default GridPane setFields (CustomTextField[][] textFields, String[] signs, CustomButton btnStart) {
+    default GridPane setFields(CustomTextField[][] textFields, String[] signs, CustomButton btnStart) {
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(10);
@@ -26,7 +26,7 @@ public interface iView {
         int cols = textFields[0].length;
 
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols;  j++) {
+            for (int j = 0; j < cols; j++) {
                 HBox hbTextField = new HBox();
                 hbTextField.setSpacing(10);
 
@@ -86,7 +86,7 @@ public interface iView {
         vbLeft.setLayoutY(14);
         vbLeft.getChildren().addAll(vbUi, graphPane);
 
-        return  vbLeft;
+        return vbLeft;
     }
 
     default VBox setRight(VBox vbPo, HBox hbButtons) {
@@ -134,5 +134,14 @@ public interface iView {
         iv.setFitWidth(225);
         iv.setFitHeight(105);
         return iv;
+    }
+
+    default VBox setReminder() {
+        VBox vbReminder = new VBox();
+        vbReminder.setPrefSize(500, 200);
+        ImageView iv = new ImageView(new Image(p + "EigenRemainder.png"));
+        iv.setFitHeight(200);
+        iv.setFitWidth(500);
+        return vbReminder;
     }
 }

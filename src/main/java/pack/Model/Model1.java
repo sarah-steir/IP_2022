@@ -38,7 +38,7 @@ public class Model1 {
     public Model1(ArrayList<Double> matrixOfCoefficients, boolean is2by2) {
         if (is2by2) {
             System.out.println("what the fuck is goin on ");
-            n =2;
+            n = 2;
             // A matrix for 2x2
             //Row 1
             this.a1 = matrixOfCoefficients.get(0);
@@ -143,7 +143,6 @@ public class Model1 {
     }
 
 
-
 // SLE SOLVER
 
     // Gaussian elimination with partial pivoting
@@ -155,31 +154,31 @@ public class Model1 {
             int i;
 
             // find pivot row
-            i = FindPivot(A,p,n);
+            i = FindPivot(A, p, n);
 
             // If pivot row is not current row, swap
             if (i != p)
-                SwapRow(A,b,p,i,n);
+                SwapRow(A, b, p, i, n);
 
             // Now normalize if needed
             //param p, A, B
-            NormRow(A,b,p,n);
+            NormRow(A, b, p, n);
 
 
             // Now zero out rows below
-            LowerTri(A,b,p,n);
+            LowerTri(A, b, p, n);
 
         }
         // Normalize last row
         // Avoid divide by zero
-        NormRow(A,b,n-1,n);
+        NormRow(A, b, n - 1, n);
 
 
         // printMat(A,b,n);
 
         // Now eliminate off-diagonal elements above the diagonal
         // Start at bottom row and work way up
-        UpperTri(A,b,n);
+        UpperTri(A, b, n);
 
 
         /** Print row echelon form **/
@@ -204,17 +203,17 @@ public class Model1 {
 
         //check for solutions + free variables
         int ns = n;
-        if (n==2)
+        if (n == 2)
             ns = n + 1;
         else
-            ns = n+ 2;
+            ns = n + 2;
         double[] solution = new double[ns];
 
         if (checkSol < 0) {
             //System.out.println("No, no solutions...");
             for (int i = ns - 1; i >= 0; i--)
                 solution[i] = 0.0;
-           // return solution;
+            // return solution;
         }
         if (checkSol == 0) {
             /** back substitution **/
@@ -225,8 +224,8 @@ public class Model1 {
                     sum += A[i][j] * solution[j];
                 solution[i] = (b[i] - sum) / A[i][i];
             }
-            if (n==2)
-                solution[n]=1;
+            if (n == 2)
+                solution[n] = 1;
             else {
                 solution[n] = 1;
                 solution[n + 1] = 1;
@@ -234,7 +233,7 @@ public class Model1 {
             /** Print solution **/
             printSolution(solution);
 
-           // return solution;
+            // return solution;
 
         }
         if (checkSol > 0) {
@@ -280,7 +279,6 @@ public class Model1 {
 
 
     }
-
 
 
 // FUNCTIONS USED FOR SOLVE
@@ -329,7 +327,7 @@ public class Model1 {
     }
 
     //S-WAP
-    public static void SwapRow(double A[][],double b[], int row1, int row2, int n) {
+    public static void SwapRow(double A[][], double b[], int row1, int row2, int n) {
         double temp = 0;
         for (int i = 0; i < n; i++) {
             temp = A[row1][i];
@@ -342,9 +340,8 @@ public class Model1 {
     }
 
 
-
     //NORMALIZE
-    public static void NormRow(double A[][], double b[], int row, int n){
+    public static void NormRow(double A[][], double b[], int row, int n) {
         double maxv = A[row][row];
         if (maxv != 0) {
             for (int i = 0; i < n; i++)
@@ -355,7 +352,7 @@ public class Model1 {
     }
 
     // lower triangular stoof
-    public static void LowerTri(double A[][], double b[], int col, int n){
+    public static void LowerTri(double A[][], double b[], int col, int n) {
         int row = col;
         double factor = A[col][col];
         double alpha = 0.0;
@@ -372,24 +369,23 @@ public class Model1 {
     }
 
 
-
     //Normalize last row + Avoid dividing by 0
-    public static void NormLastR(double A[][], double b[], int n){
-        if (A[n-1][n-1] != 0){
-            for(int j=0;j<n;j++)
-                A[n-1][j] = A[n-1][j] / A[n-1][n-1];
-            b[n-1] = b[n-1] / A[n-1][n-1];
+    public static void NormLastR(double A[][], double b[], int n) {
+        if (A[n - 1][n - 1] != 0) {
+            for (int j = 0; j < n; j++)
+                A[n - 1][j] = A[n - 1][j] / A[n - 1][n - 1];
+            b[n - 1] = b[n - 1] / A[n - 1][n - 1];
 
         }
     }
 
     //upper trangular elim stoof
-    public static void UpperTri(double A[][], double b[], int n){
-        for (int p = n-1; p >= 0; p--) {
+    public static void UpperTri(double A[][], double b[], int n) {
+        for (int p = n - 1; p >= 0; p--) {
             // Now zero out rows below
-            for (int i = p-1; i >=0; i--) {
+            for (int i = p - 1; i >= 0; i--) {
                 // Avoid divide by zero and multiplying by zero
-                if(A[i][p] != 0 && A[p][p] != 0) {
+                if (A[i][p] != 0 && A[p][p] != 0) {
                     double alpha = A[i][p] / A[p][p];
                     // Recalculate augmented portion;
                     b[i] -= alpha * b[p];
@@ -405,7 +401,6 @@ public class Model1 {
     }
 
 
-
     //  THIS WILL BE USED IN THE UI INSTEAD OF PRINTING IT IT WILL RETURN IT AS A STRING ON A LOOP AND BE ADDED EITHER IN THE VIEW OR CALLED IN VIEW FROM MODEL
 
     /**
@@ -418,13 +413,41 @@ public class Model1 {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++)
                 str += A[i][j] + "\t";
-            str +=  "|" + B[i] + "\n";
+            str += "|" + B[i] + "\n";
         }
         str += "\n";
         System.out.println(str);
         return str;
     }
 
+    public String[] getConstants(double[] B) {
+        return this.round(B);
+    }
+
+    public String[][] getCoefficients(double[][] A) {
+        return this.round(A);
+    }
+
+    public String[] round(double[] x) {
+        String[] lol = new String[x.length];
+        for (int i = 0; i < x.length; i++) {
+            lol[i] = String.format("%.2f", x[i]);
+        }
+        return lol;
+    }
+
+    public String[][] round(double[][] x) {
+        String[][] lol = new String[x.length][x[0].length];
+        for (int i = 0; i < x.length; i++) {
+            for (int j = 0; j < x[0].length; j++) {
+                lol[i][j] = String.format("%.2f", x[i][j]);
+                if (lol[i][j].equals("-0.00")) {
+                    lol[i][j] = "0.00";
+                }
+            }
+        }
+        return lol;
+    }
 
     /**
      * function to print solution
@@ -468,11 +491,12 @@ public class Model1 {
 
     /**
      * This function returns a
+     *
      * @param i random number to plug as x-value
      * @return
      */
     public Point3D solutionPoints(int i) {
-        double y = (d1 - a1*i)/a2;
+        double y = (d1 - a1 * i) / a2;
         return new Point3D(i, y, 0);
     }
 }

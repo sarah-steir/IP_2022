@@ -59,6 +59,5 @@ public class Controller2 {
         }
     }
 
-    // Get the reduced matrix as well cause WHY NOT ya schmuck
 
 }
