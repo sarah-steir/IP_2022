@@ -77,7 +77,7 @@ public class Controller1 {
 
             ArrayList<String[]> output = new ArrayList<>();
             output.add(model.getConstants(b));
-
+            sol = model.round(x);
             //no solutions
             if (x[2] == 0) {
                 for (int i = 0; i < x.length - 1; i++) {
@@ -96,11 +96,11 @@ public class Controller1 {
             }
             //if there is 1 free variable
             else if (x[2] == 2) {
+                System.out.println("ARE YOU EVEN HERE BRO");
                 sol[0] = " " + x[0] + " + (" + x[1] + ")t";
                 sol[1] = " t";
                 rank = "1";
             }
-            sol = model.round(x);
             output.add(sol);
             return output;
         } else {
@@ -112,6 +112,7 @@ public class Controller1 {
 
             ArrayList<String[]> output = new ArrayList<>();
             output.add(model.getConstants(b));
+            sol = model.round(x);
 
             if (x[4] == 0) { // No Solution
                 for (int i = 0; i < x.length - 1; i++)
@@ -140,7 +141,6 @@ public class Controller1 {
 
                 rank = "1";
             }
-            sol = model.round(x);
             output.add(sol);
             return output;
         }
