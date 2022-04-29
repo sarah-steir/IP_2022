@@ -18,8 +18,11 @@ public class MainController {
     }
 
     public void handleOurTeam() {
-        ImageView iv = new ImageView(new Image(p + "OurTeams.png"));
+        ImageView iv = new ImageView(new Image(p + "OurTeam.png"));
+        iv.setFitWidth(683);
+        iv.setFitHeight(712);
         Stage stage = new Stage();
+        stage.setResizable(false);
         stage.setScene(new Scene(new Pane(iv)));
         stage.setTitle("Usssss");
         stage.show();
@@ -28,6 +31,7 @@ public class MainController {
     public void handleCredits() {
         ImageView iv = new ImageView(new Image(p + "Credits.png"));
         Stage stage = new Stage();
+        stage.setResizable(false);
         stage.setScene(new Scene(new Pane(iv)));
         stage.setTitle("Creditsssss");
         stage.show();
@@ -36,6 +40,7 @@ public class MainController {
     public void handleLSEQuestions() {
         ImageView iv = new ImageView(new Image(p + "LSEQuestions.png"));
         Stage stage = new Stage();
+        stage.setResizable(false);
         stage.setScene(new Scene(new Pane(iv)));
         stage.setTitle("Linear System of Equations 101");
         stage.show();
@@ -46,6 +51,7 @@ public class MainController {
         iv.setFitWidth(683);
         iv.setFitHeight(595);
         Stage stage = new Stage();
+        stage.setResizable(false);
         stage.setScene(new Scene(new Pane(iv)));
         stage.setTitle("EigenValues & EigenVectors 101");
         stage.show();
@@ -56,6 +62,7 @@ public class MainController {
         iv.setFitWidth(683);
         iv.setFitHeight(712);
         Stage stage = new Stage();
+        stage.setResizable(false);
         stage.setScene(new Scene(new Pane(iv)));
         stage.setTitle("Lines & Planes 101");
         stage.show();

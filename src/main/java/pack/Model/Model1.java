@@ -2,7 +2,6 @@ package pack.Model;
 
 import javafx.geometry.Point3D;
 
-import javax.print.DocFlavor;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
