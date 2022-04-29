@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class Model2for3x3 {
 
-    // idk if i need all of this
     private static double x1;
     private static double x2;
     private static double x3; // eigenvalues
@@ -83,8 +82,6 @@ public class Model2for3x3 {
         double b = (double) C / A;
         double c = (double) D / A;
 
-        System.out.println("Double values: ");
-        System.out.println(a + " " + b + " " + c);
         double p = b - ((a * a) / 3.0);
 
         double q = (2 * Math.pow(a, 3) / 27.0) - (a * b / 3.0) + c;
@@ -139,28 +136,25 @@ public class Model2for3x3 {
         x2 = Double.parseDouble(String.valueOf(x2));
         x3 = Double.parseDouble(String.valueOf(x3));
 
-        System.out.println("x1: " + x1 + "x2: " + x2 + "x3: " + x3);
     }
-    //SEND THIS TO DE CONTROLLA
+
     // find the eigenvectors and finds reduce matrix PUTS EVERYTHING TOGETHER
     private void answers3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3, double x1, double x2, double x3) {
         double aa1 = a1Initial - x1;//WITH FIRST LAMBA
-        double bb2 = b2Initial - x1;//WITH FIRST LAMBA
-        double cc3 = c3Initial - x1;//WITH FIRST LAMBA
+        double bb2 = b2Initial - x1;
+        double cc3 = c3Initial - x1;
         m1 = reduceMatrix3x3(aa1, a2Initial, a3Initial, b1Initial, bb2, b3Initial, c1Initial, c2Initial, cc3); // reduced matrix
         s1 = findEigenVectors3x3(m1); // find the vector
 
-        //System.out.println(eigenVectors[1].get(0) + " " +eigenVectors[1].get(1) + " " +eigenVectors[1].get(2));
-        //System.out.println(eigenVectors[2].get(0) + " " +eigenVectors[2].get(1) + " " +eigenVectors[2].get(2));
-        aa1 = a1Initial - x2;//WITH FIRST LAMBA
-        bb2 = b2Initial - x2;//WITH FIRST LAMBA
-        cc3 = c3Initial - x2;//WITH FIRST LAMBA
+        aa1 = a1Initial - x2;//WITH second LAMBA
+        bb2 = b2Initial - x2;
+        cc3 = c3Initial - x2;
         m2 = reduceMatrix3x3(aa1, a2Initial, a3Initial, b1Initial, bb2, b3Initial, c1Initial, c2Initial, cc3);
         s2 = findEigenVectors3x3(m2);
 
-        aa1 = a1Initial - x3;//WITH FIRST LAMBA
-        bb2 = b2Initial - x3;//WITH FIRST LAMBA
-        cc3 = c3Initial - x3;//WITH FIRST LAMBA
+        aa1 = a1Initial - x3;//WITH third LAMBA
+        bb2 = b2Initial - x3;
+        cc3 = c3Initial - x3;
         m3 = reduceMatrix3x3(aa1, a2Initial, a3Initial, b1Initial, bb2, b3Initial, c1Initial, c2Initial, cc3);
         s3 = findEigenVectors3x3(m3);
 
@@ -255,7 +249,7 @@ public class Model2for3x3 {
             c3 = Double.parseDouble(String.valueOf(c3 - (b3 * c2))); //MAKE THE FIRST NUMBER 0 AND THEN substract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
             c2 = Double.parseDouble(String.valueOf(c2 - (b2 * c2)));
         }
-        if (c3 < 0.005) {
+        if (c3 < 0.005) { // round if the number is too small or else it doesnt work
             c3 = 0;
         }
         // second row done
@@ -277,24 +271,22 @@ public class Model2for3x3 {
 
     // find eigenvectors
     private ArrayList<Double> findEigenVectors3x3(double[] v1) {
-        ArrayList<Double> y1 = new ArrayList<>(); // if only one vector for that one eigen value
-        y1.add(0, 0.0);
+        ArrayList<Double> y1 = new ArrayList<>(); // will contain all the eigenvectors for one eigenvalue
+        y1.add(0, 0.0);// will necessarily be 3 number in the arraylist
         y1.add(1, 0.0);
         y1.add(2, 0.0);
-        int counterUp = 0;
-        int counter = 0;
-        int lineCounter = 1;
-        boolean firstLine = false;
-        boolean secondLine = false;
-        boolean thirdLine = false;
+        int counterUp = 0; //to get the numbers in the row
+        int counter = 0; //check of the whole matrix is all 0
+        int lineCounter = 1; // which line of the matrix
 
-        for (int j = 0; j < v1.length; j++) {
+
+        for (int j = 0; j < v1.length; j++) { // check if all zero
             if (v1[j] == 0) {
                 counter++;
 
             }
         }
-        if (counter == 9) {
+        if (counter == 9) { //if all zero it sets the eigenvectors
             y1.set(0, 1.0);
             y1.set(1, 0.0);
             y1.set(2, 0.0);
@@ -308,7 +300,7 @@ public class Model2for3x3 {
             return y1;
         }
 
-        if (v1[0] == 0 && v1[1] == 0 && v1[2] == 0 && v1[3] == 0 && v1[4] == 0 && v1[5] == 0) {
+        if (v1[0] == 0 && v1[1] == 0 && v1[2] == 0 && v1[3] == 0 && v1[4] == 0 && v1[5] == 0) { //if first and second rwo all zero
 
             y1.set(0, 1.0);
             y1.set(1, 0.0);
@@ -320,7 +312,7 @@ public class Model2for3x3 {
         }
 
 
-        if (v1[0] == 0 && v1[1] == 0 && v1[2] == 0 && v1[6] == 0 && v1[7] == 0 && v1[8] == 0) {
+        if (v1[0] == 0 && v1[1] == 0 && v1[2] == 0 && v1[6] == 0 && v1[7] == 0 && v1[8] == 0) { //if first and third row all zero
             y1.set(0, 1.0);
             y1.set(1, 0.0);
             y1.set(2, 0.0);
@@ -330,7 +322,7 @@ public class Model2for3x3 {
             return y1;
         }
 
-        if (v1[3] == 0 && v1[4] == 0 && v1[5] == 0 && v1[6] == 0 && v1[7] == 0 && v1[8] == 0) {
+        if (v1[3] == 0 && v1[4] == 0 && v1[5] == 0 && v1[6] == 0 && v1[7] == 0 && v1[8] == 0) { //if second and third row all zero
             y1.set(0, 0.0);
             y1.set(1, 1.0);
             y1.set(2, 0.0);
@@ -344,13 +336,13 @@ public class Model2for3x3 {
             double t11 = Double.parseDouble(String.valueOf(v1[i])); // T11 = FIRST NUMBER IN ROW T22= SECOND NUMBER IN ROW T33 THRID NUMBER IN ROW
             double t22 = Double.parseDouble(String.valueOf(v1[i + 1]));
             double t33 = Double.parseDouble(String.valueOf(v1[i + 2]));
-            if (t11 != 0 && t22 != 0 && t33 != 0) { // if the whole row has numbers ( which means other 2 rows are all zero
-                y1.set(0, -t22); // x2
-                y1.set(1, 1.0); //  vector for second number (x2) free number
+            if (t11 != 0 && t22 != 0 && t33 != 0) { // if the whole row has numbers ( which means other 2 rows are all zero)
+                y1.set(0, -t22);
+                y1.set(1, 1.0);
                 y1.set(2, 0.0);
-                y1.add(3, -t33); // x3
+                y1.add(3, -t33);
                 y1.add(4, 0.0);
-                y1.add(5, 1.0);// vector for third number (x3) free number
+                y1.add(5, 1.0);
                 return y1;
             } else {
                 if ((t11 == 0 || t22 == 0 || t33 == 0) && (t11 == 1 || t22 == 1 || t33 == 1)) { //one 0 & one 1
@@ -405,23 +397,23 @@ public class Model2for3x3 {
                             }
                         }
                     }
-                    if (v1[6] == 0 && v1[7] == 0 && v1[8] == 0) {
+                    if (v1[6] == 0 && v1[7] == 0 && v1[8] == 0) { //if the last row all zero
                         y1.set(2, 1.0);
                     }
                 }
-                if (y1.get(0) == 0 && y1.get(1) == 0 && y1.get(0) == 0) {
+                if (y1.get(0) == 0 && y1.get(1) == 0 && y1.get(2) == 0) {
                     if (t11 == 0 && t22 == 0 && t33 == 0) { // if the whole row is zero then that position in the vector is 1
-                        if (lineCounter == 1) {
-                            y1.set(0, 1.0); // x2
-                            y1.set(1, 0.0); //  vector for second number (x2) free number
+                        if (lineCounter == 1) { // first row
+                            y1.set(0, 1.0);
+                            y1.set(1, 0.0);
                             y1.set(2, 0.0);
-                        } else if (lineCounter == 2) {
-                            y1.set(0, 0.0); // x2
-                            y1.set(1, 1.0); //  vector for second number (x2) free number
+                        } else if (lineCounter == 2) { // second row
+                            y1.set(0, 0.0);
+                            y1.set(1, 1.0);
                             y1.set(2, 0.0);
-                        } else {
-                            y1.set(0, 0.0); // x2
-                            y1.set(1, 0.0); //  vector for second number (x2) free number
+                        } else { // third row
+                            y1.set(0, 0.0);
+                            y1.set(1, 0.0);
                             y1.set(2, 1.0);
                         }
                     }
@@ -438,6 +430,7 @@ public class Model2for3x3 {
         return y1;
     }
 
+    //get fnal eigenvalues
     public double[] getEigenValues() {
         double[] eigenValues = new double[3];
         eigenValues[0] = x1;
@@ -446,6 +439,7 @@ public class Model2for3x3 {
         return eigenValues;
     }
 
+    //get final eigenvectors
     public ArrayList<Double>[] getEigenVectors() {
         ArrayList<Double>[] eigenVectors = new ArrayList[3];
         eigenVectors[0] = s1;

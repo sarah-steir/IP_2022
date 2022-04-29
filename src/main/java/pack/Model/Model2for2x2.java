@@ -38,6 +38,7 @@ public class Model2for2x2 {
         answers2x2(a1, a2, b1, b2, x1, x2);
     }
 
+    //get the polynomial equation
     private void findTheCubicEquation2x2(double a1, double a2, double b1, double b2) {
         //addiction
         double a1b2 = a1 * b2;
@@ -50,6 +51,7 @@ public class Model2for2x2 {
         first = 1; // ^3
     }
 
+    //get the root for the polynomial ROOTS ARE THE EIGENVALUES
     private void roots2x2(double a, double b, double c) {
 
         double squareRoot = (b * b) - (4 * a * c); // numnber in the square root
@@ -63,7 +65,8 @@ public class Model2for2x2 {
         x1 = Double.parseDouble(formatting.format(x1)); // format
         x2 = Double.parseDouble(formatting.format(x2));
     }
-//SEND THIS TO DE CONTROLLA
+
+    // this is where u get all the answers
     private void answers2x2(double a1, double a2, double b1, double b2, double x1, double x2) {
         double aa1 = a1Initial - x1;//WITH FIRST LAMBA
         double bb2 = b2Initial - x1;//WITH FIRST LAMBA
@@ -75,6 +78,7 @@ public class Model2for2x2 {
         s2 = findEigenVectors2x2(m2);
     }
 
+    //reduce the matrix the best as possible
     private double[] reduceMatrix2x2(double a1, double a2, double b1, double b2) {
         if (a1 == 0) { // if a equal to zero (switch rows) unless all is zero (a,b,c)
             if (b1 != 0) { //switch a with b if b not zero
@@ -109,40 +113,42 @@ public class Model2for2x2 {
         return arr;
     }
 
+    //get the eigenvectors
     private ArrayList<Double> findEigenVectors2x2(double[] v1) {
-        ArrayList<Double> y1= new ArrayList<>(); // vector can max have 2 positions
-        y1.add(0,0.0);
-        y1.add(1,0.0);
+        ArrayList<Double> y1 = new ArrayList<>(); // vector can max have 2 positions
+        y1.add(0, 0.0);
+        y1.add(1, 0.0);
 
-        if(v1[0]==0 && v1[1]==0 && v1[2]==0 && v1[3]==0 ){
-            y1.set(0,1.0);
-            y1.set(1,0.0);
-            y1.add(2,0.0);
-            y1.add(3,1.0);
+        if (v1[0] == 0 && v1[1] == 0 && v1[2] == 0 && v1[3] == 0) {
+            y1.set(0, 1.0);
+            y1.set(1, 0.0);
+            y1.add(2, 0.0);
+            y1.add(3, 1.0);
         }
-        if(v1[0]!=0 && v1[1]==0 && v1[2]==0 && v1[3]==0 ){
-            y1.set(0,0.0);
-            y1.set(1,1.0);
-
-        }
-        if(v1[0]==0 && v1[1]==0 && v1[2]==0 && v1[3]!=0 ){
-            y1.set(0,1.0);
-            y1.set(1,0.0);
+        if (v1[0] != 0 && v1[1] == 0 && v1[2] == 0 && v1[3] == 0) {
+            y1.set(0, 0.0);
+            y1.set(1, 1.0);
 
         }
-        if(v1[0]!=0 && v1[1]!=0 && v1[2]==0 && v1[3]==0 ){
-            y1.set(0,-v1[1]);
-            y1.set(1,1.0);
+        if (v1[0] == 0 && v1[1] == 0 && v1[2] == 0 && v1[3] != 0) {
+            y1.set(0, 1.0);
+            y1.set(1, 0.0);
 
         }
-        if(v1[0]==1 && v1[1]==0 && v1[2]==0 && v1[3]==1 ){
-            y1.set(0,0.0);
-            y1.set(1,0.0);
+        if (v1[0] != 0 && v1[1] != 0 && v1[2] == 0 && v1[3] == 0) {
+            y1.set(0, -v1[1]);
+            y1.set(1, 1.0);
+
+        }
+        if (v1[0] == 1 && v1[1] == 0 && v1[2] == 0 && v1[3] == 1) {
+            y1.set(0, 0.0);
+            y1.set(1, 0.0);
 
         }
         return y1;
     }
 
+    //get the final eigenvalues
     public double[] getEigenValues() {
         double[] eigenValues = new double[2];
         eigenValues[0] = x1;
@@ -150,6 +156,7 @@ public class Model2for2x2 {
         return eigenValues;
     }
 
+    //get the final eigenvectors
     public ArrayList<Double>[] getEigenVectors() {
         ArrayList<Double>[] eigenVectors = new ArrayList[2];
         eigenVectors[0] = s1;
