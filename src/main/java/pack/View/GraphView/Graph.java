@@ -40,6 +40,7 @@ public class Graph extends Group {
     ObservableList<Node> axisList;
     ObservableList<Node> thingsToGraphList = FXCollections.observableArrayList();
     public ObservableList<Node> labelsList = FXCollections.observableArrayList();
+    public ObservableList<Node> displayedLabels = FXCollections.observableArrayList();
 
     public Graph() {
         axisList = getAxis();
@@ -241,15 +242,17 @@ public class Graph extends Group {
             case 1 -> {
                 line1.setStroke(blue);
                 line2.setStroke(blue);
+                this.createLineLabel(point, direction, false);
             }
             case 2 -> {
                 line1.setStroke(yellow);
                 line2.setStroke(yellow);
+                this.createLineLabel(point, direction, false);
             }
             case 3 -> {
                 line1.setStroke(white);
                 line2.setStroke(white);
-                this.createLineLabel(point, direction);
+                this.createLineLabel(point, direction, true);
             }
         }
         this.update();
@@ -284,7 +287,7 @@ public class Graph extends Group {
         label.setTranslateX(point.getX());
         label.setTranslateY(point.getY());
         label.setTranslateZ(point.getZ());
-        labelsList.add(label);
+        displayedLabels.add(label);
     }
 
     /**
@@ -293,13 +296,16 @@ public class Graph extends Group {
      * @param point1    The point p0
      * @param direction The vector of the line
      */
-    public void createLineLabel(Point3D point1, double[] direction) {
+    public void createLineLabel(Point3D point1, double[] direction, boolean display) {
         Text label = new CustomText("l(t) = (" + point1.getX() + ", " + point1.getY() + ", " + point1.getZ() + ") +\nt <" + direction[0] + ", " + direction[1] + ", " + direction[2] + ">");
         label.setScaleY(-1);
         label.setTranslateX(point1.getX());
         label.setTranslateY(point1.getY());
         label.setTranslateZ(point1.getZ());
         labelsList.add(label);
+        if (display) {
+            displayedLabels.add(label);
+        }
     }
 
     private void setCameraFromViewPoint() {
@@ -344,7 +350,7 @@ public class Graph extends Group {
         scalable.getChildren().addAll(axisList);
         scalable.getChildren().add(map);
         scalable.getChildren().addAll(thingsToGraphList);
-        scalable.getChildren().addAll(labelsList);
+        scalable.getChildren().addAll(displayedLabels);
     }
 
     /***
@@ -352,7 +358,7 @@ public class Graph extends Group {
      */
     public void reset() {
         thingsToGraphList.clear();
-        labelsList.clear();
+        displayedLabels.clear();
         this.update();
         a = 0;
     }

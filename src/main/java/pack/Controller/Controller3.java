@@ -1,5 +1,6 @@
 package pack.Controller;
 
+import javafx.geometry.Point3D;
 import javafx.scene.text.Text;
 import pack.Model.Model3;
 import pack.View.Customs.CustomText;
@@ -64,7 +65,6 @@ public class Controller3 {
             view.getGraph().addLine(model.solutions[0], model.solutions[1], model.crossProduct(model.n1, model.n2));
         }
     }
-
 
     public CustomText[] GenericTexts() {
         if (view.getRb1().isSelected()) {

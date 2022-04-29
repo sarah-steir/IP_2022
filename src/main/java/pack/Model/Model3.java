@@ -1,6 +1,8 @@
 package pack.Model;
 
 import javafx.geometry.Point3D;
+import javafx.scene.text.Text;
+import pack.View.Customs.CustomText;
 import pack.View.Customs.CustomTextField;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class Model3 {
     public double[] x = new double[2];
     public Point3D[] solutions = new Point3D[2];
     private ArrayList<Double> numbers = new ArrayList<>();
+    public ArrayList<CustomText> labels = new ArrayList<>();
 
     /**
      * Empty constructor for the planes
