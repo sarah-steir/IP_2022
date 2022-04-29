@@ -101,6 +101,7 @@ public class Graph extends Group {
 
     /**
      * This function is used so that the user doesn't have to click on a specific element to rotate/move the graph
+     *
      * @return a big, transparent box that will serve as a "grip" so the user can click anywhere on the graph and rotate it
      */
     private Box bigCube() {
@@ -111,6 +112,7 @@ public class Graph extends Group {
 
     /**
      * Well it's a function to create the axis duh
+     *
      * @return an ArrayList of the three axis, to be added in the scene
      */
     private ObservableList<Node> getAxis() {
@@ -159,7 +161,7 @@ public class Graph extends Group {
      * @param point1 the first point the line passes through
      * @param point2 the second point the line passes through
      */
-    public void addLine(Point3D point1, Point3D point2, double[]direction) {
+    public void addLine(Point3D point1, Point3D point2, double[] direction) {
         Line line1 = this.FindOneLine(point1, point2);
         Line line2 = this.FindOneLine(point2, point1);
         addLineToList(line1, line2, point1, direction);
@@ -167,6 +169,7 @@ public class Graph extends Group {
 
     /**
      * This function finds the first "half" of the line (so that it is veryyyyy long instead of being smol)
+     *
      * @param point1 The first point the line has to go through
      * @param point2 The second point the line has to go through
      * @return the "first half" of the line
@@ -175,6 +178,7 @@ public class Graph extends Group {
         double dist = point1.distance(point2);
 
         Line line = new Line(0, 0, 1000, 0);
+        line.setStrokeWidth(2);
 
         Point3D vector = point2.subtract(point1);
 
@@ -191,7 +195,6 @@ public class Graph extends Group {
     }
 
     /**
-     *
      * Boy oh boy was this function a pain in the ass to program... N E ways here we go
      * It creates the plane (a circle because it is too hard to take a rectangle and transform it since the pivot point is in the corner, not in the center)
      * When the circle is added, it goes automatically through x and y, so we just to rotate along this vector (x -> y) to make it pass through z
@@ -205,10 +208,10 @@ public class Graph extends Group {
      */
     public void addPlane(double x, double y, double z) {
 
-     //   System.out.println("x = " + x + ", y = " + y + ", z = " + z);
+        //   System.out.println("x = " + x + ", y = " + y + ", z = " + z);
         Rectangle plane = new Rectangle(-500, -500, 1000, 1000);
 
-        Point3D m = new Point3D(x/2, y/2, 0); // Midpoint between x and y
+        Point3D m = new Point3D(x / 2, y / 2, 0); // Midpoint between x and y
         double d = Math.sqrt(Math.pow(m.getX(), 2) + Math.pow(m.getY(), 2) + Math.pow(z, 2)); // Distance between m and z
         double angle = Math.toDegrees(Math.asin(z / d)); // Angle it needs to rotate
         Point3D vector = new Point3D(-x, y, 0); // "Axis" of rotation, aka vector from x to y
@@ -272,6 +275,7 @@ public class Graph extends Group {
 
     /**
      * Creates the label and places it next to the Point/Sphere
+     *
      * @param point the Point the label needs to indicate
      */
     private void createPointLabel(Point3D point) {
@@ -285,11 +289,12 @@ public class Graph extends Group {
 
     /**
      * Creates the label and places it next to the Line
-     * @param point1 The point p0
+     *
+     * @param point1    The point p0
      * @param direction The vector of the line
      */
-    public void createLineLabel(Point3D point1,  double[] direction) {
-        Text label = new CustomText("l(t) = (" + point1.getX() + ", " + point1.getY() + ", " + point1.getZ() + ") +\nt <" + direction[0] + ", " +direction[1] + ", " +direction[2] + ">");
+    public void createLineLabel(Point3D point1, double[] direction) {
+        Text label = new CustomText("l(t) = (" + point1.getX() + ", " + point1.getY() + ", " + point1.getZ() + ") +\nt <" + direction[0] + ", " + direction[1] + ", " + direction[2] + ">");
         label.setScaleY(-1);
         label.setTranslateX(point1.getX());
         label.setTranslateY(point1.getY());

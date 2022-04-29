@@ -141,6 +141,7 @@ public class Model2for3x3 {
 
         System.out.println("x1: " + x1 + "x2: " + x2 + "x3: " + x3);
     }
+
     //SEND THIS TO DE CONTROLLA
     // find the eigenvectors and finds reduce matrix PUTS EVERYTHING TOGETHER
     private void answers3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3, double x1, double x2, double x3) {

@@ -63,7 +63,8 @@ public class Model2for2x2 {
         x1 = Double.parseDouble(formatting.format(x1)); // format
         x2 = Double.parseDouble(formatting.format(x2));
     }
-//SEND THIS TO DE CONTROLLA
+
+    //SEND THIS TO DE CONTROLLA
     private void answers2x2(double a1, double a2, double b1, double b2, double x1, double x2) {
         double aa1 = a1Initial - x1;//WITH FIRST LAMBA
         double bb2 = b2Initial - x1;//WITH FIRST LAMBA
@@ -110,34 +111,34 @@ public class Model2for2x2 {
     }
 
     private ArrayList<Double> findEigenVectors2x2(double[] v1) {
-        ArrayList<Double> y1= new ArrayList<>(); // vector can max have 2 positions
-        y1.add(0,0.0);
-        y1.add(1,0.0);
+        ArrayList<Double> y1 = new ArrayList<>(); // vector can max have 2 positions
+        y1.add(0, 0.0);
+        y1.add(1, 0.0);
 
-        if(v1[0]==0 && v1[1]==0 && v1[2]==0 && v1[3]==0 ){
-            y1.set(0,1.0);
-            y1.set(1,0.0);
-            y1.add(2,0.0);
-            y1.add(3,1.0);
+        if (v1[0] == 0 && v1[1] == 0 && v1[2] == 0 && v1[3] == 0) {
+            y1.set(0, 1.0);
+            y1.set(1, 0.0);
+            y1.add(2, 0.0);
+            y1.add(3, 1.0);
         }
-        if(v1[0]!=0 && v1[1]==0 && v1[2]==0 && v1[3]==0 ){
-            y1.set(0,0.0);
-            y1.set(1,1.0);
-
-        }
-        if(v1[0]==0 && v1[1]==0 && v1[2]==0 && v1[3]!=0 ){
-            y1.set(0,1.0);
-            y1.set(1,0.0);
+        if (v1[0] != 0 && v1[1] == 0 && v1[2] == 0 && v1[3] == 0) {
+            y1.set(0, 0.0);
+            y1.set(1, 1.0);
 
         }
-        if(v1[0]!=0 && v1[1]!=0 && v1[2]==0 && v1[3]==0 ){
-            y1.set(0,-v1[1]);
-            y1.set(1,1.0);
+        if (v1[0] == 0 && v1[1] == 0 && v1[2] == 0 && v1[3] != 0) {
+            y1.set(0, 1.0);
+            y1.set(1, 0.0);
 
         }
-        if(v1[0]==1 && v1[1]==0 && v1[2]==0 && v1[3]==1 ){
-            y1.set(0,0.0);
-            y1.set(1,0.0);
+        if (v1[0] != 0 && v1[1] != 0 && v1[2] == 0 && v1[3] == 0) {
+            y1.set(0, -v1[1]);
+            y1.set(1, 1.0);
+
+        }
+        if (v1[0] == 1 && v1[1] == 0 && v1[2] == 0 && v1[3] == 1) {
+            y1.set(0, 0.0);
+            y1.set(1, 0.0);
 
         }
         return y1;

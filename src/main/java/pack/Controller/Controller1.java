@@ -1,7 +1,6 @@
 package pack.Controller;
 
 
-
 import javafx.geometry.Point3D;
 import pack.Model.Model1;
 import pack.View.Customs.CustomTextField;
@@ -42,7 +41,7 @@ public class Controller1 {
 
     public void transform2x2() { // always 6
         for (int i = 0; i < this.fieldList.size(); i++) {
-            if (i == 2 || i == 5 ) {
+            if (i == 2 || i == 5) {
                 continue;
             }
             this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(i).getText()));
@@ -66,6 +65,7 @@ public class Controller1 {
 
 
     private String rank;
+
     public ArrayList<String[]> getOutput() {
         model = new Model1(this.matrixCoefficients, is2by2);
         if (is2by2) {
@@ -95,9 +95,9 @@ public class Controller1 {
                 rank = "" + b.length;
             }
             //if there is 1 free variable
-                else if (x[2] == 2){
-                    sol[0] = " " + x[0] + " + (" + x[1] + ")t";
-                    sol[1] = " t";
+            else if (x[2] == 2) {
+                sol[0] = " " + x[0] + " + (" + x[1] + ")t";
+                sol[1] = " t";
                 rank = "1";
             }
             sol = model.round(x);
@@ -121,12 +121,12 @@ public class Controller1 {
                 output.add(sol);
                 return output;
             } // 1 Solution
-            else if (x[4] == 1){
+            else if (x[4] == 1) {
                 for (int i = 0; i < x.length - 1; i++) {
                     sol[i] = " " + x[i];
                 }
                 rank = "" + b.length;
-                } // 1 Free Variable
+            } // 1 Free Variable
             else if (x[4] == 2) {
                 sol[0] = " " + x[0] + " + (" + x[1] + ")t";
                 sol[1] = " " + x[2] + " + (" + x[3] + ")t";
@@ -163,9 +163,9 @@ public class Controller1 {
     public int getArraySize() {
         model = new Model1(this.matrixCoefficients, is2by2);
         if (is2by2) {
-           return 2;
+            return 2;
         } else {
-           return 3;
+            return 3;
         }
     }
 }

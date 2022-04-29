@@ -86,7 +86,7 @@ public class View1 extends Pane implements iView {
 
     private void setVbPo(String title) {
         this.backgroundPane.setPrefSize(500, 580);
-        BackgroundImage myBI= new BackgroundImage(new Image(p + "View1.png",520,580,false,true),
+        BackgroundImage myBI = new BackgroundImage(new Image(p + "View1.png", 520, 580, false, true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         this.backgroundPane.setBackground(new Background(myBI));
@@ -113,8 +113,11 @@ public class View1 extends Pane implements iView {
             this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
         });
         this.btnStart.setOnAction(event -> {
-            handleStart(rb1.isSelected());});
-        this.btnReset.setOnAction(event -> { handleReset(); });
+            handleStart(rb1.isSelected());
+        });
+        this.btnReset.setOnAction(event -> {
+            handleReset();
+        });
     }
 
     // doesn't set text in text field to 0, also only works for rb1?
@@ -244,8 +247,8 @@ public class View1 extends Pane implements iView {
 
     public ArrayList<CustomTextField> getFieldListRb1() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
-        for (CustomTextField[] tfArray: this.fieldListRb1) {
-            for (CustomTextField tf: tfArray) {
+        for (CustomTextField[] tfArray : this.fieldListRb1) {
+            for (CustomTextField tf : tfArray) {
                 fieldList.add(tf);
             }
         }
@@ -254,8 +257,8 @@ public class View1 extends Pane implements iView {
 
     public ArrayList<CustomTextField> getFieldListRb2() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
-        for (CustomTextField[] tfArray: this.fieldListRb2) {
-            for (CustomTextField tf: tfArray) {
+        for (CustomTextField[] tfArray : this.fieldListRb2) {
+            for (CustomTextField tf : tfArray) {
                 fieldList.add(tf);
             }
         }

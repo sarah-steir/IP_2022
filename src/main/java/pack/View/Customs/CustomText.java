@@ -8,7 +8,7 @@ import static pack.View.Customs.Custom.p;
 public class CustomText extends Text {
 
     public CustomText(String message) {
-        super (message);
+        super(message);
         this.setFont(Custom.font);
         this.setStyle("-fx-fill: #E7EBEE");
     }

@@ -46,9 +46,17 @@ public class Xform extends Group {
     public Rotate rz = new Rotate();
     public Rotate ry = new Rotate();
 
-    {rx.setAxis(Rotate.X_AXIS);}
-    {ry.setAxis(Rotate.Y_AXIS);}
-    {rz.setAxis(Rotate.Z_AXIS);}
+    {
+        rx.setAxis(Rotate.X_AXIS);
+    }
+
+    {
+        ry.setAxis(Rotate.Y_AXIS);
+    }
+
+    {
+        rz.setAxis(Rotate.Z_AXIS);
+    }
 
     public Xform() {
         super();

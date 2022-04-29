@@ -4,6 +4,7 @@ import pack.Model.Model2for2x2;
 import pack.Model.Model2for3x3;
 import pack.View.Customs.CustomTextField;
 import pack.View.View2;
+
 import java.util.ArrayList;
 
 public class Controller2 {
@@ -16,7 +17,7 @@ public class Controller2 {
     private Model2for2x2 model2for2x2;
     private Model2for3x3 model2for3x3;
 
-    public Controller2 (View2 view) {
+    public Controller2(View2 view) {
         this.view = view;
         is2by2 = view.getRb1().isSelected();
         matrixCoefficients = new ArrayList<>();
@@ -37,7 +38,7 @@ public class Controller2 {
     }
 
     public void copyArray() {
-        for (CustomTextField tf: fieldList) {
+        for (CustomTextField tf : fieldList) {
             matrixCoefficients.add(Double.parseDouble(tf.getText()));
         }
     }
