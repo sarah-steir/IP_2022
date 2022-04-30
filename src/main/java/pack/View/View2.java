@@ -573,17 +573,17 @@ public class View2 extends Pane implements iView {
     }
 
     //format the output for each eigenvalues
-    public HBox setFields(CustomTextField[][] textFields) {
-        ImageView iv1 = new ImageView(new Image(p + "Right.png")); // right vector bracket
-        iv1.setFitWidth(54);
-        iv1.setFitHeight(270);
-        ImageView iv2 = new ImageView(new Image(p + "Left.png")); //left vector bracket
-        iv2.setFitWidth(54);
-        iv2.setFitHeight(270);
+    public HBox setFields (CustomTextField[][] textFields) {
+        ImageView iv1 = new ImageView(new Image(p + "Right.png"));
+        iv1.setFitWidth(44);
+        iv1.setFitHeight(220);
+        ImageView iv2 = new ImageView(new Image(p + "Left.png"));
+        iv2.setFitWidth(44);
+        iv2.setFitHeight(220);
 
         GridPane gridPane = new GridPane();
-        gridPane.setVgap(20);
-        gridPane.setHgap(20);
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
         gridPane.setAlignment(Pos.CENTER);
 
         HBox hbText = new HBox();
@@ -598,7 +598,7 @@ public class View2 extends Pane implements iView {
         int cols = textFields[0].length;
 
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+            for (int j = 0; j < cols;  j++) {
                 if (rows == 2) {
                     iv1.setFitHeight(200);
                     iv2.setFitHeight(200);
@@ -617,7 +617,7 @@ public class View2 extends Pane implements iView {
             }
         }
         HBox hbFields = new HBox();
-        hbFields.setPadding(new Insets(20, 0, 0, 0));
+        //hbFields.setPadding(new Insets(20, 0, 0, 0));
         hbFields.getChildren().addAll(iv1, gridPane, iv2, hbText);
         hbFields.setAlignment(Pos.CENTER);
         return hbFields;
