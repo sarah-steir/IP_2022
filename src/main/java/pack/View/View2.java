@@ -258,10 +258,7 @@ public class View2 extends Pane implements iView {
                 System.out.println("not another problem");
 
             }
-
-
         });
-
         return payne;
     } //sent the saved matrix to both of the JSONfiles TO SAVE
 
@@ -369,9 +366,14 @@ public class View2 extends Pane implements iView {
         vbLeft.setPrefSize(500, 695);
         vbLeft.setLayoutX(10);
         vbLeft.setLayoutY(14);
-        vbLeft.getChildren().addAll(vbUi);
 
-        return vbLeft;
+        ImageView iv = new ImageView(new Image(p + "EigenReminder.png"));
+        iv.setFitWidth(500);
+        iv.setFitHeight(300);
+
+        vbLeft.getChildren().addAll(vbUi, iv);
+
+        return  vbLeft;
     }
 
     //set the whole output  with all the eigenvalues and vectors
