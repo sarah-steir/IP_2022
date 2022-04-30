@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class Controller2 {
 
-    private View2 view;
+    private final View2 view;
     private ArrayList<CustomTextField> fieldList;
-    private ArrayList<Double> matrixCoefficients;
-    private boolean is2by2;
+    private final ArrayList<Double> matrixCoefficients;
+    private final boolean is2by2;
 
     private Model2for2x2 model2for2x2;
     private Model2for3x3 model2for3x3;

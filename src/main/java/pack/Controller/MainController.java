@@ -28,15 +28,6 @@ public class MainController {
         stage.show();
     }
 
-    public void handleCredits() {
-        ImageView iv = new ImageView(new Image(p + "Credits.png"));
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        stage.setScene(new Scene(new Pane(iv)));
-        stage.setTitle("Creditsssss");
-        stage.show();
-    }
-
     public void handleLSEQuestions() {
         ImageView iv = new ImageView(new Image(p + "LSEQuestions.png"));
         Stage stage = new Stage();

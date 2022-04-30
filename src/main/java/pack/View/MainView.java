@@ -50,10 +50,8 @@ public class MainView extends Pane {
 
         Menu about = new Menu("About ");
         MenuItem ourTeam = new MenuItem("Our team :)");
-        MenuItem credits = new MenuItem("Credits");
-        about.getItems().addAll(ourTeam, credits);
+        about.getItems().add(ourTeam);
         ourTeam.setOnAction(e -> controller.handleOurTeam());
-        credits.setOnAction(e -> controller.handleCredits());
 
         Menu help = new Menu("Help");
         MenuItem lse = new MenuItem("How to use the Systems of Linear Equations Calculator");
