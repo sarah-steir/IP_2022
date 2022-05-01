@@ -32,7 +32,7 @@ import static pack.View.Customs.Custom.p;
 
 public class View2 extends Pane implements iView {
 
-    //TODO fix when clicking "Save matrix" two times, stack overflow
+    // TODO fix when clicking "Save matrix" two times, stack overflow
     // TODO FIX THE BUTTON GETTING NOT DISABLED WHEN THERES SITLL A WRONG VALUE BUT THE NEXT ONE IS RIGHT
 
     private CustomTextField[][] fieldListRb1, fieldListRb2;
@@ -118,7 +118,9 @@ public class View2 extends Pane implements iView {
 
     }
 
-    //update the comboBox when then save button is pressed
+    /**
+     * update the comboBox when then save button is pressed
+     */
     private void UpdateLeCombobox() {
 
         cb.setValue(null);
@@ -132,7 +134,11 @@ public class View2 extends Pane implements iView {
         cb.getSelectionModel().selectFirst();
     }
 
-    //get all the numbers for the matrix chosen in the combobox and then making an arrayList with it
+    /**
+     * get all the numbers for the matrix chosen in the combobox and then making an arrayList with it
+     * @param js the JSONArray to transform
+     * @return a list with the matrix
+     */
     private ArrayList<Double> YesImAGummyBear(JSONArray js) {
 
 
@@ -155,7 +161,10 @@ public class View2 extends Pane implements iView {
         return ints;
     }
 
-    //Set the matrix we got from the combobox into the textfields
+    /**
+     * Set the matrix we got from the combobox into the textfields
+     * @param ints the matrix
+     */
     private void setMatrix(ArrayList<Double> ints) {
         a1 = ints.get(0);
         a2 = ints.get(1);
@@ -186,23 +195,9 @@ public class View2 extends Pane implements iView {
         }
     }
 
-    //Will make an array list for the matrix we want to get from the combobox
-    public static ArrayList<Integer> makeTheArrayList(JSONArray js) {
-        ArrayList<String> objs = new ArrayList<>();
-        ArrayList<Integer> ints = new ArrayList<>();
-        JSONArray list = js;
-        Iterator<JSONObject> iterator = js.iterator();
-        while (iterator.hasNext()) {
-            objs.add(String.valueOf(iterator.next()));
-        }
-
-        for (int i = 0; i < objs.size(); i++) {
-            ints.add(Integer.valueOf(objs.get(i)));
-        }
-        return ints;
-    }
-
-    // the actual window for when we press save
+    /**
+     * the actual window for when we press save
+     */
     private void DaVoid() {
         StackPane secondaryLayout = new StackPane();
 
@@ -217,7 +212,10 @@ public class View2 extends Pane implements iView {
         newWindow.show();
     }
 
-    // everything inside the new window that open when save is pressed
+    /**
+     * everything inside the new window that open when save is pressed
+     * @return the VBox
+     */
     private VBox PANCAKES() {
         VBox payne = new VBox();
         payne.setPadding(new Insets(10));
@@ -262,14 +260,18 @@ public class View2 extends Pane implements iView {
         return payne;
     } //sent the saved matrix to both of the JSONfiles TO SAVE
 
+    /**
+     * writes the new matrix into the JSONFile
+     * @param name name of matrix
+     */
     private void humptyDumptyFellOffAWall(String name) {
         JSONArray newMatrix = new JSONArray();
         if (rb1.isSelected()) {
-            newMatrix.add(View2.getT1());//
-            newMatrix.add(View2.getT2());//
+            newMatrix.add(View2.getT1());
+            newMatrix.add(View2.getT2());
             newMatrix.add("0");
-            newMatrix.add(View2.getT4());//
-            newMatrix.add(View2.getT5());//
+            newMatrix.add(View2.getT4());
+            newMatrix.add(View2.getT5());
             newMatrix.add("0");
             newMatrix.add("0");
             newMatrix.add("0");
@@ -318,7 +320,10 @@ public class View2 extends Pane implements iView {
         UpdateLeCombobox();
     }
 
-    // get all the name from the JSONArray in the JSONFILE
+    /**
+     * get all the name from the JSONArray in the JSONFILE
+     * @return JSONObject
+     */
     private JSONObject getThemNames() {
         JSONParser parser = new JSONParser();
 
@@ -334,7 +339,10 @@ public class View2 extends Pane implements iView {
         return names;
     }
 
-    // get the JSONObject of the JSONFILE
+    /**
+     * get the JSONObject of the JSONFILE
+     * @return the JSONObject
+     */
     private JSONObject getThatObject() {
         JSONParser parser = new JSONParser();
 
@@ -350,7 +358,10 @@ public class View2 extends Pane implements iView {
         return jsonObject;
     }
 
-    // HBox which will contain the save button and the combobox for the JSON
+    /**
+     * HBox which will contain the save button and the combobox for the JSON
+     * @return HBox
+     */
     private HBox setHbComboBox() {
         HBox hbComboBox = new HBox(100);
         hbComboBox.setPadding(new Insets(15));
@@ -358,7 +369,12 @@ public class View2 extends Pane implements iView {
         return hbComboBox;
     }
 
-    //The base VBox on the left
+    /**
+     * The base VBox on the left
+     * @param vbUi everything that goes into the VBOX
+     * @param graphPane where the graph shold be but we dont have one
+     * @return VBox
+     */
     @Override
     public VBox setLeft(VBox vbUi, Pane graphPane) {
         VBox vbLeft = new VBox();
@@ -376,7 +392,441 @@ public class View2 extends Pane implements iView {
         return  vbLeft;
     }
 
-    //set the whole output  with all the eigenvalues and vectors
+    /**
+     * set the whole output  with all the eigenvalues and vectors
+     * @param controller2
+     * @return Gridpane
+     */
+    public GridPane showDaRight(Controller2 controller2) {
+        GridPane gpt = new GridPane();
+        gpt.setVgap(20);
+        gpt.setPrefSize(500, 595);
+
+        if (rb2.isSelected()) {
+            CustomText text = new CustomText("λ = " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
+            CustomText text1 = new CustomText("λ = " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
+            CustomText text2 = new CustomText("λ = " + controller2.getEigenValues()[2] + "\nTHE EIGEN VECTOR IS: ");
+            gpt.add(text, 0, 0);
+            if (controller2.getEigenVectors()[0].size() == 3) {
+                gpt.add(newVector(1, controller2, 0), 0, 1);
+            } else if (controller2.getEigenVectors()[0].size() == 6) {
+                gpt.add(newVector(1, controller2, 0), 0, 1);
+                gpt.add(newVector(2, controller2, 0), 1, 1);
+            } else {
+                gpt.add(newVector(1, controller2, 0), 0, 1);
+                gpt.add(newVector(2, controller2, 0), 1, 1);
+                gpt.add(newVector(3, controller2, 0), 2, 1);
+            }
+            gpt.add(text1, 0, 2);
+            if (controller2.getEigenVectors()[1].size() == 3) {
+                gpt.add(newVector(1, controller2, 1), 0, 3);
+            } else if (Model2for3x3.getS2().size() == 6) {
+                gpt.add(newVector(1, controller2, 1), 0, 3);
+                gpt.add(newVector(2, controller2, 1), 1, 3);
+            } else {
+                gpt.add(newVector(1, controller2, 1), 0, 3);
+                gpt.add(newVector(2, controller2, 1), 1, 3);
+                gpt.add(newVector(3, controller2, 1), 2, 3);
+            }
+            gpt.add(text2, 0, 4);
+            if (controller2.getEigenVectors()[2].size() == 3) {
+                gpt.add(newVector(1, controller2, 2), 0, 5);
+            } else if (Model2for3x3.getS3().size() == 6) {
+                gpt.add(newVector(1, controller2, 2), 1, 5);
+                gpt.add(newVector(2, controller2, 2), 2, 5);
+            } else {
+                gpt.add(newVector(1, controller2, 2), 0, 5);
+                gpt.add(newVector(2, controller2, 2), 1, 5);
+                gpt.add(newVector(3, controller2, 2), 2, 5);
+            }
+        }
+        if (rb1.isSelected()) {
+            CustomText text = new CustomText("λ = " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
+            CustomText text1 = new CustomText("λ = " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
+            gpt.add(text, 0, 0);
+            if (controller2.getEigenVectors()[0].size() == 2) {
+                gpt.add(newVector(1, controller2, 0), 0, 1);
+            } else {
+                gpt.add(newVector(1, controller2, 0), 0, 1);
+                gpt.add(newVector(2, controller2, 0), 1, 1);
+            }
+            gpt.add(text1, 0, 2);
+            if (controller2.getEigenVectors()[1].size() == 2) {
+                gpt.add(newVector(1, controller2, 1), 0, 3);
+            } else {
+                gpt.add(newVector(1, controller2, 1), 0, 3);
+                gpt.add(newVector(2, controller2, 1), 1, 3);
+            }
+        }
+        return gpt;
+    }
+
+    /**
+     * create a new vector with the bracket images and the numbers
+     * @param counter to know which eigenvalue
+     * @param controller2 math for view 2
+     * @param i to know which eigenvalue
+     * @return HBOX
+     */
+    public HBox newVector(int counter, Controller2 controller2, int i) { // counter is the vector if size=6 there is counter 1 and 2 possible
+        HBox hbx = new HBox(10);
+        VBox vbx1 = new VBox();
+        ImageView imL = new ImageView(new Image(p + "Right.png"));
+        imL.setFitWidth(10);
+        imL.setFitHeight(75);
+        ImageView imR = new ImageView(new Image(p + "Left.png"));
+        imR.setFitWidth(10);
+        imR.setFitHeight(75);
+        if (rb1.isSelected()) {
+            vbx1 = putVertical2x2(counter, controller2, i);
+            vbx1.setPrefHeight(75);
+        }
+        if (rb2.isSelected()) {
+            vbx1 = putVertical3x3(counter, controller2, i);
+            vbx1.setPrefHeight(75);
+        }
+        hbx.getChildren().addAll(imL, vbx1, imR);
+        hbx.setAlignment(Pos.CENTER);
+        return hbx;
+    }
+
+    /**
+     *  put the eigenvector in vertical for a 3x3 matrix to then be put in between the two brackets for the output
+     * @param counter to know which eigenvalue
+     * @param controller2 math for view 2
+     * @param i to know which eigenvalue
+     * @return VBOX
+     */
+    public VBox putVertical3x3(int counter, Controller2 controller2, int i) {
+        VBox vbx1 = new VBox();
+        vbx1.setAlignment(Pos.CENTER);
+        Double numba1, numba2, numba3;
+
+        if (counter == 1) {
+            numba1 = controller2.getEigenVectors()[i].get(0);
+            numba2 = controller2.getEigenVectors()[i].get(1);
+            numba3 = controller2.getEigenVectors()[i].get(2);
+        } else if (counter == 2) {
+            numba1 = controller2.getEigenVectors()[i].get(3);
+            numba2 = controller2.getEigenVectors()[i].get(4);
+            numba3 = controller2.getEigenVectors()[i].get(5);
+        } else {
+            numba1 = controller2.getEigenVectors()[i].get(6);
+            numba2 = controller2.getEigenVectors()[i].get(7);
+            numba3 = controller2.getEigenVectors()[i].get(8);
+        }
+
+        CustomText nb1 = new CustomText(Double.toString(numba1));
+        CustomText nb2 = new CustomText(Double.toString(numba2));
+        CustomText nb3 = new CustomText(Double.toString(numba3));
+        vbx1.getChildren().add(nb1);
+        vbx1.getChildren().add(nb2);
+        vbx1.getChildren().add(nb3);
+
+        return vbx1;
+    }
+
+    /**
+     * put the eigenvector in vertical for a 2x2 matrix to then be put in between the two brackets for the output
+     * @param counter to know which eigenvalue
+     * @param controller2 math view 2
+     * @param i to know which eigenvalue
+     * @return VBOX
+     */
+    public VBox putVertical2x2(int counter, Controller2 controller2, int i) {
+        VBox vbx1 = new VBox(15);
+        vbx1.setAlignment(Pos.CENTER);
+        Double numba1, numba2;
+
+        if (counter == 1) {
+            numba1 = controller2.getEigenVectors()[i].get(0);
+            numba2 = controller2.getEigenVectors()[i].get(1);
+        } else {  // if counter == 2
+            numba1 = controller2.getEigenVectors()[i].get(2);   // changed 1 to i
+            numba2 = controller2.getEigenVectors()[i].get(3);   // changed 1 to i
+        }
+        CustomText nb1 = new CustomText(Double.toString(numba1));
+        CustomText nb2 = new CustomText(Double.toString(numba2));
+        vbx1.getChildren().addAll(nb1, nb2);
+        return vbx1;
+    }
+
+    /**
+     * set a VBox on the left which will contain everything on the left
+     * @param hbRadios radio button
+     * @param hbComboBox combobox
+     */
+    private void setVbUi(HBox hbRadios, HBox hbComboBox) {
+        this.vbUi.setSpacing(5);
+        this.vbUi.setPrefSize(500, 695);
+        this.vbUi.setStyle("-fx-background-color: #333335");
+        this.emptyBox.setAlignment(Pos.CENTER);
+        this.emptyBox.getChildren().add(invisibleButton);
+        this.vbUi.getChildren().addAll(hbRadios, hbComboBox, this.emptyBox);
+    }
+
+    /**
+     * set a VBox on the right which will contain everything on the right
+     * @param title name of scene
+     */
+    private void setVbPo(String title) {
+        this.backgroundPane.setPrefSize(500, 580);
+        BackgroundImage myBI = new BackgroundImage(new Image(p + "View2.png", 520, 580, false, true), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        this.backgroundPane.setBackground(new Background(myBI));
+
+        this.vbPo.setPrefSize(500, 595);
+        //this.vbPo.setPadding(new Insets(15));
+        this.vbPo.setSpacing(15);
+        this.vbPo.setAlignment(Pos.TOP_CENTER);
+        this.vbPo.setStyle("-fx-background-color: #333335");
+        this.vbPo.getChildren().addAll(Custom.setTitle(title), this.backgroundPane);
+    }
+
+    /**
+     * set the whole view
+     */
+    public void setView2() {
+        this.setPrefSize(1050, 750);
+        this.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
+        this.getChildren().addAll(this.vbLeft, this.vbRight);
+    }
+
+    /**
+     * set action for radio button
+     */
+    public void setActions() {
+        rb1.setOnAction(event -> { //2x2 radio button
+            this.btnStart.setDisable(false);
+            this.btnSave.setDisable(false);
+            this.cb.setDisable(false);
+
+            fieldsPane = setFields(fieldListRb1);
+            this.vbUi.getChildren().clear();
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), emptyBox, fieldsPane);
+        });
+
+        rb2.setOnAction(event -> { // 3x3 radio button
+            this.btnStart.setDisable(false);
+            this.btnSave.setDisable(false);
+            this.cb.setDisable(false);
+            fieldsPane = setFields(fieldListRb2);
+            this.vbUi.getChildren().clear();
+            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), emptyBox, fieldsPane);
+        });
+        this.btnStart.setOnAction(event -> {
+            handleStart(rb1.isSelected());
+        });
+        this.btnReset.setOnAction(event -> {
+            handleReset();
+        });
+    }
+
+    /**
+     * format the output for each eigenvalues
+     * @param textFields the textfields for matrix
+     * @return the HBOX
+     */
+    public HBox setFields (CustomTextField[][] textFields) {
+        ImageView iv1 = new ImageView(new Image(p + "Right.png"));
+        iv1.setFitWidth(44);
+        iv1.setFitHeight(220);
+        ImageView iv2 = new ImageView(new Image(p + "Left.png"));
+        iv2.setFitWidth(44);
+        iv2.setFitHeight(220);
+
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        gridPane.setAlignment(Pos.CENTER);
+
+        HBox hbText = new HBox();
+        hbText.setPadding(new Insets(15));
+        hbText.setAlignment(Pos.CENTER);
+        CustomText stringEqualZero = new CustomText("= 0");
+        stringEqualZero.setStyle("-fx-fill: #E7EBEE");
+        stringEqualZero.changeSize(30);
+        hbText.getChildren().add(stringEqualZero);
+
+        int rows = textFields.length;
+        int cols = textFields[0].length;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols;  j++) {
+                if (rows == 2) {
+                    iv1.setFitHeight(200);
+                    iv2.setFitHeight(200);
+                    iv1.setFitWidth(40);
+                    iv2.setFitWidth(40);
+                }
+                textFields[i][j] = new CustomTextField();
+                textFields[i][j].setPrefSize(50, 40);
+                int finalI = i;
+                int finalJ = j;
+
+                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) -> {
+                    btnStart.setDisable(textFields[finalI][finalJ].checkField());
+                });
+                gridPane.add(textFields[i][j], j, i);
+            }
+        }
+        HBox hbFields = new HBox();
+        //hbFields.setPadding(new Insets(20, 0, 0, 0));
+        hbFields.getChildren().addAll(iv1, gridPane, iv2, hbText);
+        hbFields.setAlignment(Pos.CENTER);
+        return hbFields;
+    }
+
+    /**
+     * start button
+     * @param isRb1Selected if the 2x2 is selected
+     */
+    public void handleStart(boolean isRb1Selected) {
+        if (isRb1Selected) {
+            for (int i = 0; i < fieldListRb1.length; i++) {
+                for (int j = 0; j < fieldListRb1[0].length; j++) {
+                    if (fieldListRb1[i][j].getText().equals("")) {
+                        fieldListRb1[i][j].setText("0");
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < fieldListRb2.length; i++) {
+                for (int j = 0; j < fieldListRb2[0].length; j++) {
+                    if (fieldListRb2[i][j].getText().equals("")) {
+                        fieldListRb2[i][j].setText("0");
+                    }
+                }
+            }
+        }
+        Controller2 controller2 = new Controller2(this);
+        addOutput(controller2);
+    }
+
+    /**
+     * reset button
+     */
+    public void handleReset() {
+        this.getChildren().clear();
+        btnStart.setDisable(true);
+        btnSave.setDisable(true);
+        cb.setDisable(true);
+        rb1.setSelected(false);
+        rb2.setSelected(false);
+        this.vbUi.getChildren().removeAll(fieldsPane, invisibleButton);
+        this.vbPo.getChildren().clear();
+        this.getChildren().addAll(this.vbLeft, this.vbRight);
+    }
+
+    /**
+     *  the output reset
+     * @param controller2 math view 2
+     */
+    public void addOutput(Controller2 controller2) {
+        this.backgroundPane.getChildren().clear();
+
+        ImageView lamba1 = new ImageView(new Image(p + "Lamba1.png"));
+        lamba1.setFitWidth(30);
+        lamba1.setFitHeight(30);
+        ImageView lamba2 = new ImageView(new Image(p + "Lamba2.png"));
+        lamba2.setFitWidth(30);
+        lamba2.setFitHeight(30);
+        ImageView lamba3 = new ImageView(new Image(p + "Lamba3.png"));
+        lamba3.setFitWidth(30);
+        lamba3.setFitHeight(30);
+
+        ImageView iv1 = new ImageView(new Image(p + "Right.png"));
+        iv1.setFitWidth(10);
+        iv1.setFitHeight(75);
+        ImageView iv2 = new ImageView(new Image(p + "Left.png"));
+        iv2.setFitWidth(10);
+        iv2.setFitHeight(75);
+
+        // Eigenvalues output
+
+        HBox hbEigenValue1 = new HBox(10);
+        CustomText text = new CustomText("=  " + controller2.getEigenValues()[0]);
+        text.changeSize(20);
+        hbEigenValue1.getChildren().addAll(lamba1, text);
+        hbEigenValue1.setLayoutX(130);
+        hbEigenValue1.setLayoutY(300);
+
+        HBox hbEigenValue2 = new HBox(10);
+        CustomText text1 = new CustomText("=  " + controller2.getEigenValues()[1]);
+        text1.changeSize(20);
+        hbEigenValue2.getChildren().addAll(lamba2, text1);
+        hbEigenValue2.setLayoutX(400);
+        hbEigenValue2.setLayoutY(275);
+
+        // Eigenvectors output
+        ArrayList<HBox> hbEigenVectors1 = getEigenVectors1(controller2);
+        HBox hbEigen11 = hbEigenVectors1.get(0);
+        hbEigen11.setLayoutX(5);
+        hbEigen11.setLayoutY(210);
+        this.backgroundPane.getChildren().add(hbEigen11);
+        if (hbEigenVectors1.size() > 1) {
+            HBox hbEigen12 = hbEigenVectors1.get(1);
+            hbEigen12.setLayoutX(135);
+            hbEigen12.setLayoutY(210);
+            this.backgroundPane.getChildren().add(hbEigen12);
+        }
+        if (hbEigenVectors1.size() > 2) {
+            HBox hbEigen13 = hbEigenVectors1.get(2);
+            hbEigen13.setLayoutX(5);
+            hbEigen13.setLayoutY(320);
+            this.backgroundPane.getChildren().add(hbEigen13);
+        }
+
+        // Eigenvectors for eigenvalues 2
+        ArrayList<HBox> hbEigenVectors2 = getEigenVectors2(controller2);
+        HBox hbEigen21 = hbEigenVectors2.get(0);
+        hbEigen21.setLayoutX(270);
+        hbEigen21.setLayoutY(320);
+        this.backgroundPane.getChildren().add(hbEigen21);
+        if (hbEigenVectors2.size() > 1) {
+            HBox hbEigen22 = hbEigenVectors2.get(1);
+            hbEigen22.setLayoutX(400);
+            hbEigen22.setLayoutY(320);
+            this.backgroundPane.getChildren().add(hbEigen22);
+        }
+        if (hbEigenVectors2.size() > 2) {
+            HBox hbEigen23 = hbEigenVectors2.get(2);
+            hbEigen23.setLayoutX(400);
+            hbEigen23.setLayoutY(430);
+            this.backgroundPane.getChildren().add(hbEigen23);
+        }
+
+        this.backgroundPane.getChildren().addAll(hbEigenValue1, hbEigenValue2);
+
+        if (rb2.isSelected()) {
+            HBox hbEigenValue3 = new HBox(10);
+            CustomText text2 = new CustomText("= " + controller2.getEigenValues()[2]);
+            text2.changeSize(20);
+            hbEigenValue3.getChildren().addAll(lamba3, text2);
+            hbEigenValue3.setLayoutX(15);
+            hbEigenValue3.setLayoutY(415);
+            this.backgroundPane.getChildren().add(hbEigenValue3);
+
+            ArrayList<HBox> hbEigenVectors3 = getEigenVectors3(controller2);
+            // Eigenvectors for eigenvalue 3
+            HBox hbEigen31 = hbEigenVectors3.get(0);
+            hbEigen31.setLayoutX(5);
+            hbEigen31.setLayoutY(460);
+            this.backgroundPane.getChildren().add(hbEigen31);
+            if (hbEigenVectors3.size() > 1) {
+                HBox hbEigen32 = hbEigenVectors3.get(1);
+                hbEigen32.setLayoutX(135);
+                hbEigen32.setLayoutY(460);
+                this.backgroundPane.getChildren().add(hbEigen32);
+            }
+            if (hbEigenVectors3.size() > 2) {
+                HBox hbEigen33 = hbEigenVectors3.get(2);
+                hbEigen33.setLayoutX(265);
+                hbEigen33.setLayoutY(460);
+                this.backgroundPane.getChildren().add(hbEigen33);
+            }
+        }
+    }
+
     public ArrayList<HBox> getEigenVectors1(Controller2 controller2) {
         ArrayList<HBox> hbEigenVectors1 = new ArrayList<>();
         ImageView iv1 = new ImageView(new Image(p + "Vector1.png"));
@@ -542,333 +992,10 @@ public class View2 extends Pane implements iView {
         return hbEigenVectors3;
     }
 
-    // create a new vector with the bracket images and the numbers
-    public HBox newVector(int counter, Controller2 controller2, int i) { // counter is the vector if size=6 there is counter 1 and 2 possible
-        HBox hbx = new HBox(10);
-        VBox vbx1 = new VBox();
-        ImageView imL = new ImageView(new Image(p + "Right.png"));
-        imL.setFitWidth(10);
-        imL.setFitHeight(75);
-        ImageView imR = new ImageView(new Image(p + "Left.png"));
-        imR.setFitWidth(10);
-        imR.setFitHeight(75);
-        if (rb1.isSelected()) {
-            vbx1 = putVertical2x2(counter, controller2, i);
-            vbx1.setPrefHeight(75);
-        }
-        if (rb2.isSelected()) {
-            vbx1 = putVertical3x3(counter, controller2, i);
-            vbx1.setPrefHeight(75);
-        }
-        hbx.getChildren().addAll(imL, vbx1, imR);
-        hbx.setAlignment(Pos.CENTER);
-        return hbx;
-    }
-
-    // put the eigenvector in vertical for a 3x3 matrix to then be put in between the two brackets for the output
-    public VBox putVertical3x3(int counter, Controller2 controller2, int i) {
-        VBox vbx1 = new VBox();
-        vbx1.setAlignment(Pos.CENTER);
-        Double numba1, numba2, numba3;
-
-        if (counter == 1) {
-            numba1 = controller2.getEigenVectors()[i].get(0);
-            numba2 = controller2.getEigenVectors()[i].get(1);
-            numba3 = controller2.getEigenVectors()[i].get(2);
-        } else if (counter == 2) {
-            numba1 = controller2.getEigenVectors()[i].get(3);
-            numba2 = controller2.getEigenVectors()[i].get(4);
-            numba3 = controller2.getEigenVectors()[i].get(5);
-        } else {
-            numba1 = controller2.getEigenVectors()[i].get(6);
-            numba2 = controller2.getEigenVectors()[i].get(7);
-            numba3 = controller2.getEigenVectors()[i].get(8);
-        }
-
-        CustomText nb1 = new CustomText(Double.toString(numba1));
-        CustomText nb2 = new CustomText(Double.toString(numba2));
-        CustomText nb3 = new CustomText(Double.toString(numba3));
-        vbx1.getChildren().add(nb1);
-        vbx1.getChildren().add(nb2);
-        vbx1.getChildren().add(nb3);
-
-        return vbx1;
-    }
-
-    // put the eigenvector in vertical for a 2x2 matrix to then be put in between the two brackets for the output
-    public VBox putVertical2x2(int counter, Controller2 controller2, int i) {
-        VBox vbx1 = new VBox(15);
-        vbx1.setAlignment(Pos.CENTER);
-        Double numba1, numba2;
-
-        if (counter == 1) {
-            numba1 = controller2.getEigenVectors()[i].get(0);
-            numba2 = controller2.getEigenVectors()[i].get(1);
-        } else {  // if counter == 2
-            numba1 = controller2.getEigenVectors()[i].get(2);   // changed 1 to i
-            numba2 = controller2.getEigenVectors()[i].get(3);   // changed 1 to i
-        }
-        CustomText nb1 = new CustomText(Double.toString(numba1));
-        CustomText nb2 = new CustomText(Double.toString(numba2));
-        vbx1.getChildren().addAll(nb1, nb2);
-        return vbx1;
-    }
-
-    //set a VBox on the left which will contain everything on the left
-    private void setVbUi(HBox hbRadios, HBox hbComboBox) {
-        this.vbUi.setSpacing(5);
-        this.vbUi.setPrefSize(500, 695);
-        this.vbUi.setStyle("-fx-background-color: #333335");
-        this.emptyBox.setAlignment(Pos.CENTER);
-        this.emptyBox.getChildren().add(invisibleButton);
-        this.vbUi.getChildren().addAll(hbRadios, hbComboBox, this.emptyBox);
-    }
-
-    //set a VBox on the right which will contain everything on the right
-    private void setVbPo(String title) {
-        this.backgroundPane.setPrefSize(500, 580);
-        BackgroundImage myBI = new BackgroundImage(new Image(p + "View2.png", 520, 580, false, true),
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        this.backgroundPane.setBackground(new Background(myBI));
-
-        this.vbPo.setPrefSize(500, 595);
-        //this.vbPo.setPadding(new Insets(15));
-        this.vbPo.setSpacing(15);
-        this.vbPo.setAlignment(Pos.TOP_CENTER);
-        this.vbPo.setStyle("-fx-background-color: #333335");
-        this.vbPo.getChildren().addAll(Custom.setTitle(title), this.backgroundPane);
-    }
-
-    //set the whole view
-    public void setView2() {
-        this.setPrefSize(1050, 750);
-        this.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
-        this.getChildren().addAll(this.vbLeft, this.vbRight);
-    }
-
-    //set actiong for radio buttont
-    public void setActions() {
-        rb1.setOnAction(event -> { //2x2 radio button
-            this.btnStart.setDisable(false);
-            this.btnSave.setDisable(false);
-            this.cb.setDisable(false);
-
-            fieldsPane = setFields(fieldListRb1);
-            this.vbUi.getChildren().clear();
-            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), emptyBox, fieldsPane);
-        });
-
-        rb2.setOnAction(event -> { // 3x3 radio button
-            this.btnStart.setDisable(false);
-            this.btnSave.setDisable(false);
-            this.cb.setDisable(false);
-            fieldsPane = setFields(fieldListRb2);
-            this.vbUi.getChildren().clear();
-            this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), emptyBox, fieldsPane);
-        });
-        this.btnStart.setOnAction(event -> {
-            handleStart(rb1.isSelected());
-        });
-        this.btnReset.setOnAction(event -> {
-            handleReset();
-        });
-    }
-
-    //format the output for each eigenvalues
-    public HBox setFields (CustomTextField[][] textFields) {
-        ImageView iv1 = new ImageView(new Image(p + "Right.png"));
-        iv1.setFitWidth(44);
-        iv1.setFitHeight(220);
-        ImageView iv2 = new ImageView(new Image(p + "Left.png"));
-        iv2.setFitWidth(44);
-        iv2.setFitHeight(220);
-
-        GridPane gridPane = new GridPane();
-        gridPane.setVgap(10);
-        gridPane.setHgap(10);
-        gridPane.setAlignment(Pos.CENTER);
-
-        HBox hbText = new HBox();
-        hbText.setPadding(new Insets(15));
-        hbText.setAlignment(Pos.CENTER);
-        CustomText stringEqualZero = new CustomText("= 0");
-        stringEqualZero.setStyle("-fx-fill: #E7EBEE");
-        stringEqualZero.changeSize(30);
-        hbText.getChildren().add(stringEqualZero);
-
-        int rows = textFields.length;
-        int cols = textFields[0].length;
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols;  j++) {
-                if (rows == 2) {
-                    iv1.setFitHeight(200);
-                    iv2.setFitHeight(200);
-                    iv1.setFitWidth(40);
-                    iv2.setFitWidth(40);
-                }
-                textFields[i][j] = new CustomTextField();
-                textFields[i][j].setPrefSize(50, 40);
-                int finalI = i;
-                int finalJ = j;
-
-                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) -> {
-                    btnStart.setDisable(textFields[finalI][finalJ].checkField());
-                });
-                gridPane.add(textFields[i][j], j, i);
-            }
-        }
-        HBox hbFields = new HBox();
-        //hbFields.setPadding(new Insets(20, 0, 0, 0));
-        hbFields.getChildren().addAll(iv1, gridPane, iv2, hbText);
-        hbFields.setAlignment(Pos.CENTER);
-        return hbFields;
-    }
-
-    //start buttont
-    public void handleStart(boolean isRb1Selected) {
-        if (isRb1Selected) {
-            for (int i = 0; i < fieldListRb1.length; i++) {
-                for (int j = 0; j < fieldListRb1[0].length; j++) {
-                    if (fieldListRb1[i][j].getText().equals("")) {
-                        fieldListRb1[i][j].setText("0");
-                    }
-                }
-            }
-        } else {
-            for (int i = 0; i < fieldListRb2.length; i++) {
-                for (int j = 0; j < fieldListRb2[0].length; j++) {
-                    if (fieldListRb2[i][j].getText().equals("")) {
-                        fieldListRb2[i][j].setText("0");
-                    }
-                }
-            }
-        }
-        Controller2 controller2 = new Controller2(this);
-        addOutput(controller2);
-    }
-
-    //reset button
-    public void handleReset() {
-        this.getChildren().clear();
-        btnStart.setDisable(true);
-        btnSave.setDisable(true);
-        cb.setDisable(true);
-        rb1.setSelected(false);
-        rb2.setSelected(false);
-        this.vbUi.getChildren().removeAll(fieldsPane, invisibleButton);
-        this.backgroundPane.getChildren().clear();
-        this.getChildren().addAll(this.vbLeft, this.vbRight);
-    }
-
-    // the output reset
-    public void addOutput(Controller2 controller2) {
-        this.backgroundPane.getChildren().clear();
-
-        ImageView lamba1 = new ImageView(new Image(p + "Lamba1.png"));
-        lamba1.setFitWidth(30);
-        lamba1.setFitHeight(30);
-        ImageView lamba2 = new ImageView(new Image(p + "Lamba2.png"));
-        lamba2.setFitWidth(30);
-        lamba2.setFitHeight(30);
-        ImageView lamba3 = new ImageView(new Image(p + "Lamba3.png"));
-        lamba3.setFitWidth(30);
-        lamba3.setFitHeight(30);
-
-        ImageView iv1 = new ImageView(new Image(p + "Right.png"));
-        iv1.setFitWidth(10);
-        iv1.setFitHeight(75);
-        ImageView iv2 = new ImageView(new Image(p + "Left.png"));
-        iv2.setFitWidth(10);
-        iv2.setFitHeight(75);
-
-        // Eigenvalues output
-
-        HBox hbEigenValue1 = new HBox(10);
-        CustomText text = new CustomText("=  " + controller2.getEigenValues()[0]);
-        text.changeSize(20);
-        hbEigenValue1.getChildren().addAll(lamba1, text);
-        hbEigenValue1.setLayoutX(130);
-        hbEigenValue1.setLayoutY(300);
-
-        HBox hbEigenValue2 = new HBox(10);
-        CustomText text1 = new CustomText("=  " + controller2.getEigenValues()[1]);
-        text1.changeSize(20);
-        hbEigenValue2.getChildren().addAll(lamba2, text1);
-        hbEigenValue2.setLayoutX(400);
-        hbEigenValue2.setLayoutY(275);
-
-        // Eigenvectors output
-        ArrayList<HBox> hbEigenVectors1 = getEigenVectors1(controller2);
-        HBox hbEigen11 = hbEigenVectors1.get(0);
-        hbEigen11.setLayoutX(5);
-        hbEigen11.setLayoutY(210);
-        this.backgroundPane.getChildren().add(hbEigen11);
-        if (hbEigenVectors1.size() > 1) {
-            HBox hbEigen12 = hbEigenVectors1.get(1);
-            hbEigen12.setLayoutX(135);
-            hbEigen12.setLayoutY(210);
-            this.backgroundPane.getChildren().add(hbEigen12);
-        }
-        if (hbEigenVectors1.size() > 2) {
-            HBox hbEigen13 = hbEigenVectors1.get(2);
-            hbEigen13.setLayoutX(5);
-            hbEigen13.setLayoutY(320);
-            this.backgroundPane.getChildren().add(hbEigen13);
-        }
-
-        // Eigenvectors for eigenvalues 2
-        ArrayList<HBox> hbEigenVectors2 = getEigenVectors2(controller2);
-        HBox hbEigen21 = hbEigenVectors2.get(0);
-        hbEigen21.setLayoutX(270);
-        hbEigen21.setLayoutY(320);
-        this.backgroundPane.getChildren().add(hbEigen21);
-        if (hbEigenVectors2.size() > 1) {
-            HBox hbEigen22 = hbEigenVectors2.get(1);
-            hbEigen22.setLayoutX(400);
-            hbEigen22.setLayoutY(320);
-            this.backgroundPane.getChildren().add(hbEigen22);
-        }
-        if (hbEigenVectors2.size() > 2) {
-            HBox hbEigen23 = hbEigenVectors2.get(2);
-            hbEigen23.setLayoutX(400);
-            hbEigen23.setLayoutY(430);
-            this.backgroundPane.getChildren().add(hbEigen23);
-        }
-
-        this.backgroundPane.getChildren().addAll(hbEigenValue1, hbEigenValue2);
-
-        if (rb2.isSelected()) {
-            HBox hbEigenValue3 = new HBox(10);
-            CustomText text2 = new CustomText("= " + controller2.getEigenValues()[2]);
-            text2.changeSize(20);
-            hbEigenValue3.getChildren().addAll(lamba3, text2);
-            hbEigenValue3.setLayoutX(15);
-            hbEigenValue3.setLayoutY(415);
-            this.backgroundPane.getChildren().add(hbEigenValue3);
-
-            ArrayList<HBox> hbEigenVectors3 = getEigenVectors3(controller2);
-            // Eigenvectors for eigenvalue 3
-            HBox hbEigen31 = hbEigenVectors3.get(0);
-            hbEigen31.setLayoutX(5);
-            hbEigen31.setLayoutY(460);
-            this.backgroundPane.getChildren().add(hbEigen31);
-            if (hbEigenVectors3.size() > 1) {
-                HBox hbEigen32 = hbEigenVectors3.get(1);
-                hbEigen32.setLayoutX(135);
-                hbEigen32.setLayoutY(460);
-                this.backgroundPane.getChildren().add(hbEigen32);
-            }
-            if (hbEigenVectors3.size() > 2) {
-                HBox hbEigen33 = hbEigenVectors3.get(2);
-                hbEigen33.setLayoutX(265);
-                hbEigen33.setLayoutY(460);
-                this.backgroundPane.getChildren().add(hbEigen33);
-            }
-        }
-    }
-
-    // get the textfield for the 2x2 button
+    /**
+     * get the textfield for the 2x2 button
+     * @return
+     */
     public ArrayList<CustomTextField> getFieldListRb1() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray : this.fieldListRb1) {
@@ -879,7 +1006,10 @@ public class View2 extends Pane implements iView {
         return fieldList;
     }
 
-    // get the textfield for the 3x3 button
+    /**
+     * get the textfield for the 3x3 button
+     * @return the arrayList with all the textfields for 3x3
+     */
     public ArrayList<CustomTextField> getFieldListRb2() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray : this.fieldListRb2) {
