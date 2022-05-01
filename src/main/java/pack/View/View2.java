@@ -21,7 +21,6 @@ import javafx.scene.text.Text;
 import pack.Controller.Controller2;
 import pack.Model.Model2for3x3;
 import pack.Model.ModelForJSON;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -34,6 +33,7 @@ public class View2 extends Pane implements iView {
 
     // TODO fix when clicking "Save matrix" two times, stack overflow
     // TODO FIX THE BUTTON GETTING NOT DISABLED WHEN THERES SITLL A WRONG VALUE BUT THE NEXT ONE IS RIGHT
+    // TODO error in console when saving a matrix
 
     private CustomTextField[][] fieldListRb1, fieldListRb2;
     private HBox fieldsPane;
@@ -140,7 +140,6 @@ public class View2 extends Pane implements iView {
      * @return a list with the matrix
      */
     private ArrayList<Double> YesImAGummyBear(JSONArray js) {
-
 
         ArrayList<String> objs = new ArrayList<>();
         ArrayList<Double> ints = new ArrayList<>();
@@ -393,75 +392,6 @@ public class View2 extends Pane implements iView {
     }
 
     /**
-     * set the whole output  with all the eigenvalues and vectors
-     * @param controller2
-     * @return Gridpane
-     */
-    public GridPane showDaRight(Controller2 controller2) {
-        GridPane gpt = new GridPane();
-        gpt.setVgap(20);
-        gpt.setPrefSize(500, 595);
-
-        if (rb2.isSelected()) {
-            CustomText text = new CustomText("λ = " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
-            CustomText text1 = new CustomText("λ = " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
-            CustomText text2 = new CustomText("λ = " + controller2.getEigenValues()[2] + "\nTHE EIGEN VECTOR IS: ");
-            gpt.add(text, 0, 0);
-            if (controller2.getEigenVectors()[0].size() == 3) {
-                gpt.add(newVector(1, controller2, 0), 0, 1);
-            } else if (controller2.getEigenVectors()[0].size() == 6) {
-                gpt.add(newVector(1, controller2, 0), 0, 1);
-                gpt.add(newVector(2, controller2, 0), 1, 1);
-            } else {
-                gpt.add(newVector(1, controller2, 0), 0, 1);
-                gpt.add(newVector(2, controller2, 0), 1, 1);
-                gpt.add(newVector(3, controller2, 0), 2, 1);
-            }
-            gpt.add(text1, 0, 2);
-            if (controller2.getEigenVectors()[1].size() == 3) {
-                gpt.add(newVector(1, controller2, 1), 0, 3);
-            } else if (Model2for3x3.getS2().size() == 6) {
-                gpt.add(newVector(1, controller2, 1), 0, 3);
-                gpt.add(newVector(2, controller2, 1), 1, 3);
-            } else {
-                gpt.add(newVector(1, controller2, 1), 0, 3);
-                gpt.add(newVector(2, controller2, 1), 1, 3);
-                gpt.add(newVector(3, controller2, 1), 2, 3);
-            }
-            gpt.add(text2, 0, 4);
-            if (controller2.getEigenVectors()[2].size() == 3) {
-                gpt.add(newVector(1, controller2, 2), 0, 5);
-            } else if (Model2for3x3.getS3().size() == 6) {
-                gpt.add(newVector(1, controller2, 2), 1, 5);
-                gpt.add(newVector(2, controller2, 2), 2, 5);
-            } else {
-                gpt.add(newVector(1, controller2, 2), 0, 5);
-                gpt.add(newVector(2, controller2, 2), 1, 5);
-                gpt.add(newVector(3, controller2, 2), 2, 5);
-            }
-        }
-        if (rb1.isSelected()) {
-            CustomText text = new CustomText("λ = " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
-            CustomText text1 = new CustomText("λ = " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
-            gpt.add(text, 0, 0);
-            if (controller2.getEigenVectors()[0].size() == 2) {
-                gpt.add(newVector(1, controller2, 0), 0, 1);
-            } else {
-                gpt.add(newVector(1, controller2, 0), 0, 1);
-                gpt.add(newVector(2, controller2, 0), 1, 1);
-            }
-            gpt.add(text1, 0, 2);
-            if (controller2.getEigenVectors()[1].size() == 2) {
-                gpt.add(newVector(1, controller2, 1), 0, 3);
-            } else {
-                gpt.add(newVector(1, controller2, 1), 0, 3);
-                gpt.add(newVector(2, controller2, 1), 1, 3);
-            }
-        }
-        return gpt;
-    }
-
-    /**
      * create a new vector with the bracket images and the numbers
      * @param counter to know which eigenvalue
      * @param controller2 math for view 2
@@ -516,13 +446,12 @@ public class View2 extends Pane implements iView {
             numba3 = controller2.getEigenVectors()[i].get(8);
         }
 
-        CustomText nb1 = new CustomText(Double.toString(numba1));
-        CustomText nb2 = new CustomText(Double.toString(numba2));
-        CustomText nb3 = new CustomText(Double.toString(numba3));
+        CustomText nb1 = new CustomText(String.format("%.2f", numba1));
+        CustomText nb2 = new CustomText(String.format("%.2f", numba2));
+        CustomText nb3 = new CustomText(String.format("%.2f", numba3));
         vbx1.getChildren().add(nb1);
         vbx1.getChildren().add(nb2);
         vbx1.getChildren().add(nb3);
-
         return vbx1;
     }
 
@@ -545,8 +474,8 @@ public class View2 extends Pane implements iView {
             numba1 = controller2.getEigenVectors()[i].get(2);   // changed 1 to i
             numba2 = controller2.getEigenVectors()[i].get(3);   // changed 1 to i
         }
-        CustomText nb1 = new CustomText(Double.toString(numba1));
-        CustomText nb2 = new CustomText(Double.toString(numba2));
+        CustomText nb1 = new CustomText(String.format("%.2f", numba1));
+        CustomText nb2 = new CustomText(String.format("%.2f", numba2));
         vbx1.getChildren().addAll(nb1, nb2);
         return vbx1;
     }
@@ -744,14 +673,14 @@ public class View2 extends Pane implements iView {
         // Eigenvalues output
 
         HBox hbEigenValue1 = new HBox(10);
-        CustomText text = new CustomText("=  " + controller2.getEigenValues()[0]);
+        CustomText text = new CustomText("=  " + String.format("%.2f", controller2.getEigenValues()[0]));
         text.changeSize(20);
         hbEigenValue1.getChildren().addAll(lamba1, text);
         hbEigenValue1.setLayoutX(130);
         hbEigenValue1.setLayoutY(300);
 
         HBox hbEigenValue2 = new HBox(10);
-        CustomText text1 = new CustomText("=  " + controller2.getEigenValues()[1]);
+        CustomText text1 = new CustomText("=  " + String.format("%.2f", controller2.getEigenValues()[1]));
         text1.changeSize(20);
         hbEigenValue2.getChildren().addAll(lamba2, text1);
         hbEigenValue2.setLayoutX(400);
@@ -799,7 +728,7 @@ public class View2 extends Pane implements iView {
 
         if (rb2.isSelected()) {
             HBox hbEigenValue3 = new HBox(10);
-            CustomText text2 = new CustomText("= " + controller2.getEigenValues()[2]);
+            CustomText text2 = new CustomText("= " + String.format("%.2f", controller2.getEigenValues()[2]));
             text2.changeSize(20);
             hbEigenValue3.getChildren().addAll(lamba3, text2);
             hbEigenValue3.setLayoutX(15);
