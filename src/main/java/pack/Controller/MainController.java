@@ -29,7 +29,9 @@ public class MainController {
     }
 
     public void handleLSEQuestions() {
-        ImageView iv = new ImageView(new Image(p + "LSEQuestions.png"));
+        ImageView iv = new ImageView(new Image(p + "SLEQuestions.png"));
+        iv.setFitWidth(683);
+        iv.setFitHeight(512);
         Stage stage = new Stage();
         stage.setResizable(false);
         stage.setScene(new Scene(new Pane(iv)));
