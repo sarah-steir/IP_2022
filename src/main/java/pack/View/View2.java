@@ -683,7 +683,7 @@ public class View2 extends Pane implements iView {
         CustomText text1 = new CustomText("=  " + String.format("%.2f", controller2.getEigenValues()[1]));
         text1.changeSize(20);
         hbEigenValue2.getChildren().addAll(lamba2, text1);
-        hbEigenValue2.setLayoutX(400);
+        hbEigenValue2.setLayoutX(375);
         hbEigenValue2.setLayoutY(275);
 
         // Eigenvectors output
