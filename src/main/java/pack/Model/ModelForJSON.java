@@ -11,13 +11,18 @@ public class ModelForJSON {
     private static JSONObject matrix = new JSONObject();
     private static JSONObject names = new JSONObject();
 
-    //SET UP BOTH OF THE JSON FILE WHEN NEEDED OR RESET THEM
+    /**
+     * SET UP BOTH OF THE JSON FILE WHEN NEEDED OR RESET THEM
+     */
+
     public ModelForJSON() {
         //writeBasics();
         //writeNames();
     }
 
-    //Write all the names of the matrices in one jsonfile
+    /**
+     * Write all the names of the matrices in one jsonfile
+     */
     public static void writeNames() {
         JSONArray getNames = new JSONArray();
         getNames.add("identity");
@@ -46,7 +51,9 @@ public class ModelForJSON {
 
     }
 
-    //write all the matrices with their names in one jsonfile for one JSONObject
+    /**
+     * write all the matrices with their names in one jsonfile for one JSONObject
+     */
     public static void writeBasics() {
         JSONArray identity = new JSONArray();
         identity.add("1");

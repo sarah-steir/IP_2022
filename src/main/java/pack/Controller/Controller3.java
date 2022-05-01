@@ -1,6 +1,5 @@
 package pack.Controller;
 
-import javafx.geometry.Point3D;
 import javafx.scene.text.Text;
 import pack.Model.Model3;
 import pack.View.Customs.CustomText;
@@ -32,11 +31,11 @@ public class Controller3 {
 
     public String identifyLines() {
 
-        if (model.parallel() == true) {
+        if (model.parallel()) {
             return "parallel";
         }
 
-        if (model.det() == true) {
+        if (model.det()) {
             return "intersecting";
         }
 
