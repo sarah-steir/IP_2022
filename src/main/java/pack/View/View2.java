@@ -388,21 +388,20 @@ public class View2 extends Pane implements iView {
         ImageView iv3 = new ImageView(new Image(p + "Vector3.png"));
         iv3.setFitWidth(20);
         iv3.setFitHeight(20);
-        CustomText text = new CustomText("= ");
 
         if (rb1.isSelected()) {
             if (controller2.getEigenVectors()[0].size() == 2) {
                 HBox hb1 = new HBox();
                 hb1.setAlignment(Pos.CENTER);
-                hb1.getChildren().addAll(iv1, text, newVector(1, controller2, 0));
+                hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 0));
                 hbEigenVectors1.add(hb1);
             } else {
                 HBox hb1 = new HBox();
                 hb1.setAlignment(Pos.CENTER);
-                hb1.getChildren().addAll(iv1, text, newVector(1, controller2, 0));
+                hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 0));
                 HBox hb2 = new HBox();
                 hb2.setAlignment(Pos.CENTER);
-                hb2.getChildren().addAll(iv2, text, newVector(2, controller2, 0));
+                hb2.getChildren().addAll(iv2, new CustomText("= "), newVector(2, controller2, 0));
                 hbEigenVectors1.add(hb1);
                 hbEigenVectors1.add(hb2);
             }
@@ -410,27 +409,27 @@ public class View2 extends Pane implements iView {
             if (controller2.getEigenVectors()[0].size() == 3) {
                 HBox hb1 = new HBox();
                 hb1.setAlignment(Pos.CENTER);
-                hb1.getChildren().addAll(iv1, text, newVector(1, controller2, 0));
+                hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 0));
                 hbEigenVectors1.add(hb1);
             } else if (controller2.getEigenVectors()[0].size() == 6) {
                 HBox hb1 = new HBox();
                 hb1.setAlignment(Pos.CENTER);
-                hb1.getChildren().addAll(iv1, text, newVector(1, controller2, 0));
+                hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 0));
                 HBox hb2 = new HBox();
                 hb2.setAlignment(Pos.CENTER);
-                hb2.getChildren().addAll(iv2, text, newVector(2, controller2, 0));
+                hb2.getChildren().addAll(iv2, new CustomText("= "), newVector(2, controller2, 0));
                 hbEigenVectors1.add(hb1);
                 hbEigenVectors1.add(hb2);
             } else {
                 HBox hb1 = new HBox();
                 hb1.setAlignment(Pos.CENTER);
-                hb1.getChildren().addAll(iv1, text, newVector(1, controller2, 0));
+                hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 0));
                 HBox hb2 = new HBox();
                 hb2.setAlignment(Pos.CENTER);
-                hb2.getChildren().addAll(iv2, text, newVector(2, controller2, 0));
+                hb2.getChildren().addAll(iv2, new CustomText("= "), newVector(2, controller2, 0));
                 HBox hb3 = new HBox();
                 hb3.setAlignment(Pos.CENTER);
-                hb3.getChildren().addAll(iv3, text, newVector(3, controller2, 0));
+                hb3.getChildren().addAll(iv3, new CustomText("= "), newVector(3, controller2, 0));
                 hbEigenVectors1.add(hb1);
                 hbEigenVectors1.add(hb2);
                 hbEigenVectors1.add(hb3);
@@ -450,21 +449,20 @@ public class View2 extends Pane implements iView {
         ImageView iv3 = new ImageView(new Image(p + "Vector3.png"));
         iv3.setFitWidth(20);
         iv3.setFitHeight(20);
-        CustomText text = new CustomText("= ");
 
         if (rb1.isSelected()) {
             if (controller2.getEigenVectors()[1].size() == 2) {
                 HBox hb1 = new HBox();
                 hb1.setAlignment(Pos.CENTER);
-                hb1.getChildren().addAll(iv1, text, newVector(1, controller2, 1));
+                hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 1));
                 hbEigenVectors2.add(hb1);
             } else {
                 HBox hb1 = new HBox();
                 hb1.setAlignment(Pos.CENTER);
-                hb1.getChildren().addAll(iv1, text, newVector(1, controller2, 1));
+                hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 1));
                 HBox hb2 = new HBox();
                 hb2.setAlignment(Pos.CENTER);
-                hb2.getChildren().addAll(iv2, text, newVector(2, controller2, 1));
+                hb2.getChildren().addAll(iv2, new CustomText("= "), newVector(2, controller2, 1));
                 hbEigenVectors2.add(hb1);
                 hbEigenVectors2.add(hb2);
             }
@@ -472,27 +470,27 @@ public class View2 extends Pane implements iView {
             if (controller2.getEigenVectors()[1].size() == 3) {
                 HBox hb1 = new HBox();
                 hb1.setAlignment(Pos.CENTER);
-                hb1.getChildren().addAll(iv1, text, newVector(1, controller2, 1));
+                hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 1));
                 hbEigenVectors2.add(hb1);
             } else if (Model2for3x3.getS2().size() == 6) {
                 HBox hb1 = new HBox();
                 hb1.setAlignment(Pos.CENTER);
-                hb1.getChildren().addAll(iv1, text, newVector(1, controller2, 1));
+                hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 1));
                 HBox hb2 = new HBox();
                 hb2.setAlignment(Pos.CENTER);
-                hb2.getChildren().addAll(iv2, text, newVector(2, controller2, 1));
+                hb2.getChildren().addAll(iv2, new CustomText("= "), newVector(2, controller2, 1));
                 hbEigenVectors2.add(hb1);
                 hbEigenVectors2.add(hb2);
             } else {
                 HBox hb1 = new HBox();
                 hb1.setAlignment(Pos.CENTER);
-                hb1.getChildren().addAll(iv1, text, newVector(1, controller2, 1));
+                hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 1));
                 HBox hb2 = new HBox();
                 hb2.setAlignment(Pos.CENTER);
-                hb2.getChildren().addAll(iv2, text, newVector(2, controller2, 1));
+                hb2.getChildren().addAll(iv2, new CustomText("= "), newVector(2, controller2, 1));
                 HBox hb3 = new HBox();
                 hb3.setAlignment(Pos.CENTER);
-                hb3.getChildren().addAll(iv3, text, newVector(3, controller2, 1));
+                hb3.getChildren().addAll(iv3, new CustomText("= "), newVector(3, controller2, 1));
                 hbEigenVectors2.add(hb1);
                 hbEigenVectors2.add(hb2);
                 hbEigenVectors2.add(hb3);
@@ -512,32 +510,31 @@ public class View2 extends Pane implements iView {
         ImageView iv3 = new ImageView(new Image(p + "Vector3.png"));
         iv3.setFitWidth(20);
         iv3.setFitHeight(20);
-        CustomText text = new CustomText("= ");
 
         if (controller2.getEigenVectors()[2].size() == 3) {
             HBox hb1 = new HBox();
             hb1.setAlignment(Pos.CENTER);
-            hb1.getChildren().addAll(iv1, text, newVector(1, controller2, 2));
+            hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 2));
             hbEigenVectors3.add(hb1);
         } else if (Model2for3x3.getS3().size() == 6) {
             HBox hb1 = new HBox();
             hb1.setAlignment(Pos.CENTER);
-            hb1.getChildren().addAll(iv1, text, newVector(1, controller2, 2));
+            hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 2));
             HBox hb2 = new HBox();
             hb2.setAlignment(Pos.CENTER);
-            hb2.getChildren().addAll(iv2, text, newVector(2, controller2, 2));
+            hb2.getChildren().addAll(iv2, new CustomText("= "), newVector(2, controller2, 2));
             hbEigenVectors3.add(hb1);
             hbEigenVectors3.add(hb2);
         } else {
             HBox hb1 = new HBox();
             hb1.setAlignment(Pos.CENTER);
-            hb1.getChildren().addAll(iv1, text, newVector(1, controller2, 2));
+            hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 2));
             HBox hb2 = new HBox();
             hb2.setAlignment(Pos.CENTER);
-            hb2.getChildren().addAll(iv2, text, newVector(2, controller2, 2));
+            hb2.getChildren().addAll(iv2, new CustomText("= "), newVector(2, controller2, 2));
             HBox hb3 = new HBox();
             hb3.setAlignment(Pos.CENTER);
-            hb3.getChildren().addAll(iv3, text, newVector(3, controller2, 2));
+            hb3.getChildren().addAll(iv3, new CustomText("= "), newVector(3, controller2, 2));
             hbEigenVectors3.add(hb1);
             hbEigenVectors3.add(hb2);
             hbEigenVectors3.add(hb3);
@@ -769,14 +766,14 @@ public class View2 extends Pane implements iView {
         this.backgroundPane.getChildren().clear();
 
         ImageView lamba1 = new ImageView(new Image(p + "Lamba1.png"));
-        lamba1.setFitWidth(20);
-        lamba1.setFitHeight(20);
+        lamba1.setFitWidth(30);
+        lamba1.setFitHeight(30);
         ImageView lamba2 = new ImageView(new Image(p + "Lamba2.png"));
-        lamba2.setFitWidth(20);
-        lamba2.setFitHeight(20);
+        lamba2.setFitWidth(30);
+        lamba2.setFitHeight(30);
         ImageView lamba3 = new ImageView(new Image(p + "Lamba3.png"));
-        lamba3.setFitWidth(20);
-        lamba3.setFitHeight(20);
+        lamba3.setFitWidth(30);
+        lamba3.setFitHeight(30);
 
         ImageView iv1 = new ImageView(new Image(p + "Right.png"));
         iv1.setFitWidth(10);
@@ -789,38 +786,54 @@ public class View2 extends Pane implements iView {
 
         HBox hbEigenValue1 = new HBox(10);
         CustomText text = new CustomText("=  " + controller2.getEigenValues()[0]);
+        text.changeSize(20);
         hbEigenValue1.getChildren().addAll(lamba1, text);
-        hbEigenValue1.setLayoutX(15);
-        hbEigenValue1.setLayoutY(210);
+        hbEigenValue1.setLayoutX(130);
+        hbEigenValue1.setLayoutY(300);
 
         HBox hbEigenValue2 = new HBox(10);
         CustomText text1 = new CustomText("=  " + controller2.getEigenValues()[1]);
+        text1.changeSize(20);
         hbEigenValue2.getChildren().addAll(lamba2, text1);
         hbEigenValue2.setLayoutX(400);
         hbEigenValue2.setLayoutY(275);
 
         // Eigenvectors output
         ArrayList<HBox> hbEigenVectors1 = getEigenVectors1(controller2);
-        HBox hbEigen1 = hbEigenVectors1.get(0);
-        hbEigen1.setLayoutX(15);
-        hbEigen1.setLayoutY(250);
-        this.backgroundPane.getChildren().add(hbEigen1);
+        HBox hbEigen11 = hbEigenVectors1.get(0);
+        hbEigen11.setLayoutX(5);
+        hbEigen11.setLayoutY(210);
+        this.backgroundPane.getChildren().add(hbEigen11);
         if (hbEigenVectors1.size() > 1) {
-            HBox hbEigen2 = hbEigenVectors1.get(1);
-            hbEigen2.setLayoutX(115);
-            hbEigen2.setLayoutY(250);
-            this.backgroundPane.getChildren().add(hbEigen2);
+            HBox hbEigen12 = hbEigenVectors1.get(1);
+            hbEigen12.setLayoutX(135);
+            hbEigen12.setLayoutY(210);
+            this.backgroundPane.getChildren().add(hbEigen12);
         }
         if (hbEigenVectors1.size() > 2) {
-            HBox hbEigen3 = hbEigenVectors1.get(2);
-            hbEigen3.setLayoutX(215);
-            hbEigen3.setLayoutY(250);
-            this.backgroundPane.getChildren().add(hbEigen3);
+            HBox hbEigen13 = hbEigenVectors1.get(2);
+            hbEigen13.setLayoutX(5);
+            hbEigen13.setLayoutY(320);
+            this.backgroundPane.getChildren().add(hbEigen13);
         }
 
+        // Eigenvectors for eigenvalues 2
         ArrayList<HBox> hbEigenVectors2 = getEigenVectors2(controller2);
-        for (HBox hbVector2: hbEigenVectors2) {
-            this.backgroundPane.getChildren().add(hbVector2);
+        HBox hbEigen21 = hbEigenVectors2.get(0);
+        hbEigen21.setLayoutX(270);
+        hbEigen21.setLayoutY(320);
+        this.backgroundPane.getChildren().add(hbEigen21);
+        if (hbEigenVectors2.size() > 1) {
+            HBox hbEigen22 = hbEigenVectors2.get(1);
+            hbEigen22.setLayoutX(400);
+            hbEigen22.setLayoutY(320);
+            this.backgroundPane.getChildren().add(hbEigen22);
+        }
+        if (hbEigenVectors2.size() > 2) {
+            HBox hbEigen23 = hbEigenVectors2.get(2);
+            hbEigen23.setLayoutX(400);
+            hbEigen23.setLayoutY(430);
+            this.backgroundPane.getChildren().add(hbEigen23);
         }
 
         this.backgroundPane.getChildren().addAll(hbEigenValue1, hbEigenValue2);
@@ -828,10 +841,30 @@ public class View2 extends Pane implements iView {
         if (rb2.isSelected()) {
             HBox hbEigenValue3 = new HBox(10);
             CustomText text2 = new CustomText("= " + controller2.getEigenValues()[2]);
+            text2.changeSize(20);
             hbEigenValue3.getChildren().addAll(lamba3, text2);
-            hbEigenValue3.setLayoutX(20);
-            hbEigenValue3.setLayoutY(100);
+            hbEigenValue3.setLayoutX(15);
+            hbEigenValue3.setLayoutY(415);
             this.backgroundPane.getChildren().add(hbEigenValue3);
+
+            ArrayList<HBox> hbEigenVectors3 = getEigenVectors3(controller2);
+            // Eigenvectors for eigenvalue 3
+            HBox hbEigen31 = hbEigenVectors3.get(0);
+            hbEigen31.setLayoutX(5);
+            hbEigen31.setLayoutY(460);
+            this.backgroundPane.getChildren().add(hbEigen31);
+            if (hbEigenVectors3.size() > 1) {
+                HBox hbEigen32 = hbEigenVectors3.get(1);
+                hbEigen32.setLayoutX(135);
+                hbEigen32.setLayoutY(460);
+                this.backgroundPane.getChildren().add(hbEigen32);
+            }
+            if (hbEigenVectors3.size() > 2) {
+                HBox hbEigen33 = hbEigenVectors3.get(2);
+                hbEigen33.setLayoutX(265);
+                hbEigen33.setLayoutY(460);
+                this.backgroundPane.getChildren().add(hbEigen33);
+            }
         }
     }
 
