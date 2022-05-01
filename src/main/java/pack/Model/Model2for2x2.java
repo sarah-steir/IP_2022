@@ -3,6 +3,7 @@ package pack.Model;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+
 public class Model2for2x2 {
 
     private static double x1;
@@ -24,6 +25,10 @@ public class Model2for2x2 {
 
     static final DecimalFormat formatting = new DecimalFormat("0.000");// format the number to 3 decimals
 
+    /**
+     *will find the eigenvector and eigenvalue for a 3x3 matrix
+     * @param matrixCoefficients CONTAINS THE NUMBERS FROM THE TEXTFIELDS
+     */
     public Model2for2x2(ArrayList<Double> matrixCoefficients) {
         this.a1 = matrixCoefficients.get(0);
         this.a2 = matrixCoefficients.get(1);
@@ -35,10 +40,16 @@ public class Model2for2x2 {
         this.b2Initial = b2;
         findTheCubicEquation2x2(a1, a2, b1, b2);
         roots2x2(first, second, third);
-        answers2x2(a1, a2, b1, b2, x1, x2);
+        answers2x2(x1, x2);
     }
 
-    //get the polynomial equation
+    /**
+     * get the polynomial equation
+     * @param a1 first row first column
+     * @param a2 second row first column
+     * @param b1 first row second column
+     * @param b2 second row second column
+     */
     private void findTheCubicEquation2x2(double a1, double a2, double b1, double b2) {
         //addiction
         double a1b2 = a1 * b2;
@@ -51,7 +62,12 @@ public class Model2for2x2 {
         first = 1; // ^3
     }
 
-    //get the root for the polynomial ROOTS ARE THE EIGENVALUES
+    /**
+     * get the root for the polynomial ROOTS ARE THE EIGENVALUES
+     * @param a number which is before x^2
+     * @param b umber which is before x
+     * @param c last number
+     */
     private void roots2x2(double a, double b, double c) {
 
         double squareRoot = (b * b) - (4 * a * c); // numnber in the square root
@@ -66,8 +82,12 @@ public class Model2for2x2 {
         x2 = Double.parseDouble(formatting.format(x2));
     }
 
-    // this is where u get all the answers
-    private void answers2x2(double a1, double a2, double b1, double b2, double x1, double x2) {
+    /**
+     * this is where u get all the answers
+     * @param x1 first eigenvalue
+     * @param x2 second eigenvalue
+     */
+    private void answers2x2(double x1, double x2) {
         double aa1 = a1Initial - x1;//WITH FIRST LAMBA
         double bb2 = b2Initial - x1;//WITH FIRST LAMBA
         m1 = reduceMatrix2x2(aa1, a2Initial, b1Initial, bb2); // reduce matrix
@@ -78,7 +98,14 @@ public class Model2for2x2 {
         s2 = findEigenVectors2x2(m2);
     }
 
-    //reduce the matrix the best as possible
+    /**
+     * reduce the matrix the best as possible
+     * @param a1 first row first column
+     * @param a2 second row first column
+     * @param b1 first row second column
+     * @param b2 second row second column
+     * @return the reduced matrix
+     */
     private double[] reduceMatrix2x2(double a1, double a2, double b1, double b2) {
         if (a1 == 0) { // if a equal to zero (switch rows) unless all is zero (a,b,c)
             if (b1 != 0) { //switch a with b if b not zero
@@ -113,7 +140,11 @@ public class Model2for2x2 {
         return arr;
     }
 
-    //get the eigenvectors
+    /**
+     * get the eigenvectors
+     * @param v1 the reduced matrix
+     * @return the eigenvectors
+     */
     private ArrayList<Double> findEigenVectors2x2(double[] v1) {
         ArrayList<Double> y1 = new ArrayList<>(); // vector can max have 2 positions
         y1.add(0, 0.0);
@@ -148,7 +179,10 @@ public class Model2for2x2 {
         return y1;
     }
 
-    //get the final eigenvalues
+    /**
+     * get the final eigenvalues
+     * @return the final eigenvalues
+     */
     public double[] getEigenValues() {
         double[] eigenValues = new double[2];
         eigenValues[0] = x1;
@@ -156,7 +190,10 @@ public class Model2for2x2 {
         return eigenValues;
     }
 
-    //get the final eigenvectors
+    /**
+     * get the final eigenvectors
+     * @return the final eigen vectors
+     */
     public ArrayList<Double>[] getEigenVectors() {
         ArrayList<Double>[] eigenVectors = new ArrayList[2];
         eigenVectors[0] = s1;
