@@ -21,6 +21,10 @@ public class Model2for3x3 {
 
     static final DecimalFormat formatting = new DecimalFormat("0.0000"); // format the number to 4 decimals
 
+    /**
+     * will find the eigenvector and eigenvalue for a 3x3 matrix
+     * @param matrixCoefficients CONTAINS THE NUMBERS FROM THE TEXTFIELDS
+     */
     public Model2for3x3(ArrayList<Double> matrixCoefficients) {
         this.a1 = matrixCoefficients.get(0);
         this.a2 = matrixCoefficients.get(1);
@@ -46,7 +50,18 @@ public class Model2for3x3 {
 
     }
 
-    // find the cubic equation
+    /**
+     * find the cubic equation
+     * @param a1 first row first column
+     * @param a2 first row second column
+     * @param a3 first row third column
+     * @param b1 second row first column
+     * @param b2 second row second column
+     * @param b3 second row third column
+     * @param c1 third row first column
+     * @param c2 third row second column
+     * @param c3 third row third column
+     */
     private void findTheCubicEquation3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3) {
         //additions
         //SEPARATED A1*B2*C3 according to the exponent of lambda
@@ -75,7 +90,13 @@ public class Model2for3x3 {
         first = toTheCube; // x^3
     }
 
-    // get the roots so the eigenvalues
+    /**
+     * get the roots so the eigenvalues
+     * @param A number before x^3
+     * @param B number before x^2
+     * @param C number before x
+     * @param D last number
+     */
     private void roots3x3(double A, double B, double C, double D) {
 
         double a = (double) B / A;
@@ -138,7 +159,21 @@ public class Model2for3x3 {
 
     }
 
-    // find the eigenvectors and finds reduce matrix PUTS EVERYTHING TOGETHER
+    /**
+     * find the eigenvectors and finds reduce matrix PUTS EVERYTHING TOGETHER
+     * @param a1 first row first column
+     * @param a2 first row second column
+     * @param a3 first row third column
+     * @param b1 second row first column
+     * @param b2 second row second column
+     * @param b3 second row third column
+     * @param c1 third row first column
+     * @param c2 third row second column
+     * @param c3 third row third column
+     * @param x1 first eigenvalue
+     * @param x2 second eigenvalue
+     * @param x3 third eigenvalue
+     */
     private void answers3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3, double x1, double x2, double x3) {
         double aa1 = a1Initial - x1;//WITH FIRST LAMBA
         double bb2 = b2Initial - x1;
@@ -160,7 +195,19 @@ public class Model2for3x3 {
 
     }
 
-    // reduces the matrix
+    /**
+     * reduces the matrix
+     * @param a1 first row first column
+     * @param a2 first row second column
+     * @param a3 first row third column
+     * @param b1 second row first column
+     * @param b2 second row second column
+     * @param b3 second row third column
+     * @param c1 third row first column
+     * @param c2 third row second column
+     * @param c3 third row third column
+     * @return the reduced matrix
+     */
     private double[] reduceMatrix3x3(double a1, double a2, double a3, double b1, double b2, double b3, double c1, double c2, double c3) {
         a1 = Double.parseDouble(String.valueOf(a1)); // format everything
         a2 = Double.parseDouble(String.valueOf(a2));
@@ -269,7 +316,11 @@ public class Model2for3x3 {
         return arr;
     }
 
-    // find eigenvectors
+    /**
+     * find eigenvectors
+     * @param v1 the reduced matrix
+     * @return the eigenvectors
+     */
     private ArrayList<Double> findEigenVectors3x3(double[] v1) {
         ArrayList<Double> y1 = new ArrayList<>(); // will contain all the eigenvectors for one eigenvalue
         y1.add(0, 0.0);// will necessarily be 3 number in the arraylist
@@ -430,7 +481,10 @@ public class Model2for3x3 {
         return y1;
     }
 
-    //get fnal eigenvalues
+    /**
+     * get final eigenvalues
+     * @return the final eigenvalues
+     */
     public double[] getEigenValues() {
         double[] eigenValues = new double[3];
         eigenValues[0] = x1;
@@ -439,7 +493,10 @@ public class Model2for3x3 {
         return eigenValues;
     }
 
-    //get final eigenvectors
+    /**
+     * get final eigenvectors
+     * @return the final eigenvectors
+     */
     public ArrayList<Double>[] getEigenVectors() {
         ArrayList<Double>[] eigenVectors = new ArrayList[3];
         eigenVectors[0] = s1;

@@ -118,7 +118,9 @@ public class View2 extends Pane implements iView {
 
     }
 
-    //update the comboBox when then save button is pressed
+    /**
+     * update the comboBox when then save button is pressed
+     */
     private void UpdateLeCombobox() {
 
         cb.setValue(null);
@@ -132,7 +134,11 @@ public class View2 extends Pane implements iView {
         cb.getSelectionModel().selectFirst();
     }
 
-    //get all the numbers for the matrix chosen in the combobox and then making an arrayList with it
+    /**
+     * get all the numbers for the matrix chosen in the combobox and then making an arrayList with it
+     * @param js the JSONArray to transform
+     * @return a list with the matrix
+     */
     private ArrayList<Double> YesImAGummyBear(JSONArray js) {
 
 
@@ -155,7 +161,10 @@ public class View2 extends Pane implements iView {
         return ints;
     }
 
-    //Set the matrix we got from the combobox into the textfields
+    /**
+     * Set the matrix we got from the combobox into the textfields
+     * @param ints the matrix
+     */
     private void setMatrix(ArrayList<Double> ints) {
         a1 = ints.get(0);
         a2 = ints.get(1);
@@ -186,23 +195,9 @@ public class View2 extends Pane implements iView {
         }
     }
 
-    //Will make an array list for the matrix we want to get from the combobox
-    public static ArrayList<Integer> makeTheArrayList(JSONArray js) {
-        ArrayList<String> objs = new ArrayList<>();
-        ArrayList<Integer> ints = new ArrayList<>();
-        JSONArray list = js;
-        Iterator<JSONObject> iterator = js.iterator();
-        while (iterator.hasNext()) {
-            objs.add(String.valueOf(iterator.next()));
-        }
-
-        for (int i = 0; i < objs.size(); i++) {
-            ints.add(Integer.valueOf(objs.get(i)));
-        }
-        return ints;
-    }
-
-    // the actual window for when we press save
+    /**
+     * the actual window for when we press save
+     */
     private void DaVoid() {
         StackPane secondaryLayout = new StackPane();
 
@@ -217,7 +212,10 @@ public class View2 extends Pane implements iView {
         newWindow.show();
     }
 
-    // everything inside the new window that open when save is pressed
+    /**
+     * everything inside the new window that open when save is pressed
+     * @return the VBox
+     */
     private VBox PANCAKES() {
         VBox payne = new VBox();
         payne.setPadding(new Insets(10));
@@ -262,14 +260,18 @@ public class View2 extends Pane implements iView {
         return payne;
     } //sent the saved matrix to both of the JSONfiles TO SAVE
 
+    /**
+     * writes the new matrix into the JSONFile
+     * @param name name of matrix
+     */
     private void humptyDumptyFellOffAWall(String name) {
         JSONArray newMatrix = new JSONArray();
         if (rb1.isSelected()) {
-            newMatrix.add(View2.getT1());//
-            newMatrix.add(View2.getT2());//
+            newMatrix.add(View2.getT1());
+            newMatrix.add(View2.getT2());
             newMatrix.add("0");
-            newMatrix.add(View2.getT4());//
-            newMatrix.add(View2.getT5());//
+            newMatrix.add(View2.getT4());
+            newMatrix.add(View2.getT5());
             newMatrix.add("0");
             newMatrix.add("0");
             newMatrix.add("0");
@@ -318,7 +320,10 @@ public class View2 extends Pane implements iView {
         UpdateLeCombobox();
     }
 
-    // get all the name from the JSONArray in the JSONFILE
+    /**
+     * get all the name from the JSONArray in the JSONFILE
+     * @return JSONObject
+     */
     private JSONObject getThemNames() {
         JSONParser parser = new JSONParser();
 
@@ -334,7 +339,10 @@ public class View2 extends Pane implements iView {
         return names;
     }
 
-    // get the JSONObject of the JSONFILE
+    /**
+     * get the JSONObject of the JSONFILE
+     * @return the JSONObject
+     */
     private JSONObject getThatObject() {
         JSONParser parser = new JSONParser();
 
@@ -350,7 +358,10 @@ public class View2 extends Pane implements iView {
         return jsonObject;
     }
 
-    // HBox which will contain the save button and the combobox for the JSON
+    /**
+     * HBox which will contain the save button and the combobox for the JSON
+     * @return HBox
+     */
     private HBox setHbComboBox() {
         HBox hbComboBox = new HBox(100);
         hbComboBox.setPadding(new Insets(15));
@@ -358,7 +369,12 @@ public class View2 extends Pane implements iView {
         return hbComboBox;
     }
 
-    //The base VBox on the left
+    /**
+     * The base VBox on the left
+     * @param vbUi everything that goes into the VBOX
+     * @param graphPane where the graph shold be but we dont have one
+     * @return VBox
+     */
     @Override
     public VBox setLeft(VBox vbUi, Pane graphPane) {
         VBox vbLeft = new VBox();
@@ -376,7 +392,11 @@ public class View2 extends Pane implements iView {
         return  vbLeft;
     }
 
-    //set the whole output  with all the eigenvalues and vectors
+    /**
+     * set the whole output  with all the eigenvalues and vectors
+     * @param controller2
+     * @return Gridpane
+     */
     public GridPane showDaRight(Controller2 controller2) {
         GridPane gpt = new GridPane();
         gpt.setVgap(20);
@@ -441,7 +461,13 @@ public class View2 extends Pane implements iView {
         return gpt;
     }
 
-    // create a new vector with the bracket images and the numbers
+    /**
+     * create a new vector with the bracket images and the numbers
+     * @param counter to know which eigenvalue
+     * @param controller2 math for view 2
+     * @param i to know which eigenvalue
+     * @return HBOX
+     */
     public HBox newVector(int counter, Controller2 controller2, int i) { // counter is the vector if size=6 there is counter 1 and 2 possible
         HBox hbx = new HBox(10);
         VBox vbx1 = new VBox();
@@ -464,7 +490,13 @@ public class View2 extends Pane implements iView {
         return hbx;
     }
 
-    // put the eigenvector in vertical for a 3x3 matrix to then be put in between the two brackets for the output
+    /**
+     *  put the eigenvector in vertical for a 3x3 matrix to then be put in between the two brackets for the output
+     * @param counter to know which eigenvalue
+     * @param controller2 math for view 2
+     * @param i to know which eigenvalue
+     * @return VBOX
+     */
     public VBox putVertical3x3(int counter, Controller2 controller2, int i) {
         VBox vbx1 = new VBox();
         vbx1.setAlignment(Pos.CENTER);
@@ -494,7 +526,13 @@ public class View2 extends Pane implements iView {
         return vbx1;
     }
 
-    // put the eigenvector in vertical for a 2x2 matrix to then be put in between the two brackets for the output
+    /**
+     * put the eigenvector in vertical for a 2x2 matrix to then be put in between the two brackets for the output
+     * @param counter to know which eigenvalue
+     * @param controller2 math view 2
+     * @param i to know which eigenvalue
+     * @return VBOX
+     */
     public VBox putVertical2x2(int counter, Controller2 controller2, int i) {
         VBox vbx1 = new VBox(15);
         vbx1.setAlignment(Pos.CENTER);
@@ -513,7 +551,11 @@ public class View2 extends Pane implements iView {
         return vbx1;
     }
 
-    //set a VBox on the left which will contain everything on the left
+    /**
+     * set a VBox on the left which will contain everything on the left
+     * @param hbRadios radio button
+     * @param hbComboBox combobox
+     */
     private void setVbUi(HBox hbRadios, HBox hbComboBox) {
         this.vbUi.setSpacing(5);
         this.vbUi.setPrefSize(500, 695);
@@ -523,7 +565,10 @@ public class View2 extends Pane implements iView {
         this.vbUi.getChildren().addAll(hbRadios, hbComboBox, this.emptyBox);
     }
 
-    //set a VBox on the right which will contain everything on the right
+    /**
+     * set a VBox on the right which will contain everything on the right
+     * @param title name of scene
+     */
     private void setVbPo(String title) {
         this.vbBackground.setPrefSize(500, 580);
         BackgroundImage myBI = new BackgroundImage(new Image(p + "View2.png", 520, 580, false, true), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -537,14 +582,18 @@ public class View2 extends Pane implements iView {
         this.vbPo.getChildren().addAll(Custom.setTitle(title), this.vbBackground);
     }
 
-    //set the whole view
+    /**
+     * set the whole view
+     */
     public void setView2() {
         this.setPrefSize(1050, 750);
         this.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
         this.getChildren().addAll(this.vbLeft, this.vbRight);
     }
 
-    //set actiong for radio buttont
+    /**
+     * set action for radio button
+     */
     public void setActions() {
         rb1.setOnAction(event -> { //2x2 radio button
             this.btnStart.setDisable(false);
@@ -572,7 +621,11 @@ public class View2 extends Pane implements iView {
         });
     }
 
-    //format the output for each eigenvalues
+    /**
+     * format the output for each eigenvalues
+     * @param textFields the textfields for matrix
+     * @return the HBOX
+     */
     public HBox setFields (CustomTextField[][] textFields) {
         ImageView iv1 = new ImageView(new Image(p + "Right.png"));
         iv1.setFitWidth(44);
@@ -623,7 +676,10 @@ public class View2 extends Pane implements iView {
         return hbFields;
     }
 
-    //start buttont
+    /**
+     * start button
+     * @param isRb1Selected if the 2x2 is selected
+     */
     public void handleStart(boolean isRb1Selected) {
         if (isRb1Selected) {
             for (int i = 0; i < fieldListRb1.length; i++) {
@@ -646,7 +702,9 @@ public class View2 extends Pane implements iView {
         addOutput(controller2);
     }
 
-    //reset button
+    /**
+     * reset button
+     */
     public void handleReset() {
         this.getChildren().clear();
         btnStart.setDisable(true);
@@ -659,13 +717,19 @@ public class View2 extends Pane implements iView {
         this.getChildren().addAll(this.vbLeft, this.vbRight);
     }
 
-    // the output reset
+    /**
+     *  the output reset
+     * @param controller2 math view 2
+     */
     public void addOutput(Controller2 controller2) {
         this.vbBackground.getChildren().clear();
         this.vbBackground.getChildren().add(showDaRight(controller2));
     }
 
-    // get the textfield for the 2x2 button
+    /**
+     * get the textfield for the 2x2 button
+     * @return
+     */
     public ArrayList<CustomTextField> getFieldListRb1() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray : this.fieldListRb1) {
@@ -676,7 +740,10 @@ public class View2 extends Pane implements iView {
         return fieldList;
     }
 
-    // get the textfield for the 3x3 button
+    /**
+     * get the textfield for the 3x3 button
+     * @return the arrayList with all the textfields for 3x3
+     */
     public ArrayList<CustomTextField> getFieldListRb2() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray : this.fieldListRb2) {
