@@ -377,68 +377,94 @@ public class View2 extends Pane implements iView {
     }
 
     //set the whole output  with all the eigenvalues and vectors
-    public GridPane showDaRight(Controller2 controller2) {
-        GridPane gpt = new GridPane();
-        gpt.setVgap(20);
-        gpt.setPrefSize(500, 595);
+    public HBox getEigen1(Controller2 controller2) {
+        HBox hbEigen1 = new HBox();
 
-        if (rb2.isSelected()) {
-            CustomText text = new CustomText("λ = " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
-            CustomText text1 = new CustomText("λ = " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
-            CustomText text2 = new CustomText("λ = " + controller2.getEigenValues()[2] + "\nTHE EIGEN VECTOR IS: ");
-            gpt.add(text, 0, 0);
-            if (controller2.getEigenVectors()[0].size() == 3) {
-                gpt.add(newVector(1, controller2, 0), 0, 1);
-            } else if (controller2.getEigenVectors()[0].size() == 6) {
-                gpt.add(newVector(1, controller2, 0), 0, 1);
-                gpt.add(newVector(2, controller2, 0), 1, 1);
-            } else {
-                gpt.add(newVector(1, controller2, 0), 0, 1);
-                gpt.add(newVector(2, controller2, 0), 1, 1);
-                gpt.add(newVector(3, controller2, 0), 2, 1);
-            }
-            gpt.add(text1, 0, 2);
-            if (controller2.getEigenVectors()[1].size() == 3) {
-                gpt.add(newVector(1, controller2, 1), 0, 3);
-            } else if (Model2for3x3.getS2().size() == 6) {
-                gpt.add(newVector(1, controller2, 1), 0, 3);
-                gpt.add(newVector(2, controller2, 1), 1, 3);
-            } else {
-                gpt.add(newVector(1, controller2, 1), 0, 3);
-                gpt.add(newVector(2, controller2, 1), 1, 3);
-                gpt.add(newVector(3, controller2, 1), 2, 3);
-            }
-            gpt.add(text2, 0, 4);
-            if (controller2.getEigenVectors()[2].size() == 3) {
-                gpt.add(newVector(1, controller2, 2), 0, 5);
-            } else if (Model2for3x3.getS3().size() == 6) {
-                gpt.add(newVector(1, controller2, 2), 1, 5);
-                gpt.add(newVector(2, controller2, 2), 2, 5);
-            } else {
-                gpt.add(newVector(1, controller2, 2), 0, 5);
-                gpt.add(newVector(2, controller2, 2), 1, 5);
-                gpt.add(newVector(3, controller2, 2), 2, 5);
-            }
-        }
+        CustomText text = new CustomText("λ = " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
+        hbEigen1.getChildren().add(text);
+
+        ImageView iv
+
+//        if (rb1.isSelected()) {
+//            if (controller2.getEigenVectors()[0].size() == 2) {
+//                HBox hb1 = newVector(1, controller2, 0);
+//                hbEigen1.getChildren().add(hb1);
+//            } else {
+//                HBox hb1 = newVector(1, controller2, 0);
+//                HBox hb2 = newVector(2, controller2, 0);
+//                hbEigen1.getChildren().addAll(hb1, hb2);
+//            }
+//        } else {
+//            if (controller2.getEigenVectors()[0].size() == 3) {
+//                HBox hb1 = newVector(1, controller2, 0);
+//                hbEigen1.getChildren().add(hb1);
+//            } else if (controller2.getEigenVectors()[0].size() == 6) {
+//                HBox hb1 = newVector(1, controller2, 0);
+//                HBox hb2 = newVector(2, controller2, 0);
+//                hbEigen1.getChildren().addAll(hb1, hb2);
+//            } else {
+//                HBox hb1 = newVector(1, controller2, 0);
+//                HBox hb2 = newVector(2, controller2, 0);
+//                HBox hb3 = newVector(3, controller2, 0);
+//                hbEigen1.getChildren().addAll(hb1, hb2, hb3);
+//            }
+//        }
+//        return hbEigen1;
+    }
+
+    public HBox getEigen2(Controller2 controller2) {
+        HBox hbEigen2 = new HBox();
+
+        CustomText text = new CustomText("λ = " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
+        hbEigen2.getChildren().add(text);
+
         if (rb1.isSelected()) {
-            CustomText text = new CustomText("λ = " + controller2.getEigenValues()[0] + "\nTHE EIGEN VECTOR IS: ");
-            CustomText text1 = new CustomText("λ = " + controller2.getEigenValues()[1] + "\nTHE EIGEN VECTOR IS: ");
-            gpt.add(text, 0, 0);
-            if (controller2.getEigenVectors()[0].size() == 2) {
-                gpt.add(newVector(1, controller2, 0), 0, 1);
-            } else {
-                gpt.add(newVector(1, controller2, 0), 0, 1);
-                gpt.add(newVector(2, controller2, 0), 1, 1);
-            }
-            gpt.add(text1, 0, 2);
             if (controller2.getEigenVectors()[1].size() == 2) {
-                gpt.add(newVector(1, controller2, 1), 0, 3);
+                HBox hb1 = newVector(1, controller2, 1);
+                hbEigen2.getChildren().add(hb1);
             } else {
-                gpt.add(newVector(1, controller2, 1), 0, 3);
-                gpt.add(newVector(2, controller2, 1), 1, 3);
+                HBox hb1 = newVector(1, controller2, 1);
+                HBox hb2 = newVector(2, controller2, 1);
+                hbEigen2.getChildren().addAll(hb1, hb2);
+            }
+        } else {
+            if (controller2.getEigenVectors()[1].size() == 3) {
+                HBox hb1 = newVector(1, controller2, 1);
+                hbEigen2.getChildren().add(hb1);
+            } else if (Model2for3x3.getS2().size() == 6) {
+                HBox hb1 = newVector(1, controller2, 1);
+                HBox hb2 = newVector(2, controller2, 1);
+                hbEigen2.getChildren().addAll(hb1, hb2);
+            } else {
+                HBox hb1 = newVector(1, controller2, 1);
+                HBox hb2 = newVector(2, controller2, 1);
+                HBox hb3 = newVector(3, controller2, 1);
+                hbEigen2.getChildren().addAll(hb1, hb2, hb3);
             }
         }
-        return gpt;
+        return hbEigen2;
+    }
+
+    public HBox getEigen3(Controller2 controller2) {
+        HBox hbEigen3 = new HBox();
+
+        CustomText text = new CustomText("λ = " + controller2.getEigenValues()[2] + "\nTHE EIGEN VECTOR IS: ");
+        hbEigen3.getChildren().add(text);
+
+        if (controller2.getEigenVectors()[2].size() == 3) {
+            HBox hb1 = newVector(1, controller2, 2);
+            hbEigen3.getChildren().add(hb1);
+        } else if (Model2for3x3.getS3().size() == 6) {
+            HBox hb1 = newVector(1, controller2, 2);
+            HBox hb2 = newVector(2, controller2, 2);
+            hbEigen3.getChildren().addAll(hb1, hb2);
+        } else {
+            HBox hb1 = newVector(1, controller2, 2);
+            HBox hb2 = newVector(2, controller2, 2);
+            HBox hb3 = newVector(3, controller2, 2);
+            hbEigen3.getChildren().addAll(hb1, hb2, hb3);
+        }
+        return hbEigen3;
     }
 
     // create a new vector with the bracket images and the numbers
@@ -662,7 +688,37 @@ public class View2 extends Pane implements iView {
     // the output reset
     public void addOutput(Controller2 controller2) {
         this.vbBackground.getChildren().clear();
-        this.vbBackground.getChildren().add(showDaRight(controller2));
+
+        ImageView lamba1 = new ImageView(new Image(p + "Lamba1.png"));
+        lamba1.setFitWidth(10);
+        lamba1.setFitHeight(75);
+        ImageView lamba2 = new ImageView(new Image(p + "Lamba2.png"));
+        lamba2.setFitWidth(10);
+        lamba2.setFitHeight(75);
+        ImageView lamba3 = new ImageView(new Image(p + "Lamba3.png"));
+        lamba3.setFitWidth(10);
+        lamba3.setFitHeight(75);
+
+        ImageView iv1 = new ImageView(new Image(p + "Right.png"));
+        iv1.setFitWidth(10);
+        iv1.setFitHeight(75);
+        ImageView iv2 = new ImageView(new Image(p + "Left.png"));
+        iv2.setFitWidth(10);
+        iv2.setFitHeight(75);
+
+        HBox hbEigenValue1 = new HBox(10);
+        CustomText text = new CustomText("= " + controller2.getEigenValues()[0]);
+        hbEigenValue1.getChildren().addAll(iv1, text, iv2);
+
+
+        HBox hbEigenValue2 = getEigenValue2(controller2);
+        this.vbBackground.getChildren().addAll(hbEigenValue1, hbEigenValue2);
+
+        if (rb2.isSelected()) {
+            HBox hbEigen3 = getEigen3(controller2);
+            this.vbBackground.getChildren().add(hbEigen3);
+        }
+
     }
 
     // get the textfield for the 2x2 button
