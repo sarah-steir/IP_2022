@@ -1,6 +1,5 @@
 package pack.Model;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -20,10 +19,9 @@ public class Model2for2x2 {
     static ArrayList<Double> s1;//eigenvectors
     static ArrayList<Double> s2;
 
-    static final DecimalFormat formatting = new DecimalFormat("0.000");// format the number to 3 decimals
-
     /**
-     *will find the eigenvector and eigenvalue for a 3x3 matrix
+     * will find the eigenvector and eigenvalue for a 3x3 matrix
+     *
      * @param matrixCoefficients CONTAINS THE NUMBERS FROM THE TEXT FIELDS
      */
     public Model2for2x2(ArrayList<Double> matrixCoefficients) {
@@ -44,6 +42,7 @@ public class Model2for2x2 {
 
     /**
      * get the polynomial equation
+     *
      * @param a1 first row first column
      * @param a2 second row first column
      * @param b1 first row second column
@@ -63,6 +62,7 @@ public class Model2for2x2 {
 
     /**
      * get the root for the polynomial ROOTS ARE THE EIGENVALUES
+     *
      * @param a number which is before x^2
      * @param b umber which is before x
      * @param c last number
@@ -83,6 +83,7 @@ public class Model2for2x2 {
 
     /**
      * this is where u get all the answers
+     *
      * @param x1 first eigenvalue
      * @param x2 second eigenvalue
      */
@@ -99,6 +100,7 @@ public class Model2for2x2 {
 
     /**
      * reduce the matrix the best as possible
+     *
      * @param a1 first row first column
      * @param a2 second row first column
      * @param b1 first row second column
@@ -120,7 +122,7 @@ public class Model2for2x2 {
 
         if (a1 != 1 && a1 != 0) { //if a not equal to one or zero
             a2 = Double.parseDouble(String.valueOf(a2 / a1));//MAKE THE FIRST NUMBER 1 AND THEN DIVIDE ALL THE NUMBERS IN THAT row
-            a1 = Double.parseDouble(String.valueOf(a1 / a1));
+            a1 = Double.parseDouble(String.valueOf(1.0));
         }
 
         if (b1 != 0) { // reduce the second row to 0 in the first #
@@ -130,7 +132,7 @@ public class Model2for2x2 {
 
         //COLUMN ONE DONE
         if (b2 != 1 && b2 != 0) { //if a not equal to one or zero
-            b2 = Double.parseDouble(String.valueOf(b2 / b2));//MAKE THE FIRST NUMBER 1
+            b2 = Double.parseDouble(String.valueOf(1.0));//MAKE THE FIRST NUMBER 1
         }
 
         if (b2 != 0 && a2 != 0) { // reduce the second row to 0 in the first #
@@ -141,6 +143,7 @@ public class Model2for2x2 {
 
     /**
      * get the eigenvectors
+     *
      * @param v1 the reduced matrix
      * @return the eigenvectors
      */
@@ -180,6 +183,7 @@ public class Model2for2x2 {
 
     /**
      * get the final eigenvalues
+     *
      * @return the final eigenvalues
      */
     public double[] getEigenValues() {
@@ -191,6 +195,7 @@ public class Model2for2x2 {
 
     /**
      * get the final eigenvectors
+     *
      * @return the final eigen vectors
      */
     public ArrayList<Double>[] getEigenVectors() {
