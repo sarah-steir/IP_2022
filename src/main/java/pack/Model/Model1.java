@@ -57,16 +57,6 @@ public class Model1 {
             this.d2 = matrixOfCoefficients.get(5);
             matrixB_2x2[1] = this.d2;
 
-//            //making sure im getting the right numbers for A lmao 2x2
-//            for (int i = 0; i < 2; i++)
-//                for (int j = 0; j < 2; j++)
-//                    System.out.println("arr2A[" + i + "][" + j + "] = "
-//                            + matrixA_2x2[i][j]);
-//            //making sure im getting the right numbers for B lmao 2x2
-//            for (int i = 0; i < 2; i++)
-//                for (int j = 0; j < 1; j++)
-//                    System.out.println("arr2B[" + i + "][" + j + "] = "
-//                            + matrixB_2x2[i]);
 
             System.out.println(matrixOfCoefficients);
 
@@ -107,18 +97,6 @@ public class Model1 {
             matrixB_3x3[1] = this.d2;
             this.d3 = matrixOfCoefficients.get(11);
             matrixB_3x3[2] = this.d3;
-
-
-//            //making sure im getting the right numbers for A lmao 3x3
-//            for (int i = 0; i < 3; i++)
-//                for (int j = 0; j < 3; j++)
-//                    System.out.println("arr3A[" + i + "][" + j + "] = "
-//                            + matrixA_3x3[i][j]);
-//            //making sure im getting the right numbers for B lmao 3x3
-//            for (int i = 0; i < 3; i++)
-//                for (int j = 0; j < 1; j++)
-//                    System.out.println("arr3B[" + i + "][" + j + "] = "
-//                            + matrixB_3x3[i]);
 
 
         }
@@ -399,6 +377,11 @@ public class Model1 {
         }
     }
 
+    //Stoof for graph
+
+
+
+
 
     //  THIS WILL BE USED IN THE UI INSTEAD OF PRINTING IT IT WILL RETURN IT AS A STRING ON A LOOP AND BE ADDED EITHER IN THE VIEW OR CALLED IN VIEW FROM MODEL
 
@@ -459,43 +442,20 @@ public class Model1 {
         System.out.println();
     }
 
-//    public StringBuilder printMat(double A[][], double b[], int n) {
-//        StringBuilder str = new StringBuilder();
-//        for (int q = 0; q < n; q++) {
-//            str.append("[");
-//            for (int s = 0; s < n; s++) {
-//                str.append(A[q][s] + " ");
-//            }
-//            str.append(" | ");
-//            str.append(b[q] + " ]");
-//            str.append("");
-//        }
-//        return str;
-//    }
-
-
-//
-//    public Point3D solutionPoints(int i) {
-//
-//        double x = i;
-//        double z = ((n2.get(1) / n1.get(1)) * (n1.get(0) * x + n1.get(3)) - n2.get(0) * x - n2.get(3)) / (n2.get(2) - n1.get(2) * n2.get(1) / n1.get(1));
-//        double y = (-n1.get(2) * z - n1.get(0) * x - n1.get(3)) / n1.get(1);
-//        //double z= ((-n2.get(1)/n1.get(1))*(n1.get(0)*x+n1.get(3))-n2.get(0)*x- -n2.get(3)) /(n2.get(2)-n1.get(2)*n2.get(1)/n1.get(1));
-//        //double z=((-n2.get(1/n1.get(1)))*n1.get(3)-n2.get(3))/((n2.get(2)*n2.get(1)/n1.get(1))*n1.get(2));
-//        //double y=(-n1.get(3)-n1.get(2)*z)/n1.get(1);
-//        System.out.println("x: " + x + " y: " + y + " z: " + z);
-//        Point3D point1 = new Point3D(x, y, z);
-//        return point1;
-//    }
-
     /**
      * This function returns a
      *
      * @param i random number to plug as x-value
-     * @return
+     * @return point3D thats on the line that goes through
      */
-    public Point3D solutionPoints(int i) {
+    public Point3D solutionPointsLineOne(int i) {
         double y = (d1 - a1 * i) / a2;
         return new Point3D(i, y, 0);
     }
+
+    public Point3D solutionPointsLineTwo(int i) {
+        double y = (d2 - b1 * i) / b2;
+        return new Point3D(i, y, 0);
+    }
+
 }

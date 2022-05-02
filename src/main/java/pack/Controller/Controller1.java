@@ -1,13 +1,9 @@
 package pack.Controller;
 
-
 import javafx.geometry.Point3D;
 import pack.Model.Model1;
 import pack.View.Customs.CustomTextField;
 import pack.View.View1;
-
-
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -17,7 +13,7 @@ public class Controller1 {
     private ArrayList<CustomTextField> fieldList;
     private ArrayList<Double> matrixCoefficients;
     private boolean is2by2;
-    private Model1 model;
+    public Model1 model;
     static final DecimalFormat formatting = new DecimalFormat("0.000");
 
     public Controller1(View1 view) {
@@ -27,6 +23,30 @@ public class Controller1 {
         matrixCoefficients = new ArrayList<>();
         transform();
     }
+
+
+    public void graphPlane() {
+        model = new Model1(this.matrixCoefficients, is2by2);
+
+        if (is2by2) {
+            double[][] A = Model1.getMatrixA_2x2();
+            double[] b = Model1.getMatrixB_2x2();
+
+            view.graph.addLine(model.solutionPointsLineOne(69), model.solutionPointsLineOne(420), new double[]{0, 0, 0});
+            view.graph.addLine(model.solutionPointsLineTwo(69), model.solutionPointsLineTwo(420), new double[]{0, 0, 0});
+
+        } else {
+            double[][] A = Model1.getMatrixA_3x3();
+            double[] b = Model1.getMatrixB_3x3();
+
+            view.graph.addPlane(b[0] / A[0][0], b[0] / A[0][1], b[0] / A[0][2]);
+            view.graph.addPlane(b[1] / A[1][0], b[1] / A[1][1], b[1] / A[1][2]);
+            view.graph.addPlane(b[2] / A[2][0], b[2] / A[2][1], b[2] / A[2][2]);
+        }
+
+
+    }
+
 
     // Include 2x2 as well later
     public void transform() {
@@ -89,18 +109,21 @@ public class Controller1 {
             }
             //unique solution
             else if (x[2] == 1) {
-                for (int i = 0; i < x.length - 1; i++)
+                for (int i = 0; i < x.length - 1; i++) {
                     sol[i] = " " + x[i];
+                }
+                view.graph.addPoint(new Point3D(Double.parseDouble(sol[0]), Double.parseDouble(sol[1]), 0));
 
                 rank = "" + b.length;
+
             }
             //if there is 1 free variable
             else if (x[2] == 2) {
-                System.out.println("ARE YOU EVEN HERE BRO");
                 sol[0] = " " + x[0] + " + (" + x[1] + ")t";
                 sol[1] = " t";
                 rank = "1";
             }
+
             output.add(sol);
             return output;
         } else {
@@ -126,6 +149,7 @@ public class Controller1 {
                 for (int i = 0; i < x.length - 1; i++) {
                     sol[i] = " " + x[i];
                 }
+                view.graph.addPoint(new Point3D(Double.parseDouble(sol[0]), Double.parseDouble(sol[1]), Double.parseDouble(sol[2])));
                 rank = "" + b.length;
             } // 1 Free Variable
             else if (x[4] == 2) {

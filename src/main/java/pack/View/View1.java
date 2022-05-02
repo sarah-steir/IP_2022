@@ -22,7 +22,7 @@ public class View1 extends Pane implements iView {
     private final CustomRadioButton rb1, rb2;
     private final CustomButton btnStart, btnReset;
     private ToggleGroup group = new ToggleGroup();
-    private Graph graph = new Graph();
+    public Graph graph = new Graph();
     private String[] signsRb1 = {"X +", "Y ="};
     private String[] signsRb2 = {"X +", "Y +", "Z ="};
 
@@ -146,6 +146,8 @@ public class View1 extends Pane implements iView {
 //            }
 //        }
         Controller1 controller = new Controller1(this);
+        this.graph.reset();
+        controller.graphPlane();
         addOutput(controller);
     }
 
@@ -157,6 +159,7 @@ public class View1 extends Pane implements iView {
         this.vbUi.getChildren().remove(fieldsPane);
         this.backgroundPane.getChildren().clear();
         this.getChildren().addAll(this.vbLeft, this.vbRight);
+        this.graph.reset();
     }
 
     public void addOutput(Controller1 controller) {
