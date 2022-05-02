@@ -77,8 +77,8 @@ public class Model2for2x2 {
             x1 = (-b) / (2 * a);
             x2 = (-b) / (2 * a);
         }
-        x1 = Double.parseDouble(formatting.format(x1)); // format
-        x2 = Double.parseDouble(formatting.format(x2));
+        x1 = Double.parseDouble(String.valueOf(x1)); // format
+        x2 = Double.parseDouble(String.valueOf(x2));
     }
 
     /**
@@ -119,22 +119,22 @@ public class Model2for2x2 {
         }
 
         if (a1 != 1 && a1 != 0) { //if a not equal to one or zero
-            a2 = Double.parseDouble(formatting.format(a2 / a1));//MAKE THE FIRST NUMBER 1 AND THEN DIVIDE ALL THE NUMBERS IN THAT row
-            a1 = Double.parseDouble(formatting.format(a1 / a1));
+            a2 = Double.parseDouble(String.valueOf(a2 / a1));//MAKE THE FIRST NUMBER 1 AND THEN DIVIDE ALL THE NUMBERS IN THAT row
+            a1 = Double.parseDouble(String.valueOf(a1 / a1));
         }
 
         if (b1 != 0) { // reduce the second row to 0 in the first #
-            b2 = Double.parseDouble(formatting.format(b2 - (a2 * b1)));//MAKE THE FIRST NUMBER 0 AND THEN subtract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
-            b1 = Double.parseDouble(formatting.format(b1 - (a1 * b1)));
+            b2 = Double.parseDouble(String.valueOf(b2 - (a2 * b1)));//MAKE THE FIRST NUMBER 0 AND THEN subtract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
+            b1 = Double.parseDouble(String.valueOf(b1 - (a1 * b1)));
         }
 
         //COLUMN ONE DONE
         if (b2 != 1 && b2 != 0) { //if a not equal to one or zero
-            b2 = Double.parseDouble(formatting.format(b2 / b2));//MAKE THE FIRST NUMBER 1
+            b2 = Double.parseDouble(String.valueOf(b2 / b2));//MAKE THE FIRST NUMBER 1
         }
 
         if (b2 != 0 && a2 != 0) { // reduce the second row to 0 in the first #
-            a2 = Double.parseDouble(formatting.format(a2 - (a2 * b2)));//MAKE THE FIRST NUMBER 0
+            a2 = Double.parseDouble(String.valueOf(a2 - (a2 * b2)));//MAKE THE FIRST NUMBER 0
         }
         return new double[]{a1, a2, b1, b2};
     }

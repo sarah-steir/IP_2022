@@ -17,10 +17,10 @@ import static pack.View.Customs.Custom.p;
 
 public class View1 extends Pane implements iView {
 
-    private CustomTextField[][] fieldListRb1, fieldListRb2;
+    private final CustomTextField[][] fieldListRb1, fieldListRb2;
     private GridPane fieldsPane;
-    private CustomRadioButton rb1, rb2;
-    private CustomButton btnStart, btnReset;
+    private final CustomRadioButton rb1, rb2;
+    private final CustomButton btnStart, btnReset;
     private ToggleGroup group = new ToggleGroup();
     private Graph graph = new Graph();
     private String[] signsRb1 = {"X +", "Y ="};
