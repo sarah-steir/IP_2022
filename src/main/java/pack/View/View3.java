@@ -15,33 +15,31 @@ import static pack.View.Customs.Custom.p;
 
 public class View3 extends Pane implements iView {
 
-    private CustomTextField[][] fieldListRb1, fieldListRb2;
+    private final CustomTextField[][]  fieldListRb1, fieldListRb2;
 
     public CustomRadioButton getRb1() {
         return rb1;
     }
 
     private GridPane fieldsPane;
-    private CustomRadioButton rb1, rb2;
-    private CustomButton btnStart, btnReset;
-    private ToggleGroup group = new ToggleGroup();
-    private Graph graph = new Graph();
-    private String[] signsRb1 = {"X: ", "S + ", "Y: ", "S + ", "Z: ", "S + "};
-    private String[] signsRb2 = {"X +", "Y +", "Z +", "= 0"};
+    private final CustomRadioButton rb1, rb2;
+    private final CustomButton btnStart, btnReset;
+    private final Graph graph = new Graph();
+    private final String[] signsRb1 = {"X: ", "S + ", "Y: ", "S + ", "Z: ", "S + "};
+    private final String[] signsRb2 = {"X +", "Y +", "Z +", "= 0"};
+    private final VBox vbUi;
+    private final  VBox vbPo;
+    private  VBox vbLeft;
+    private  VBox vbRight;
 
-    private VBox vbUi;
-    private VBox vbPo;
-
-    private VBox vbLeft;
-    private VBox vbRight;
-
-    private Pane backgroundPane;
+    private final Pane backgroundPane;
     Controller3 controller = new Controller3(this);
 
     public View3() {
 
         rb1 = new CustomRadioButton("Lines");
         rb2 = new CustomRadioButton("Planes");
+        ToggleGroup group = new ToggleGroup();
         rb1.setToggleGroup(group);
         rb2.setToggleGroup(group);
         btnStart = new CustomButton("START\nTHE\nMAGIK");
@@ -62,7 +60,7 @@ public class View3 extends Pane implements iView {
 
 
         setVbUi(setHbRadios(this.rb1, this.rb2));
-        setVbPo("Planes and lines");
+        setVbPo();
 
         setVbLeft(setLeft(this.vbUi, setGraphPane(graph)));
         setVbRight(setRight(this.vbPo, setHbBottom(this.btnStart, this.btnReset)));
@@ -92,7 +90,7 @@ public class View3 extends Pane implements iView {
         this.vbUi.getChildren().add(hbRadios);
     }
 
-    private void setVbPo(String title) {
+    private void setVbPo() {
         this.backgroundPane.setPrefSize(500, 580);
         BackgroundImage myBI = new BackgroundImage(new Image(p + "View3.png", 520, 580, false, true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -102,7 +100,7 @@ public class View3 extends Pane implements iView {
         this.vbPo.setSpacing(15);
         this.vbPo.setAlignment(Pos.TOP_CENTER);
         this.vbPo.setStyle("-fx-background-color: #333335");
-        this.vbPo.getChildren().addAll(Custom.setTitle(title), this.backgroundPane);
+        this.vbPo.getChildren().addAll(Custom.setTitle("Planes and lines"), this.backgroundPane);
 
     }
 
@@ -110,30 +108,19 @@ public class View3 extends Pane implements iView {
         return graph;
     }
 
-    //TODO method for filling empty textfields
-    //TODO find a method to empty arrays cuz its not working yet (wtf)
-    //TODO implement Constance methods
     public void handleStart(boolean isRb1Selected) {
 
         if (isRb1Selected) {
-            for (int i = 0; i < fieldListRb1.length; i++) {
+            for (CustomTextField[] customTextFields : fieldListRb1) {
                 for (int j = 0; j < fieldListRb1[0].length; j++) {
-                    if (fieldListRb1[i][j].getText().isBlank()) {
-                        fieldListRb1[i][j].setText("0");
-                    }
-                }
-            }
-        }
+                    if (customTextFields[j].getText().isBlank()) {
+                        customTextFields[j].setText("0");}}}}
         // for rb2
         else {
-            for (int i = 0; i < fieldListRb2.length; i++) {
+            for (CustomTextField[] customTextFields : fieldListRb2) {
                 for (int j = 0; j < fieldListRb2[0].length; j++) {
-                    if (fieldListRb2[i][j].getText().isBlank()) {
-                        fieldListRb2[i][j].setText("0");
-                    }
-                }
-            }
-        }
+                    if (customTextFields[j].getText().isBlank()) {
+                        customTextFields[j].setText("0");}}}}
 
         controller.getValues();
         controller.addElementsGraph();
@@ -141,6 +128,8 @@ public class View3 extends Pane implements iView {
 
 
     }
+
+
 
     public void addOutput(Controller3 controller) {
 
@@ -205,12 +194,8 @@ public class View3 extends Pane implements iView {
             this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
         });
 
-        this.btnStart.setOnAction(event -> {
-            handleStart(rb1.isSelected());
-        });
-        this.btnReset.setOnAction(event -> {
-            handleReset();
-        });
+        this.btnStart.setOnAction(event -> handleStart(rb1.isSelected()));
+        this.btnReset.setOnAction(event -> handleReset());
     }
 
 
@@ -220,6 +205,7 @@ public class View3 extends Pane implements iView {
         gridPane.setVgap(10);
         gridPane.setHgap(10);
         gridPane.setAlignment(Pos.CENTER);
+
         int rows = textFields.length;
         int cols = textFields[0].length;
 
