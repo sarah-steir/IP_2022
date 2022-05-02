@@ -9,17 +9,14 @@ public class Model2for2x2 {
     private static double x1;
     private static double x2;// eigenvalues
     private double first, second, third;//square function
-    private double e1, e2;// to hold values in the reduce matrix
-    private double a1, a2;//first line
-    private double b1, b2;//second line
 
-    private double a1Initial;// hold initiql value first row
-    private double a2Initial;
-    private double b1Initial;// hold initial value second row
-    private double b2Initial;
+    private final double a1Initial;// hold initial value first row
+    private final double a2Initial;
+    private final double b1Initial;// hold initial value second row
+    private final double b2Initial;
 
-    double m1[];// reduced matrix
-    double m2[];
+    double[] m1;// reduced matrix
+    double[] m2;
     static ArrayList<Double> s1;//eigenvectors
     static ArrayList<Double> s2;
 
@@ -27,13 +24,15 @@ public class Model2for2x2 {
 
     /**
      *will find the eigenvector and eigenvalue for a 3x3 matrix
-     * @param matrixCoefficients CONTAINS THE NUMBERS FROM THE TEXTFIELDS
+     * @param matrixCoefficients CONTAINS THE NUMBERS FROM THE TEXT FIELDS
      */
     public Model2for2x2(ArrayList<Double> matrixCoefficients) {
-        this.a1 = matrixCoefficients.get(0);
-        this.a2 = matrixCoefficients.get(1);
-        this.b1 = matrixCoefficients.get(2);
-        this.b2 = matrixCoefficients.get(3);
+        double a1 = matrixCoefficients.get(0);
+        //first line
+        double a2 = matrixCoefficients.get(1);
+        double b1 = matrixCoefficients.get(2);
+        //second line
+        double b2 = matrixCoefficients.get(3);
         this.a1Initial = a1;
         this.a2Initial = a2;
         this.b1Initial = b1;
@@ -58,7 +57,7 @@ public class Model2for2x2 {
         double a2b1 = -a2 * b1;
 
         third = a1b2 + a2b1; // ^1
-        second = -a1 + -b2; // ^2
+        second = -a1 - b2; // ^2
         first = 1; // ^3
     }
 
@@ -70,7 +69,7 @@ public class Model2for2x2 {
      */
     private void roots2x2(double a, double b, double c) {
 
-        double squareRoot = (b * b) - (4 * a * c); // numnber in the square root
+        double squareRoot = (b * b) - (4 * a * c); // number in the square root
         if (squareRoot > 0) { // if # in the square root than it exist
             x1 = (-b + Math.sqrt(squareRoot)) / (2 * a);
             x2 = (-b - Math.sqrt(squareRoot)) / (2 * a);
@@ -109,8 +108,9 @@ public class Model2for2x2 {
     private double[] reduceMatrix2x2(double a1, double a2, double b1, double b2) {
         if (a1 == 0) { // if a equal to zero (switch rows) unless all is zero (a,b,c)
             if (b1 != 0) { //switch a with b if b not zero
-                e1 = Double.parseDouble(String.valueOf(a1));// E holds the number
-                e2 = Double.parseDouble(String.valueOf(a2));
+                double e1 = Double.parseDouble(String.valueOf(a1));// E holds the number
+                // to hold values in the reduced matrix
+                double e2 = Double.parseDouble(String.valueOf(a2));
                 a1 = Double.parseDouble(String.valueOf(b1));
                 a2 = Double.parseDouble(String.valueOf(b2));
                 b1 = Double.parseDouble(String.valueOf(e1));
@@ -124,7 +124,7 @@ public class Model2for2x2 {
         }
 
         if (b1 != 0) { // reduce the second row to 0 in the first #
-            b2 = Double.parseDouble(formatting.format(b2 - (a2 * b1)));//MAKE THE FIRST NUMBER 0 AND THEN substract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
+            b2 = Double.parseDouble(formatting.format(b2 - (a2 * b1)));//MAKE THE FIRST NUMBER 0 AND THEN subtract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
             b1 = Double.parseDouble(formatting.format(b1 - (a1 * b1)));
         }
 
@@ -136,8 +136,7 @@ public class Model2for2x2 {
         if (b2 != 0 && a2 != 0) { // reduce the second row to 0 in the first #
             a2 = Double.parseDouble(formatting.format(a2 - (a2 * b2)));//MAKE THE FIRST NUMBER 0
         }
-        double arr[] = {a1, a2, b1, b2}; // reduced matrix
-        return arr;
+        return new double[]{a1, a2, b1, b2};
     }
 
     /**
@@ -195,7 +194,7 @@ public class Model2for2x2 {
      * @return the final eigen vectors
      */
     public ArrayList<Double>[] getEigenVectors() {
-        ArrayList<Double>[] eigenVectors = new ArrayList[2];
+        ArrayList[] eigenVectors = new ArrayList[2];
         eigenVectors[0] = s1;
         eigenVectors[1] = s2;
         return eigenVectors;

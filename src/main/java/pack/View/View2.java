@@ -25,6 +25,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import static pack.View.Customs.Custom.p;
@@ -35,35 +36,34 @@ public class View2 extends Pane implements iView {
     // TODO FIX THE BUTTON GETTING NOT DISABLED WHEN THERES SITLL A WRONG VALUE BUT THE NEXT ONE IS RIGHT
     // TODO error in console when saving a matrix
 
-    private CustomTextField[][] fieldListRb1, fieldListRb2;
+    private final CustomTextField[][] fieldListRb1;
+    private final CustomTextField[][] fieldListRb2;
     private HBox fieldsPane;
-    private CustomRadioButton rb1;
-    private CustomRadioButton rb2;
-    private CustomButton btnStart, btnReset, btnSave;
-    private ToggleGroup group = new ToggleGroup();
-    private ComboBox cb;
-    private CustomButton butt;
-    private Label ll;
-    private VBox vbUi;
-    private VBox vbPo;
-    private ModelForJSON JASONDERULO;
+    private final CustomRadioButton rb1;
+    private final CustomRadioButton rb2;
+    private final CustomButton btnStart;
+    private final CustomButton btnReset;
+    private final CustomButton btnSave;
+    private final ComboBox cb;
+    private final VBox vbUi;
+    private final VBox vbPo;
     private VBox vbLeft;
     private VBox vbRight;
     private static CustomTextField t1, t2, t3, t4, t5, t6, t7, t8, t9;
-    private static double a1, a2, a3, b1, b2, b3, c1, c2, c3;
     static FileWriter file;
-    private static ArrayList<Integer> other = new ArrayList<>();
+    private final static ArrayList<Integer> other = new ArrayList<>();
     private JSONObject jsonObject;
     private JSONObject names;
     private Stage newWindow;
-    private HBox emptyBox;
-    private CustomButton invisibleButton;
-    private Pane backgroundPane;
+    private final HBox emptyBox;
+    private final CustomButton invisibleButton;
+    private final Pane backgroundPane;
 
     public View2() {
         jsonObject = getThatObject();
         this.rb1 = new CustomRadioButton("2 x 2");
         this.rb2 = new CustomRadioButton("3 x 3");
+        ToggleGroup group = new ToggleGroup();
         this.rb1.setToggleGroup(group);
         this.rb2.setToggleGroup(group);
         this.btnStart = new CustomButton("START\nTHE\nMAGIK");
@@ -74,7 +74,6 @@ public class View2 extends Pane implements iView {
         this.btnSave = new CustomButton("Save Matrix");
         this.btnSave.setDisable(true);
         this.btnSave.setPrefSize(200, 20);
-        JASONDERULO = new ModelForJSON();
         names = getThemNames();
         UpdateLeCombobox();
         //comboBox on action
@@ -143,16 +142,15 @@ public class View2 extends Pane implements iView {
 
         ArrayList<String> objs = new ArrayList<>();
         ArrayList<Double> ints = new ArrayList<>();
-        JSONArray list = js;
-        Iterator<JSONObject> iterator;
+        Iterator iterator;
         try {
             iterator = js.iterator();
 
             while (iterator.hasNext()) {
                 objs.add(String.valueOf(iterator.next()));
             }
-            for (int i = 0; i < objs.size(); i++) {
-                ints.add(Double.valueOf(objs.get(i)));
+            for (String obj : objs) {
+                ints.add(Double.valueOf(obj));
             }
         } catch (Exception e) {
             System.out.println("we've run into a problem");
@@ -165,15 +163,15 @@ public class View2 extends Pane implements iView {
      * @param ints the matrix
      */
     private void setMatrix(ArrayList<Double> ints) {
-        a1 = ints.get(0);
-        a2 = ints.get(1);
-        a3 = ints.get(2);
-        b1 = ints.get(3);
-        b2 = ints.get(4);
-        b3 = ints.get(5);
-        c1 = ints.get(6);
-        c2 = ints.get(7);
-        c3 = ints.get(8);
+        double a1 = ints.get(0);
+        double a2 = ints.get(1);
+        double a3 = ints.get(2);
+        double b1 = ints.get(3);
+        double b2 = ints.get(4);
+        double b3 = ints.get(5);
+        double c1 = ints.get(6);
+        double c2 = ints.get(7);
+        double c3 = ints.get(8);
 
         if (rb1.isSelected()) {
             fieldListRb1[0][0].setText(String.valueOf(a1));
@@ -218,20 +216,20 @@ public class View2 extends Pane implements iView {
     private VBox PANCAKES() {
         VBox payne = new VBox();
         payne.setPadding(new Insets(10));
-        this.ll = new Label("Choose a name for your matrix");
+        Label ll = new Label("Choose a name for your matrix");
         ll.setTextFill(Color.BLUE);
         Text txt = new Text("YO SWITCH IT UP");
 
 
         TextField ctf = new CustomTextField();
-        butt = new CustomButton("SEND IT");
+        CustomButton butt = new CustomButton("SEND IT");
         payne.getChildren().add(ll);
         payne.getChildren().add(ctf);
         payne.getChildren().add(butt);
         butt.setOnAction(event -> {
 
             try { // THE NAME OF THE MATRIX IS ALREADY USE
-                if (jsonObject.containsKey(ctf.getText()) == true) {
+                if (jsonObject.containsKey(ctf.getText())) {
                     if (!payne.getChildren().contains(txt)) {
                         payne.getChildren().add(txt);
 
@@ -326,13 +324,11 @@ public class View2 extends Pane implements iView {
     private JSONObject getThemNames() {
         JSONParser parser = new JSONParser();
 
-        Object obj = null;
+        Object obj;
         try {
             obj = parser.parse(new FileReader("Resources/JsonNames.json"));
             this.names = (JSONObject) obj;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
         return names;
@@ -345,13 +341,11 @@ public class View2 extends Pane implements iView {
     private JSONObject getThatObject() {
         JSONParser parser = new JSONParser();
 
-        Object obj = null;
+        Object obj;
         try {
             obj = parser.parse(new FileReader("Resources/JsonFile.json"));
             this.jsonObject = (JSONObject) obj;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
         return jsonObject;
@@ -542,17 +536,13 @@ public class View2 extends Pane implements iView {
             this.vbUi.getChildren().clear();
             this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), setHbComboBox(), emptyBox, fieldsPane);
         });
-        this.btnStart.setOnAction(event -> {
-            handleStart(rb1.isSelected());
-        });
-        this.btnReset.setOnAction(event -> {
-            handleReset();
-        });
+        this.btnStart.setOnAction(event -> handleStart(rb1.isSelected()));
+        this.btnReset.setOnAction(event -> handleReset());
     }
 
     /**
-     * format the output for each eigenvalues
-     * @param textFields the textfields for matrix
+     * format the output for each eigenvalue
+     * @param textFields the text-fields for matrix
      * @return the HBOX
      */
     public HBox setFields (CustomTextField[][] textFields) {
@@ -592,9 +582,7 @@ public class View2 extends Pane implements iView {
                 int finalI = i;
                 int finalJ = j;
 
-                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) -> {
-                    btnStart.setDisable(textFields[finalI][finalJ].checkField());
-                });
+                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) -> btnStart.setDisable(textFields[finalI][finalJ].checkField()));
                 gridPane.add(textFields[i][j], j, i);
             }
         }
@@ -611,18 +599,18 @@ public class View2 extends Pane implements iView {
      */
     public void handleStart(boolean isRb1Selected) {
         if (isRb1Selected) {
-            for (int i = 0; i < fieldListRb1.length; i++) {
+            for (CustomTextField[] customTextFields : fieldListRb1) {
                 for (int j = 0; j < fieldListRb1[0].length; j++) {
-                    if (fieldListRb1[i][j].getText().equals("")) {
-                        fieldListRb1[i][j].setText("0");
+                    if (customTextFields[j].getText().equals("")) {
+                        customTextFields[j].setText("0");
                     }
                 }
             }
         } else {
-            for (int i = 0; i < fieldListRb2.length; i++) {
+            for (CustomTextField[] customTextFields : fieldListRb2) {
                 for (int j = 0; j < fieldListRb2[0].length; j++) {
-                    if (fieldListRb2[i][j].getText().equals("")) {
-                        fieldListRb2[i][j].setText("0");
+                    if (customTextFields[j].getText().equals("")) {
+                        customTextFields[j].setText("0");
                     }
                 }
             }
@@ -923,14 +911,12 @@ public class View2 extends Pane implements iView {
 
     /**
      * get the textfield for the 2x2 button
-     * @return
+     * @return an array filled with the user input
      */
     public ArrayList<CustomTextField> getFieldListRb1() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray : this.fieldListRb1) {
-            for (CustomTextField tf : tfArray) {
-                fieldList.add(tf);
-            }
+            Collections.addAll(fieldList, tfArray);
         }
         return fieldList;
     }
@@ -942,9 +928,7 @@ public class View2 extends Pane implements iView {
     public ArrayList<CustomTextField> getFieldListRb2() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray : this.fieldListRb2) {
-            for (CustomTextField tf : tfArray) {
-                fieldList.add(tf);
-            }
+            Collections.addAll(fieldList, tfArray);
         }
         return fieldList;
     }
@@ -955,10 +939,6 @@ public class View2 extends Pane implements iView {
 
     public CustomRadioButton getRb2() {
         return rb2;
-    }
-
-    public ComboBox getCb() {
-        return cb;
     }
 
     public static CustomTextField getT1() {
@@ -983,10 +963,6 @@ public class View2 extends Pane implements iView {
 
     private void setVbLeft(VBox vbLeft) {
         this.vbLeft = vbLeft;
-    }
-
-    public ArrayList<Integer> getOther() {
-        return other;
     }
 
 }

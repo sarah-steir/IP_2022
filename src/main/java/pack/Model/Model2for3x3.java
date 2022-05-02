@@ -1,6 +1,5 @@
 package pack.Model;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Model2for3x3 {
@@ -9,32 +8,29 @@ public class Model2for3x3 {
     private static double x2;
     private static double x3; // eigenvalues
     private double first, second, third, fourth; //cubic function
-    private double e1, e2, e3; // to hold values in the reduce matrix
-    private double a1, a2, a3; // first line of matrix
-    private double b1, b2, b3;//second line
-    private double c1, c2, c3;// third line
-    private double a1Initial, a2Initial, a3Initial; // hold initiql value first row
-    private double b1Initial, b2Initial, b3Initial;// hold initial value second row
-    private double c1Initial, c2Initial, c3Initial;// hold initial value third row
-    double m1[], m2[], m3[]; // reduced matrix
+    private final double a1Initial, a2Initial, a3Initial;// hold initial value first row
+    private final double b1Initial, b2Initial, b3Initial;// hold initial value second row
+    private final double c1Initial, c2Initial, c3Initial;// hold initial value third row
+    double[] m1, m2, m3; // reduced matrix
     static ArrayList<Double> s1, s2, s3;//eigenvectors
-
-    static final DecimalFormat formatting = new DecimalFormat("0.0000"); // format the number to 4 decimals
 
     /**
      * will find the eigenvector and eigenvalue for a 3x3 matrix
-     * @param matrixCoefficients CONTAINS THE NUMBERS FROM THE TEXTFIELDS
+     * @param matrixCoefficients CONTAINS THE NUMBERS FROM THE TEXT FIELDS
      */
     public Model2for3x3(ArrayList<Double> matrixCoefficients) {
-        this.a1 = matrixCoefficients.get(0);
-        this.a2 = matrixCoefficients.get(1);
-        this.a3 = matrixCoefficients.get(2);
-        this.b1 = matrixCoefficients.get(3);
-        this.b2 = matrixCoefficients.get(4);
-        this.b3 = matrixCoefficients.get(5);
-        this.c1 = matrixCoefficients.get(6);
-        this.c2 = matrixCoefficients.get(7);
-        this.c3 = matrixCoefficients.get(8);
+        double a1 = matrixCoefficients.get(0);
+        double a2 = matrixCoefficients.get(1);
+        // first line of matrix
+        double a3 = matrixCoefficients.get(2);
+        double b1 = matrixCoefficients.get(3);
+        double b2 = matrixCoefficients.get(4);
+        //second line
+        double b3 = matrixCoefficients.get(5);
+        double c1 = matrixCoefficients.get(6);
+        double c2 = matrixCoefficients.get(7);
+        // third line
+        double c3 = matrixCoefficients.get(8);
         this.a1Initial = a1;
         this.a2Initial = a2;
         this.a3Initial = a3;
@@ -70,12 +66,11 @@ public class Model2for3x3 {
         double a1b2Cal1 = -(a1 + b2);// needed in further steps
         double a1b2Cal2 = (a1b2Cal1 * c3);
         double a1b2Cal3 = -(a1b2Cal1); // ^2
-        double c3Cal = c3; // ^2
         double toTheCube = -1; // the lambda ^3 always neg
-        // the 2 that dont have lambda in them
+        // the 2 that don't have lambda in them
         double a2b3c1 = a2 * b3 * c1;
         double a3b1c2 = a3 * b1 * c2;
-        //substraction
+        //subtraction
         // the ones with lambda ^1 in them
         double a1b3c2 = -(a1 * b3 * c2);
         double b3c2 = (b3 * c2);// ^1
@@ -86,7 +81,7 @@ public class Model2for3x3 {
         //cubic equation = ax^3+bx^2+cx^1+d -> a=first, b=second, c=third, d= fourth
         fourth = a1b2c3 + a2b3c1 + a3b1c2 + a1b3c2 + b2a3c1 + c3a2b1;
         third = a2b1 + a3c1 + b3c2 + a1b2 + a1b2Cal2; //x
-        second = a1b2Cal3 + c3Cal; // x^2
+        second = a1b2Cal3 + c3; // x^2
         first = toTheCube; // x^3
     }
 
@@ -99,9 +94,9 @@ public class Model2for3x3 {
      */
     private void roots3x3(double A, double B, double C, double D) {
 
-        double a = (double) B / A;
-        double b = (double) C / A;
-        double c = (double) D / A;
+        double a = B / A;
+        double b = C / A;
+        double c = D / A;
 
         double p = b - ((a * a) / 3.0);
 
@@ -218,7 +213,11 @@ public class Model2for3x3 {
         c1 = Double.parseDouble(String.valueOf(c1));
         c2 = Double.parseDouble(String.valueOf(c2));
         c3 = Double.parseDouble(String.valueOf(c3));
+        double e2;
+        // to hold values in the reduced matrix
+        double e3;
         if (a1 == 0) { // if a equal to zero (switch rows) unless all is zero (a,b,c)
+            double e1;
             if (b1 == 0) { // if second row also has zero as the first number
                 if (c1 != 0) { // then switch a with c if c not equal zero
                     e1 = Double.parseDouble(String.valueOf(a1)); // E holds the number
@@ -253,13 +252,13 @@ public class Model2for3x3 {
         }
         if (b1 != 0) { // reduce the second row to 0 in the first #
 
-            b2 = Double.parseDouble(String.valueOf(b2 - (a2 * b1)));//MAKE THE FIRST NUMBER 0 AND THEN substract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
+            b2 = Double.parseDouble(String.valueOf(b2 - (a2 * b1)));//MAKE THE FIRST NUMBER 0 AND THEN subtract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
             b3 = Double.parseDouble(String.valueOf(b3 - (a3 * b1)));
             b1 = Double.parseDouble(String.valueOf(b1 - (a1 * b1)));
         }
         if (c1 != 0) { // reduce the third row to 0 in the first #
 
-            c2 = Double.parseDouble(String.valueOf(c2 - (a2 * c1)));//MAKE THE FIRST NUMBER 0 AND THEN substract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
+            c2 = Double.parseDouble(String.valueOf(c2 - (a2 * c1)));//MAKE THE FIRST NUMBER 0 AND THEN subtract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
             c3 = Double.parseDouble(String.valueOf(c3 - (a3 * c1)));
             c1 = Double.parseDouble(String.valueOf(c1 - (a1 * c1)));
         }
@@ -288,15 +287,15 @@ public class Model2for3x3 {
         }
 
         if (a2 != 0) { // reduce the second row to 0 in the first #
-            a3 = Double.parseDouble(String.valueOf(a3 - (a2 * b3))); //MAKE THE FIRST NUMBER 0 AND THEN substract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
+            a3 = Double.parseDouble(String.valueOf(a3 - (a2 * b3))); //MAKE THE FIRST NUMBER 0 AND THEN subtract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
             a2 = Double.parseDouble(String.valueOf(a2 - (a2 * b2)));
         }
 
         if (c2 != 0) { // reduce the third row to 0 in the first #
-            c3 = Double.parseDouble(String.valueOf(c3 - (b3 * c2))); //MAKE THE FIRST NUMBER 0 AND THEN substract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
+            c3 = Double.parseDouble(String.valueOf(c3 - (b3 * c2))); //MAKE THE FIRST NUMBER 0 AND THEN subtract ALL THE NUMBERS IN THAT row by whatever we took of in the first one
             c2 = Double.parseDouble(String.valueOf(c2 - (b2 * c2)));
         }
-        if (c3 < 0.005) { // round if the number is too small or else it doesnt work
+        if (c3 < 0.005) { // round if the number is too small or else it doesn't work
             c3 = 0;
         }
         // second row done
@@ -311,9 +310,8 @@ public class Model2for3x3 {
         if (c3 != 0 && a3 != 0) { // reduce the third row to 0 in the first #
             a3 = Double.parseDouble(String.valueOf(a3 - (a3 * c3)));
         }
-        double arr[] = {a1, a2, a3, b1, b2, b3, c1, c2, c3}; // array to hold the matrix
 
-        return arr;
+        return new double[]{a1, a2, a3, b1, b2, b3, c1, c2, c3};
     }
 
     /**
@@ -331,8 +329,8 @@ public class Model2for3x3 {
         int lineCounter = 1; // which line of the matrix
 
 
-        for (int j = 0; j < v1.length; j++) { // check if all zero
-            if (v1[j] == 0) {
+        for (double v : v1) { // check if all zero
+            if (v == 0) {
                 counter++;
 
             }
@@ -384,7 +382,7 @@ public class Model2for3x3 {
         }
 
         for (int i = 0; i < v1.length; i++) { // loop until we went through all the numbers in the matrix  SHOULD GO THROUGH 3 TIME CUZ 3 ROWS
-            double t11 = Double.parseDouble(String.valueOf(v1[i])); // T11 = FIRST NUMBER IN ROW T22= SECOND NUMBER IN ROW T33 THRID NUMBER IN ROW
+            double t11 = Double.parseDouble(String.valueOf(v1[i])); // T11 = FIRST NUMBER IN ROW T22= SECOND NUMBER IN ROW T33 THIRD NUMBER IN ROW
             double t22 = Double.parseDouble(String.valueOf(v1[i + 1]));
             double t33 = Double.parseDouble(String.valueOf(v1[i + 2]));
             if (t11 != 0 && t22 != 0 && t33 != 0) { // if the whole row has numbers ( which means other 2 rows are all zero)
@@ -396,7 +394,7 @@ public class Model2for3x3 {
                 y1.add(5, 1.0);
                 return y1;
             } else {
-                if ((t11 == 0 || t22 == 0 || t33 == 0) && (t11 == 1 || t22 == 1 || t33 == 1)) { //one 0 & one 1
+                if (t11 == 1 || t22 == 1 || t33 == 1) { //one 0 & one 1
                     if (t11 == 1) { // FIND WHERE IS THE ONE
                         if (t22 == 0) { // FIND WHERE IS THE ZERO
                             if (t33 == 0) { // IF THERE IS ANOTHER ZERO THEN 0 IN THE VECTOR FOR THAT ROW (COUNTER =1 THEN ROW ONE AND THE TOP POSITION IN VECTOR)
@@ -498,7 +496,7 @@ public class Model2for3x3 {
      * @return the final eigenvectors
      */
     public ArrayList<Double>[] getEigenVectors() {
-        ArrayList<Double>[] eigenVectors = new ArrayList[3];
+        ArrayList[] eigenVectors = new ArrayList[3];
         eigenVectors[0] = s1;
         eigenVectors[1] = s2;
         eigenVectors[2] = s3;
