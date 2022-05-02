@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 public class Model2for3x3 {
 
-    private static double x1;
-    private static double x2;
-    private static double x3; // eigenvalues
+    private static double x1, x2, x3; // EigenValues
     private double first, second, third, fourth; //cubic function
     private final double a1Initial, a2Initial, a3Initial;// hold initial value first row
     private final double b1Initial, b2Initial, b3Initial;// hold initial value second row

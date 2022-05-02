@@ -5,14 +5,11 @@ import java.util.ArrayList;
 
 public class Model2for2x2 {
 
-    private static double x1;
-    private static double x2;// eigenvalues
+    private static double x1, x2; // EigenValues
     private double first, second, third;//square function
 
-    private final double a1Initial;// hold initial value first row
-    private final double a2Initial;
-    private final double b1Initial;// hold initial value second row
-    private final double b2Initial;
+    private final double a1Initial, a2Initial;// hold initial value first row
+    private final double b1Initial, b2Initial;// hold initial value second row
 
     double[] m1;// reduced matrix
     double[] m2;

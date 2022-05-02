@@ -8,8 +8,8 @@ import org.json.simple.JSONObject;
 
 public class ModelForJSON {
     private static FileWriter file;
-    private static JSONObject matrix = new JSONObject();
-    private static JSONObject names = new JSONObject();
+    private static final JSONObject matrix = new JSONObject();
+    private static final JSONObject names = new JSONObject();
 
     /**
      * SET UP BOTH OF THE JSON FILE WHEN NEEDED OR RESET THEM
