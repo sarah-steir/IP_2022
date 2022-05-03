@@ -19,6 +19,7 @@ public class Custom {
     public static String p = "file:" + f.getAbsolutePath() + "/Resources/";
 
     public static Font font = Font.loadFont(p + "Font.otf", 15);
+    public static Font smallerFont = Font.loadFont(p + "Font.otf", 12);
 
     public static Label setTitle(String title) {
         Label t = new Label(title);
