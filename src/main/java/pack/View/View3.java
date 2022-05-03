@@ -10,6 +10,7 @@ import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static pack.View.Customs.Custom.p;
 
@@ -109,7 +110,7 @@ public class View3 extends Pane implements iView {
     }
 
     public void handleStart(boolean isRb1Selected) {
-
+        graph.reset();
         if (isRb1Selected) {
             for (CustomTextField[] customTextFields : fieldListRb1) {
                 for (int j = 0; j < fieldListRb1[0].length; j++) {
@@ -249,9 +250,7 @@ public class View3 extends Pane implements iView {
     public ArrayList<CustomTextField> getFieldListRb1() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray : this.fieldListRb1) {
-            for (CustomTextField tf : tfArray) {
-                fieldList.add(tf);
-            }
+            Collections.addAll(fieldList, tfArray);
         }
         return fieldList;
     }
@@ -259,9 +258,7 @@ public class View3 extends Pane implements iView {
     public ArrayList<CustomTextField> getFieldListRb2() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray : this.fieldListRb2) {
-            for (CustomTextField tf : tfArray) {
-                fieldList.add(tf);
-            }
+            Collections.addAll(fieldList, tfArray);
         }
         return fieldList;
     }

@@ -20,7 +20,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import pack.Controller.Controller2;
 import pack.Model.Model2for3x3;
-import pack.Model.ModelForJSON;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,7 +32,7 @@ import static pack.View.Customs.Custom.p;
 public class View2 extends Pane implements iView {
 
     // TODO fix when clicking "Save matrix" two times, stack overflow
-    // TODO FIX THE BUTTON GETTING NOT DISABLED WHEN THERES SITLL A WRONG VALUE BUT THE NEXT ONE IS RIGHT
+    // TODO FIX THE BUTTON GETTING NOT DISABLED WHEN THERES STILL A WRONG VALUE BUT THE NEXT ONE IS RIGHT
     // TODO error in console when saving a matrix
 
     private final CustomTextField[][] fieldListRb1;
@@ -159,7 +158,7 @@ public class View2 extends Pane implements iView {
     }
 
     /**
-     * Set the matrix we got from the combobox into the textfields
+     * Set the matrix we got from the combobox into the text-fields
      * @param ints the matrix
      */
     private void setMatrix(ArrayList<Double> ints) {
@@ -255,7 +254,7 @@ public class View2 extends Pane implements iView {
             }
         });
         return payne;
-    } //sent the saved matrix to both of the JSONfiles TO SAVE
+    } //sent the saved matrix to both of the JSON files TO SAVE
 
     /**
      * writes the new matrix into the JSONFile
@@ -365,7 +364,7 @@ public class View2 extends Pane implements iView {
     /**
      * The base VBox on the left
      * @param vbUi everything that goes into the VBOX
-     * @param graphPane where the graph shold be but we dont have one
+     * @param graphPane where the graph should be, but we don't have one
      * @return VBox
      */
     @Override
@@ -390,7 +389,7 @@ public class View2 extends Pane implements iView {
      * @param counter to know which eigenvalue
      * @param controller2 math for view 2
      * @param i to know which eigenvalue
-     * @return HBOX
+     * @return a box
      */
     public HBox newVector(int counter, Controller2 controller2, int i) { // counter is the vector if size=6 there is counter 1 and 2 possible
         HBox hbx = new HBox(10);
@@ -543,7 +542,7 @@ public class View2 extends Pane implements iView {
     /**
      * format the output for each eigenvalue
      * @param textFields the text-fields for matrix
-     * @return the HBOX
+     * @return a BOX
      */
     public HBox setFields (CustomTextField[][] textFields) {
         ImageView iv1 = new ImageView(new Image(p + "Right.png"));
@@ -923,7 +922,7 @@ public class View2 extends Pane implements iView {
 
     /**
      * get the textfield for the 3x3 button
-     * @return the arrayList with all the textfields for 3x3
+     * @return the arrayList with all the text-fields for 3x3
      */
     public ArrayList<CustomTextField> getFieldListRb2() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();

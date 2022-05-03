@@ -108,7 +108,7 @@ public class Controller1 {
             double[] b = Model1.getMatrixB_3x3();
             double[] x = model.SLEsolve(A, b);
 
-            String[] sol = new String[x.length];
+            String[] sol;
 
             ArrayList<String[]> output = new ArrayList<>();
             output.add(model.getConstants(b));
