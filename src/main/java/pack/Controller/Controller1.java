@@ -93,11 +93,12 @@ public class Controller1 {
             double[] b = Model1.getMatrixB_2x2();
             double[] x = model.SLEsolve(A, b);
 
-            String[] sol = new String[x.length];
+            String[] sol;
 
             ArrayList<String[]> output = new ArrayList<>();
             output.add(model.getConstants(b));
             sol = model.round(x);
+
             //no solutions
             if (x[2] == 0) {
                 for (int i = 0; i < x.length - 1; i++) {
@@ -110,7 +111,7 @@ public class Controller1 {
             //unique solution
             else if (x[2] == 1) {
                 for (int i = 0; i < x.length - 1; i++) {
-                    sol[i] = " " + x[i];
+                    sol[i] = " " + String.format("%.2f", x[i]);
                 }
                 view.graph.addPoint(new Point3D(Double.parseDouble(sol[0]), Double.parseDouble(sol[1]), 0));
 
@@ -119,7 +120,7 @@ public class Controller1 {
             }
             //if there is 1 free variable
             else if (x[2] == 2) {
-                sol[0] = " " + x[0] + " + (" + x[1] + ")t";
+                sol[0] = " " + String.format("%.2f", x[0]) + " + (" + String.format("%.2f", x[1]) + ")t";
                 sol[1] = " t";
                 rank = "1";
             }
@@ -131,11 +132,10 @@ public class Controller1 {
             double[] b = Model1.getMatrixB_3x3();
             double[] x = model.SLEsolve(A, b);
 
-            String[] sol;
+            String[] sol = new String[x.length];
 
             ArrayList<String[]> output = new ArrayList<>();
             output.add(model.getConstants(b));
-            sol = model.round(x);
 
             if (x[4] == 0) { // No Solution
                 for (int i = 0; i < x.length - 1; i++)
@@ -147,19 +147,19 @@ public class Controller1 {
             } // 1 Solution
             else if (x[4] == 1) {
                 for (int i = 0; i < x.length - 1; i++) {
-                    sol[i] = " " + x[i];
+                    sol[i] = " " + String.format("%.2f", x[i]);
                 }
                 view.graph.addPoint(new Point3D(Double.parseDouble(sol[0]), Double.parseDouble(sol[1]), Double.parseDouble(sol[2])));
                 rank = "" + b.length;
             } // 1 Free Variable
             else if (x[4] == 2) {
-                sol[0] = " " + x[0] + " + (" + x[1] + ")t";
-                sol[1] = " " + x[2] + " + (" + x[3] + ")t";
+                sol[0] = " " + String.format("%.2f", x[0]) + " + (" + String.format("%.2f", x[1]) + ")t";
+                sol[1] = " " + String.format("%.2f", x[2]) + " + (" + String.format("%.2f", x[3]) + ")t";
                 sol[2] = "t";
 
                 rank = "2";
             } else { // 2 Free Variables
-                sol[0] = " " + x[0] + " + (" + x[1] + ")s" + " + (" + x[2] + ")t";
+                sol[0] = " " + String.format("%.2f", x[0]) + " + (" + String.format("%.2f", x[1]) + ")s" + " + (" + String.format("%.2f", x[2]) + ")t";
                 sol[1] = "s";
                 sol[2] = "t";
 
@@ -190,6 +190,12 @@ public class Controller1 {
             return 2;
         } else {
             return 3;
+        }
+    }
+
+    public void printSol(String[] sol) {
+        for (String solution: sol) {
+            System.out.println("YA: " + solution);
         }
     }
 }

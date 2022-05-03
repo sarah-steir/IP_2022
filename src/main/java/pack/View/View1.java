@@ -170,20 +170,22 @@ public class View1 extends Pane implements iView {
 //        vbOutput.setSpacing(15);
 //        vbOutput.setPadding(new Insets(15));
         ArrayList<String[]> output = controller.getOutput();
+        String[] sol = output.get(1);
 
-        int solIndex = 1;
+        System.out.println("YA: " + sol[0]);
+
         VBox vbSolutions = new VBox();
-        CustomText textX = new CustomText("X = " + output.get(solIndex)[0]);
+        CustomText textX = new CustomText("X = " + output.get(1)[0]);
         textX.changeSize(20);
         vbSolutions.getChildren().add(textX);
-        CustomText textY = new CustomText("Y = " + output.get(solIndex)[1]);
+        CustomText textY = new CustomText("Y = " + output.get(1)[1]);
         textY.changeSize(20);
         vbSolutions.getChildren().add(textY);
         vbSolutions.setSpacing(15);
         vbSolutions.setLayoutX(10);
         vbSolutions.setLayoutY(430);
-        if (output.get(solIndex).length > 3) {
-            CustomText textZ = new CustomText("Z = " + output.get(solIndex)[2]);
+        if (output.get(1).length > 3) {
+            CustomText textZ = new CustomText("Z = " + output.get(1)[2]);
             textZ.changeSize(20);
             vbSolutions.getChildren().add(textZ);
             vbSolutions.setLayoutY(410);
