@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import pack.Controller.Controller1;
+import pack.Model.Model1;
 import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
 
@@ -123,28 +124,23 @@ public class View1 extends Pane implements iView {
     // doesn't set text in text field to 0, also only works for rb1?
     public void handleStart(boolean isRb1Selected) {
 
-        // Tayba is commenting this out because it makes the program crash sometimes so yea:// i'll fix it
-        // TODO fix pls
-//        if (isRb1Selected) {
-//            for (int i = 0; i < Model1.getN(); i++) {
-//                System.out.println(Model1.getN() + "what thwe fuck");
-//                for (int j = 0; j < fieldListRb1[0].length; j++) {
-//                    if (fieldListRb1[i][j].getText().equals("")) {
-//                        fieldListRb1[i][j].setText("0");
-//                    }
-//                    //   System.out.println("YO: " + fieldListRb1[i][j].getText());
-//                }
-//            }
-//        } else {
-//            for (int i = 0; i < fieldListRb2.length; i++) {
-//                for (int j = 0; j < fieldListRb2[0].length; j++) {
-//                    if (fieldListRb2[i][j].getText().equals("")) {
-//                        fieldListRb2[i][j].setText("0");
-//                    }
-//                    //   System.out.println("YO FROM 3x3: " + fieldListRb2[i][j].getText());
-//                }
-//            }
-//        }
+        if (isRb1Selected) {
+            for (int i = 0; i < fieldListRb1.length; i++) {
+                for (int j = 0; j < fieldListRb1[0].length; j++) {
+                    if (fieldListRb1[i][j].getText().equals("")) {
+                        fieldListRb1[i][j].setText("0");
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < fieldListRb2.length; i++) {
+                for (int j = 0; j < fieldListRb2[0].length; j++) {
+                    if (fieldListRb2[i][j].getText().equals("")) {
+                        fieldListRb2[i][j].setText("0");
+                    }
+                }
+            }
+        }
         Controller1 controller = new Controller1(this);
         this.graph.reset();
         controller.graphPlane();
