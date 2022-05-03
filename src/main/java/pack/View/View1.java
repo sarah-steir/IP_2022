@@ -143,8 +143,6 @@ public class View1 extends Pane implements iView {
                     lblVariable.setText(signs[j]);
                 }
 
-                int finalI = i;
-                int finalJ = j;
 
                 textFields[i][j].textProperty().addListener((observable, oldValue, newValue) -> btnStart.setDisable(checkFields(getFieldListRb1(), getFieldListRb2(), rb1.isSelected())));
 
