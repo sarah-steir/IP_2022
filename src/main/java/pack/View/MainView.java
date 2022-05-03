@@ -88,16 +88,12 @@ public class MainView extends Pane {
     public void playAnimation(Pane pane) {
         if (!(currentPane.getChildren().get(0).getClass() == (pane.getClass()))) {
             ImageView t1 = new ImageView(new Image(p + "Trans1.gif"));
-            Timeline timeline1 = new Timeline(
-                    new KeyFrame(Duration.ZERO, e -> gif.getChildren().add(t1)),
-                    new KeyFrame(Duration.seconds(1.35), e -> gif.getChildren().remove(t1)));
+            Timeline timeline1 = new Timeline(new KeyFrame(Duration.ZERO, e -> gif.getChildren().add(t1)), new KeyFrame(Duration.seconds(1.35), e -> gif.getChildren().remove(t1)));
             timeline1.play();
             timeline1.setOnFinished(event -> {
                 setCurrentPane(pane);
                 ImageView t2 = new ImageView(new Image(p + "Trans2.gif"));
-                Timeline timeline2 = new Timeline(
-                        new KeyFrame(Duration.ZERO, e -> gif.getChildren().add(t2)),
-                        new KeyFrame(Duration.seconds(1.25), e -> gif.getChildren().remove(t2)));
+                Timeline timeline2 = new Timeline(new KeyFrame(Duration.ZERO, e -> gif.getChildren().add(t2)), new KeyFrame(Duration.seconds(1.25), e -> gif.getChildren().remove(t2)));
                 timeline2.play();
             });
         }

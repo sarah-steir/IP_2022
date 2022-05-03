@@ -1,4 +1,5 @@
 package pack.Model;
+
 import java.util.ArrayList;
 
 public class Model2for3x3 {

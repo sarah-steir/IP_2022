@@ -86,9 +86,7 @@ public class View1 extends Pane implements iView {
 
     private void setVbPo(String title) {
         this.backgroundPane.setPrefSize(500, 580);
-        BackgroundImage myBI = new BackgroundImage(new Image(p + "View1.png", 520, 580, false, true),
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+        BackgroundImage myBI = new BackgroundImage(new Image(p + "View1.png", 520, 580, false, true), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         this.backgroundPane.setBackground(new Background(myBI));
 
         this.vbPo.setPrefSize(500, 595);
@@ -139,18 +137,23 @@ public class View1 extends Pane implements iView {
                 lblVariable.setStyle("-fx-text-fill: E7EBEE;");
                 lblVariable.setFont(Custom.font);
 
-                if (j == cols - 1) {lblVariable.setText("");}
-                else {lblVariable.setText(signs[j]);}
+                if (j == cols - 1) {
+                    lblVariable.setText("");
+                } else {
+                    lblVariable.setText(signs[j]);
+                }
 
                 int finalI = i;
                 int finalJ = j;
 
-                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) ->
-                        btnStart.setDisable(checkFields(getFieldListRb1(), getFieldListRb2(),rb1.isSelected())));
+                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) -> btnStart.setDisable(checkFields(getFieldListRb1(), getFieldListRb2(), rb1.isSelected())));
 
                 hbTextField.getChildren().addAll(textFields[i][j], lblVariable);
-                gridPane.add(hbTextField, j, i);}}
-        return gridPane;}
+                gridPane.add(hbTextField, j, i);
+            }
+        }
+        return gridPane;
+    }
 
     // doesn't set text in text field to 0, also only works for rb1?
     public void handleStart(boolean isRb1Selected) {
@@ -298,38 +301,40 @@ public class View1 extends Pane implements iView {
     }
 
 
-
-    public boolean checkFields(boolean b){
-        ArrayList<Boolean> booleans= new ArrayList<>();
-        int i=0;
+    public boolean checkFields(boolean b) {
+        ArrayList<Boolean> booleans = new ArrayList<>();
+        int i = 0;
         ArrayList<CustomTextField> a;
-        if (b){ a =getFieldListRb1();}
-        else {
-            a =getFieldListRb2();}
+        if (b) {
+            a = getFieldListRb1();
+        } else {
+            a = getFieldListRb2();
+        }
 
-        while (i!= a.size()) {
-            CustomTextField t= a.get(i);
+        while (i != a.size()) {
+            CustomTextField t = a.get(i);
 
-            if(!t.getText().isEmpty()) {
-                if(isNumeric(t.getText())) {
+            if (!t.getText().isEmpty()) {
+                if (isNumeric(t.getText())) {
                     t.setStyle(" -fx-control-inner-background:#A0A0A0;");
                     booleans.add(true);
                 }
 
-                if(!isNumeric(t.getText())) {
+                if (!isNumeric(t.getText())) {
                     t.setStyle(" -fx-control-inner-background: red;");
-                    booleans.add(false);}
+                    booleans.add(false);
+                }
 
             }
             i++;
         }
 
-        if(booleans.contains(false)) {
-            return true;}
-
-        else{ return false;}}
-
-
+        if (booleans.contains(false)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 }

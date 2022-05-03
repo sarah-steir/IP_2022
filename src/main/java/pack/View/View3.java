@@ -16,7 +16,7 @@ import static pack.View.Customs.Custom.p;
 
 public class View3 extends Pane implements iView {
 
-    private final CustomTextField[][]  fieldListRb1, fieldListRb2;
+    private final CustomTextField[][] fieldListRb1, fieldListRb2;
 
     public CustomRadioButton getRb1() {
         return rb1;
@@ -29,9 +29,9 @@ public class View3 extends Pane implements iView {
     private final String[] signsRb1 = {"X: ", "S + ", "Y: ", "S + ", "Z: ", "S + "};
     private final String[] signsRb2 = {"X +", "Y +", "Z +", "= 0"};
     private final VBox vbUi;
-    private final  VBox vbPo;
-    private  VBox vbLeft;
-    private  VBox vbRight;
+    private final VBox vbPo;
+    private VBox vbLeft;
+    private VBox vbRight;
 
     private final Pane backgroundPane;
     Controller3 controller = new Controller3(this);
@@ -93,18 +93,18 @@ public class View3 extends Pane implements iView {
 
     private void setVbPo() {
         this.backgroundPane.setPrefSize(500, 580);
-        BackgroundImage myBI = new BackgroundImage(new Image(p + "View3.png", 520, 580, false, true),
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+        BackgroundImage myBI = new BackgroundImage(new Image(p + "View3.png", 520, 580, false, true), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         this.backgroundPane.setBackground(new Background(myBI));
         this.vbPo.setPrefSize(500, 595);
         this.vbPo.setSpacing(15);
         this.vbPo.setAlignment(Pos.TOP_CENTER);
         this.vbPo.setStyle("-fx-background-color: #333335");
-        this.vbPo.getChildren().addAll(Custom.setTitle("Planes and lines"), this.backgroundPane);}
+        this.vbPo.getChildren().addAll(Custom.setTitle("Planes and lines"), this.backgroundPane);
+    }
 
     public Graph getGraph() {
-        return graph;}
+        return graph;
+    }
 
     public void handleStart(boolean isRb1Selected) {
         if (isRb1Selected) {
@@ -112,23 +112,24 @@ public class View3 extends Pane implements iView {
                 for (int j = 0; j < fieldListRb1[0].length; j++) {
                     if (customTextFields[j].getText().isBlank()) {
                         customTextFields[j].setText("0");
-                       }}}}
+                    }
+                }
+            }
+        }
         // for rb2
         else {
             for (CustomTextField[] customTextFields : fieldListRb2) {
                 for (int j = 0; j < fieldListRb2[0].length; j++) {
                     if (customTextFields[j].getText().isBlank()) {
                         customTextFields[j].setText("0");
-                        }}}}
-
+                    }
+                }
+            }
+        }
         controller.getValues();
         controller.addElementsGraph();
         addOutput(controller);
-
-
     }
-
-
 
     public void addOutput(Controller3 controller) {
         this.backgroundPane.getChildren().clear();
@@ -139,10 +140,7 @@ public class View3 extends Pane implements iView {
             CustomText textX = new CustomText(controller.GenericTexts()[i].getText());
             textX.changeSize(20);
             vbGeneric.getChildren().add(textX);
-
         }
-
-
         for (int i = 0; i < controller.SolutionTexts().length; i++) {
             CustomText textX = new CustomText(controller.SolutionTexts()[i].getText());
             textX.changeSize(20);
@@ -183,16 +181,13 @@ public class View3 extends Pane implements iView {
             this.vbUi.getChildren().clear();
             this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
         });
-
         rb2.setOnAction(event -> {
             this.btnStart.setDisable(false);
             fieldsPane = setFields(fieldListRb2, signsRb2, this.btnStart);
             this.vbUi.getChildren().clear();
             this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
         });
-
-        this.btnStart.setOnAction(event ->
-                handleStart(rb1.isSelected()));
+        this.btnStart.setOnAction(event -> handleStart(rb1.isSelected()));
         this.btnReset.setOnAction(event -> handleReset());
     }
 
@@ -223,29 +218,18 @@ public class View3 extends Pane implements iView {
                     lblVariable.setText(signs[j]);
                 }
 
-
-                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) ->
-                        btnStart.setDisable(checkFields(getFieldListRb1(), getFieldListRb2(),rb1.isSelected())));
-
-
-
-
+                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) -> btnStart.setDisable(checkFields(getFieldListRb1(), getFieldListRb2(), rb1.isSelected())));
                 if (rb1.isSelected()) {
                     textFields[i][j].setPrefSize(40, 30);
                     hbTextField.getChildren().addAll(lblVariable, textFields[i][j]);
-
-                }
-
-                else {
+                } else {
                     hbTextField.getChildren().addAll(textFields[i][j], lblVariable);
-                    }
-
+                }
                 gridPane.add(hbTextField, j, i);
             }
         }
         return gridPane;
     }
-
 
     public ArrayList<CustomTextField> getFieldListRb1() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
@@ -262,10 +246,4 @@ public class View3 extends Pane implements iView {
         }
         return fieldList;
     }
-
-
-
-
-
 }
-

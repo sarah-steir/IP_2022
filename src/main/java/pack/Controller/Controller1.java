@@ -4,6 +4,7 @@ import javafx.geometry.Point3D;
 import pack.Model.Model1;
 import pack.View.Customs.CustomTextField;
 import pack.View.View1;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -185,7 +186,7 @@ public class Controller1 {
     }
 
     public void printSol(String[] sol) {
-        for (String solution: sol) {
+        for (String solution : sol) {
             System.out.println("YA: " + solution);
         }
     }

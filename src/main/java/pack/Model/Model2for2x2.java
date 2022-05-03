@@ -7,7 +7,6 @@ public class Model2for2x2 {
 
     private static double x1, x2; // EigenValues
     private double first, second, third;//square function
-
     private final double a1Initial, a2Initial;// hold initial value first row
     private final double b1Initial, b2Initial;// hold initial value second row
 
@@ -153,13 +152,16 @@ public class Model2for2x2 {
             y1.set(0, 1.0);
             y1.set(1, 0.0);
             y1.add(2, 0.0);
-            y1.add(3, 1.0);}
+            y1.add(3, 1.0);
+        }
         if (v1[0] != 0 && v1[1] == 0 && v1[2] == 0 && v1[3] == 0) {
             y1.set(0, 0.0);
-            y1.set(1, 1.0);}
+            y1.set(1, 1.0);
+        }
         if (v1[0] == 0 && v1[1] == 0 && v1[2] == 0 && v1[3] != 0) {
             y1.set(0, 1.0);
-            y1.set(1, 0.0);}
+            y1.set(1, 0.0);
+        }
         if (v1[0] != 0 && v1[1] != 0 && v1[2] == 0 && v1[3] == 0) {
             y1.set(0, -v1[1]);
             y1.set(1, 1.0);

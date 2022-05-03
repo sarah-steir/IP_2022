@@ -133,12 +133,7 @@ public interface iView {
             }
             i++;
         }
-
-        if (booleans.contains(false)) {
-            return true;
-        } else {
-            return false;
-        }
+        return booleans.contains(false);
     }
 
     default boolean isNumeric(String str) {

@@ -134,8 +134,7 @@ public class Model1 {
             i = FindPivot(A, p, n);
 
             // If pivot row is not current row, swap
-            if (i != p)
-                SwapRow(A, b, p, i, n);
+            if (i != p) SwapRow(A, b, p, i, n);
 
             // Now normalize if needed
             //param p, A, B
@@ -180,10 +179,8 @@ public class Model1 {
 
         //check for solutions + free variables
         int ns = n;
-        if (n == 2)
-            ns = n + 1;
-        else
-            ns = n + 2;
+        if (n == 2) ns = n + 1;
+        else ns = n + 2;
         double[] solution = new double[ns];
 
         if (checkSol < 0) {
@@ -201,8 +198,7 @@ public class Model1 {
                     sum += A[i][j] * solution[j];
                 solution[i] = (b[i] - sum) / A[i][i];
             }
-            if (n == 2)
-                solution[n] = 1;
+            if (n == 2) solution[n] = 1;
             else {
                 solution[n] = 1;
                 solution[n + 1] = 1;
@@ -333,15 +329,14 @@ public class Model1 {
         int row = col;
         double factor = A[col][col];
         double alpha = 0.0;
-        if (factor != 0)
-            for (int i = row + 1; i < n; i++) {
-                alpha = A[i][col] / factor;
-                // Recalculate augmented portion;
-                b[i] -= alpha * b[col];
-                // Reduce coefficients
-                for (int j = 0; j < n; j++)
-                    A[i][j] -= alpha * A[row][j];
-            }
+        if (factor != 0) for (int i = row + 1; i < n; i++) {
+            alpha = A[i][col] / factor;
+            // Recalculate augmented portion;
+            b[i] -= alpha * b[col];
+            // Reduce coefficients
+            for (int j = 0; j < n; j++)
+                A[i][j] -= alpha * A[row][j];
+        }
 
     }
 
@@ -380,9 +375,6 @@ public class Model1 {
     //Stoof for graph
 
 
-
-
-
     //  THIS WILL BE USED IN THE UI INSTEAD OF PRINTING IT IT WILL RETURN IT AS A STRING ON A LOOP AND BE ADDED EITHER IN THE VIEW OR CALLED IN VIEW FROM MODEL
 
     /**
@@ -394,8 +386,7 @@ public class Model1 {
         System.out.println("\nRow Echelon form : ");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++)
-                str += A[i][j]
-            + "\t";
+                str += A[i][j] + "\t";
             str += "|" + B[i] + "\n";
         }
         str += "\n";
