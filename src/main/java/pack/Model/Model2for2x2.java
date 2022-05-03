@@ -40,7 +40,7 @@ public class Model2for2x2 {
     /**
      * get the polynomial equation
      *
-     * @param a1 first row first column
+     * @param a1 first row and first column
      * @param a2 second row first column
      * @param b1 first row second column
      * @param b2 second row second column
@@ -85,12 +85,12 @@ public class Model2for2x2 {
      * @param x2 second eigenvalue
      */
     private void answers2x2(double x1, double x2) {
-        double aa1 = a1Initial - x1;//WITH FIRST LAMBA
-        double bb2 = b2Initial - x1;//WITH FIRST LAMBA
+        double aa1 = a1Initial - x1;//WITH FIRST LAMBDA
+        double bb2 = b2Initial - x1;//WITH FIRST LAMBDA
         m1 = reduceMatrix2x2(aa1, a2Initial, b1Initial, bb2); // reduce matrix
         s1 = findEigenVectors2x2(m1); // vector
-        aa1 = a1Initial - x2;//WITH FIRST LAMBA
-        bb2 = b2Initial - x2;//WITH FIRST LAMBA
+        aa1 = a1Initial - x2;//WITH FIRST LAMBDA
+        bb2 = b2Initial - x2;//WITH FIRST LAMBDA
         m2 = reduceMatrix2x2(aa1, a2Initial, b1Initial, bb2);
         s2 = findEigenVectors2x2(m2);
     }
@@ -153,18 +153,13 @@ public class Model2for2x2 {
             y1.set(0, 1.0);
             y1.set(1, 0.0);
             y1.add(2, 0.0);
-            y1.add(3, 1.0);
-        }
+            y1.add(3, 1.0);}
         if (v1[0] != 0 && v1[1] == 0 && v1[2] == 0 && v1[3] == 0) {
             y1.set(0, 0.0);
-            y1.set(1, 1.0);
-
-        }
+            y1.set(1, 1.0);}
         if (v1[0] == 0 && v1[1] == 0 && v1[2] == 0 && v1[3] != 0) {
             y1.set(0, 1.0);
-            y1.set(1, 0.0);
-
-        }
+            y1.set(1, 0.0);}
         if (v1[0] != 0 && v1[1] != 0 && v1[2] == 0 && v1[3] == 0) {
             y1.set(0, -v1[1]);
             y1.set(1, 1.0);

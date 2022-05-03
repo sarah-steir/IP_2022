@@ -89,7 +89,7 @@ public class Controller3 {
             if (identifyLines().equals("skew")) {
                 CustomText l = new CustomText("These two lines are skew" + "\n"
                         + "The closest distance between" + "\n" +
-                        "them is: " + model.distanceSkew());
+                        "them is: " + model.getDistance()[0]);
                 return new CustomText[]{l};
             }
 

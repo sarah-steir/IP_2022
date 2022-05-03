@@ -10,7 +10,7 @@ import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 
 import static pack.View.Customs.Custom.p;
 
@@ -101,27 +101,25 @@ public class View3 extends Pane implements iView {
         this.vbPo.setSpacing(15);
         this.vbPo.setAlignment(Pos.TOP_CENTER);
         this.vbPo.setStyle("-fx-background-color: #333335");
-        this.vbPo.getChildren().addAll(Custom.setTitle("Planes and lines"), this.backgroundPane);
-
-    }
+        this.vbPo.getChildren().addAll(Custom.setTitle("Planes and lines"), this.backgroundPane);}
 
     public Graph getGraph() {
-        return graph;
-    }
+        return graph;}
 
     public void handleStart(boolean isRb1Selected) {
-        graph.reset();
         if (isRb1Selected) {
             for (CustomTextField[] customTextFields : fieldListRb1) {
                 for (int j = 0; j < fieldListRb1[0].length; j++) {
                     if (customTextFields[j].getText().isBlank()) {
-                        customTextFields[j].setText("0");}}}}
+                        customTextFields[j].setText("0");
+                       }}}}
         // for rb2
         else {
             for (CustomTextField[] customTextFields : fieldListRb2) {
                 for (int j = 0; j < fieldListRb2[0].length; j++) {
                     if (customTextFields[j].getText().isBlank()) {
-                        customTextFields[j].setText("0");}}}}
+                        customTextFields[j].setText("0");
+                        }}}}
 
         controller.getValues();
         controller.addElementsGraph();
@@ -133,8 +131,6 @@ public class View3 extends Pane implements iView {
 
 
     public void addOutput(Controller3 controller) {
-
-
         this.backgroundPane.getChildren().clear();
         VBox vbSolutions = new VBox();
         VBox vbGeneric = new VBox();
@@ -195,12 +191,12 @@ public class View3 extends Pane implements iView {
             this.vbUi.getChildren().addAll(setHbRadios(rb1, rb2), fieldsPane);
         });
 
-        this.btnStart.setOnAction(event -> handleStart(rb1.isSelected()));
+        this.btnStart.setOnAction(event ->
+                handleStart(rb1.isSelected()));
         this.btnReset.setOnAction(event -> handleReset());
     }
 
 
-    @Override
     public GridPane setFields(CustomTextField[][] textFields, String[] signs, CustomButton btnStart) {
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
@@ -227,18 +223,22 @@ public class View3 extends Pane implements iView {
                     lblVariable.setText(signs[j]);
                 }
 
-                int finalI = i;
-                int finalJ = j;
 
                 textFields[i][j].textProperty().addListener((observable, oldValue, newValue) ->
-                        btnStart.setDisable(textFields[finalI][finalJ].checkField()));
+                        btnStart.setDisable(checkFields(getFieldListRb1(), getFieldListRb2(),rb1.isSelected())));
+
+
+
 
                 if (rb1.isSelected()) {
                     textFields[i][j].setPrefSize(40, 30);
                     hbTextField.getChildren().addAll(lblVariable, textFields[i][j]);
-                } else {
-                    hbTextField.getChildren().addAll(textFields[i][j], lblVariable);
+
                 }
+
+                else {
+                    hbTextField.getChildren().addAll(textFields[i][j], lblVariable);
+                    }
 
                 gridPane.add(hbTextField, j, i);
             }
@@ -250,7 +250,7 @@ public class View3 extends Pane implements iView {
     public ArrayList<CustomTextField> getFieldListRb1() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray : this.fieldListRb1) {
-            Collections.addAll(fieldList, tfArray);
+            fieldList.addAll(Arrays.asList(tfArray));
         }
         return fieldList;
     }
@@ -258,10 +258,13 @@ public class View3 extends Pane implements iView {
     public ArrayList<CustomTextField> getFieldListRb2() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray : this.fieldListRb2) {
-            Collections.addAll(fieldList, tfArray);
+            fieldList.addAll(Arrays.asList(tfArray));
         }
         return fieldList;
     }
+
+
+
 
 
 }

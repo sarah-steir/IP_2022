@@ -169,7 +169,7 @@ public class Graph extends Group {
     }
 
     /**
-     * This function finds the first "half" of the line (so that it is veryyyyy long instead of being smol)
+     * This function finds the first "half" of the line (so that it is very long instead of being small)
      *
      * @param point1 The first point the line has to go through
      * @param point2 The second point the line has to go through
@@ -178,7 +178,7 @@ public class Graph extends Group {
     private Line FindOneLine(Point3D point1, Point3D point2) {
         double dist = point1.distance(point2);
 
-        Line line = new Line(0, 0, 5000, 0);
+        Line line = new Line(0, 0, 1000, 0);
         line.setStrokeWidth(2);
 
         Point3D vector = point2.subtract(point1);
@@ -296,9 +296,8 @@ public class Graph extends Group {
      * @param point1    The point p0
      * @param direction The vector of the line
      */
-    private void createLineLabel(Point3D point1, double[] direction, boolean display) {
-        Text label = new CustomText("l(t) = (" + Math.round(point1.getX()) + ", " + Math.round(point1.getY()) + ", " + Math.round(point1.getZ()) + ") +" +
-                " t <" + Math.round(direction[0]) + ", " + Math.round(direction[1]) + ", " + Math.round(direction[2]) + ">");
+    public void createLineLabel(Point3D point1, double[] direction, boolean display) {
+        Text label = new CustomText("l(t) = (" + point1.getX() + ", " + point1.getY() + ", " + point1.getZ() + ") +\nt <" + direction[0] + ", " + direction[1] + ", " + direction[2] + ">");
         label.setScaleY(-1);
         label.setTranslateX(point1.getX());
         label.setTranslateY(point1.getY());
@@ -310,12 +309,15 @@ public class Graph extends Group {
     }
 
     private void setCameraFromViewPoint() {
-        double zTranslate = Math.sqrt(Math.pow(100, 2) + Math.pow(100, 2) + Math.pow(300, 2));
+        double zTranslate
+                = Math.sqrt(Math.pow(100, 2) + Math.pow(100, 2) + Math.pow(300, 2));
+
         double ryAngle, rxAngle;
 
         if (zTranslate > 0) {
             ryAngle = -Math.toDegrees(Math.atan2(100, 300));
-            rxAngle = -Math.toDegrees(Math.asin((double) 100 / zTranslate));
+            rxAngle
+                    = -Math.toDegrees(Math.asin((double) 100 / zTranslate));
         } else {
             ryAngle = 0;
             rxAngle = 0;

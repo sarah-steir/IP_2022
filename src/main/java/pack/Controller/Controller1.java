@@ -98,6 +98,7 @@ public class Controller1 {
                 rank = "0";
                 output.add(sol);
                 return output;
+
             }
             //unique solution
             else if (x[2] == 1) {
@@ -105,7 +106,6 @@ public class Controller1 {
                     sol[i] = " " + String.format("%.2f", x[i]);
                 }
                 view.graph.addPoint(new Point3D(Double.parseDouble(sol[0]), Double.parseDouble(sol[1]), 0));
-
                 rank = "" + b.length;
 
             }

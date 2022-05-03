@@ -74,23 +74,19 @@ public class Model3 {
      * @return the equation of the plane given by i (1 or 2)
      */
     public String planeEq(int i) {
-        switch (i) {
-            case 1:
-                return n1[0] + "x +" + n1[1] + "y +" + n1[2] + "z+ " + n1[3]+" =0";
-            case 2:
-                return n2[0] + "x +" + n2[1] + "y +" + n2[2] + "z + " + n2[3]+" =0";
-            default:
-                return null;}}
+        return switch (i) {
+            case 1 -> n1[0] + "x +" + n1[1] + "y +" + n1[2] + "z+ " + n1[3] + " =0";
+            case 2 -> n2[0] + "x +" + n2[1] + "y +" + n2[2] + "z + " + n2[3] + " =0";
+            default -> null;
+        };
+    }
 
     //Lines
     private static final double EPSILON = 1e-10;
-    double a1, a2; // Row 1
-    double b1, b2; // Row 2
-    double d1, d2; // Last Column
-    int n;
+    private int n;
     // storing arraylist variables for the SLE calculation 2x2
-    public static double[][] matrixA_2x2 = {{1, 1}, {1, 1}};
-    public static double[] matrixB_2x2 = {1, 1};
+    private static final double[][] matrixA_2x2 = {{1, 1}, {1, 1}};
+    private static final double[] matrixB_2x2 = {1, 1};
 
     /**
      *  Brings the values given by the user and adds them on double arrayList of doubles
@@ -107,7 +103,7 @@ public class Model3 {
      * This is for the handling on the SLEsolve
      * @return sum of constants
      */
-    public ArrayList<Double> constants() {
+    private ArrayList<Double> constants() {
         ArrayList<Double> constant = new ArrayList<>();
         double d1 = numbers.get(1);
         double d2 = numbers.get(7);
@@ -122,7 +118,7 @@ public class Model3 {
      * This is for the handling on the SLEsolve
      * @return coefficients of s and t
      */
-    public ArrayList<Double> inputs() {
+    private ArrayList<Double> inputs() {
         ArrayList<Double> arr = new ArrayList<>();
         double d1 = numbers.get(0);
         double d2 = numbers.get(2);
@@ -140,26 +136,29 @@ public class Model3 {
     public void setMatrices() {
         n = 2;
         //Row 1
-        this.a1 = inputs().get(0);
-        matrixA_2x2[0][0] = this.a1;
-        this.a2 = inputs().get(1);
-        matrixA_2x2[0][1] = this.a2;
+        double a1 = inputs().get(0);
+        matrixA_2x2[0][0] = a1;
+        // Row 1
+        double a2 = inputs().get(1);
+        matrixA_2x2[0][1] = a2;
         //Row2
-        this.b1 = inputs().get(2);
-        matrixA_2x2[1][0] = this.b1;
-        this.b2 = inputs().get(3);
-        matrixA_2x2[1][1] = this.b2;
+        double b1 = inputs().get(2);
+        matrixA_2x2[1][0] = b1;
+        // Row 2
+        double b2 = inputs().get(3);
+        matrixA_2x2[1][1] = b2;
         //B Matrix (Constants)
-        this.d1 = constants().get(0);
-        matrixB_2x2[0] = this.d1;
-        this.d2 = constants().get(1);
-        matrixB_2x2[1] = this.d2;}
+        double d1 = constants().get(0);
+        matrixB_2x2[0] = d1;
+        // Last Column
+        double d2 = constants().get(1);
+        matrixB_2x2[1] = d2;}
 
     public static double[][] getMatrixA_2x2() {return matrixA_2x2;}
     public static double[] getMatrixB_2x2() {return matrixB_2x2;}
 
-    double[][] A = Model3.getMatrixA_2x2();
-    double[] b = Model3.getMatrixB_2x2();
+    private final double[][] A = getMatrixA_2x2();
+     private final double[] b =getMatrixB_2x2();
 
     /**
      * Solves the 2by2 matrix given with the x and y variables of the line
@@ -174,9 +173,7 @@ public class Model3 {
             int max = p;
             for (int i = p + 1; i < n; i++) {
                 if (Math.abs(A[i][p]) > Math.abs(A[max][p])) {
-                    max = i;
-                }
-            }
+                    max = i;}}
             double[] temp = A[p];
             A[p] = A[max];
             A[max] = temp;
@@ -185,17 +182,13 @@ public class Model3 {
             b[max] = t;
 
             // singular or almost singular
-            if (Math.abs(A[p][p]) <= EPSILON) {
-                System.out.println("Matrix is singular or super close to being singular, try again :) ");
-            }
-
+            if (Math.abs(A[p][p]) <= EPSILON) {System.out.println("Matrix is singular or super close to being singular, try again :) ");}
             // pivot within A and b
             for (int i = p + 1; i < n; i++) {
                 double alpha = A[i][p] / A[p][p];
                 b[i] -= alpha * b[p];
                 for (int j = p; j < n; j++) {
-                    A[i][j] -= alpha * A[p][j];
-                }}}
+                    A[i][j] -= alpha * A[p][j];}}}
 
         // back substitution
         double[] x = new double[n];
@@ -227,16 +220,19 @@ public class Model3 {
         double zpoint = 0;
 
         switch (i) {
-            case 1:
+            case 1 -> {
                 xpoint = numbers.get(0) * t + numbers.get(1);
                 ypoint = numbers.get(2) * t + numbers.get(3);
                 zpoint = numbers.get(4) * t + numbers.get(5);
                 return new Point3D(xpoint, ypoint, zpoint);
-            case 2:
+            }
+            case 2 -> {
                 xpoint = numbers.get(6) * t + numbers.get(7);
                 ypoint = numbers.get(8) * t + numbers.get(9);
                 zpoint = numbers.get(10) * t + numbers.get(11);
-                return new Point3D(xpoint, ypoint, zpoint);}
+                return new Point3D(xpoint, ypoint, zpoint);
+            }
+        }
 
         return new Point3D(xpoint, ypoint, zpoint);}
 
@@ -248,17 +244,19 @@ public class Model3 {
     public double[] dirVector(int i) {
         double[] direction = new double[3];
         switch (i) {
-            case 1:
-
+            case 1 -> {
                 direction[0] = numbers.get(0);
                 direction[1] = numbers.get(2);
                 direction[2] = numbers.get(4);
                 return direction;
-            case 2:
+            }
+            case 2 -> {
                 direction[0] = numbers.get(6);
                 direction[1] = numbers.get(8);
                 direction[2] = numbers.get(10);
-                return direction;}
+                return direction;
+            }
+        }
         return null;}
 
     /**
@@ -288,9 +286,9 @@ public class Model3 {
 
     /**
      * If the lines are skew, it calculates the closer distance between them
-     * @return a string with the value of the distance
+     * @return   the value of the distance
      */
-    public String distanceSkew() {
+    private double distanceSkew() {
         double[] v = new double[3];
         v[0] = numbers.get(7) - numbers.get(1);
         v[1] = numbers.get(9) - numbers.get(3);
@@ -307,13 +305,12 @@ public class Model3 {
         double[] d = crossProduct(n1, n2);
         double upper = Math.abs(v[0] * d[0] + v[1] * d[1] + v[2] * d[2]);
         double lower = Math.sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
-        double distance = upper / lower;
-        return String.valueOf(distance);}
+        return upper / lower;}
 
-    public String[] round(double[] x) {
+    private String[] round(double[] x) {
         String[] lol = new String[x.length];
         for (int i = 0; i < x.length; i++) {
-            lol[i] = String.format("%.2f", x[i]);}
+            lol[i] = String.format("%.3f", x[i]);}
         return lol;}
 
 
@@ -331,8 +328,10 @@ public class Model3 {
         sol[2]=intersectionLines().getZ();
         return this.round(sol);}
 
+    public String[] getDistance() {
+        double []sol={distanceSkew()};
+        return round(sol);}
 
     public double[] getCrossProduct() {return crossProduct;}
-
     public String[] getCrossProductSt() {return round(crossProduct);}
 }

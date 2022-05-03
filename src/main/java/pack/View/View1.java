@@ -2,16 +2,15 @@ package pack.View;
 
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import pack.Controller.Controller1;
-import pack.Model.Model1;
 import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static pack.View.Customs.Custom.p;
@@ -120,6 +119,38 @@ public class View1 extends Pane implements iView {
             handleReset();
         });
     }
+
+    public GridPane setFields(CustomTextField[][] textFields, String[] signs, CustomButton btnStart) {
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        gridPane.setAlignment(Pos.CENTER);
+
+        int rows = textFields.length;
+        int cols = textFields[0].length;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                HBox hbTextField = new HBox();
+                hbTextField.setSpacing(10);
+
+                textFields[i][j] = new CustomTextField();
+                Label lblVariable = new Label();
+                lblVariable.setStyle("-fx-text-fill: E7EBEE;");
+                lblVariable.setFont(Custom.font);
+
+                if (j == cols - 1) {lblVariable.setText("");}
+                else {lblVariable.setText(signs[j]);}
+
+                int finalI = i;
+                int finalJ = j;
+
+                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) ->
+                        btnStart.setDisable(checkFields(getFieldListRb1(), getFieldListRb2(),rb1.isSelected())));
+
+                hbTextField.getChildren().addAll(textFields[i][j], lblVariable);
+                gridPane.add(hbTextField, j, i);}}
+        return gridPane;}
 
     // doesn't set text in text field to 0, also only works for rb1?
     public void handleStart(boolean isRb1Selected) {
@@ -265,4 +296,40 @@ public class View1 extends Pane implements iView {
         }
         return fieldList;
     }
+
+
+
+    public boolean checkFields(boolean b){
+        ArrayList<Boolean> booleans= new ArrayList<>();
+        int i=0;
+        ArrayList<CustomTextField> a;
+        if (b){ a =getFieldListRb1();}
+        else {
+            a =getFieldListRb2();}
+
+        while (i!= a.size()) {
+            CustomTextField t= a.get(i);
+
+            if(!t.getText().isEmpty()) {
+                if(isNumeric(t.getText())) {
+                    t.setStyle(" -fx-control-inner-background:#A0A0A0;");
+                    booleans.add(true);
+                }
+
+                if(!isNumeric(t.getText())) {
+                    t.setStyle(" -fx-control-inner-background: red;");
+                    booleans.add(false);}
+
+            }
+            i++;
+        }
+
+        if(booleans.contains(false)) {
+            return true;}
+
+        else{ return false;}}
+
+
+
+
 }
