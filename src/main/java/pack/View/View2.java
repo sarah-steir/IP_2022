@@ -197,12 +197,11 @@ public class View2 extends Pane implements iView {
     private void DaVoid() {
         VBox vbPancakes = PANCAKES();
         Scene secondScene = new Scene(vbPancakes, 500, 300);
-
+//        secondScene.setFill();
         // New window (Stage)
         newWindow = new Stage();
-        newWindow.setTitle("Second Stage");
+        newWindow.setTitle("Save a Matrix");
         newWindow.setScene(secondScene);
-
         newWindow.show();
     }
 

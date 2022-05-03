@@ -24,29 +24,21 @@ public class Controller1 {
         transform();
     }
 
-
     public void graphPlane() {
         model = new Model1(this.matrixCoefficients, is2by2);
 
         if (is2by2) {
-            double[][] A = Model1.getMatrixA_2x2();
-            double[] b = Model1.getMatrixB_2x2();
-
             view.graph.addLine(model.solutionPointsLineOne(69), model.solutionPointsLineOne(420), new double[]{0, 0, 0});
             view.graph.addLine(model.solutionPointsLineTwo(69), model.solutionPointsLineTwo(420), new double[]{0, 0, 0});
 
         } else {
             double[][] A = Model1.getMatrixA_3x3();
             double[] b = Model1.getMatrixB_3x3();
-
             view.graph.addPlane(b[0] / A[0][0], b[0] / A[0][1], b[0] / A[0][2]);
             view.graph.addPlane(b[1] / A[1][0], b[1] / A[1][1], b[1] / A[1][2]);
             view.graph.addPlane(b[2] / A[2][0], b[2] / A[2][1], b[2] / A[2][2]);
         }
-
-
     }
-
 
     // Include 2x2 as well later
     public void transform() {
@@ -68,7 +60,6 @@ public class Controller1 {
         }
         this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(2).getText()));
         this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(5).getText()));
-
     }
 
     public void transform3x3() {   //always 12d

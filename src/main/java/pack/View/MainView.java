@@ -33,7 +33,7 @@ public class MainView extends Pane {
      * Function that switches the current Pane accordingly
      * It first clears it so there is no stacking and offers better efficiency (I think)
      */
-    public void setCurrentPane(Pane pane) {
+    private void setCurrentPane(Pane pane) {
         this.currentPane.getChildren().clear();
         this.currentPane.getChildren().add(pane);
     }
@@ -43,7 +43,7 @@ public class MainView extends Pane {
      * It uses an AnchorPane so the elements are stuck to the top
      * @return AnchorPane
      */
-    public AnchorPane setMenuBar() {
+    private AnchorPane setMenuBar() {
         MenuBar menuBar = new MenuBar();
         AnchorPane menuPane = new AnchorPane();
         AnchorPane.setTopAnchor(menuBar, 0.0);

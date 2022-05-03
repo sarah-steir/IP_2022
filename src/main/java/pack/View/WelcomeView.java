@@ -28,7 +28,7 @@ public class WelcomeView extends Pane {
      *
      * @return the box that will be used for the buttons
      */
-    public VBox setButtons() {
+    private VBox setButtons() {
 
         VBox boxyy = new VBox();
 
@@ -47,7 +47,7 @@ public class WelcomeView extends Pane {
         return boxyy;
     }
 
-    public ImageView setLogo() {
+    private ImageView setLogo() {
         ImageView iv = new ImageView(new Image(Custom.p + "Logo.png"));
         iv.setFitWidth(225);
         iv.setFitHeight(105);
