@@ -25,7 +25,7 @@ public class Controller2 {
         transform();
     }
 
-    public void transform() {
+    private void transform() {
         if (is2by2) {
             fieldList = view.getFieldListRb1();
             copyArray();
@@ -37,7 +37,7 @@ public class Controller2 {
         }
     }
 
-    public void copyArray() {
+    private void copyArray() {
         for (CustomTextField tf : fieldList) {
             matrixCoefficients.add(Double.parseDouble(tf.getText()));
         }
@@ -51,7 +51,7 @@ public class Controller2 {
         }
     }
 
-    public ArrayList<Double>[] getEigenVectors() {
+    private ArrayList<Double>[] getEigenVectors() {
         if (is2by2) {
             return model2for2x2.getEigenVectors();
         } else {

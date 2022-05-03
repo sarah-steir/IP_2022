@@ -391,7 +391,7 @@ public class View2 extends Pane implements iView {
      * @param i to know which eigenvalue
      * @return a box
      */
-    public HBox newVector(int counter, Controller2 controller2, int i) { // counter is the vector if size=6 there is counter 1 and 2 possible
+    private HBox newVector(int counter, Controller2 controller2, int i) { // counter is the vector if size=6 there is counter 1 and 2 possible
         HBox hbx = new HBox(10);
         VBox vbx1 = new VBox();
         ImageView imL = new ImageView(new Image(p + "Right.png"));
@@ -420,7 +420,7 @@ public class View2 extends Pane implements iView {
      * @param i to know which eigenvalue
      * @return VBOX
      */
-    public VBox putVertical3x3(int counter, Controller2 controller2, int i) {
+    private VBox putVertical3x3(int counter, Controller2 controller2, int i) {
         VBox vbx1 = new VBox();
         vbx1.setAlignment(Pos.CENTER);
         Double numba1, numba2, numba3;
@@ -455,7 +455,7 @@ public class View2 extends Pane implements iView {
      * @param i to know which eigenvalue
      * @return VBOX
      */
-    public VBox putVertical2x2(int counter, Controller2 controller2, int i) {
+    private VBox putVertical2x2(int counter, Controller2 controller2, int i) {
         VBox vbx1 = new VBox(15);
         vbx1.setAlignment(Pos.CENTER);
         Double numba1, numba2;
@@ -507,7 +507,7 @@ public class View2 extends Pane implements iView {
     /**
      * set the whole view
      */
-    public void setView2() {
+    private void setView2() {
         this.setPrefSize(1050, 750);
         this.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
         this.getChildren().addAll(this.vbLeft, this.vbRight);
@@ -516,7 +516,7 @@ public class View2 extends Pane implements iView {
     /**
      * set action for radio button
      */
-    public void setActions() {
+    private void setActions() {
         rb1.setOnAction(event -> { //2x2 radio button
             this.btnStart.setDisable(false);
             this.btnSave.setDisable(false);
@@ -544,7 +544,7 @@ public class View2 extends Pane implements iView {
      * @param textFields the text-fields for matrix
      * @return a BOX
      */
-    public HBox setFields (CustomTextField[][] textFields) {
+    private HBox setFields (CustomTextField[][] textFields) {
         ImageView iv1 = new ImageView(new Image(p + "Right.png"));
         iv1.setFitWidth(44);
         iv1.setFitHeight(220);
@@ -596,7 +596,7 @@ public class View2 extends Pane implements iView {
      * start button
      * @param isRb1Selected if the 2x2 is selected
      */
-    public void handleStart(boolean isRb1Selected) {
+    private void handleStart(boolean isRb1Selected) {
         if (isRb1Selected) {
             for (CustomTextField[] customTextFields : fieldListRb1) {
                 for (int j = 0; j < fieldListRb1[0].length; j++) {
@@ -621,7 +621,7 @@ public class View2 extends Pane implements iView {
     /**
      * reset button
      */
-    public void handleReset() {
+    private void handleReset() {
         this.getChildren().clear();
         btnStart.setDisable(true);
         btnSave.setDisable(true);
@@ -637,7 +637,7 @@ public class View2 extends Pane implements iView {
      *  the output reset
      * @param controller2 math view 2
      */
-    public void addOutput(Controller2 controller2) {
+    private void addOutput(Controller2 controller2) {
         this.backgroundPane.getChildren().clear();
 
         ImageView lamba1 = new ImageView(new Image(p + "Lamba1.png"));
@@ -743,7 +743,7 @@ public class View2 extends Pane implements iView {
         }
     }
 
-    public ArrayList<HBox> getEigenVectors1(Controller2 controller2) {
+    private ArrayList<HBox> getEigenVectors1(Controller2 controller2) {
         ArrayList<HBox> hbEigenVectors1 = new ArrayList<>();
         ImageView iv1 = new ImageView(new Image(p + "Vector1.png"));
         iv1.setFitWidth(20);
@@ -804,7 +804,7 @@ public class View2 extends Pane implements iView {
         return hbEigenVectors1;
     }
 
-    public ArrayList<HBox> getEigenVectors2(Controller2 controller2) {
+    private ArrayList<HBox> getEigenVectors2(Controller2 controller2) {
         ArrayList<HBox> hbEigenVectors2 = new ArrayList<>();
         ImageView iv1 = new ImageView(new Image(p + "Vector1.png"));
         iv1.setFitWidth(20);
@@ -865,7 +865,7 @@ public class View2 extends Pane implements iView {
         return hbEigenVectors2;
     }
 
-    public ArrayList<HBox> getEigenVectors3(Controller2 controller2) {
+    private ArrayList<HBox> getEigenVectors3(Controller2 controller2) {
         ArrayList<HBox> hbEigenVectors3 = new ArrayList<>();
         ImageView iv1 = new ImageView(new Image(p + "Vector1.png"));
         iv1.setFitWidth(20);

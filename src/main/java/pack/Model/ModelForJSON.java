@@ -23,7 +23,7 @@ public class ModelForJSON {
     /**
      * Write all the names of the matrices in one jsonfile
      */
-    public static void writeNames() {
+    private static void writeNames() {
         JSONArray getNames = new JSONArray();
         getNames.add("identity");
         getNames.add("diagonal");
@@ -54,7 +54,7 @@ public class ModelForJSON {
     /**
      * write all the matrices with their names in one jsonfile for one JSONObject
      */
-    public static void writeBasics() {
+    private static void writeBasics() {
         JSONArray identity = new JSONArray();
         identity.add("1");
         identity.add("0");
