@@ -175,6 +175,7 @@ public class View3 extends Pane implements iView {
     }
 
     public void setActions() {
+        this.graph.reset();
         rb1.setOnAction(event -> {
             this.btnStart.setDisable(false);
             fieldsPane = setFields(fieldListRb1, signsRb1, this.btnStart);
