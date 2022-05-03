@@ -195,10 +195,8 @@ public class View2 extends Pane implements iView {
      * the actual window for when we press save
      */
     private void DaVoid() {
-        StackPane secondaryLayout = new StackPane();
-
-        secondaryLayout.getChildren().add(PANCAKES());
-        Scene secondScene = new Scene(secondaryLayout, 300, 300);
+        VBox vbPancakes = PANCAKES();
+        Scene secondScene = new Scene(vbPancakes, 500, 300);
 
         // New window (Stage)
         newWindow = new Stage();
@@ -214,24 +212,26 @@ public class View2 extends Pane implements iView {
      */
     private VBox PANCAKES() {
         VBox payne = new VBox();
-        payne.setPadding(new Insets(10));
-        Label ll = new Label("Choose a name for your matrix");
-        ll.setTextFill(Color.BLUE);
-        Text txt = new Text("YO SWITCH IT UP");
+        payne.setPadding(new Insets(15));
+        payne.setSpacing(30);
+        payne.setStyle("-fx-background-color: #333234");
+        payne.setAlignment(Pos.CENTER);
 
-
-        TextField ctf = new CustomTextField();
+        CustomText promptText = new CustomText("Enter name of the matrix");
+        CustomText text = new CustomText("This matrix already exists.");
+        text.setVisible(false);
+        CustomTextField ctf = new CustomTextField();
+        ctf.setMaxWidth(300);
+        ctf.setMaxHeight(200);
         CustomButton butt = new CustomButton("SEND IT");
-        payne.getChildren().add(ll);
-        payne.getChildren().add(ctf);
-        payne.getChildren().add(butt);
+
+        payne.getChildren().addAll(promptText, ctf, butt, text);
         butt.setOnAction(event -> {
 
             try { // THE NAME OF THE MATRIX IS ALREADY USE
                 if (jsonObject.containsKey(ctf.getText())) {
-                    if (!payne.getChildren().contains(txt)) {
-                        payne.getChildren().add(txt);
-
+                    if (!text.isVisible()) {
+                        text.setVisible(true);
                     }
                 } else { // CLOSE THE SCENE + MATRIX NAME NOT USED
                     invisibleButton.setText("Matrix " + ctf.getText() + " has been saved.");
@@ -244,9 +244,8 @@ public class View2 extends Pane implements iView {
                     ft.play();
 
                     humptyDumptyFellOffAWall(ctf.getText());
-                    payne.getChildren().remove(txt);
+                    text.setVisible(false);
                     newWindow.close();
-
                 }
             } catch (NullPointerException e) {
                 System.out.println("not another problem");
