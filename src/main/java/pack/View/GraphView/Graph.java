@@ -296,7 +296,7 @@ public class Graph extends Group {
      * @param point1    The point p0
      * @param direction The vector of the line
      */
-    public void createLineLabel(Point3D point1, double[] direction, boolean display) {
+    private void createLineLabel(Point3D point1, double[] direction, boolean display) {
         Text label = new CustomText("l(t) = (" + Math.round(point1.getX()) + ", " + Math.round(point1.getY()) + ", " + Math.round(point1.getZ()) + ") +" +
                 " t <" + Math.round(direction[0]) + ", " + Math.round(direction[1]) + ", " + Math.round(direction[2]) + ">");
         label.setScaleY(-1);
