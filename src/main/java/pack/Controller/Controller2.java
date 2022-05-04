@@ -4,13 +4,13 @@ import pack.Model.Model2for2x2;
 import pack.Model.Model2for3x3;
 import pack.View.Customs.CustomTextField;
 import pack.View.View2;
+import java.util.ArrayList;
+
 
 /**
  * This class is the Controller between View2 and Model2for2x2/Model2for3x3. It fetches the data from View1 and sends it
  * to the Model for the mathematical process. It then fetches the data from Model1 and gives it back to the View.
  */
-import java.util.ArrayList;
-
 public class Controller2 {
 
     private final View2 view;                           // The view object
