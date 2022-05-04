@@ -4,18 +4,20 @@ import javafx.geometry.Point3D;
 import pack.Model.Model1;
 import pack.View.Customs.CustomTextField;
 import pack.View.View1;
-
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * This class is the Controller between View1 and Model1. It fetches the data from View1 and sends it to the Model for
+ * the mathematical process. It then fetches the data from Model1 and gives it back to the View.
+ */
 public class Controller1 {
 
-    View1 view;
-    private ArrayList<CustomTextField> fieldList;
-    private ArrayList<Double> matrixCoefficients;
-    private boolean is2by2;
-    public Model1 model;
-    static final DecimalFormat formatting = new DecimalFormat("0.000");
+    private View1 view;                             // The view object that is getting updated
+    private ArrayList<CustomTextField> fieldList;   // The list of text fields that are the input
+    private ArrayList<Double> matrixCoefficients;   // The list of inputs (text fields) in the form of double
+    private boolean is2by2;                         // A boolean variable to determine if the matrix is 2x2 or 3x3
+    private Model1 model;                           // The model object that does the math
+    private String rank;                            // The rank of the final matrix
 
     public Controller1(View1 view) {
         this.view = view;
@@ -25,6 +27,53 @@ public class Controller1 {
         transform();
     }
 
+    /**
+     * This method sends to 2 different methods to transform the given data.
+     */
+    private void transform() {
+        if (is2by2) {
+            fieldList = view.getFieldListRb1();
+            transform2x2();
+        } else {
+            fieldList = view.getFieldListRb2();
+            transform3x3();
+        }
+    }
+
+    /**
+     * This method transforms the data given for a 2x2 matrix. It adds all the inputs of the text fields into the
+     * matrixCoefficients variable to store it as Doubles.
+     */
+    public void transform2x2() { // always 6
+        for (int i = 0; i < this.fieldList.size(); i++) {
+            if (i == 2 || i == 5) {
+                continue;
+            }
+            this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(i).getText()));
+        }
+        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(2).getText()));
+        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(5).getText()));
+    }
+
+    /**
+     * This method transforms the data given for a 3x3 matrix. It adds all the inputs of the text fields into the
+     * matrixCoefficients variable to store it as Doubles.
+     */
+    public void transform3x3() {   //always 12d
+        for (int i = 0; i < this.fieldList.size(); i++) {
+            if (i == 3 || i == 7 || i == 11) {
+                continue;
+            }
+            this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(i).getText()));
+        }
+        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(3).getText()));
+        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(7).getText()));
+        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(11).getText()));
+    }
+
+    /**
+     * This method graphs the output for View 1 which is either two lines or two planes.
+     */
     public void graphPlane() {
         model = new Model1(this.matrixCoefficients, is2by2);
 
@@ -41,43 +90,11 @@ public class Controller1 {
         }
     }
 
-    // Include 2x2 as well later
-    public void transform() {
-        if (is2by2) {
-            fieldList = view.getFieldListRb1();
-            transform2x2();
-        } else {
-            fieldList = view.getFieldListRb2();
-            transform3x3();
-        }
-    }
-
-    public void transform2x2() { // always 6
-        for (int i = 0; i < this.fieldList.size(); i++) {
-            if (i == 2 || i == 5) {
-                continue;
-            }
-            this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(i).getText()));
-        }
-        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(2).getText()));
-        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(5).getText()));
-    }
-
-    public void transform3x3() {   //always 12d
-        for (int i = 0; i < this.fieldList.size(); i++) {
-            if (i == 3 || i == 7 || i == 11) {
-                continue;
-            }
-            this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(i).getText()));
-        }
-        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(3).getText()));
-        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(7).getText()));
-        this.matrixCoefficients.add(Double.parseDouble(this.fieldList.get(11).getText()));
-    }
-
-
-    private String rank;
-
+    /**
+     * This method retrieves the result from model and puts all the output into an ArrayList of String[]. This ArrayList
+     * is then sent to View to put on display on the application.
+     * @return the String[] of outputs containing all the constants of the reduced matrix and the solutions
+     */
     public ArrayList<String[]> getOutput() {
         model = new Model1(this.matrixCoefficients, is2by2);
         if (is2by2) {
@@ -99,7 +116,6 @@ public class Controller1 {
                 rank = "0";
                 output.add(sol);
                 return output;
-
             }
             //unique solution
             else if (x[2] == 1) {
@@ -108,7 +124,6 @@ public class Controller1 {
                 }
                 view.graph.addPoint(new Point3D(Double.parseDouble(sol[0]), Double.parseDouble(sol[1]), 0));
                 rank = "" + b.length;
-
             }
             //if there is 1 free variable
             else if (x[2] == 2) {
@@ -162,6 +177,11 @@ public class Controller1 {
         }
     }
 
+    /**
+     * This method gets the coefficient reduced matrix (A) and returns it as a String[][] so that the View can use it
+     * to print the output.
+     * @return the 2D array of the matrix coefficients
+     */
     public String[][] getCoefficients() {
         double[][] A;
         if (is2by2) {
@@ -172,22 +192,11 @@ public class Controller1 {
         return model.getCoefficients(A);
     }
 
+    /**
+     * This method returns the rank of the reduced matrix to be used in the View.
+     * @return the rank of the matrix
+     */
     public String getRank() {
         return rank;
-    }
-
-    public int getArraySize() {
-        model = new Model1(this.matrixCoefficients, is2by2);
-        if (is2by2) {
-            return 2;
-        } else {
-            return 3;
-        }
-    }
-
-    public void printSol(String[] sol) {
-        for (String solution : sol) {
-            System.out.println("YA: " + solution);
-        }
     }
 }
