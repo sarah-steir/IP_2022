@@ -4,7 +4,6 @@ import javafx.animation.FadeTransition;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.json.simple.JSONArray;
@@ -17,7 +16,6 @@ import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import pack.Controller.Controller2;
 import pack.Model.Model2for3x3;
 
@@ -30,9 +28,12 @@ import java.util.Iterator;
 
 import static pack.View.Customs.Custom.p;
 
+/**
+ * This class is the whole user interface of the second view, the Eigenvalues and Eigenvectors calculator. It contains
+ * both the whole layout (setting up all the panes and boxes) as well as setting up the JSON Database.
+ */
 public class View2 extends Pane implements iView {
 
-    // TODO fix when clicking "Save matrix" two times, stack overflow
     // TODO FIX THE BUTTON GETTING NOT DISABLED WHEN THERES STILL A WRONG VALUE BUT THE NEXT ONE IS RIGHT
     // TODO error in console when saving a matrix
 
@@ -58,6 +59,7 @@ public class View2 extends Pane implements iView {
     private final HBox emptyBox;
     private final CustomButton invisibleButton;
     private final Pane backgroundPane;
+    private boolean isBtnSaveClicked = false;
 
     public View2() {
         jsonObject = getThatObject();
@@ -76,21 +78,6 @@ public class View2 extends Pane implements iView {
         this.btnSave.setPrefSize(200, 20);
         names = getThemNames();
         UpdateLeCombobox();
-        //comboBox on action
-        cb.setOnAction(event -> {
-            //Call a method to determine which item in the list the user has selected
-            jsonObject = getThatObject();
-            if (cb.getValue() != "Saved Matrices") {
-                setMatrix(YesImAGummyBear((JSONArray) jsonObject.get(cb.getValue())));
-            }
-        });
-//Save Button on action
-        btnSave.setOnAction(event -> {
-            //Call a method to determine which item in the list the user has selected
-            DaVoid(); //Send the selected item to the method
-            cb.getSelectionModel().selectFirst();
-
-        });
 
         fieldListRb1 = new CustomTextField[2][2];
         fieldListRb2 = new CustomTextField[3][3];
@@ -549,6 +536,26 @@ public class View2 extends Pane implements iView {
         });
         this.btnStart.setOnAction(event -> handleStart(rb1.isSelected()));
         this.btnReset.setOnAction(event -> handleReset());
+
+        //comboBox on action
+        cb.setOnAction(event -> {
+            //Call a method to determine which item in the list the user has selected
+            jsonObject = getThatObject();
+
+            if (isBtnSaveClicked) { // Please don't go in the other one, come here
+                isBtnSaveClicked = false;
+            } else if (cb.getValue() != "Saved Matrices") {
+                setMatrix(YesImAGummyBear((JSONArray) jsonObject.get(cb.getValue())));
+            }
+        });
+
+        //Save Button on action
+        btnSave.setOnAction(event -> {
+            //Call a method to determine which item in the list the user has selected
+            DaVoid(); //Send the selected item to the method
+            cb.getSelectionModel().selectFirst();
+            isBtnSaveClicked = true;
+        });
     }
 
     /**
