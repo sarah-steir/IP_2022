@@ -12,10 +12,10 @@ import java.util.ArrayList;
  */
 public class Controller1 {
 
-    private View1 view;                             // The view object that is getting updated
+    private final View1 view;                             // The view object that is getting updated
     private ArrayList<CustomTextField> fieldList;   // The list of text fields that are the input
-    private ArrayList<Double> matrixCoefficients;   // The list of inputs (text fields) in the form of double
-    private boolean is2by2;                         // A boolean variable to determine if the matrix is 2x2 or 3x3
+    private final ArrayList<Double> matrixCoefficients;   // The list of inputs (text fields) in the form of double
+    private final boolean is2by2;                         // A boolean variable to determine if the matrix is 2x2 or 3x3
     private Model1 model;                           // The model object that does the math
     private String rank;                            // The rank of the final matrix
 
@@ -100,7 +100,7 @@ public class Controller1 {
         if (is2by2) {
             double[][] A = Model1.getMatrixA_2x2();
             double[] b = Model1.getMatrixB_2x2();
-            double[] x = model.SLEsolve(A, b);
+            double[] x = model.SLESolve(A, b);
 
             String[] sol;
 
@@ -137,7 +137,7 @@ public class Controller1 {
         } else {
             double[][] A = Model1.getMatrixA_3x3();
             double[] b = Model1.getMatrixB_3x3();
-            double[] x = model.SLEsolve(A, b);
+            double[] x = model.SLESolve(A, b);
 
             String[] sol = new String[x.length];
 
