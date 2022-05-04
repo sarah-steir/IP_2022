@@ -22,7 +22,7 @@ public class Model3 {
     }
 
     /**
-     * The function divides the textfields into 2 groups (for plane 1 and for plane 2) and stores the double value of the text on
+     * The function divides the text-fields into 2 groups (for plane 1 and for plane 2) and stores the double value of the text on
      * their respective double arrayList
      *
      * @param f The ArrayList that contains the TextFields on the plane section
@@ -59,23 +59,23 @@ public class Model3 {
      */
     public void solutionPoint() {
         double determinantWithZis0 = n1[0] * n2[1] - n2[0] * n1[1];
-        double determinantXwithZis0 = -n1[3] * n2[1] - -n2[3] * n1[1];
-        double determinantYwithZis0 = n1[0] * -n2[3] - n2[0] * -n1[3];
-        double x1 = determinantXwithZis0 / determinantWithZis0;
-        double y1 = determinantYwithZis0 / determinantWithZis0;
+        double determinantXWithZis0 = -n1[3] * n2[1] - -n2[3] * n1[1];
+        double determinantYWithZis0 = n1[0] * -n2[3] - n2[0] * -n1[3];
+        double x1 = determinantXWithZis0 / determinantWithZis0;
+        double y1 = determinantYWithZis0 / determinantWithZis0;
         double z1 = 0;
         solutions[0] = new Point3D(x1, y1, z1);
         double determinantWithYis0 = n1[0] * n2[2] - n2[0] * n1[2];
-        double determinantXwithYis0 = -n1[3] * n2[2] - -n2[3] * n1[2];
-        double determinantZwithYis0 = n1[0] * -n2[3] - n2[0] * -n1[3];
-        double x2 = determinantXwithYis0 / determinantWithYis0;
+        double determinantXWithYis0 = -n1[3] * n2[2] - -n2[3] * n1[2];
+        double determinantZWithYis0 = n1[0] * -n2[3] - n2[0] * -n1[3];
+        double x2 = determinantXWithYis0 / determinantWithYis0;
         double y2 = 0;
-        double z2 = determinantZwithYis0 / determinantWithYis0;
+        double z2 = determinantZWithYis0 / determinantWithYis0;
         solutions[1] = new Point3D(x2, y2, z2);
     }
 
     /**
-     * @param i wether one or two
+     * @param i weather one or two
      * @return the equation of the plane given by i (1 or 2)
      */
     public String planeEq(int i) {
@@ -96,7 +96,7 @@ public class Model3 {
     /**
      * Brings the values given by the user and adds them on double arrayList of doubles
      *
-     * @param tf Arraylist of textfields for lines
+     * @param tf Arraylist of text-fields for lines
      */
     public void bringT(ArrayList<CustomTextField> tf) {
         numbers.clear();
@@ -108,7 +108,7 @@ public class Model3 {
 
     /**
      * Only takes the constant values of variable x and y and adds them together
-     * This is for the handling on the SLEsolve
+     * This is for the handling on the SLESolve
      *
      * @return sum of constants
      */
@@ -125,7 +125,7 @@ public class Model3 {
 
     /**
      * Only takes the input variable of x and y (s and t variable coefficients)
-     * This is for the handling on the SLEsolve
+     * This is for the handling on the SLESolve
      *
      * @return coefficients of s and t
      */
@@ -233,10 +233,10 @@ public class Model3 {
      */
     public Point3D intersectionLines() {
         x = SLESolve(A, b);
-        double xpoint = numbers.get(0) * x[0] + numbers.get(1);
-        double ypoint = numbers.get(2) * x[0] + numbers.get(3);
-        double zpoint = numbers.get(4) * x[0] + numbers.get(5);
-        return new Point3D(xpoint, ypoint, zpoint);
+        double xPoint = numbers.get(0) * x[0] + numbers.get(1);
+        double yPoint = numbers.get(2) * x[0] + numbers.get(3);
+        double zPoint = numbers.get(4) * x[0] + numbers.get(5);
+        return new Point3D(xPoint, yPoint, zPoint);
     }
 
     /**
@@ -245,32 +245,32 @@ public class Model3 {
      * @return a point in the line i
      */
     public Point3D linesPoints(int i, int t) {
-        double xpoint = 0;
-        double ypoint = 0;
-        double zpoint = 0;
+        double xPoint = 0;
+        double yPoint = 0;
+        double zPoint = 0;
 
         switch (i) {
             case 1 -> {
-                xpoint = numbers.get(0) * t + numbers.get(1);
-                ypoint = numbers.get(2) * t + numbers.get(3);
-                zpoint = numbers.get(4) * t + numbers.get(5);
-                return new Point3D(xpoint, ypoint, zpoint);
+                xPoint = numbers.get(0) * t + numbers.get(1);
+                yPoint = numbers.get(2) * t + numbers.get(3);
+                zPoint = numbers.get(4) * t + numbers.get(5);
+                return new Point3D(xPoint, yPoint, zPoint);
             }
             case 2 -> {
-                xpoint = numbers.get(6) * t + numbers.get(7);
-                ypoint = numbers.get(8) * t + numbers.get(9);
-                zpoint = numbers.get(10) * t + numbers.get(11);
-                return new Point3D(xpoint, ypoint, zpoint);
+                xPoint = numbers.get(6) * t + numbers.get(7);
+                yPoint = numbers.get(8) * t + numbers.get(9);
+                zPoint = numbers.get(10) * t + numbers.get(11);
+                return new Point3D(xPoint, yPoint, zPoint);
             }
         }
 
-        return new Point3D(xpoint, ypoint, zpoint);
+        return new Point3D(xPoint, yPoint, zPoint);
     }
 
     /**
      * Function gives the direction vector that is used for the label on the graph
      *
-     * @param i wether 1 or 2
+     * @param i weather 1 or 2
      * @return the direction vector of the first or second line (determined by i)
      */
     public double[] dirVector(int i) {

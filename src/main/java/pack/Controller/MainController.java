@@ -24,7 +24,7 @@ public class MainController {
         Stage stage = new Stage();
         stage.setResizable(false);
         stage.setScene(new Scene(new Pane(iv)));
-        stage.setTitle("Usssss");
+        stage.setTitle("Us");
         stage.show();
     }
 
