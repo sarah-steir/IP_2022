@@ -34,8 +34,7 @@ import static pack.View.Customs.Custom.p;
  */
 public class View2 extends Pane implements iView {
 
-    // TODO FIX THE BUTTON GETTING NOT DISABLED WHEN THERES STILL A WRONG VALUE BUT THE NEXT ONE IS RIGHT
-    // TODO error in console when saving a matrix
+    // TODO when switching rb1, and there's still cb chosen (matrix is empty until reclick)
 
     private final CustomTextField[][] fieldListRb1;
     private final CustomTextField[][] fieldListRb2;
@@ -50,9 +49,7 @@ public class View2 extends Pane implements iView {
     private final VBox vbPo;
     private VBox vbLeft;
     private VBox vbRight;
-    private static CustomTextField t1, t2, t3, t4, t5, t6, t7, t8, t9;
     static FileWriter file;
-    private final static ArrayList<Integer> other = new ArrayList<>();
     private JSONObject jsonObject;
     private JSONObject names;
     private Stage newWindow;
@@ -253,11 +250,11 @@ public class View2 extends Pane implements iView {
     private void humptyDumptyFellOffAWall(String name) {
         JSONArray newMatrix = new JSONArray();
         if (rb1.isSelected()) {
-            newMatrix.add(View2.getT1());
-            newMatrix.add(View2.getT2());
+            newMatrix.add(this.getFieldListRb1().get(0).getText());
+            newMatrix.add(this.getFieldListRb1().get(1).getText());
             newMatrix.add("0");
-            newMatrix.add(View2.getT4());
-            newMatrix.add(View2.getT5());
+            newMatrix.add(this.getFieldListRb1().get(2).getText());
+            newMatrix.add(this.getFieldListRb1().get(3).getText());
             newMatrix.add("0");
             newMatrix.add("0");
             newMatrix.add("0");
@@ -598,8 +595,6 @@ public class View2 extends Pane implements iView {
                 }
                 textFields[i][j] = new CustomTextField();
                 textFields[i][j].setPrefSize(50, 40);
-                int finalI = i;
-                int finalJ = j;
 
                 textFields[i][j].textProperty().addListener((observable, oldValue, newValue) -> btnStart.setDisable(checkFields(getFieldListRb1(), getFieldListRb2(), rb1.isSelected())));
                 gridPane.add(textFields[i][j], j, i);
@@ -899,24 +894,18 @@ public class View2 extends Pane implements iView {
         iv3.setFitWidth(20);
         iv3.setFitHeight(20);
 
-        if (controller2.getEigenVectors()[2].size() == 3) {
-            HBox hb1 = new HBox();
-            hb1.setAlignment(Pos.CENTER);
-            hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 2));
-            hbEigenVectors3.add(hb1);
-        } else if (Model2for3x3.getS3().size() == 6) {
-            HBox hb1 = new HBox();
-            hb1.setAlignment(Pos.CENTER);
-            hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 2));
+        HBox hb1 = new HBox();
+        hb1.setAlignment(Pos.CENTER);
+        hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 2));
+        hbEigenVectors3.add(hb1);
+
+        if (Model2for3x3.getS3().size() == 6) {
             HBox hb2 = new HBox();
             hb2.setAlignment(Pos.CENTER);
             hb2.getChildren().addAll(iv2, new CustomText("= "), newVector(2, controller2, 2));
             hbEigenVectors3.add(hb1);
             hbEigenVectors3.add(hb2);
         } else {
-            HBox hb1 = new HBox();
-            hb1.setAlignment(Pos.CENTER);
-            hb1.getChildren().addAll(iv1, new CustomText("= "), newVector(1, controller2, 2));
             HBox hb2 = new HBox();
             hb2.setAlignment(Pos.CENTER);
             hb2.getChildren().addAll(iv2, new CustomText("= "), newVector(2, controller2, 2));
@@ -931,7 +920,7 @@ public class View2 extends Pane implements iView {
     }
 
     /**
-     * get the textfield for the 2x2 button
+     * get the text field for the 2x2 button
      *
      * @return an array filled with the user input
      */
@@ -944,7 +933,7 @@ public class View2 extends Pane implements iView {
     }
 
     /**
-     * get the textfield for the 3x3 button
+     * get the text field for the 3x3 button
      *
      * @return the arrayList with all the text-fields for 3x3
      */
@@ -964,21 +953,21 @@ public class View2 extends Pane implements iView {
         return rb2;
     }
 
-    public static CustomTextField getT1() {
-        return t1;
-    }
-
-    public static CustomTextField getT2() {
-        return t2;
-    }
-
-    public static CustomTextField getT4() {
-        return t4;
-    }
-
-    public static CustomTextField getT5() {
-        return t5;
-    }
+//    public static CustomTextField getT1() {
+//        return t1;
+//    }
+//
+//    public static CustomTextField getT2() {
+//        return t2;
+//    }
+//
+//    public static CustomTextField getT4() {
+//        return t4;
+//    }
+//
+//    public static CustomTextField getT5() {
+//        return t5;
+//    }
 
     private void setVbRight(VBox vbRight) {
         this.vbRight = vbRight;

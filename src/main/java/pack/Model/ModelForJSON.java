@@ -17,7 +17,7 @@ public class ModelForJSON {
 
     public ModelForJSON() {
         writeBasics();
-        //writeNames();
+        writeNames();
     }
 
     /**
