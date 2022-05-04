@@ -105,7 +105,13 @@ public interface iView {
         return vbRight;
     }
 
-
+    /**
+     * This method checks the text fields and disables the start button when an invalid input is entered.
+     * @param rb1 the arraylist of textfields for the first radiobutton
+     * @param rb2 the arraylist of textfields for the second radiobutton
+     * @param b a boolean to determine whether the first radio button or the second is selected
+     * @return true if all inputs are valid, false otherwise
+     */
     default boolean checkFields(ArrayList<CustomTextField> rb1, ArrayList<CustomTextField> rb2, boolean b) {
         ArrayList<Boolean> booleans = new ArrayList<>();
         int i = 0;
@@ -136,6 +142,11 @@ public interface iView {
         return booleans.contains(false);
     }
 
+    /**
+     * This method checks whether an input is numeric or not (negative numbers included)
+     * @param str the string to be checked
+     * @return true if it's numeric, false otherwise
+     */
     default boolean isNumeric(String str) {
         try {
             Double.parseDouble(str);

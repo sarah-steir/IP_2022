@@ -15,6 +15,9 @@ import java.util.ArrayList;
 
 import static pack.View.Customs.Custom.p;
 
+/**
+ * This class is the whole user interface for the first view of the program, the System of Linear Equations Calculator.
+ */
 public class View1 extends Pane implements iView {
 
     private final CustomTextField[][] fieldListRb1, fieldListRb2;
@@ -63,20 +66,36 @@ public class View1 extends Pane implements iView {
         setActions();
     }
 
-    public void setView1() {
+    /**
+     * This methods sets all the panes and boxes for this view
+     */
+    private void setView1() {
         this.setPrefSize(1050, 750);
         this.setStyle("-fx-background-color: #6F6F77;");    // Blue Grey
         this.getChildren().addAll(this.vbLeft, this.vbRight);
     }
 
+    /**
+     * This methods sets the left pane.
+     * @param vbLeft the left VBox
+     */
     private void setVbLeft(VBox vbLeft) {
         this.vbLeft = vbLeft;
     }
 
+    /**
+     * This method sets the right pane.
+     * @param vbRight the right VBox
+     */
     private void setVbRight(VBox vbRight) {
         this.vbRight = vbRight;
     }
 
+    /**
+     * This method sets the upper left pane called the UI box. It contains the radio buttons and the text fields
+     * for the user's input.
+     * @param hbRadios the HBox of the RadioButtons
+     */
     private void setVbUi(HBox hbRadios) {
         this.vbUi.setSpacing(5);
         this.vbUi.setPrefSize(500, 160);
@@ -84,6 +103,11 @@ public class View1 extends Pane implements iView {
         this.vbUi.getChildren().add(hbRadios);
     }
 
+    /**
+     * This method sets the right pane called the Program Output box. This contains a background image of cloud drawings,
+     * as well as the output of the view (when the start button is clicked)
+     * @param title the title of the view
+     */
     private void setVbPo(String title) {
         this.backgroundPane.setPrefSize(500, 580);
         BackgroundImage myBI = new BackgroundImage(new Image(p + "View1.png", 520, 580, false, true), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -96,7 +120,11 @@ public class View1 extends Pane implements iView {
         this.vbPo.getChildren().addAll(Custom.setTitle(title), this.backgroundPane);
     }
 
-    public void setActions() {
+    /**
+     * This method sets the actions of the elements in the view such as both RadioButtons as well as both the Start Button
+     * and the Reset Button.
+     */
+    private void setActions() {
         rb1.setOnAction(event -> {
             this.btnStart.setDisable(false);
             fieldsPane = setFields(fieldListRb1, signsRb1, this.btnStart);
@@ -118,6 +146,13 @@ public class View1 extends Pane implements iView {
         });
     }
 
+    /**
+     * This method sets the text fields of the view.
+     * @param textFields the array of textfields
+     * @param signs the signs for this specific radio button (differs for 2x2 and 3x3)
+     * @param btnStart the start button
+     * @return a GridPane with the properly labelled and formatted text fields
+     */
     public GridPane setFields(CustomTextField[][] textFields, String[] signs, CustomButton btnStart) {
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
@@ -143,8 +178,8 @@ public class View1 extends Pane implements iView {
                     lblVariable.setText(signs[j]);
                 }
 
-
-                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) -> btnStart.setDisable(checkFields(getFieldListRb1(), getFieldListRb2(), rb1.isSelected())));
+                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) ->
+                        btnStart.setDisable(checkFields(getFieldListRb1(), getFieldListRb2(), rb1.isSelected())));
 
                 hbTextField.getChildren().addAll(textFields[i][j], lblVariable);
                 gridPane.add(hbTextField, j, i);
@@ -153,9 +188,11 @@ public class View1 extends Pane implements iView {
         return gridPane;
     }
 
-    // doesn't set text in text field to 0, also only works for rb1?
-    public void handleStart(boolean isRb1Selected) {
-
+    /**
+     * This method handles what happens when the start button is clicked.
+     * @param isRb1Selected the boolean to check which RadioButton is selected
+     */
+    private void handleStart(boolean isRb1Selected) {
         if (isRb1Selected) {
             for (int i = 0; i < fieldListRb1.length; i++) {
                 for (int j = 0; j < fieldListRb1[0].length; j++) {
@@ -179,7 +216,10 @@ public class View1 extends Pane implements iView {
         addOutput(controller);
     }
 
-    public void handleReset() {
+    /**
+     * This method handles what happens when the Reset Button is clicked.
+     */
+    private void handleReset() {
         this.getChildren().clear();
         btnStart.setDisable(false);
         rb1.setSelected(false);
@@ -190,13 +230,13 @@ public class View1 extends Pane implements iView {
         this.graph.reset();
     }
 
-    public void addOutput(Controller1 controller) {
+    /**
+     * This methods add the output (the results of the math) once the Start button is clicked.
+     * @param controller the controller object used to fetch and retrieve data
+     */
+    private void addOutput(Controller1 controller) {
         this.backgroundPane.getChildren().clear();
-        //setVbPo("Systems of linear equations");
 
-//        VBox vbOutput = new VBox();
-//        vbOutput.setSpacing(15);
-//        vbOutput.setPadding(new Insets(15));
         ArrayList<String[]> output = controller.getOutput();
         String[] sol = output.get(1);
 
@@ -274,10 +314,19 @@ public class View1 extends Pane implements iView {
         this.backgroundPane.getChildren().addAll(hbRank, vbSolutions, hbReducedMatrix);
     }
 
+    /**
+     * Gets the first RadioButton
+     * @return the RadioButton
+     */
     public CustomRadioButton getRb1() {
         return rb1;
     }
 
+    /**
+     * This methods gets the list (of the first RadioButton) of text fields in the form of an arrayList instead of an
+     * array since that's how the controller and model classes need it.
+     * @return the arraylist of text fields for rb1
+     */
     public ArrayList<CustomTextField> getFieldListRb1() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray : this.fieldListRb1) {
@@ -288,6 +337,11 @@ public class View1 extends Pane implements iView {
         return fieldList;
     }
 
+    /**
+     * This methods gets the list (of the second RadioButton) of text fields in the form of an arrayList instead of an
+     * array since that's how the controller and model classes need it.
+     * @return the arraylist of textfields for rb2
+     */
     public ArrayList<CustomTextField> getFieldListRb2() {
         ArrayList<CustomTextField> fieldList = new ArrayList<>();
         for (CustomTextField[] tfArray : this.fieldListRb2) {
@@ -297,42 +351,4 @@ public class View1 extends Pane implements iView {
         }
         return fieldList;
     }
-
-
-    public boolean checkFields(boolean b) {
-        ArrayList<Boolean> booleans = new ArrayList<>();
-        int i = 0;
-        ArrayList<CustomTextField> a;
-        if (b) {
-            a = getFieldListRb1();
-        } else {
-            a = getFieldListRb2();
-        }
-
-        while (i != a.size()) {
-            CustomTextField t = a.get(i);
-
-            if (!t.getText().isEmpty()) {
-                if (isNumeric(t.getText())) {
-                    t.setStyle(" -fx-control-inner-background:#A0A0A0;");
-                    booleans.add(true);
-                }
-
-                if (!isNumeric(t.getText())) {
-                    t.setStyle(" -fx-control-inner-background: red;");
-                    booleans.add(false);
-                }
-
-            }
-            i++;
-        }
-
-        if (booleans.contains(false)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
 }

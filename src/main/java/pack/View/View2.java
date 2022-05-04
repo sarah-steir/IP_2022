@@ -594,7 +594,7 @@ public class View2 extends Pane implements iView {
                 int finalI = i;
                 int finalJ = j;
 
-                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) -> btnStart.setDisable(textFields[finalI][finalJ].checkField()));
+                textFields[i][j].textProperty().addListener((observable, oldValue, newValue) -> btnStart.setDisable(checkFields(getFieldListRb1(), getFieldListRb2(), rb1.isSelected())));
                 gridPane.add(textFields[i][j], j, i);
             }
         }

@@ -58,6 +58,4 @@ public class Controller2 {
             return model2for3x3.getEigenVectors();
         }
     }
-
-
 }
