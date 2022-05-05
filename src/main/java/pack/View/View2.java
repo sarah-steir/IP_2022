@@ -44,6 +44,7 @@ public class View2 extends Pane implements iView {
     private final CustomButton btnStart;
     private final CustomButton btnReset;
     private final CustomButton btnSave;
+    private CustomButton btnResetMatrix;
     private final ComboBox cb;
     private final VBox vbUi;
     private final VBox vbPo;
@@ -73,6 +74,8 @@ public class View2 extends Pane implements iView {
         this.btnSave = new CustomButton("Save Matrix");
         this.btnSave.setDisable(true);
         this.btnSave.setPrefSize(200, 20);
+        this.btnResetMatrix = new CustomButton("Reset Matrices");
+        this.btnResetMatrix.setPrefSize(200, 20);
         names = getThemNames();
         UpdateLeCombobox();
 
@@ -555,6 +558,20 @@ public class View2 extends Pane implements iView {
         });
     }
 
+    @Override
+    public HBox setHbRadios(CustomRadioButton rb1, CustomRadioButton rb2) {
+        HBox hbRadios = new HBox();
+        hbRadios.setSpacing(20);
+        hbRadios.setPrefWidth(115);
+
+        HBox hbButton = new HBox();
+        hbButton.setPadding(new Insets(15, 15, 15, 75));
+        hbButton.getChildren().add(this.btnResetMatrix);
+
+        hbRadios.getChildren().addAll(rb1, rb2, hbButton);
+        return hbRadios;
+    }
+
     /**
      * format the output for each eigenvalue
      *
@@ -952,22 +969,6 @@ public class View2 extends Pane implements iView {
     public CustomRadioButton getRb2() {
         return rb2;
     }
-
-//    public static CustomTextField getT1() {
-//        return t1;
-//    }
-//
-//    public static CustomTextField getT2() {
-//        return t2;
-//    }
-//
-//    public static CustomTextField getT4() {
-//        return t4;
-//    }
-//
-//    public static CustomTextField getT5() {
-//        return t5;
-//    }
 
     private void setVbRight(VBox vbRight) {
         this.vbRight = vbRight;
