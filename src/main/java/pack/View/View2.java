@@ -578,7 +578,8 @@ public class View2 extends Pane implements iView {
         hbRadios.setPrefWidth(115);
 
         HBox hbButton = new HBox();
-        hbButton.setPadding(new Insets(15, 15, 15, 50));
+        hbButton.setAlignment(Pos.CENTER);
+        hbButton.setPadding(new Insets(15, 15, 15, 10));
         hbButton.getChildren().add(this.btnResetSavedMatrices);
 
         hbRadios.getChildren().addAll(rb1, rb2, hbButton);
