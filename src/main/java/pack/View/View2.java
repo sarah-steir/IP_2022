@@ -10,6 +10,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import pack.Model.ModelForJSON;
 import pack.View.Customs.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -58,6 +59,7 @@ public class View2 extends Pane implements iView {
     private final CustomButton invisibleButton;
     private final Pane backgroundPane;
     private boolean isBtnSaveClicked = false;
+    private ModelForJSON JASONDERULO;
 
     public View2() {
         jsonObject = getThatObject();
@@ -555,6 +557,10 @@ public class View2 extends Pane implements iView {
             DaVoid(); //Send the selected item to the method
             cb.getSelectionModel().selectFirst();
             isBtnSaveClicked = true;
+        });
+
+        btnResetMatrix.setOnAction(event -> {
+            JASONDERULO = new ModelForJSON();
         });
     }
 
