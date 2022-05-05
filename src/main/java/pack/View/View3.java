@@ -5,6 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import pack.Controller.Controller3;
 import pack.View.Customs.*;
 import pack.View.GraphView.Graph;
@@ -135,17 +137,18 @@ public class View3 extends Pane implements iView {
         this.backgroundPane.getChildren().clear();
         VBox vbSolutions = new VBox();
         VBox vbGeneric = new VBox();
+        Circle[] legend = new Circle[] {new Circle(0), new Circle(10, Color.valueOf("#1985A1")), new Circle(10, Color.valueOf("#F2C15F"))};
 
         for (int i = 0; i < controller.GenericTexts().length; i++) {
             CustomText textX = new CustomText(controller.GenericTexts()[i].getText());
             textX.changeSize(20);
-            vbGeneric.getChildren().add(textX);
+            HBox otherBox = new HBox(legend[i],new CustomText("   "), textX);
+            vbGeneric.getChildren().addAll(otherBox);
         }
         for (int i = 0; i < controller.SolutionTexts().length; i++) {
             CustomText textX = new CustomText(controller.SolutionTexts()[i].getText());
             textX.changeSize(20);
             vbSolutions.getChildren().add(textX);
-
         }
 
         vbGeneric.setSpacing(15);
