@@ -45,7 +45,7 @@ public class View2 extends Pane implements iView {
     private final CustomButton btnStart;
     private final CustomButton btnReset;
     private final CustomButton btnSave;
-    private CustomButton btnResetMatrix;
+    private CustomButton btnResetSavedMatrices;
     private final ComboBox cb;
     private final VBox vbUi;
     private final VBox vbPo;
@@ -77,8 +77,8 @@ public class View2 extends Pane implements iView {
         this.btnSave = new CustomButton("Save Matrix");
         this.btnSave.setDisable(true);
         this.btnSave.setPrefSize(200, 20);
-        this.btnResetMatrix = new CustomButton("Reset Matrices");
-        this.btnResetMatrix.setPrefSize(200, 20);
+        this.btnResetSavedMatrices = new CustomButton("Reset Matrices");
+        this.btnResetSavedMatrices.setPrefSize(200, 20);
         names = getThemNames();
         UpdateLeCombobox();
 
@@ -111,7 +111,6 @@ public class View2 extends Pane implements iView {
      * update the comboBox when then save button is pressed
      */
     private void UpdateLeCombobox() {
-
         cb.setValue(null);
         cb.getItems().clear();
         cb.getItems().add("Saved Matrices");
@@ -547,7 +546,7 @@ public class View2 extends Pane implements iView {
 
             if (isBtnSaveClicked) { // Please don't go in the other one, come here
                 isBtnSaveClicked = false;
-            }else if (isBtnResetClicked) { // Please don't go in the other one, come here
+            } else if (isBtnResetClicked) { // Please don't go in the other one, come here
                 isBtnResetClicked = false;
             } else if (cb.getValue() != "Saved Matrices") {
                 setMatrix(YesImAGummyBear((JSONArray) jsonObject.get(cb.getValue())));
@@ -562,12 +561,12 @@ public class View2 extends Pane implements iView {
             isBtnSaveClicked = true;
         });
 
-        btnResetMatrix.setOnAction(event -> {
+        btnResetSavedMatrices.setOnAction(event -> {
             JASONDERULO = new ModelForJSON();
             jsonObject = getThatObject();
             names = getThemNames();
-            UpdateLeCombobox();
             isBtnResetClicked = true;
+            UpdateLeCombobox();
         });
     }
 
@@ -579,7 +578,7 @@ public class View2 extends Pane implements iView {
 
         HBox hbButton = new HBox();
         hbButton.setPadding(new Insets(15, 15, 15, 75));
-        hbButton.getChildren().add(this.btnResetMatrix);
+        hbButton.getChildren().add(this.btnResetSavedMatrices);
 
         hbRadios.getChildren().addAll(rb1, rb2, hbButton);
         return hbRadios;
