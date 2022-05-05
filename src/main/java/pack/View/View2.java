@@ -59,6 +59,7 @@ public class View2 extends Pane implements iView {
     private final CustomButton invisibleButton;
     private final Pane backgroundPane;
     private boolean isBtnSaveClicked = false;
+    private boolean isBtnResetClicked = false;
     private ModelForJSON JASONDERULO;
 
     public View2() {
@@ -546,6 +547,8 @@ public class View2 extends Pane implements iView {
 
             if (isBtnSaveClicked) { // Please don't go in the other one, come here
                 isBtnSaveClicked = false;
+            }else if (isBtnResetClicked) { // Please don't go in the other one, come here
+                isBtnResetClicked = false;
             } else if (cb.getValue() != "Saved Matrices") {
                 setMatrix(YesImAGummyBear((JSONArray) jsonObject.get(cb.getValue())));
             }
@@ -561,6 +564,10 @@ public class View2 extends Pane implements iView {
 
         btnResetMatrix.setOnAction(event -> {
             JASONDERULO = new ModelForJSON();
+            jsonObject = getThatObject();
+            names = getThemNames();
+            UpdateLeCombobox();
+            isBtnResetClicked = true;
         });
     }
 
