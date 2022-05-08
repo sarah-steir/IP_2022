@@ -137,7 +137,6 @@ public class Model2for3x3 {
 
                 x1 = -2 * Math.pow(q / 2, (double) 1 / 3) - (a / 3);
                 x2 = Math.pow(q / 2, (double) 1 / 3) - (a / 3);
-
             }
 
         } else {

@@ -109,6 +109,7 @@ public class View3 extends Pane implements iView {
     }
 
     public void handleStart(boolean isRb1Selected) {
+        this.graph.reset();
         if (isRb1Selected) {
             for (CustomTextField[] customTextFields : fieldListRb1) {
                 for (int j = 0; j < fieldListRb1[0].length; j++) {

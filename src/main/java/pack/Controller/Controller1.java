@@ -123,6 +123,7 @@ public class Controller1 {
                     sol[i] = " " + String.format("%.2f", x[i]);
                 }
                 view.graph.addPoint(new Point3D(Double.parseDouble(sol[0]), Double.parseDouble(sol[1]), 0));
+//                view.graph.addPoint(new Point3D(x[0], x[1], 0));
                 rank = "" + b.length;
             }
             //if there is 1 free variable
@@ -157,6 +158,7 @@ public class Controller1 {
                     sol[i] = " " + String.format("%.2f", x[i]);
                 }
                 view.graph.addPoint(new Point3D(Double.parseDouble(sol[0]), Double.parseDouble(sol[1]), Double.parseDouble(sol[2])));
+//                view.graph.addPoint(new Point3D(x[0], x[1], x[2]));
                 rank = "" + b.length;
             } // 1 Free Variable
             else if (x[4] == 2) {
