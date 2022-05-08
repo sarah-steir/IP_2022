@@ -141,13 +141,13 @@ public class View3 extends Pane implements iView {
 
         for (int i = 0; i < controller.GenericTexts().length; i++) {
             CustomText textX = new CustomText(controller.GenericTexts()[i].getText());
-            textX.changeSize(20);
+            textX.changeSize(15);
             HBox otherBox = new HBox(legend[i],new CustomText("   "), textX);
             vbGeneric.getChildren().addAll(otherBox);
         }
         for (int i = 0; i < controller.SolutionTexts().length; i++) {
             CustomText textX = new CustomText(controller.SolutionTexts()[i].getText());
-            textX.changeSize(20);
+            textX.changeSize(15);
             vbSolutions.getChildren().add(textX);
         }
 
