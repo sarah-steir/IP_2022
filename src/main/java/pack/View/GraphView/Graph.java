@@ -35,7 +35,7 @@ public class Graph extends Group {
 
     Box map = bigCube();
 
-    private int a = 0; // Serves as a counter to know which color should the added element be
+    private int mango = 0; // Serves as a counter to know which color should the added element be
 
     ObservableList<Node> axisList;
     ObservableList<Node> thingsToGraphList = FXCollections.observableArrayList();
@@ -235,10 +235,10 @@ public class Graph extends Group {
      * @param line2 The line that goes from point1 to point2, and past point2
      */
     private void addLineToList(Line line1, Line line2, Point3D point, double[] direction) {
-        a++;
+        mango++;
         thingsToGraphList.add(line1);
         thingsToGraphList.add(line2);
-        switch (a) {
+        switch (mango) {
             case 1 -> {
                 line1.setStroke(blue);
                 line2.setStroke(blue);
@@ -265,10 +265,10 @@ public class Graph extends Group {
      * @param rectangle the plane quoi
      */
     private void addPlaneToList(Rectangle rectangle) {
-        a++;
+        mango++;
         rectangle.setOpacity(0.5);
         thingsToGraphList.add(rectangle);
-        switch (a) {
+        switch (mango) {
             case 1 -> rectangle.setFill(blue);
             case 2 -> rectangle.setFill(yellow);
             case 3 -> rectangle.setFill(red);
@@ -361,6 +361,6 @@ public class Graph extends Group {
         thingsToGraphList.clear();
         displayedLabels.clear();
         this.update();
-        a = 0;
+        mango = 0;
     }
 }
