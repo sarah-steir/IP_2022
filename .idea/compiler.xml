@@ -15,7 +15,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="IP_2022" options="--add-exports jdk.internal.le/jdk.internal.org.jline.terminal=ALL-UNNAMED" />
+      <module name="IP_2022" options="" />
     </option>
   </component>
 </project>
